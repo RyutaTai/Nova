@@ -26,6 +26,8 @@ void Transform::DrawDebug()
         {
             Reset();
         }
+
+        ImGui::TreePop();
     }
 }
 

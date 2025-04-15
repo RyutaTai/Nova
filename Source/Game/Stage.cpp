@@ -16,25 +16,12 @@ Stage::Stage()
 	_ASSERT_EXPR(instance_ == instance_, L"already instance");
 	instance_ = this;
 
-	//	コリジョンメッシュ生成
-#if 0
-	//collisionMesh_ = std::make_unique<decltype(collisionMesh_)::element_type>(Graphics::Instance().GetDevice(), "./Resources/Model/syougiban.glb");
-	collisionMesh_ = std::make_unique<decltype(collisionMesh_)::element_type>(Graphics::Instance().GetDevice(), "./Resources/Model/cybercity-2099-v2/city_collision_ground2_correct.glb");
-#else
-	
-	gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/cybercity-2099-v2/city.gltf");
+	gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/Stage/Stage.gltf");
 
 	GetTransform()->SetPosition(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
-	GetTransform()->SetScaleFactor(0.0025f);	//	シティモデル
 
-	collisionMesh_ = std::make_unique<decltype(collisionMesh_)::element_type>(Graphics::Instance().GetDevice(), "./Resources/Model/cybercity-2099-v2/city.gltf");
+	GetTransform()->SetScaleFactor(100.0f);
 
-	//DirectX::XMFLOAT4X4 transform = {};
-	//DirectX::XMStoreFloat4x4(&transform, GetTransform()->CalcWorldMatrix(GetTransform()->GetScaleFactor()));
-	//collisionMesh_->Transform(transform);
-#endif
-
-	//GetTransform()->SetPosition(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
 
 	//	エミッシブ定数バッファ生成
 	D3D11_BUFFER_DESC bufferDesc = {};
@@ -307,6 +294,7 @@ float Stage::CalculateAutocorrelation(const float data[], const int& lag)
 bool Stage::Collision(_In_ const DirectX::XMFLOAT3& rayStartPosition, _In_ const DirectX::XMFLOAT3& rayDirection, _In_ const DirectX::XMFLOAT4X4& stageTransform, _Out_ DirectX::XMFLOAT3& intersectionPosition, _Out_ DirectX::XMFLOAT3& intersectionNormal,
 	_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ float rayLengthLimit, _In_ bool skipIf) const
 {
+	return false;
 #if 0
 	if (collisionMesh_->Raycast(rayStartPosition, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
 	{
@@ -444,10 +432,10 @@ void Stage::UpdateFFTConstantBuffer()
 //	デバッグ描画
 void Stage::DrawDebug()
 {
-	if (ImGui::TreeNode(u8"Stageステージ"))
+	if (ImGui::TreeNodeEx(u8"Stageステージ", ImGuiTreeNodeFlags_Framed))
 	{
-		//	コリジョンメッシュ
-		collisionMesh_->DrawDebug();
+		GetTransform()->DrawDebug();
+
 
 		//	円形のオーディオスペクトラムテクスチャ
 		ImGui::Text(u8"CircleSpectrumSRV_Slot15");
@@ -523,7 +511,7 @@ void Stage::DrawDebug()
 		}
 
 		gltfStaticModelResource_->DrawDebug();
-		GetTransform()->DrawDebug();
+
 		ImGui::TreePop();
 	}
 }
