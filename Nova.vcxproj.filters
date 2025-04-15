@@ -1,0 +1,684 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Imgui">
+      <UniqueIdentifier>{5d2ed881-4062-49d0-a1ce-86240074d016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{fbda7416-56ec-4494-9e2c-d64e4b86339a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova">
+      <UniqueIdentifier>{7618f0df-09fe-4e1e-b0ba-0dfdf1a5a88d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics">
+      <UniqueIdentifier>{71bb1bf0-06eb-422e-af50-179b74c662cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Resources">
+      <UniqueIdentifier>{a239d1d7-a6a6-4f4d-8fcc-d603b0cc9370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Core">
+      <UniqueIdentifier>{05c4e814-5c76-41fa-a3be-337fa2adaa7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Others">
+      <UniqueIdentifier>{ec4a4808-d1eb-4188-baf5-6d9dc8773756}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Shaders">
+      <UniqueIdentifier>{9f64f4ff-d9e0-43d7-88e1-13e6d3656a89}</UniqueIdentifier>
+      <Extensions>hlsl;hlsli</Extensions>
+    </Filter>
+    <Filter Include="Nova\Scenes">
+      <UniqueIdentifier>{44163571-bdbc-444e-b458-de2ea40e2188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Input">
+      <UniqueIdentifier>{b0f4ca77-f633-4800-9da3-e7a72acd6b81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Audio">
+      <UniqueIdentifier>{edc006d7-41ba-4a35-af78-be429e0963e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Collision">
+      <UniqueIdentifier>{e8326290-ea59-4abb-9ad3-7bdd97b83503}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Debug">
+      <UniqueIdentifier>{0a9d13ea-36c0-466d-a481-91d9024d2e76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Shaders">
+      <UniqueIdentifier>{813cc3ec-ea22-48fc-8008-99cb95ebcccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\AI">
+      <UniqueIdentifier>{1c31d348-952a-4ff8-b203-504c9b5f0684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\AI\State">
+      <UniqueIdentifier>{e754a4d1-501a-4e6e-bb87-bf51a1b6f9ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\AI\MetaAI">
+      <UniqueIdentifier>{ecd5b889-641f-44a7-8802-107071e00456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\AI\BehaviorBaseAI">
+      <UniqueIdentifier>{e2f3a1cb-1e77-4cae-ba09-1ed1e8f36ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Object">
+      <UniqueIdentifier>{df55fadd-f76d-49ad-81ba-8179114cefda}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="External\imgui\imgui.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_demo.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_draw.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_impl_dx11.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_impl_win32.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_tables.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_widgets.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\ImGuiCtrl.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Scenes\SceneDemo.cpp">
+      <Filter>Nova\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Scenes\SceneGame.cpp">
+      <Filter>Nova\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Scenes\SceneLoading.cpp">
+      <Filter>Nova\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Scenes\SceneManager.cpp">
+      <Filter>Nova\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Scenes\SceneTitle.cpp">
+      <Filter>Nova\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\Effect.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\EffectManager.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\GeometricPrimitive.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\Model.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\Sprite.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\SpriteBatch.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\StaticMesh.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\Texture.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Others\Transform.cpp">
+      <Filter>Nova\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Debug\DebugRenderer.cpp">
+      <Filter>Nova\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Input\GamePad.cpp">
+      <Filter>Nova\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Input\Input.cpp">
+      <Filter>Nova\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Input\Microphone.cpp">
+      <Filter>Nova\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Input\Mouse.cpp">
+      <Filter>Nova\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\Camera.cpp">
+      <Filter>Nova\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\FrameBuffer.cpp">
+      <Filter>Nova\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\FullScreenQuad.cpp">
+      <Filter>Nova\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\Graphics.cpp">
+      <Filter>Nova\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\Shader.cpp">
+      <Filter>Nova\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\ShadowMap.cpp">
+      <Filter>Nova\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Core\Framework.cpp">
+      <Filter>Nova\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Core\Main.cpp">
+      <Filter>Nova\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Collision\Collision.cpp">
+      <Filter>Nova\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Collision\Raycast.cpp">
+      <Filter>Nova\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Debug\SceneModelCheck.cpp">
+      <Filter>Nova\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\ResourceManager.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\AI\MetaAI.cpp">
+      <Filter>Nova\AI\MetaAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\AI\BehaviorTree.cpp">
+      <Filter>Nova\AI\BehaviorBaseAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\Midi.cpp" />
+    <ClCompile Include="External\MidiFile\Src\Binasc.cpp" />
+    <ClCompile Include="External\MidiFile\Src\MidiEvent.cpp" />
+    <ClCompile Include="External\MidiFile\Src\MidiEventList.cpp" />
+    <ClCompile Include="External\MidiFile\Src\MidiFile.cpp" />
+    <ClCompile Include="External\MidiFile\Src\MidiMessage.cpp" />
+    <ClCompile Include="External\MidiFile\Src\Options.cpp" />
+    <ClCompile Include="Source\Game\Bullet.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\BulletHorming.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\BulletManager.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\BulletStraight.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Dragonkin.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Drone.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Enemy.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\EnemyManager.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Player.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Stage.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\PlayerState.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\DroneState.cpp" />
+    <ClCompile Include="Source\Nova\Resources\GltfModel.cpp" />
+    <ClCompile Include="External\tinygltf-release\tiny_gltf.cc" />
+    <ClCompile Include="Source\Nova\Collision\CollisionMesh.cpp" />
+    <ClCompile Include="Source\Nova\PostProcess\Bloom.cpp" />
+    <ClCompile Include="Source\Nova\Resources\GltfModelStaticBatching.cpp" />
+    <ClCompile Include="Source\Game\BulletCover.cpp" />
+    <ClCompile Include="Source\Game\GameState.cpp" />
+    <ClCompile Include="Source\Game\UI\UI.cpp" />
+    <ClCompile Include="Source\Game\UI\UIManager.cpp" />
+    <ClCompile Include="Source\Nova\Audio\AudioManager.cpp" />
+    <ClCompile Include="Source\Nova\Audio\Audio3DSystem.cpp" />
+    <ClCompile Include="Source\Nova\Audio\AudioSource.cpp" />
+    <ClCompile Include="Source\Nova\Audio\AudioSource3D.cpp" />
+    <ClCompile Include="Source\Nova\Audio\Frequency.cpp" />
+    <ClCompile Include="Source\Nova\Audio\PitchShifter.cpp" />
+    <ClCompile Include="Source\Nova\Audio\WaveRead.cpp" />
+    <ClCompile Include="Source\Game\TitleState.cpp" />
+    <ClCompile Include="Source\Game\UI\UIHealth.cpp" />
+    <ClCompile Include="Source\Nova\Others\JudgeTime.cpp" />
+    <ClCompile Include="Source\Game\UI\UIInstructions.cpp" />
+    <ClCompile Include="Source\Game\UI\UITempo.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\Decal.cpp" />
+    <ClCompile Include="Source\Game\DragonkinJudgment.cpp" />
+    <ClCompile Include="Source\Game\DragonkinAction.cpp" />
+    <ClCompile Include="Source\Nova\AI\BehaviorData.cpp" />
+    <ClCompile Include="Source\Nova\AI\NodeBase.cpp" />
+    <ClCompile Include="Source\Game\Rhythm.cpp" />
+    <ClCompile Include="Source\Nova\Audio\Audio.cpp" />
+    <ClCompile Include="Source\Nova\Audio\FadeXAPO.cpp" />
+    <ClCompile Include="Source\Game\UI\UIRhythmJudgment.cpp" />
+    <ClCompile Include="Source\Nova\Collision\CollisionData.cpp" />
+    <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp" />
+    <ClCompile Include="Source\Nova\Others\TimelineEditor.cpp" />
+    <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="External\imgui\imconfig.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imgui.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imgui_impl_dx11.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imgui_impl_win32.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imgui_internal.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\ImGuiCtrl.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imstb_rectpack.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imstb_textedit.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imstb_truetype.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Scenes\Scene.h">
+      <Filter>Nova\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Scenes\SceneDemo.h">
+      <Filter>Nova\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Scenes\SceneGame.h">
+      <Filter>Nova\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Scenes\SceneLoading.h">
+      <Filter>Nova\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Scenes\SceneManager.h">
+      <Filter>Nova\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Scenes\SceneTitle.h">
+      <Filter>Nova\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\Effect.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\EffectManager.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\GeometricPrimitive.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\Model.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\Sprite.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\SpriteBatch.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\StaticMesh.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\Texture.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\Converter.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\Easing.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\MathHelper.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\Misc.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\Transform.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Debug\DebugRenderer.h">
+      <Filter>Nova\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Input\GamePad.h">
+      <Filter>Nova\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Input\Input.h">
+      <Filter>Nova\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Input\Microphone.h">
+      <Filter>Nova\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Input\Mouse.h">
+      <Filter>Nova\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\Camera.h">
+      <Filter>Nova\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\FrameBuffer.h">
+      <Filter>Nova\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\FullScreenQuad.h">
+      <Filter>Nova\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\Graphics.h">
+      <Filter>Nova\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\Shader.h">
+      <Filter>Nova\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\ShadowMap.h">
+      <Filter>Nova\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Core\Framework.h">
+      <Filter>Nova\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Core\HighResolutionTimer.h">
+      <Filter>Nova\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Collision\Collision.h">
+      <Filter>Nova\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Collision\Raycast.h">
+      <Filter>Nova\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Debug\SceneModelCheck.h">
+      <Filter>Nova\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\ResourceManager.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\MetaAI.h">
+      <Filter>Nova\AI\MetaAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\Telegram.h">
+      <Filter>Nova\AI\MetaAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\State.h">
+      <Filter>Nova\AI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\StateMachine.h">
+      <Filter>Nova\AI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\BehaviorTree.h">
+      <Filter>Nova\AI\BehaviorBaseAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\Midi.h" />
+    <ClInclude Include="External\MidiFile\include\Binasc.h" />
+    <ClInclude Include="External\MidiFile\include\MidiEvent.h" />
+    <ClInclude Include="External\MidiFile\include\MidiEventList.h" />
+    <ClInclude Include="External\MidiFile\include\MidiFile.h" />
+    <ClInclude Include="External\MidiFile\include\MidiMessage.h" />
+    <ClInclude Include="External\MidiFile\include\Options.h" />
+    <ClInclude Include="Source\Game\Bullet.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\BulletHorming.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\BulletManager.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\BulletStraight.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Dragonkin.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Drone.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Enemy.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\EnemyManager.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Player.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Stage.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PlayerState.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\DroneState.h" />
+    <ClInclude Include="Source\Nova\Resources\GltfModel.h" />
+    <ClInclude Include="External\tinygltf-release\tiny_gltf.h" />
+    <ClInclude Include="Source\Nova\Collision\CollisionMesh.h" />
+    <ClInclude Include="Source\Nova\PostProcess\Bloom.h" />
+    <ClInclude Include="Source\Nova\Resources\GltfModelStaticBatching.h" />
+    <ClInclude Include="Source\Game\BulletCover.h" />
+    <ClInclude Include="Source\Game\GameState.h" />
+    <ClInclude Include="Source\Game\UI\UI.h" />
+    <ClInclude Include="Source\Game\UI\UIManager.h" />
+    <ClInclude Include="Source\Nova\Audio\AudioManager.h" />
+    <ClInclude Include="Source\Nova\Audio\Audio3DSystem.h" />
+    <ClInclude Include="Source\Nova\Audio\AudioSource.h" />
+    <ClInclude Include="Source\Nova\Audio\AudioSource3D.h" />
+    <ClInclude Include="Source\Nova\Audio\AudioStructures.h" />
+    <ClInclude Include="Source\Nova\Audio\Frequency.h" />
+    <ClInclude Include="Source\Nova\Audio\PitchShifter.h" />
+    <ClInclude Include="Source\Nova\Audio\WaveRead.h" />
+    <ClInclude Include="Source\Game\TitleState.h" />
+    <ClInclude Include="Source\Game\UI\UIHealth.h" />
+    <ClInclude Include="Source\Nova\Others\JudgeTime.h" />
+    <ClInclude Include="Source\Game\UI\UIInstructions.h" />
+    <ClInclude Include="Source\Game\UI\UITempo.h" />
+    <ClInclude Include="Source\Nova\Graphics\Decal.h" />
+    <ClInclude Include="Source\Game\DragonkinJudgment.h" />
+    <ClInclude Include="Source\Game\DragonkinAction.h" />
+    <ClInclude Include="Source\Nova\AI\ActionBase.h" />
+    <ClInclude Include="Source\Nova\AI\BehaviorData.h" />
+    <ClInclude Include="Source\Nova\AI\JudgmentBase.h" />
+    <ClInclude Include="Source\Nova\AI\NodeBase.h" />
+    <ClInclude Include="Source\Game\AudioResourceTable.h" />
+    <ClInclude Include="Source\Game\Rhythm.h" />
+    <ClInclude Include="Source\Nova\Audio\Audio.h" />
+    <ClInclude Include="Source\Nova\Audio\FadeXAPO.h" />
+    <ClInclude Include="Source\Game\UI\UIRhythmJudgment.h" />
+    <ClInclude Include="Source\Nova\Collision\CollisionData.h" />
+    <ClInclude Include="Source\Nova\Collision\CollisionManager.h" />
+    <ClInclude Include="Source\Nova\Others\TimelineEditor.h" />
+    <ClInclude Include="External\nlohmann\ordered_map.hpp" />
+    <ClInclude Include="External\nlohmann\adl_serializer.hpp" />
+    <ClInclude Include="External\nlohmann\byte_container_with_subtype.hpp" />
+    <ClInclude Include="External\nlohmann\json.hpp" />
+    <ClInclude Include="External\nlohmann\json_fwd.hpp" />
+    <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley.hpp" />
+    <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
+    <ClInclude Include="External\nlohmann\detail\conversions\from_json.hpp" />
+    <ClInclude Include="External\nlohmann\detail\conversions\to_chars.hpp" />
+    <ClInclude Include="External\nlohmann\detail\conversions\to_json.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\binary_reader.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\input_adapters.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\json_sax.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\lexer.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\parser.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\position_t.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\internal_iterator.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\iter_impl.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\iteration_proxy.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\iterator_traits.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\json_reverse_iterator.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\primitive_iterator.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\call_std\begin.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\call_std\end.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\cpp_future.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\detected.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\identity_tag.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\is_sax.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\std_fs.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\type_traits.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\void_t.hpp" />
+    <ClInclude Include="External\nlohmann\detail\output\binary_writer.hpp" />
+    <ClInclude Include="External\nlohmann\detail\output\output_adapters.hpp" />
+    <ClInclude Include="External\nlohmann\detail\output\serializer.hpp" />
+    <ClInclude Include="External\nlohmann\detail\abi_macros.hpp" />
+    <ClInclude Include="External\nlohmann\detail\exceptions.hpp" />
+    <ClInclude Include="External\nlohmann\detail\hash.hpp" />
+    <ClInclude Include="External\nlohmann\detail\json_custom_base_class.hpp" />
+    <ClInclude Include="External\nlohmann\detail\json_pointer.hpp" />
+    <ClInclude Include="External\nlohmann\detail\json_ref.hpp" />
+    <ClInclude Include="External\nlohmann\detail\macro_scope.hpp" />
+    <ClInclude Include="External\nlohmann\detail\macro_unscope.hpp" />
+    <ClInclude Include="External\nlohmann\detail\string_concat.hpp" />
+    <ClInclude Include="External\nlohmann\detail\string_escape.hpp" />
+    <ClInclude Include="External\nlohmann\detail\string_utils.hpp" />
+    <ClInclude Include="External\nlohmann\detail\value_t.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DebugPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DebugVS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\FullscreenQuadPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\FullscreenQuadVs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GeometricPrimitivePs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GeometricPrimitiveVs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\LuminanceExtractionPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\ModelPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\ModelVs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\SpritePs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\SpriteVs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\StaticMeshPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\StaticMeshVs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\DronePS.hlsl">
+      <Filter>Game\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\CityPS.hlsl">
+      <Filter>Game\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\MonotonePS.hlsl">
+      <Filter>Game\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\BulletCoverPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelVS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\FinalPassPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GlowExtractionPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GaussianBlurDownsamplingPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GaussianBlurHorizontalPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GaussianBlurUpsamplingPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GaussianBlurVerticalPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelStaticBatchingVs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\SkymapPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\PlayerPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DecalPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DecalVs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\SpectrumPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\SpectrumCirclePS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Nova\Shaders\Debug.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\FullscreenQuad.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\GeometricPrimitive.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\Model.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\Sprite.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\StaticMesh.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\GltfModel.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\BidirectionalReflectanceDistributionFunction.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\ImageBasedLighting.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\Bloom.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\Decal.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\ProjectionMapping.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

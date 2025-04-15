@@ -1,0 +1,15 @@
+#pragma once
+
+class Enemy;
+
+//	é¿çsîªíË
+class JudgmentBase
+{
+public:
+	JudgmentBase(Enemy* enemy) :owner_(enemy) {}
+	virtual bool Judgment() = 0;
+
+protected:
+	Enemy* owner_;
+
+};

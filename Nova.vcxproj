@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0DDBE550-8551-4506-9A5A-4DD100C00C48}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Nova</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Groove</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>USE_IMGUI;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.\cereal-master\include;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.¥DirectXTK-main¥Inc</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>zlib-md.lib;libxml2-md.lib;libfbxsdk-md.lib;DirectXTK.lib;zlib-md.lib;libxml2-md.lib;libfbxsdk-md.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <AdditionalLibraryDirectories>$(VC_LibraryPath_x86)</AdditionalLibraryDirectories>
+    </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>.\External\Autodesk\FBX\FBX_SDK\2020.2\include;.\External\cereal-master\include;.\External\DirectXTK-main\Inc;.\External\Effekseer170e\include;.\External\nlohmann</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>.\External\Autodesk\FBX\FBX_SDK\2020.2\lib\vs2019\x64\debug;.\External\DirectXTK-main\Bin\Desktop_2019\x64\Debug;.\External\Effekseer170e\lib\vs2022\MD\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libfbxsdk-md.lib;zlib-md.lib;libxml2-md.lib;d3d11.lib;dxgi.lib;DirectXTK.lib;xinput.lib;Effekseerd.lib;EffekseerRendererDX11d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>Resources\Shader\%(Filename).cso</ObjectFileOutput>
+      <AssemblerOutput>AssemblyCode</AssemblerOutput>
+      <AssemblerOutputFile>Resources\Shader\%(Filename).cod</AssemblerOutputFile>
+      <HeaderFileOutput>
+      </HeaderFileOutput>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.\cereal-master\include;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.¥DirectXTK-main¥Inc</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib-md.lib;libxml2-md.lib;libfbxsdk-md.lib;DirectXTK.lib;zlib-md.lib;libxml2-md.lib;libfbxsdk-md.lib</AdditionalDependencies>
+    </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>.\External\cereal-master\include;.\External\DirectXTK-main\Inc;.\External\Autodesk\FBX\FBX_SDK\2020.2\include;.\External\Effekseer170e\include;.\External\nlohmann</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>.\External\Autodesk\FBX\FBX_SDK\2020.2\lib\vs2019\x64\release;.\External\DirectXTK-main\Bin\Desktop_2019\x64\Release;.\External\Effekseer170e\lib\vs2022\MD\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libfbxsdk-md.lib;zlib-md.lib;libxml2-md.lib;d3d11.lib;dxgi.lib;DirectXTK.lib;xinput.lib;Effekseerd.lib;EffekseerRendererDX11d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>Resources\Shader\%(Filename).cso</ObjectFileOutput>
+      <AssemblerOutput>AssemblyCode</AssemblerOutput>
+      <AssemblerOutputFile>Resources\Shader\%(Filename).cod</AssemblerOutputFile>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
+    <ClCompile Include="Source\Game\Rhythm.cpp" />
+    <ClCompile Include="Source\Game\DragonkinAction.cpp" />
+    <ClCompile Include="Source\Game\DragonkinJudgment.cpp" />
+    <ClCompile Include="Source\Game\UI\UIInstructions.cpp" />
+    <ClCompile Include="Source\Nova\AI\BehaviorData.cpp" />
+    <ClCompile Include="Source\Nova\AI\NodeBase.cpp" />
+    <ClCompile Include="Source\Nova\Audio\Audio.cpp" />
+    <ClCompile Include="Source\Nova\Audio\FadeXAPO.cpp" />
+    <ClCompile Include="Source\Nova\Collision\CollisionData.cpp" />
+    <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\Decal.cpp" />
+    <ClCompile Include="Source\Nova\Others\JudgeTime.cpp" />
+    <ClCompile Include="Source\Game\UI\UIHealth.cpp" />
+    <ClCompile Include="Source\Nova\Audio\AudioManager.cpp" />
+    <ClCompile Include="External\imgui\imgui.cpp" />
+    <ClCompile Include="External\imgui\ImGuiCtrl.cpp" />
+    <ClCompile Include="External\imgui\imgui_demo.cpp" />
+    <ClCompile Include="External\imgui\imgui_draw.cpp" />
+    <ClCompile Include="External\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="External\imgui\imgui_tables.cpp" />
+    <ClCompile Include="External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="External\MidiFile\Src\Binasc.cpp" />
+    <ClCompile Include="External\MidiFile\Src\MidiEvent.cpp" />
+    <ClCompile Include="External\MidiFile\Src\MidiEventList.cpp" />
+    <ClCompile Include="External\MidiFile\Src\MidiFile.cpp" />
+    <ClCompile Include="External\MidiFile\Src\MidiMessage.cpp" />
+    <ClCompile Include="External\MidiFile\Src\Options.cpp" />
+    <ClCompile Include="External\tinygltf-release\tiny_gltf.cc" />
+    <ClCompile Include="Source\Game\Bullet.cpp" />
+    <ClCompile Include="Source\Game\BulletCover.cpp" />
+    <ClCompile Include="Source\Game\BulletHorming.cpp" />
+    <ClCompile Include="Source\Game\BulletManager.cpp" />
+    <ClCompile Include="Source\Game\BulletStraight.cpp" />
+    <ClCompile Include="Source\Game\Character.cpp" />
+    <ClCompile Include="Source\Game\Dragonkin.cpp" />
+    <ClCompile Include="Source\Game\Drone.cpp" />
+    <ClCompile Include="Source\Game\DroneState.cpp" />
+    <ClCompile Include="Source\Game\Enemy.cpp" />
+    <ClCompile Include="Source\Game\EnemyManager.cpp" />
+    <ClCompile Include="Source\Game\GameState.cpp" />
+    <ClCompile Include="Source\Game\Player.cpp" />
+    <ClCompile Include="Source\Game\PlayerState.cpp" />
+    <ClCompile Include="Source\Game\Stage.cpp" />
+    <ClCompile Include="Source\Game\UI\UI.cpp" />
+    <ClCompile Include="Source\Nova\AI\BehaviorTree.cpp" />
+    <ClCompile Include="Source\Nova\AI\MetaAI.cpp" />
+    <ClCompile Include="Source\Nova\Audio\Audio3DSystem.cpp" />
+    <ClCompile Include="Source\Nova\Audio\AudioSource.cpp" />
+    <ClCompile Include="Source\Nova\Audio\AudioSource3D.cpp" />
+    <ClCompile Include="Source\Nova\Audio\Frequency.cpp" />
+    <ClCompile Include="Source\Nova\Audio\PitchShifter.cpp" />
+    <ClCompile Include="Source\Nova\Audio\WaveRead.cpp" />
+    <ClCompile Include="Source\Nova\Collision\Collision.cpp" />
+    <ClCompile Include="Source\Nova\Collision\CollisionMesh.cpp" />
+    <ClCompile Include="Source\Nova\Collision\Raycast.cpp" />
+    <ClCompile Include="Source\Nova\Core\Framework.cpp" />
+    <ClCompile Include="Source\Nova\Core\Main.cpp" />
+    <ClCompile Include="Source\Nova\Debug\DebugRenderer.cpp" />
+    <ClCompile Include="Source\Nova\Debug\SceneModelCheck.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\Camera.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\FrameBuffer.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\FullScreenQuad.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\Graphics.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\ShadowMap.cpp" />
+    <ClCompile Include="Source\Nova\Input\GamePad.cpp" />
+    <ClCompile Include="Source\Nova\Input\Input.cpp" />
+    <ClCompile Include="Source\Nova\Input\Microphone.cpp" />
+    <ClCompile Include="Source\Nova\Input\Mouse.cpp" />
+    <ClCompile Include="Source\Nova\Others\Transform.cpp" />
+    <ClCompile Include="Source\Nova\PostProcess\Bloom.cpp" />
+    <ClCompile Include="Source\Nova\Resources\Effect.cpp" />
+    <ClCompile Include="Source\Nova\Resources\EffectManager.cpp" />
+    <ClCompile Include="Source\Nova\Resources\GeometricPrimitive.cpp" />
+    <ClCompile Include="Source\Nova\Resources\GltfModel.cpp" />
+    <ClCompile Include="Source\Nova\Resources\GltfModelStaticBatching.cpp" />
+    <ClCompile Include="Source\Nova\Audio\Midi.cpp" />
+    <ClCompile Include="Source\Nova\Resources\Model.cpp" />
+    <ClCompile Include="Source\Nova\Resources\ResourceManager.cpp" />
+    <ClCompile Include="Source\Nova\Resources\Sprite.cpp" />
+    <ClCompile Include="Source\Nova\Resources\SpriteBatch.cpp" />
+    <ClCompile Include="Source\Nova\Resources\StaticMesh.cpp" />
+    <ClCompile Include="Source\Nova\Resources\Texture.cpp" />
+    <ClCompile Include="Source\Nova\Scenes\SceneDemo.cpp" />
+    <ClCompile Include="Source\Nova\Scenes\SceneGame.cpp" />
+    <ClCompile Include="Source\Nova\Scenes\SceneLoading.cpp" />
+    <ClCompile Include="Source\Nova\Scenes\SceneManager.cpp" />
+    <ClCompile Include="Source\Nova\Scenes\SceneTitle.cpp" />
+    <ClCompile Include="Source\Game\UI\UIManager.cpp" />
+    <ClCompile Include="Source\Game\TitleState.cpp" />
+    <ClCompile Include="Source\Game\UI\UITempo.cpp" />
+    <ClCompile Include="Source\Game\UI\UIRhythmJudgment.cpp" />
+    <ClCompile Include="Source\Nova\Others\TimelineEditor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="External\nlohmann\adl_serializer.hpp" />
+    <ClInclude Include="External\nlohmann\byte_container_with_subtype.hpp" />
+    <ClInclude Include="External\nlohmann\detail\abi_macros.hpp" />
+    <ClInclude Include="External\nlohmann\detail\conversions\from_json.hpp" />
+    <ClInclude Include="External\nlohmann\detail\conversions\to_chars.hpp" />
+    <ClInclude Include="External\nlohmann\detail\conversions\to_json.hpp" />
+    <ClInclude Include="External\nlohmann\detail\exceptions.hpp" />
+    <ClInclude Include="External\nlohmann\detail\hash.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\binary_reader.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\input_adapters.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\json_sax.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\lexer.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\parser.hpp" />
+    <ClInclude Include="External\nlohmann\detail\input\position_t.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\internal_iterator.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\iteration_proxy.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\iterator_traits.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\iter_impl.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\json_reverse_iterator.hpp" />
+    <ClInclude Include="External\nlohmann\detail\iterators\primitive_iterator.hpp" />
+    <ClInclude Include="External\nlohmann\detail\json_custom_base_class.hpp" />
+    <ClInclude Include="External\nlohmann\detail\json_pointer.hpp" />
+    <ClInclude Include="External\nlohmann\detail\json_ref.hpp" />
+    <ClInclude Include="External\nlohmann\detail\macro_scope.hpp" />
+    <ClInclude Include="External\nlohmann\detail\macro_unscope.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\call_std\begin.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\call_std\end.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\cpp_future.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\detected.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\identity_tag.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\is_sax.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\std_fs.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\type_traits.hpp" />
+    <ClInclude Include="External\nlohmann\detail\meta\void_t.hpp" />
+    <ClInclude Include="External\nlohmann\detail\output\binary_writer.hpp" />
+    <ClInclude Include="External\nlohmann\detail\output\output_adapters.hpp" />
+    <ClInclude Include="External\nlohmann\detail\output\serializer.hpp" />
+    <ClInclude Include="External\nlohmann\detail\string_concat.hpp" />
+    <ClInclude Include="External\nlohmann\detail\string_escape.hpp" />
+    <ClInclude Include="External\nlohmann\detail\string_utils.hpp" />
+    <ClInclude Include="External\nlohmann\detail\value_t.hpp" />
+    <ClInclude Include="External\nlohmann\json.hpp" />
+    <ClInclude Include="External\nlohmann\json_fwd.hpp" />
+    <ClInclude Include="External\nlohmann\ordered_map.hpp" />
+    <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley.hpp" />
+    <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
+    <ClInclude Include="Source\Game\Rhythm.h" />
+    <ClInclude Include="Source\Game\AudioResourceTable.h" />
+    <ClInclude Include="Source\Game\DragonkinAction.h" />
+    <ClInclude Include="Source\Game\DragonkinJudgment.h" />
+    <ClInclude Include="Source\Game\UI\UIInstructions.h" />
+    <ClInclude Include="Source\Nova\AI\ActionBase.h" />
+    <ClInclude Include="Source\Nova\AI\BehaviorData.h" />
+    <ClInclude Include="Source\Nova\AI\JudgmentBase.h" />
+    <ClInclude Include="Source\Nova\AI\NodeBase.h" />
+    <ClInclude Include="Source\Nova\Audio\Audio.h" />
+    <ClInclude Include="Source\Nova\Audio\FadeXAPO.h" />
+    <ClInclude Include="Source\Nova\Collision\CollisionData.h" />
+    <ClInclude Include="Source\Nova\Collision\CollisionManager.h" />
+    <ClInclude Include="Source\Nova\Graphics\Decal.h" />
+    <ClInclude Include="Source\Nova\Others\JudgeTime.h" />
+    <ClInclude Include="Source\Game\UI\UIHealth.h" />
+    <ClInclude Include="Source\Nova\Audio\AudioManager.h" />
+    <ClInclude Include="External\imgui\imconfig.h" />
+    <ClInclude Include="External\imgui\imgui.h" />
+    <ClInclude Include="External\imgui\ImGuiCtrl.h" />
+    <ClInclude Include="External\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="External\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="External\imgui\imgui_internal.h" />
+    <ClInclude Include="External\imgui\imstb_rectpack.h" />
+    <ClInclude Include="External\imgui\imstb_textedit.h" />
+    <ClInclude Include="External\imgui\imstb_truetype.h" />
+    <ClInclude Include="External\MidiFile\include\Binasc.h" />
+    <ClInclude Include="External\MidiFile\include\MidiEvent.h" />
+    <ClInclude Include="External\MidiFile\include\MidiEventList.h" />
+    <ClInclude Include="External\MidiFile\include\MidiFile.h" />
+    <ClInclude Include="External\MidiFile\include\MidiMessage.h" />
+    <ClInclude Include="External\MidiFile\include\Options.h" />
+    <ClInclude Include="External\tinygltf-release\tiny_gltf.h" />
+    <ClInclude Include="Source\Game\Bullet.h" />
+    <ClInclude Include="Source\Game\BulletCover.h" />
+    <ClInclude Include="Source\Game\BulletHorming.h" />
+    <ClInclude Include="Source\Game\BulletManager.h" />
+    <ClInclude Include="Source\Game\BulletStraight.h" />
+    <ClInclude Include="Source\Game\Character.h" />
+    <ClInclude Include="Source\Game\Dragonkin.h" />
+    <ClInclude Include="Source\Game\Drone.h" />
+    <ClInclude Include="Source\Game\DroneState.h" />
+    <ClInclude Include="Source\Game\Enemy.h" />
+    <ClInclude Include="Source\Game\EnemyManager.h" />
+    <ClInclude Include="Source\Game\GameState.h" />
+    <ClInclude Include="Source\Game\Player.h" />
+    <ClInclude Include="Source\Game\PlayerState.h" />
+    <ClInclude Include="Source\Game\Stage.h" />
+    <ClInclude Include="Source\Game\UI\UI.h" />
+    <ClInclude Include="Source\Game\UI\UIManager.h" />
+    <ClInclude Include="Source\Nova\AI\BehaviorTree.h" />
+    <ClInclude Include="Source\Nova\AI\MetaAI.h" />
+    <ClInclude Include="Source\Nova\AI\State.h" />
+    <ClInclude Include="Source\Nova\AI\StateMachine.h" />
+    <ClInclude Include="Source\Nova\AI\Telegram.h" />
+    <ClInclude Include="Source\Nova\Audio\Audio3DSystem.h" />
+    <ClInclude Include="Source\Nova\Audio\AudioSource.h" />
+    <ClInclude Include="Source\Nova\Audio\AudioSource3D.h" />
+    <ClInclude Include="Source\Nova\Audio\AudioStructures.h" />
+    <ClInclude Include="Source\Nova\Audio\Frequency.h" />
+    <ClInclude Include="Source\Nova\Audio\PitchShifter.h" />
+    <ClInclude Include="Source\Nova\Audio\WaveRead.h" />
+    <ClInclude Include="Source\Nova\Collision\Collision.h" />
+    <ClInclude Include="Source\Nova\Collision\CollisionMesh.h" />
+    <ClInclude Include="Source\Nova\Collision\Raycast.h" />
+    <ClInclude Include="Source\Nova\Core\Framework.h" />
+    <ClInclude Include="Source\Nova\Core\HighResolutionTimer.h" />
+    <ClInclude Include="Source\Nova\Debug\DebugRenderer.h" />
+    <ClInclude Include="Source\Nova\Debug\SceneModelCheck.h" />
+    <ClInclude Include="Source\Nova\Graphics\Camera.h" />
+    <ClInclude Include="Source\Nova\Graphics\FrameBuffer.h" />
+    <ClInclude Include="Source\Nova\Graphics\FullScreenQuad.h" />
+    <ClInclude Include="Source\Nova\Graphics\Graphics.h" />
+    <ClInclude Include="Source\Nova\Graphics\Shader.h" />
+    <ClInclude Include="Source\Nova\Graphics\ShadowMap.h" />
+    <ClInclude Include="Source\Nova\Input\GamePad.h" />
+    <ClInclude Include="Source\Nova\Input\Input.h" />
+    <ClInclude Include="Source\Nova\Input\Microphone.h" />
+    <ClInclude Include="Source\Nova\Input\Mouse.h" />
+    <ClInclude Include="Source\Nova\Others\Converter.h" />
+    <ClInclude Include="Source\Nova\Others\Easing.h" />
+    <ClInclude Include="Source\Nova\Others\MathHelper.h" />
+    <ClInclude Include="Source\Nova\Others\Misc.h" />
+    <ClInclude Include="Source\Nova\Others\Transform.h" />
+    <ClInclude Include="Source\Nova\PostProcess\Bloom.h" />
+    <ClInclude Include="Source\Nova\Resources\Effect.h" />
+    <ClInclude Include="Source\Nova\Resources\EffectManager.h" />
+    <ClInclude Include="Source\Nova\Resources\GeometricPrimitive.h" />
+    <ClInclude Include="Source\Nova\Resources\GltfModel.h" />
+    <ClInclude Include="Source\Nova\Resources\GltfModelStaticBatching.h" />
+    <ClInclude Include="Source\Nova\Audio\Midi.h" />
+    <ClInclude Include="Source\Nova\Resources\Model.h" />
+    <ClInclude Include="Source\Nova\Resources\ResourceManager.h" />
+    <ClInclude Include="Source\Nova\Resources\Sprite.h" />
+    <ClInclude Include="Source\Nova\Resources\SpriteBatch.h" />
+    <ClInclude Include="Source\Nova\Resources\StaticMesh.h" />
+    <ClInclude Include="Source\Nova\Resources\Texture.h" />
+    <ClInclude Include="Source\Nova\Scenes\Scene.h" />
+    <ClInclude Include="Source\Nova\Scenes\SceneDemo.h" />
+    <ClInclude Include="Source\Nova\Scenes\SceneGame.h" />
+    <ClInclude Include="Source\Nova\Scenes\SceneLoading.h" />
+    <ClInclude Include="Source\Nova\Scenes\SceneManager.h" />
+    <ClInclude Include="Source\Nova\Scenes\SceneTitle.h" />
+    <ClInclude Include="Source\Game\TitleState.h" />
+    <ClInclude Include="Source\Game\UI\UITempo.h" />
+    <ClInclude Include="Source\Game\UI\UIRhythmJudgment.h" />
+    <ClInclude Include="Source\Nova\Others\TimelineEditor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\Game\Shaders\BulletCoverPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\CityPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\DronePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\MonotonePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\PlayerPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\SpectrumCirclePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\SpectrumPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DebugPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DebugVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DecalPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DecalVs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\FinalPassPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\FullscreenQuadPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\FullscreenQuadVs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GaussianBlurDownsamplingPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GaussianBlurHorizontalPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GaussianBlurUpsamplingPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GaussianBlurVerticalPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GeometricPrimitivePs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GeometricPrimitiveVs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GlowExtractionPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelStaticBatchingVs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\LuminanceExtractionPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\ModelPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\ModelVs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\SkymapPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\SpritePs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\SpriteVs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\StaticMeshPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\StaticMeshVs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Nova\Shaders\BidirectionalReflectanceDistributionFunction.hlsli" />
+    <None Include="Source\Nova\Shaders\Bloom.hlsli" />
+    <None Include="Source\Nova\Shaders\Debug.hlsli" />
+    <None Include="Source\Nova\Shaders\Decal.hlsli" />
+    <None Include="Source\Nova\Shaders\FullscreenQuad.hlsli" />
+    <None Include="Source\Nova\Shaders\GeometricPrimitive.hlsli" />
+    <None Include="Source\Nova\Shaders\GltfModel.hlsli" />
+    <None Include="Source\Nova\Shaders\ImageBasedLighting.hlsli" />
+    <None Include="Source\Nova\Shaders\Model.hlsli" />
+    <None Include="Source\Nova\Shaders\ProjectionMapping.hlsli" />
+    <None Include="Source\Nova\Shaders\Sprite.hlsli" />
+    <None Include="Source\Nova\Shaders\StaticMesh.hlsli" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
