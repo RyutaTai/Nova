@@ -199,6 +199,7 @@
     <ClCompile Include="Source\Game\DragonkinAction.cpp" />
     <ClCompile Include="Source\Game\DragonkinJudgment.cpp" />
     <ClCompile Include="Source\Game\UI\UIInstructions.cpp" />
+    <ClCompile Include="Source\Game\UI\UIRank.cpp" />
     <ClCompile Include="Source\Nova\AI\BehaviorData.cpp" />
     <ClCompile Include="Source\Nova\AI\NodeBase.cpp" />
     <ClCompile Include="Source\Nova\Audio\Audio.cpp" />
@@ -337,10 +338,10 @@
     <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
     <ClInclude Include="Source\Game\Rhythm.h" />
-    <ClInclude Include="Source\Game\AudioResourceTable.h" />
     <ClInclude Include="Source\Game\DragonkinAction.h" />
     <ClInclude Include="Source\Game\DragonkinJudgment.h" />
     <ClInclude Include="Source\Game\UI\UIInstructions.h" />
+    <ClInclude Include="Source\Game\UI\UIRank.h" />
     <ClInclude Include="Source\Nova\AI\ActionBase.h" />
     <ClInclude Include="Source\Nova\AI\BehaviorData.h" />
     <ClInclude Include="Source\Nova\AI\JudgmentBase.h" />
@@ -479,6 +480,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\Game\Shaders\SpectrumPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\UIRankPs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>

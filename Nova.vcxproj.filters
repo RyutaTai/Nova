@@ -261,6 +261,7 @@
     <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp" />
     <ClCompile Include="Source\Nova\Others\TimelineEditor.cpp" />
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
+    <ClCompile Include="Source\Game\UI\UIRank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h">
@@ -486,7 +487,6 @@
     <ClInclude Include="Source\Nova\AI\BehaviorData.h" />
     <ClInclude Include="Source\Nova\AI\JudgmentBase.h" />
     <ClInclude Include="Source\Nova\AI\NodeBase.h" />
-    <ClInclude Include="Source\Game\AudioResourceTable.h" />
     <ClInclude Include="Source\Game\Rhythm.h" />
     <ClInclude Include="Source\Nova\Audio\Audio.h" />
     <ClInclude Include="Source\Game\UI\UIRhythmJudgment.h" />
@@ -539,6 +539,7 @@
     <ClInclude Include="External\nlohmann\detail\string_escape.hpp" />
     <ClInclude Include="External\nlohmann\detail\string_utils.hpp" />
     <ClInclude Include="External\nlohmann\detail\value_t.hpp" />
+    <ClInclude Include="Source\Game\UI\UIRank.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
@@ -638,6 +639,9 @@
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Source\Game\Shaders\SpectrumCirclePS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Game\Shaders\UIRankPs.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
   </ItemGroup>

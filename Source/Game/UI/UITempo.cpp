@@ -1,31 +1,33 @@
 #include "UITempo.h"
 
-#include "../../../External/imgui/imgui.h"
 #include "../../Nova/Input/Input.h"
 #include "../Rhythm.h"
+#include "../UI/UIRhythmJudgment.h"
+#include "../../../External/imgui/imgui.h"
 
 UITempo::UITempo()
 	:UI(UIManager::UIType::Tempo)
 {
-	//	真ん中の円
+	//	中心円
 	center_ = std::make_unique<Sprite>(L"./Resources/Image/TempoUI.png");
-	center_->GetTransform()->CutOutX(-300.0f);
-	center_->GetTransform()->SetPivot(0.5f, 0.5f);
 	center_->GetTransform()->SetTexPosX(0.0f);
+	center_->GetTransform()->CutOutX(100.0f);
+	center_->GetTransform()->SetPivot(0.5f, 0.5f);
 	center_->GetTransform()->SetPosition(962, 905);
 
 	//	中心円のY座標
 	float centerPosY = center_->GetTransform()->GetPositionY();
 
 	//	両サイドの半円
-	for (int index = 0; index < SemicircleMax; ++index)
+	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	半円生成
 		semicircles_[index] = std::make_unique<Semicircle>();
 
-		//	range_設定
-		float RangePerOne = semicircleRangeMax_ / SemicircleMax;	//	一つ当たりのrange_
-		float range = RangePerOne * index;
+		//	中心円からの距離設定して位置を決める
+		//	中心円からの最大距離を半円の個数で割って1つ分の距離を算出し、等間隔に配置する
+		rangePerOne_ = semicircleRangeMax_ / SemicircleMax_;
+		float range = rangePerOne_ * index;
 		semicircles_[index]->range_ = range;
 
 		//	左
@@ -47,11 +49,14 @@ UITempo::UITempo()
 		semicircles_[index]->right_->GetTransform()->SetTexSizeX(100.0f);
 		semicircles_[index]->right_->GetTransform()->SetSizeX(100.0f);
 		semicircles_[index]->right_->GetTransform()->SetDefaultSize(100.0f, 100.0f);
+
+		//	判定済みフラグ初期化
+		semicircles_[index]->isJudged_ = false;
+
 	}
 
 	//	表示フラグをtrueにしておく。ビューボタンで切り替えできる
 	SetIsVisible(true);
-	//SetDrawFlag(false);
 
 }
 
@@ -88,29 +93,39 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 {
 	float centerPosX = center_->GetTransform()->GetPositionX();	//	中心円のX座標
 	
-	for (int index = 0; index < SemicircleMax; ++index)
+	float totalRange = 0.0f;
+	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	range更新
-		semicircles_[index]->range_ -= moveSpeed_ * moveFactor_ * elapsedTime;
-		if (semicircles_[index]->range_ <= semicircleRangeMin_)	//	中心円と重なったら最大距離にリセット
+		semicircles_[index]->range_ -= (rangePerOne_ / quarterNoteDuration_) * elapsedTime;
+		//semicircles_[index]->range_ -= moveSpeed_ * moveFactor_ * elapsedTime;
+
+			//	中心円と重なったら最大距離にリセット
+		if (semicircles_[index]->range_ <= semicircleRangeMin_)
 		{
 			semicircles_[index]->range_ = semicircleRangeMax_;
 			centerCircleAnimFlag_ = true;
+
+			//	判定済みフラグをリセット
+			if (semicircles_[index]->isJudged_)semicircles_[index]->isJudged_ = false;
 		}
 
+		//	更新したrangeを位置に反映
 		float range = semicircles_[index]->range_;
-
-		//	位置更新
 		semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - range);
 		semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + range);
-	}
 
+		//	合計距離更新
+		totalRange += semicircles_[index]->range_;
+
+	}
+	totalRange_ = totalRange;
 }
 
 //	UIのスケール更新処理
 void UITempo::UpdateScale(const float& elapsedTime)
 {
-	for (int index = 0; index < SemicircleMax; ++index)
+	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	半円更新
 		float range = semicircles_[index]->range_;
@@ -125,7 +140,9 @@ void UITempo::UpdateScale(const float& elapsedTime)
 void UITempo::UpdateMoveFactor()
 {
 	//	bpmに合わせた速度の設定
-	moveFactor_ = (Rhythm::Instance().GetBPM() / 120.0f);
+	//moveFactor_ = 1.0f / Rhythm::Instance().GetBPM();
+	//moveFactor_ = (Rhythm::Instance().GetBPM() / 120.0f);
+	moveFactor_ = Rhythm::Instance().GetBPM();
 
 }
 
@@ -146,12 +163,86 @@ void UITempo::UpdateCenterCircleAnimation()
 
 }
 
+//	タイミング判定
+bool UITempo::JudgeRythm()
+{
+	//	中心円に一番近い半円の番号
+	int nearSemicircleIndex = FindNearSemicircleIndex();
+	
+	//	入力タイミングが判定範囲に入っているか
+	if (semicircles_[nearSemicircleIndex]->range_ < perfectRange_)		//	Perfect
+	{
+		//  判定文字UIを生成
+		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
+		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Perfect);
+		uiRhythm->Initialize();
+		uiRhythm->SetIsVisible(true);
+
+		//	判定フラグをtrueにしてコンボ加算
+		semicircles_[nearSemicircleIndex]->isJudged_ = true;
+		Rhythm::Instance().AddComboCount(1);
+
+		return true;
+
+	}
+	else if (semicircles_[nearSemicircleIndex]->range_ < goodRange_)	//	Good
+	{
+		//  判定文字UIを生成
+		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
+		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Good);
+		uiRhythm->Initialize();
+		uiRhythm->SetIsVisible(true);
+
+		//	判定フラグをtrueにしてコンボ加算
+		semicircles_[nearSemicircleIndex]->isJudged_ = true;
+		Rhythm::Instance().AddComboCount(1);
+
+		return true;
+	}
+	else
+	{
+		//  判定文字UIを生成
+		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
+		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Miss);
+		uiRhythm->Initialize();
+		uiRhythm->SetIsVisible(true);
+
+		//	コンボ数リセット
+		Rhythm::Instance().SetComboCount(0);
+
+		return false;
+	}
+
+	return false;
+}
+
+//	中心円に一番近い半円の番号を見つける
+int UITempo::FindNearSemicircleIndex()
+{
+	float nearRange = FLT_MAX;			//	中心円に一番近い半円の最短距離
+	int nearSemicircleIndex = INT_MAX;	//	中心円に一番近い半円の番号
+
+	for (int i = 0; i < SemicircleMax_; ++i)
+	{
+		//	前回より中心円に近い半円があれば、最短距離と番号を更新する
+		if (nearRange > semicircles_[i]->range_)
+		{
+			nearSemicircleIndex = i;
+			nearRange = semicircles_[i]->range_;
+		}
+	}
+	return nearSemicircleIndex;
+}
+
 //	描画処理
 void UITempo::Render()
 {
 	center_->Render();
-	for (int index = 0; index < SemicircleMax; ++index)
+	for (int index = 0; index < SemicircleMax_; ++index)
 	{
+		//	判定済みなら描画しない
+		if (semicircles_[index]->isJudged_)continue;
+
 		semicircles_[index]->left_->Render();
 		semicircles_[index]->right_->Render();
 	}
@@ -164,18 +255,30 @@ void UITempo::DrawDebug()
 		UI::DrawDebug();
 		float bpm = Rhythm::Instance().GetBPM();
 		ImGui::DragFloat("BPM", &bpm, 0.1f);
-		
+		ImGui::DragFloat("QuarterNoteDuration", &quarterNoteDuration_);	
+
 		//	描画フラグ
 		ImGui::Checkbox("IsVisible", &isVisible_);
 		
-		ImGui::Text("Center");								//	中心の円
+		ImGui::Text("----- Center -----");
 		ImGui::DragInt("animChangeThreshold_", &animChangeThreshold_);
+
+		ImGui::Text("----- Range -----");
+		ImGui::DragFloat("RangePerOne", &rangePerOne_);
+		ImGui::DragFloat("TotalRange", &totalRange_);
 		ImGui::DragFloat("RangeMax", &semicircleRangeMax_);
 		ImGui::DragFloat("RangeMin", &semicircleRangeMin_);
+
+		//	判定範囲
+		ImGui::Text("----- JudgeRange -----");
+		ImGui::DragFloat("GoodRange", &goodRange_, 0.1f);
+
 		center_->DrawDebug();
 
+		ImGui::Text("----- Move -----");
 		ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.1f);	//	半円が移動する速さ
 		ImGui::DragFloat("MoveFactor", &moveFactor_, 0.1f);	//	半円が移動する速さの倍率
+
 		if (ImGui::TreeNode("Semi0"))
 		{
 			ImGui::PushID(static_cast<int>(Side::Left));

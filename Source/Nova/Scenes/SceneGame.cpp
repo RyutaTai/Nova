@@ -16,6 +16,7 @@
 #include "../../Game/UI/UIHealth.h"
 #include "../../Game/UI/UIInstructions.h"
 #include "../../Game/UI/UITempo.h"
+#include "../../Game/UI/UIRank.h"
 #include "../../Game/Rhythm.h"
 #include "../Collision/CollisionManager.h"
 
@@ -45,6 +46,9 @@ void SceneGame::Initialize()
 	UIHealth*			uiHealth		= new UIHealth();
 	//UIInstructions* uiInstructions	= new UIInstructions();
 	UITempo*			uiTempo			= new UITempo();
+	UIRank*				uiRank			= new UIRank();
+	UIManager::Instance().RegisterUITempo(uiTempo);
+	UIManager::Instance().RegisterUIRank(uiRank);
 	UIManager::Instance().Initialize();					//	“o˜^‚µI‚í‚Á‚Ä‚©‚ç‰Šú‰»ˆ—‚ğ‚·‚é
 
 	/* ----- RhythmƒNƒ‰ƒX‰Šú‰» ----- */

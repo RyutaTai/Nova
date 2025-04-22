@@ -43,9 +43,36 @@ void UIManager::Update(const float& elapsedTime)
 	}
 }
 
+//	UI“o˜^
 void UIManager::Register(UI* ui)
 {
 	generates_.insert(ui);
+}
+
+//	UITempo“o˜^
+void UIManager::RegisterUITempo(UITempo* uiTempo)
+{
+	uiTempo_ = uiTempo;
+}
+
+//	UITempo‚ğæ“¾
+UITempo* UIManager::GetUITempo()
+{
+	_ASSERT_EXPR(uiTempo_ != nullptr, L"uiTempo_ is nullptr.");
+	return uiTempo_;
+}
+
+//	ƒ‰ƒ“ƒNUI“o˜^
+void UIManager::RegisterUIRank(UIRank* uiRank)
+{
+	uiRank_ = uiRank;
+}
+
+//	ƒ‰ƒ“ƒNUIæ“¾
+UIRank* UIManager::GetUIRank()
+{
+	_ASSERT_EXPR(uiRank_ != nullptr, L"uiRank_ is nullptr.");
+	return uiRank_;
 }
 
 //	UIíœ

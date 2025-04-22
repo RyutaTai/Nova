@@ -5,6 +5,8 @@
 #include "../Nova/Core/Framework.h"
 #include "../Nova/Others/MathHelper.h"
 #include "../Nova/Collision/Collision.h"
+#include "../Game/UI/UIManager.h"
+#include "../Game/UI/UITempo.h"
 #include "PlayerState.h"
 #include "Stage.h"
 #include "EnemyManager.h"
@@ -32,10 +34,12 @@ Player::Player()
 	stateMachine_.reset(new StateMachine<State<Player>>());
 	stateMachine_->RegisterState(new PlayerState::IdleState(this));		//	待機
 	stateMachine_->RegisterState(new PlayerState::MoveState(this));		//	移動
-	stateMachine_->RegisterState(new PlayerState::ComboOne1(this));		//	コンボ0_1
-	stateMachine_->RegisterState(new PlayerState::ComboOne2(this));		//	コンボ0_2
-	stateMachine_->RegisterState(new PlayerState::ComboOne3(this));		//	コンボ0_3
-	stateMachine_->RegisterState(new PlayerState::ComboOne4(this));		//	コンボ0_4
+	stateMachine_->RegisterState(new PlayerState::ComboOne1(this));		//	コンボ1_1
+	stateMachine_->RegisterState(new PlayerState::ComboOne2(this));		//	コンボ1_2
+	stateMachine_->RegisterState(new PlayerState::ComboOne3(this));		//	コンボ1_3
+	stateMachine_->RegisterState(new PlayerState::ComboOne4(this));		//	コンボ1_4
+	stateMachine_->RegisterState(new PlayerState::ComboTwo1(this));		//	コンボ2_1
+	stateMachine_->RegisterState(new PlayerState::ComboTwo2(this));		//	コンボ2_2
 	stateMachine_->RegisterState(new PlayerState::DodgeState(this));	//	回避
 	stateMachine_->RegisterState(new PlayerState::GetUpState(this));	//	起き上がり
 	stateMachine_->RegisterState(new PlayerState::DamageState(this));	//	ダメージ
@@ -915,9 +919,8 @@ void Player::ChangeState(const StateType& state)
 void Player::ChangeDodgeState()
 {
 	if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_B/*Xキー*/)
-	//if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_Y/*Vキー*/)
 	{
-
+		UIManager::Instance().GetUITempo()->JudgeRythm();
 		ChangeState(Player::StateType::Dodge);
 	}
 }
@@ -936,6 +939,7 @@ void Player::DrawStateStr()
 	{
 		"Idle","Move",
 		"ComboOne1","ComboOne2","ComboOne3","ComboOne4",
+		"ComboTwo1","ComboTwo2",
 		"Dodge","GetUp","Damage","Flinch","Death"
 	};
 

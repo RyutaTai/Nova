@@ -1,13 +1,14 @@
 #pragma once
 
 #include "UI.h"
+#include "UITempo.h"
 #include "../../Game/Rhythm.h"
 
 //	”»’è•¶ŽšUI
 class UIRhythmJudgment :public UI
 {
 public:
-	UIRhythmJudgment(const Rhythm::JudgmentType& judgmentType);
+	UIRhythmJudgment(const UITempo::JudgmentType& judgmentType);
 	~UIRhythmJudgment() {}
 
 	void Initialize()override;
@@ -15,7 +16,7 @@ public:
 	void Render()override;
 	void DrawDebug()override;
 
-	void TextSetting(const Rhythm::JudgmentType& type);
+	void TextSetting(const UITempo::JudgmentType& type);
 
 	void SetIsVisible(const bool& isVisible)override;
 

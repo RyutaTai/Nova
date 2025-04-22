@@ -3,8 +3,6 @@
 #include "../../Game/UI/UIManager.h"
 #include "../../Nova/Resources/Sprite.h"
 
-//class UIManager;
-
 class UI
 {
 public:
@@ -16,7 +14,7 @@ public:
 	virtual void Render();
 	virtual void DrawDebug();
 
-	virtual void SetIsVisible(const bool& isVisible) = 0;
+	virtual void SetIsVisible(const bool& isVisible) { isVisible_ = isVisible; }
 	bool GetIsVisible() { return isVisible_; }
 
 	const UIManager::UIType GetUIType() { return type_; }

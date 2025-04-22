@@ -115,7 +115,7 @@ public:
 		deltaTime_ = (thisTime_ - lastTime_) * secondsPerCount_;
 		if (deltaTime_ > 1.0f)
 		{
-			deltaTime_ = 1.0f;
+			deltaTime_ = 0.0f;
 		}
 
 		// Prepare for next frame.

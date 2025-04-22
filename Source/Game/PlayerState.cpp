@@ -6,6 +6,8 @@
 #include "BulletManager.h"
 #include "EnemyManager.h"
 #include "Rhythm.h"
+#include "UI/UIManager.h"
+#include "UI/UITempo.h"
 #include "../Nova/Debug/DebugRenderer.h"
 #include "../Nova/Graphics/Graphics.h"
 #include "../Nova/Collision/Collision.h"
@@ -50,7 +52,16 @@ namespace PlayerState
 			owner_->ChangeState(Player::StateType::ComboOne1);
 
 			//	リズム判定処理
-			Rhythm::Instance().GetJudgmentType(Rhythm::Instance().GetCurrentMidiTime());
+			UIManager::Instance().GetUITempo()->JudgeRythm();
+
+			return;
+		}
+		else if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_X/*Cキー*/)
+		{
+			owner_->ChangeState(Player::StateType::ComboTwo1);
+
+			//	リズム判定処理
+			UIManager::Instance().GetUITempo()->JudgeRythm();
 			return;
 		}
 
@@ -120,7 +131,15 @@ namespace PlayerState
 			owner_->ChangeState(Player::StateType::ComboOne1);
 
 			//	リズム判定処理
-			Rhythm::Instance().GetJudgmentType(Rhythm::Instance().GetCurrentMidiTime());
+			UIManager::Instance().GetUITempo()->JudgeRythm();
+			return;
+		}
+		else if(Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_X/*Cキー*/)
+		{
+			owner_->ChangeState(Player::StateType::ComboTwo1);
+
+			//	リズム判定処理
+			UIManager::Instance().GetUITempo()->JudgeRythm();
 			return;
 		}
 
@@ -191,7 +210,7 @@ namespace PlayerState
 	}
 }
 
-//	コンボ01_1(右パンチ)
+//	コンボ1_1(右パンチ)
 namespace PlayerState
 {
 	void ComboOne1::Initialize()
@@ -253,7 +272,7 @@ namespace PlayerState
 		if (JudgeInput(cancellationTime_))
 		{
 			//	リズム判定処理(missならreturn)
-			if (Rhythm::Instance().GetJudgmentType(Rhythm::Instance().GetCurrentMidiTime()) == Rhythm::JudgmentType::Miss)
+			if (UIManager::Instance().GetUITempo()->JudgeRythm() == false)
 				return;
 
 			//	miss以外なら次のステートへ遷移
@@ -349,7 +368,7 @@ namespace PlayerState
 
 }
 
-//	コンボ01_2
+//	コンボ1_2
 namespace PlayerState
 {
 	void ComboOne2::Initialize()
@@ -415,7 +434,7 @@ namespace PlayerState
 		if (JudgeInput(cancellationTime_))	//	入力判定がtrueならコンボを進める
 		{
 			//	リズム判定処理(missならreturn)
-			if (Rhythm::Instance().GetJudgmentType(Rhythm::Instance().GetCurrentMidiTime()) == Rhythm::JudgmentType::Miss)
+			if (UIManager::Instance().GetUITempo()->JudgeRythm() == false)
 				return;
 
 			//	次のステートへ遷移
@@ -513,7 +532,7 @@ namespace PlayerState
 
 }
 
-//	コンボ01_3
+//	コンボ1_3
 namespace PlayerState
 {
 	void ComboOne3::Initialize()
@@ -581,7 +600,7 @@ namespace PlayerState
 		if (JudgeInput(cancellationTime_))	//	入力判定がtrueなら
 		{
 			//	リズム判定処理(missならreturn)
-			if (Rhythm::Instance().GetJudgmentType(Rhythm::Instance().GetCurrentMidiTime()) == Rhythm::JudgmentType::Miss)
+			if (UIManager::Instance().GetUITempo()->JudgeRythm() == false)
 				return;
 
 			//	次のステートへ遷移
@@ -661,7 +680,7 @@ namespace PlayerState
 
 }
 
-//	コンボ01_4
+//	コンボ1_4
 namespace PlayerState
 {
 	void ComboOne4::Initialize()
@@ -692,7 +711,7 @@ namespace PlayerState
 		//	リズム判定をとって判定文字を出すため
 		if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_A/*Zキー*/)
 		{
-			Rhythm::Instance().GetJudgmentType(Rhythm::Instance().GetCurrentMidiTime());
+			UIManager::Instance().GetUITempo()->JudgeRythm();
 		}
 
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
@@ -782,6 +801,108 @@ namespace PlayerState
 			ImGui::DragFloat("CancelTimeMin", &cancellationTimeMax);
 			cancellationTime_.SetJudgeTime(cancellationTimeMin, cancellationTimeMax);
 
+			ImGui::TreePop();
+		}
+	}
+}
+
+//	コンボ2_1
+namespace PlayerState
+{
+	void ComboTwo1::Initialize()
+	{
+		//	アニメーションセット
+		owner_->PlayAnimation(Player::AnimationType::Execution01, false, 0.0f);
+		owner_->SetAnimationSpeed(1.0f);
+
+		animJudgeTime_ = {};
+		cancellationTime_ = {};
+		acceptInputFrame_ = 0.0f;
+
+		inputSucessFlag_ = false;
+
+	}
+
+	void ComboTwo1::Update(const float& elapsedTime)
+	{
+		//	ステート遷移を判断
+		DetermineStateTransition(elapsedTime);
+	}
+
+	//	ステートの遷移を判断
+	void ComboTwo1::DetermineStateTransition(const float& elapsedTime)
+	{
+		//	1撃目が終わっていなければステート遷移しない
+		if (owner_->GetCurrentAnimationSeconds() < playAnimDuration_)return;
+
+		//	入力に成功していたら２撃目へ遷移
+		if (inputSucessFlag_)owner_->ChangeState(Player::StateType::ComboTwo2);
+		//	待機ステートへ遷移
+		else owner_->ChangeState(Player::StateType::Idle);
+
+	}
+
+	void ComboTwo1::Finalize()
+	{
+
+	}
+
+	void ComboTwo1::DrawDebug()
+	{
+		if (ImGui::TreeNode("ComboTwo1 State"))
+		{
+			ImGui::Checkbox("InputSuccessFlag", &inputSucessFlag_);
+			ImGui::DragFloat("PlayAnimDuration", &playAnimDuration_, 0.01f);
+
+			ImGui::TreePop();
+		}
+	}
+
+}
+
+//	コンボ2_2
+namespace PlayerState
+{
+	void ComboTwo2::Initialize()
+	{
+		//	アニメーションセット
+		owner_->SetAnimationSpeed(1.0f);
+
+		animJudgeTime_ = {};
+		cancellationTime_ = {};
+		acceptInputFrame_ = 0.0f;
+	}
+
+	void ComboTwo2::Update(const float& elapsedTime)
+	{
+		//	ステート遷移を判断
+		DetermineStateTransition(elapsedTime);
+	}
+
+	//	ステートの遷移を判断
+	void ComboTwo2::DetermineStateTransition(const float& elapsedTime)
+	{
+		//	アニメーションが終了したら待機ステートへ遷移
+		if (owner_->IsPlayAnimation() == false)
+		{
+			owner_->ChangeState(Player::StateType::Idle);
+
+			return;
+		}
+
+		//	回避ステートへも遷移できるようにする
+		owner_->ChangeDodgeState();
+	}
+
+	void ComboTwo2::Finalize()
+	{
+
+	}
+
+	void ComboTwo2::DrawDebug()
+	{
+		if (ImGui::TreeNode("ComboTwo2 State"))
+		{
 			ImGui::TreePop();
 		}
 	}

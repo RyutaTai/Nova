@@ -12,7 +12,14 @@
 
 class Sprite
 {
-public:	// 構造体
+public:	
+	struct InitInfo
+	{
+		std::string psFilename_ = {};
+		std::string vsFilename_ = {};
+	};
+	
+	// 構造体
 	struct SpriteTransform
 	{
 	public:
@@ -58,6 +65,8 @@ public:	// 構造体
 		void SetTexPos(const float& x, const float& y) { texPos_ = { x, y }; }
 		void SetTexPosX(const float& x) { texPos_.x = x; }
 		void SetTexPosY(const float& y) { texPos_.y = y; }
+		void AddTexPosX(const float& x) { texPos_.x += x; }
+		void AddTexPosY(const float& y) { texPos_.y += y; }
 		DirectX::XMFLOAT2 GetTexPos() { return texPos_; }
 		float GetTexPosX() { return texPos_.x; }
 		float GetTexPosY() { return texPos_.y; }
@@ -99,35 +108,36 @@ public:	// 構造体
 		void ResetScale();
 
 	private:
-		DirectX::XMFLOAT2 position_ = {};		//	位置 
-		DirectX::XMFLOAT2 pivot_ = {};			//	基準点
-		DirectX::XMFLOAT2 size_ = {};			//	画像サイズ 
-		DirectX::XMFLOAT2 texPos_ = {};			//	切り取り開始位置
-		DirectX::XMFLOAT2 texSize_ = {};		//	切り取りサイズ
-		DirectX::XMFLOAT2 scale_ = {1.0f,1.0f};	//	スケール
-		float scaleFactor_ = 1.0f;
-		DirectX::XMFLOAT4 color_ = { 1,1,1,1 };	//	描画色 
-		float angle_ = 0;						//	回転角度
+		DirectX::XMFLOAT2	position_ = {};			//	位置 
+		DirectX::XMFLOAT2	pivot_ = {};			//	基準点
+		DirectX::XMFLOAT2	size_ = {};				//	画像サイズ
+		DirectX::XMFLOAT2	texPos_ = {};			//	切り取り開始位置
+		DirectX::XMFLOAT2	texSize_ = {};			//	切り取りサイズ
+		DirectX::XMFLOAT2	scale_ = { 1.0f,1.0f };	//	スケール
+		float				scaleFactor_ = 1.0f;	
+		DirectX::XMFLOAT4	color_ = { 1,1,1,1 };	//	描画色 
+		float				angle_ = 0.0f;			//	回転角度
 
 	private:
-		bool isCut_ = false;					//	切り取りフラグ
-		DirectX::XMFLOAT2 cutSize_ = {};		//	切り取りサイズ
-		DirectX::XMFLOAT2 defaultSize_ = {};	//	デフォルトサイズ(スケール1.0fのサイズ)を保持する。texSizeと同じ
+		bool isCut_ = false;						//	切り取りフラグ
+		DirectX::XMFLOAT2 cutSize_ = {};			//	切り取りサイズ
+		DirectX::XMFLOAT2 defaultSize_ = {};		//	デフォルトサイズ(スケール1.0fのサイズ)を保持する
 	};
 
 private:
 	struct Vertex
 	{
-		DirectX::XMFLOAT3 position_;
-		DirectX::XMFLOAT4 color_;
-		DirectX::XMFLOAT2 texcoord_;
+		DirectX::XMFLOAT3 position_ = {};
+		DirectX::XMFLOAT4 color_ = { 0.0f,0.0f,0.0f,1.0f };
+		DirectX::XMFLOAT2 texcoord_ = {};
 	};
 
 public:
-	Sprite(const wchar_t* filename);
+	Sprite(const wchar_t* filename, const InitInfo& initInfo = {});
 	~Sprite();
 
 	void Render();
+	void Render(uint32_t slot,ID3D11Buffer** ppConstantBuffer);
 	void DrawDebug();
 
 	void Textout(std::string s,

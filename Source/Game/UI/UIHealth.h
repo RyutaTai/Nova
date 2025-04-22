@@ -13,12 +13,9 @@ public:
 	void Render()override;
 	void DrawDebug()override;
 
-	void SetIsVisible(const bool& isVisible)override { isVisible_ = isVisible; }
-
 	void UpdateHpGauge(const float& elpasedTime);		//	HPゲージ更新
 	void UpdateHpGaugeBack(const float& elpasedTime);	//	後ろのHPゲージ更新
 	void CheckDamage();									//	ダメージを食らったか確認する
-
 
 private:
 	std::unique_ptr<Sprite> hpFrame_;

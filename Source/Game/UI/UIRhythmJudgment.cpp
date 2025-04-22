@@ -3,7 +3,7 @@
 #include "UIManager.h"
 #include "../../../External/imgui/imgui.h"
 
-UIRhythmJudgment::UIRhythmJudgment(const Rhythm::JudgmentType& judgmentType)
+UIRhythmJudgment::UIRhythmJudgment(const UITempo::JudgmentType& judgmentType)
 	:UI(UIManager::UIType::Rhythm)
 {
 	judgmentText_ = std::make_unique<Sprite>(L"./Resources/Image/RythmJudgment.png");
@@ -37,10 +37,10 @@ void UIRhythmJudgment::Render()
 }
 
 //	”»’èŒ‹‰Ê‚É‰ž‚¶‚Ä•`‰æ‚ÌÝ’è‚ð‚·‚é
-void UIRhythmJudgment::TextSetting(const Rhythm::JudgmentType& type)
+void UIRhythmJudgment::TextSetting(const UITempo::JudgmentType& type)
 {
 	SetIsVisible(true);
-	if (type == Rhythm::JudgmentType::Perfect)
+	if (type == UITempo::JudgmentType::Perfect)
 	{
 		judgmentText_->GetTransform()->SetPosition(900.0f, 1000.0f);
 		judgmentText_->GetTransform()->SetTexPosX(0.0f);
@@ -48,7 +48,7 @@ void UIRhythmJudgment::TextSetting(const Rhythm::JudgmentType& type)
 		judgmentText_->GetTransform()->SetSizeX(255.0f);
 		judgmentText_->GetTransform()->SetDefaultSize(552.0f, 42.0f);
 	}
-	else if (type == Rhythm::JudgmentType::Good)
+	else if (type == UITempo::JudgmentType::Good)
 	{
 		judgmentText_->GetTransform()->SetPosition(900.0f, 1000.0f);
 		judgmentText_->GetTransform()->SetTexPosX(260.0f);
@@ -56,7 +56,7 @@ void UIRhythmJudgment::TextSetting(const Rhythm::JudgmentType& type)
 		judgmentText_->GetTransform()->SetSizeX(165.0f);
 		judgmentText_->GetTransform()->SetDefaultSize(552.0f, 42.0f);
 	}
-	else if (type == Rhythm::JudgmentType::Miss)
+	else if (type == UITempo::JudgmentType::Miss)
 	{
 		judgmentText_->GetTransform()->SetPosition(900.0f, 1000.0f);
 		judgmentText_->GetTransform()->SetTexPosX(430.0f);

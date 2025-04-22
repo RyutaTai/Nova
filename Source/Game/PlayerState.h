@@ -63,7 +63,7 @@ namespace PlayerState
 	};
 }
 
-//	コンボ01_1(右パンチ)
+//	コンボ1_1(右パンチ)
 namespace PlayerState
 {
 	class ComboOne1 :public State<Player>
@@ -97,7 +97,7 @@ namespace PlayerState
 	};
 }
 
-//	コンボ01_2
+//	コンボ1_2
 namespace PlayerState
 {
 	class ComboOne2 :public State<Player>
@@ -135,7 +135,7 @@ namespace PlayerState
 	};
 }
 
-//	コンボ01_3(右アッパー)
+//	コンボ1_3(右アッパー)
 namespace PlayerState
 {
 	class ComboOne3 :public State<Player>
@@ -166,7 +166,7 @@ namespace PlayerState
 	};
 }
 
-//	コンボ01_4
+//	コンボ1_4
 namespace PlayerState
 {
 	class ComboOne4 :public State<Player>
@@ -190,6 +190,68 @@ namespace PlayerState
 
 	private:
 		JudgeTime	animJudgeTime_	= {};		//	判定を取るアニメーション区間
+		JudgeTime	cancellationTime_ = {};		//	キャンセル可能時間
+		float		acceptInputFrame_ = {};		//	入力時間を受け付ける範囲
+
+	};
+}
+
+//	コンボ2_1
+namespace PlayerState
+{
+	class ComboTwo1 :public State<Player>
+	{
+	public:
+		ComboTwo1(Player* owner) :State(owner) {}
+		~ComboTwo1() {}
+
+		void Initialize()override;
+		void Update(const float& elapsedTime)override;
+		void Finalize()override;
+		void DrawDebug()override;
+
+	private:
+		//	----- 入力判定 -----
+		bool JudgeInput(const JudgeTime& cancellationTime);	//	正しい入力が取れていたらtrue
+		bool JudgeInputCommand(const JudgeTime& inputJudgeTime, const Command& command);
+
+		//	----- ステートの遷移を判断 -----
+		void DetermineStateTransition(const float& elapsedTime);
+
+	private:
+		JudgeTime	animJudgeTime_ = {};		//	判定を取るアニメーション区間
+		JudgeTime	cancellationTime_ = {};		//	キャンセル可能時間
+		float		acceptInputFrame_ = {};		//	入力時間を受け付ける範囲
+		bool		inputSucessFlag_ = false;	//	入力成功フラグ(trueなら２撃目へ遷移)
+		float		playAnimDuration_ = 0.817f;	//	一撃目のアニメーションの長さ
+
+	};
+}
+
+//	コンボ2_2
+namespace PlayerState
+{
+	class ComboTwo2 :public State<Player>
+	{
+	public:
+		ComboTwo2(Player* owner) :State(owner) {}
+		~ComboTwo2() {}
+
+		void Initialize()override;
+		void Update(const float& elapsedTime)override;
+		void Finalize()override;
+		void DrawDebug()override;
+
+	private:
+		//	----- 入力判定 -----
+		bool JudgeInput(const JudgeTime& cancellationTime);	//	正しい入力が取れていたらtrue
+		bool JudgeInputCommand(const JudgeTime& inputJudgeTime, const Command& command);
+
+		//	----- ステートの遷移を判断 -----
+		void DetermineStateTransition(const float& elapsedTime);
+
+	private:
+		JudgeTime	animJudgeTime_ = {};		//	判定を取るアニメーション区間
 		JudgeTime	cancellationTime_ = {};		//	キャンセル可能時間
 		float		acceptInputFrame_ = {};		//	入力時間を受け付ける範囲
 

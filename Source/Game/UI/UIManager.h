@@ -4,6 +4,8 @@
 #include <set>
 
 class UI;
+class UITempo;
+class UIRank;
 class UIManager
 {
 public:
@@ -14,6 +16,7 @@ public:
 		Health,			//	HP
 		Tempo,			//	テンポ
 		Rhythm,			//	リズム判定
+		Rank,			//	ランク
 		Max
 	};
 
@@ -37,17 +40,27 @@ public:
 	void	Remove(UI* ui);
 	void	RemoveFromType(const UIType& type);
 
-	void	SetIsVisible(const bool& isVisible);
+	UI*			GetUIFromNum(const int& num);
+	UI*			GetUIFromType(const UIType& type);
 
-	UI*		GetUIFromNum(const int& num);
-	UI*		GetUIFromType(const UIType& type);
-	bool	ExistUI(const UIType& type);
+	void		SetIsVisible(const bool& isVisible);
+	bool		ExistUI(const UIType& type);
+
+	//	テンポUI
+	void		RegisterUITempo(UITempo* uiTempo);
+	UITempo*	GetUITempo();
+
+	//	ランクUI
+	void	RegisterUIRank(UIRank* uiRank);
+	UIRank* GetUIRank();
 
 private:
 	std::vector<UI*> userInterfaces_;
 	std::set<UI*>	generates_;
 	std::set<UI*>	removes_;
-	bool allIsVisible_ = true;
+	UITempo*		uiTempo_ = nullptr;		//	UITempo
+	UIRank*			uiRank_ = nullptr;		//	UIRank
+	bool			allIsVisible_ = true;
 
 };
 

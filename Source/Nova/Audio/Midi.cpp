@@ -147,12 +147,10 @@ Midi::MidiNote* Midi::FindClosestNoteInLoop(const double& inputTime)
     return closestNote;
 }
 #else
-Midi::MidiNote* Midi::FindClosestNoteInLoop(const double& time)
+Midi::MidiNote* Midi::FindClosestNoteInLoop(const double& inputTime)
 {
     MidiNote* closestNote = nullptr;
     double minDelta = DBL_MAX;
-
-    double inputTime = time;
 
     int count = 0;
 

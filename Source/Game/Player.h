@@ -55,10 +55,12 @@ public:
 	{
 		Idle = 0, 		//	待機
 		Move,			//	移動
-		ComboOne1,		//	コンボ0_1
-		ComboOne2,		//	コンボ0_2
-		ComboOne3,		//	コンボ0_3
-		ComboOne4,		//	コンボ0_4
+		ComboOne1,		//	コンボ1_1
+		ComboOne2,		//	コンボ1_2
+		ComboOne3,		//	コンボ1_3
+		ComboOne4,		//	コンボ1_4
+		ComboTwo1,		//	コンボ2_1
+		ComboTwo2,		//	コンボ2_2
 		Dodge,			//	回避
 		GetUp,			//	起き上がり
 		Damage,			//	ダメージを受けた

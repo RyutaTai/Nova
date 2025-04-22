@@ -25,7 +25,7 @@ private:
 	const size_t maxVertices_;
 
 public:
-	SpriteBatch(ID3D11Device* device, const wchar_t* fileName,size_t maxSprites);
+	SpriteBatch(ID3D11Device* device, const wchar_t* filename,size_t maxSprites);
 	~SpriteBatch();
 
 	void Render(ID3D11DeviceContext* deviceContext,
