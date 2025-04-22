@@ -337,7 +337,7 @@ void Model::FetchMeshes(FbxScene* fbxScene, std::vector<Mesh>& meshes)
 					vertex.tangent_.z = static_cast<float>(tangent->GetDirectArray().GetAt(vertexIndex)[2]);
 					vertex.tangent_.w = static_cast<float>(tangent->GetDirectArray().GetAt(vertexIndex)[3]);
 				}
-				if (fbxMesh->GenerateTangentsData(0, false))	//	タンジェントが無かったらダミーで値入れる,この引数がfalseならデータの上書きがされないらしい
+				if (fbxMesh->GenerateTangentsData(0, false))	//	タンジェントが無かったらダミーで値入れる,この引数がfalseならデータの上書きがされない
 				{
 					vertex.tangent_.x = 1.001f;
 					vertex.tangent_.y = 0.0f;
@@ -612,7 +612,7 @@ void Model::PlayBlendAnimation(int index1, int index2, bool loop, float speed)
 	animationEndFlag_			= false;			//	アニメーション終了フラグリセット
 	animationSpeed_				= speed;			//	アニメーション再生フラグ
 	animationBlendTime_			= 0.0f;				//	ブレンドしてから今まで何秒経過したか
-	animationBlendSeconds_ = 0.0f;
+	animationBlendSeconds_		= 0.0f;
 	
 }
 

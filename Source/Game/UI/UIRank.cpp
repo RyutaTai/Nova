@@ -29,12 +29,12 @@ void UIRank::Initialize()
 	rankTextBack_->GetTransform()->CutOutX(RankTextSize_);
 	rankTextBack_->GetTransform()->SetPivot(0.5f, 0.5f);
 	rankTextBack_->GetTransform()->SetTexPosX(0.0f);
-	rankTextBack_->GetTransform()->SetPosition(800, 800);
+	rankTextBack_->GetTransform()->SetPosition(1580.0f, 330.0f);
 	//	ランク文字の背景
 	rankText_->GetTransform()->CutOutX(RankTextSize_);
 	rankText_->GetTransform()->SetPivot(0.5f, 0.5f);
 	rankText_->GetTransform()->SetTexPosX(0.0f);
-	rankText_->GetTransform()->SetPosition(800, 800);
+	rankText_->GetTransform()->SetPosition(1580.0f, 330.0f);
 
 	//	現在のランク
 	currentRankInfo_.index_ = static_cast<int>(RankType::C);
@@ -72,9 +72,13 @@ void UIRank::UpdateVisibleThreshold(const float& elapsedTime)
 	//	次のランクへのポイントが貯まっていて、ランクがSランクより低ければランクアップ処理
 	if (visibleThreshold_ >= VisibleThresholdMax_ && currentRankInfo_.index_ <= 2)
 	{
+		//	画像の切り取り開始位置を更新
 		rankText_->GetTransform()->AddTexPosX(RankTextSize_);
 		rankTextBack_->GetTransform()->AddTexPosX(RankTextSize_);
+
 		visibleThreshold_ = VisibleThresholdMin_;
+		
+		//	現在のランク情報更新
 		currentRankInfo_.index_++;
 		if (currentRankInfo_.index_ < RankTypeMax_ - 2)
 			currentRankInfo_.pointToNextRank_ = pointsToNextRank_[currentRankInfo_.index_];
