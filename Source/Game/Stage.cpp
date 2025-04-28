@@ -16,11 +16,14 @@ Stage::Stage()
 	_ASSERT_EXPR(instance_ == instance_, L"already instance");
 	instance_ = this;
 
-	gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/Stage/Stage.gltf");
+	gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/City/city.gltf");
+	//gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/Stage/Stage.gltf");
 
 	GetTransform()->SetPosition(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
 
-	GetTransform()->SetScaleFactor(100.0f);
+	collisionMesh_ = std::make_unique<decltype(collisionMesh_)::element_type>(Graphics::Instance().GetDevice(), "./Resources/Model/City/city.gltf");
+	GetTransform()->SetScaleFactor(0.0025f);	//	CityModel
+	//GetTransform()->SetScaleFactor(100.0f);
 
 
 	//	エミッシブ定数バッファ生成
