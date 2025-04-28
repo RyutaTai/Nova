@@ -8,13 +8,14 @@
 class Shader
 {
 public:
-	enum class SAMPLER_STATE {
+	enum class SAMPLER_STATE
+	{
 		POINT,
 		LINEAR,
 		ANISOTROPIC,
 		LINEAR_BORDER_BLACK,
 		LINEAR_BORDER_WHITE,
-		COMPARISON_LINEAR_BORDER_WHITE/*SHADOW*/,
+		COMPARISON_LINEAR_BORDER_WHITE,
 		LINEAR_BORDER_OPAQUE_BLACK,
 		POINT_CLAMP,
 		Max,
@@ -63,6 +64,7 @@ public:
 	HRESULT CreateVsFromCso(ID3D11Device* device, const char* csoName, ID3D11VertexShader** vertexShader, ID3D11InputLayout** inputLayout,
 		D3D11_INPUT_ELEMENT_DESC* inputElementDesc, UINT numElements);
 	HRESULT CreatePsFromCso(ID3D11Device* device, const char* csoName, ID3D11PixelShader** pixelShader);
+	HRESULT CreateGsFromCso(ID3D11Device* device, const char* csoName, ID3D11GeometryShader** geometryShader);
 
 private:
 	Microsoft::WRL::ComPtr <ID3D11SamplerState>			samplerStates_[static_cast<UINT>(SAMPLER_STATE::Max)];

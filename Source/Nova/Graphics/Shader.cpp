@@ -9,7 +9,7 @@ Shader::Shader()
 	HRESULT hr{ S_OK };
 
 	//	SamplerDesc
-	D3D11_SAMPLER_DESC samplerDesc;
+	D3D11_SAMPLER_DESC samplerDesc = {};
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -108,7 +108,7 @@ Shader::Shader()
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
 	//	DepthStencilDesc
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc{};
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
 	//	Z-Test ON ,Z-Write ON
 	depthStencilDesc.DepthEnable = TRUE;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
@@ -222,7 +222,7 @@ Shader::Shader()
 
 	//	RasterizerDesc
 	//	SOLID 
-	D3D11_RASTERIZER_DESC rasterizerDesc{};
+	D3D11_RASTERIZER_DESC rasterizerDesc = {};
 	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 	rasterizerDesc.CullMode = D3D11_CULL_BACK;
 	rasterizerDesc.FrontCounterClockwise = TRUE;
@@ -339,6 +339,27 @@ HRESULT Shader::CreatePsFromCso(ID3D11Device* device, const char* csoName, ID3D1
 
 	HRESULT hr{ S_OK };
 	hr = device->CreatePixelShader(csoData.get(), csoSz, nullptr, pixelShader);
+	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+
+	return hr;
+}
+
+HRESULT Shader::CreateGsFromCso(ID3D11Device* device, const char* csoName, ID3D11GeometryShader** geometryShader)
+{
+	FILE* fp{ nullptr };
+	fopen_s(&fp, csoName, "rb");
+	_ASSERT_EXPR_A(fp, "CSO File not found");
+
+	fseek(fp, 0, SEEK_END);
+	long csoSz{ ftell(fp) };
+	fseek(fp, 0, SEEK_SET);
+
+	std::unique_ptr<unsigned char[]> csoData{ std::make_unique<unsigned char[]>(csoSz) };
+	fread(csoData.get(), csoSz, 1, fp);
+	fclose(fp);
+
+	HRESULT hr{ S_OK };
+	hr = device->CreateGeometryShader(csoData.get(), csoSz, nullptr, geometryShader);
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
 	return hr;
