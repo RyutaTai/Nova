@@ -14,7 +14,7 @@ UIRhythmJudgment::UIRhythmJudgment(const UITempo::JudgmentType& judgmentType)
 
 void UIRhythmJudgment::Initialize()
 {
-	judgmentText_->GetTransform()->SetPosition(900.0f, 1000.0f);
+	judgmentText_->GetTransform()->SetPosition(900.0f, 810.0f);
 	isVisible_ = false;
 }
 

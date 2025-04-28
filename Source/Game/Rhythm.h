@@ -38,16 +38,17 @@ public:
 private:
 	float bpm_ = 140.0f;	//	楽曲のbpm
 
-	double	debugMaxMidiTimer_ = 0.0f;
-	float	debugDelta_ = 0.0f;
-	float	debugClosestNoteTime_ = 0.0f;
-	float	debugInputTime_ = 0.0f;
-
 	//	midiデータ
 	std::unique_ptr<Midi> midi_ = nullptr;	//	タイミング判定用midi(4つ打ち)
 
 	//	コンボ数
 	int comboCount_ = 0;
+
+	//	デバッグ用変数
+	double	debugMaxMidiTimer_ = 0.0f;
+	float	debugDelta_ = 0.0f;
+	float	debugClosestNoteTime_ = 0.0f;
+	float	debugInputTime_ = 0.0f;
 
 };
 

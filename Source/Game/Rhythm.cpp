@@ -40,8 +40,8 @@ bool Rhythm::GetRhythm()
 //	コンボ加算
 void Rhythm::AddComboCount(const int& comboCount)
 {
-	comboCount_ += comboCount;
-	UIManager::Instance().GetUIRank()->AddRankPoint(comboCount);
+	comboCount_ += comboCount;										//	コンボ加算
+	UIManager::Instance().GetUIRank()->AddRankPoint(comboCount);	//	ランクポイント加算
 }
 
 void Rhythm::DrawDebug()

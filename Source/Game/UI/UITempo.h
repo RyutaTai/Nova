@@ -17,6 +17,31 @@ public:
 		Max
 	};
 
+private:
+	//	半円の構造体(左右でペア)
+	struct Semicircle
+	{
+		std::unique_ptr<Sprite> left_;		//	左側の半円
+		std::unique_ptr<Sprite> right_;		//	右側の半円
+		float	range_ = 0.0f;				//	中心円からの距離
+		bool	isJudged_ = false;			//	判定済みかどうか
+
+	public:
+		Sprite* GetLeft()	{ return left_.get(); }			//	左側の半円取得
+		Sprite* GetRight()	{ return right_.get(); }		//	右側の半円取得
+		const float GetRange()const { return range_; }		//	中心円からの距離取得
+		const bool	IsJudged()const { return isJudged_; }	//	判定済みフラグ取得
+
+	};
+
+	//	左右の識別(ImGui用)
+	enum class Side
+	{
+		Left = 0,
+		Right,
+		Max
+	};
+
 public:
 	UITempo();
 	~UITempo() {}
@@ -28,33 +53,17 @@ public:
 
 	bool JudgeRythm();	//	入力タイミングがリズムにあっているか判定
 
-private:
-	void UpdateDrawFlag();
-	void UpdateCenterCircleAnimation();
-	void UpdatePosition(const float& elapsedTime);
-	void UpdateScale(const float& elapsedTime);
-	void UpdateMoveFactor();
+	Sprite*		GetCenterCircle()				{ return center_.get(); }				//	中心円取得
+	Semicircle* GetSemicircle(const int& index) { return semicircles_[index].get(); }	//	半円取得
+	const float GetTotalRange()const			{ return totalRange_; }					//	中心円からのそれぞれの半円の合計
 
 private:
-	int FindNearSemicircleIndex();	//	中心円に一番近い半円の番号を見つける
+	void UpdateDrawFlag();							//	描画フラグ切り替え処理
+	void UpdateCenterCircleAnimation();				//	中心円のアニメーション更新処理
+	void UpdatePosition(const float& elapsedTime);	//	UIの位置更新処理
+	void UpdateScale(const float& elapsedTime);		//	UIのスケール更新処理
 
-private:
-	//	半円の構造体
-	struct Semicircle
-	{
-		std::unique_ptr<Sprite> left_;		//	左側の半円
-		std::unique_ptr<Sprite> right_;		//	右側の半円
-		float	range_ = 0.0f;				//	中心円からの距離
-		bool	isJudged_ = false;			//	判定済みかどうか
-	};
-	
-	//	左右の識別(ImGui用)
-	enum class Side
-	{
-		Left = 0,
-		Right,
-		Max
-	};
+	int FindNearSemicircleIndex();					//	中心円に一番近い半円の番号を見つける
 
 private:
 	static constexpr int		SemicircleMax_ = 4;				//	半円の数
@@ -66,20 +75,15 @@ private:
 	//	中心円からの距離
 	float	rangePerOne_ = 1.0f;				//	半円1つ当たりの距離 ( 最大距離/個数 に設定し、等間隔に配置する)
 	float	totalRange_ = 0.0f;					//	それぞれの距離の合計
-	//float	semicircleRangeMax_ = 432.0f;		//	rangeの最大値
 	float	semicircleRangeMax_ = 576.0f;		//	rangeの最大値
 	float	semicircleRangeMin_ = -0.5f;		//	rangeの最小値。これを下回ったら位置リセット
 	
 	//	スケール
-	float	centerScaleMax_ = 1.0f;				//	真ん中の円のスケール最大値
-	float	centerScaleMin_ = 0.75f;			//	真ん中の円のスケール最小値
+	float	centerScaleMax_ = 1.0f;				//	中心円のスケール最大値
+	float	centerScaleMin_ = 0.75f;			//	中心円のスケール最小値
 	float	semicircleScaleMax_ = 1.5f;			//	半円のスケール最大値
 	float	semicircleScaleMin_ = 1.0f;			//	半円のスケール最小値
 
-	//	移動
-	float	moveSpeed_ = 290.0f;				//	移動する速さ
-	float	moveFactor_ = 1.0f;					//	BPM120を基準とする移動する速さの倍率
-	
 	//	アニメーション
 	bool	centerCircleAnimFlag_ = false;		//	中心円のアニメーション更新フラグ
 	int		animChangeThreshold_ = 9;			//	何フレームでアニメーションを遷移するか

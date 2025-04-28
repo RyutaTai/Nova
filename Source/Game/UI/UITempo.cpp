@@ -11,7 +11,7 @@ UITempo::UITempo()
 	//	中心円
 	center_ = std::make_unique<Sprite>(L"./Resources/Image/TempoUI.png");
 	center_->GetTransform()->SetTexPosX(0.0f);
-	center_->GetTransform()->CutOutX(100.0f);
+	center_->GetTransform()->SetTexSizeX(100.0f);
 	center_->GetTransform()->SetPivot(0.5f, 0.5f);
 	center_->GetTransform()->SetPosition(962, 905);
 
@@ -71,7 +71,6 @@ void UITempo::Initialize()
 void UITempo::Update(const float& elapsedTime)
 {
 	UpdateDrawFlag();
-	UpdateMoveFactor();
 	UpdatePosition(elapsedTime);
 	UpdateScale(elapsedTime);
 	UpdateCenterCircleAnimation();
@@ -100,7 +99,7 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 		semicircles_[index]->range_ -= (rangePerOne_ / quarterNoteDuration_) * elapsedTime;
 		//semicircles_[index]->range_ -= moveSpeed_ * moveFactor_ * elapsedTime;
 
-			//	中心円と重なったら最大距離にリセット
+		//	中心円と重なったら最大距離にリセット
 		if (semicircles_[index]->range_ <= semicircleRangeMin_)
 		{
 			semicircles_[index]->range_ = semicircleRangeMax_;
@@ -110,7 +109,7 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 			if (semicircles_[index]->isJudged_)semicircles_[index]->isJudged_ = false;
 		}
 
-		//	更新したrangeを位置に反映
+		//	rangeを元に位置を更新
 		float range = semicircles_[index]->range_;
 		semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - range);
 		semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + range);
@@ -134,16 +133,6 @@ void UITempo::UpdateScale(const float& elapsedTime)
 		semicircles_[index]->left_->GetTransform()->SetScaleFactor(scaleFactor);
 		semicircles_[index]->right_->GetTransform()->SetScaleFactor(scaleFactor);
 	}
-}
-
-//	BPMに合わせたMoveSpeedの更新
-void UITempo::UpdateMoveFactor()
-{
-	//	bpmに合わせた速度の設定
-	//moveFactor_ = 1.0f / Rhythm::Instance().GetBPM();
-	//moveFactor_ = (Rhythm::Instance().GetBPM() / 120.0f);
-	moveFactor_ = Rhythm::Instance().GetBPM();
-
 }
 
 //	中心円のアニメーション更新
@@ -261,7 +250,7 @@ void UITempo::DrawDebug()
 		ImGui::Checkbox("IsVisible", &isVisible_);
 		
 		ImGui::Text("----- Center -----");
-		ImGui::DragInt("animChangeThreshold_", &animChangeThreshold_);
+		ImGui::DragInt("AnimChangeThreshold_", &animChangeThreshold_);
 
 		ImGui::Text("----- Range -----");
 		ImGui::DragFloat("RangePerOne", &rangePerOne_);
@@ -274,10 +263,6 @@ void UITempo::DrawDebug()
 		ImGui::DragFloat("GoodRange", &goodRange_, 0.1f);
 
 		center_->DrawDebug();
-
-		ImGui::Text("----- Move -----");
-		ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.1f);	//	半円が移動する速さ
-		ImGui::DragFloat("MoveFactor", &moveFactor_, 0.1f);	//	半円が移動する速さの倍率
 
 		if (ImGui::TreeNode("Semi0"))
 		{

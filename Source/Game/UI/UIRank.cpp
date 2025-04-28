@@ -26,12 +26,12 @@ void UIRank::Initialize()
 	currentRankPoint_ = 0.0f;
 
 	//	ランク文字
-	rankTextBack_->GetTransform()->CutOutX(RankTextSize_);
+	rankTextBack_->GetTransform()->SetTexSizeX(RankTextSize_);
 	rankTextBack_->GetTransform()->SetPivot(0.5f, 0.5f);
 	rankTextBack_->GetTransform()->SetTexPosX(0.0f);
 	rankTextBack_->GetTransform()->SetPosition(1580.0f, 330.0f);
 	//	ランク文字の背景
-	rankText_->GetTransform()->CutOutX(RankTextSize_);
+	rankText_->GetTransform()->SetTexSizeX(RankTextSize_);
 	rankText_->GetTransform()->SetPivot(0.5f, 0.5f);
 	rankText_->GetTransform()->SetTexPosX(0.0f);
 	rankText_->GetTransform()->SetPosition(1580.0f, 330.0f);
@@ -62,7 +62,6 @@ void UIRank::UpdateVisibleThreshold(const float& elapsedTime)
 {
 	//	現在のランク階級
 	int rankGrade = currentRankInfo_.index_;
-	//int rankGrade = static_cast<int>(currentRank_);
 	if (rankGrade >= RankTypeMax_ - 2)
 		rankGrade = RankTypeMax_ - 2;
 	//	threshold = (threshold最大値 - threshold最小値) * (現在のランクポイント / 次のランクに必要なポイント) + threshold最小値

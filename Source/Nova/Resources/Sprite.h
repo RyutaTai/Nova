@@ -24,8 +24,6 @@ public:
 	{
 	public:
 		void CutOut();							//	‰æ‘œØ‚èæ‚è
-		void CutOutX(const float& cutSizeX);	//	X•ûŒüØ‚èæ‚è
-		void CutOutY(const float& cutSizeY);	//	Y•ûŒüØ‚èæ‚è
 
 		void DrawDebug();	//	ImGui•`‰æ
 

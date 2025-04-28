@@ -463,26 +463,6 @@ void Sprite::Textout(std::string s,
 	}
 }
 
-//	X•ûŒüØ‚èæ‚è
-void Sprite::SpriteTransform::CutOutX(const float& sizeX)
-{
-	//size_.x = sizeX;
-	texSize_.x = sizeX;
-
-	/*size_.x = defaultSize_.x - sizeX;
-	texSize_.x = defaultSize_.x - sizeX;*/
-}
-
-//	Y•ûŒüØ‚èæ‚è
-void Sprite::SpriteTransform::CutOutY(const float& sizeY)
-{
-	//size_.y += sizeY;
-	texSize_.y += sizeY;
-	
-	/*size_.y = defaultSize_.y - sizeY;
-	texSize_.y = defaultSize_.y - sizeY;*/
-}
-
 //	Ø‚èæ‚è
 void Sprite::SpriteTransform::CutOut()
 {
