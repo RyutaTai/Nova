@@ -207,7 +207,6 @@
     <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp" />
     <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Decal.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\ShadowMap.cpp" />
     <ClCompile Include="Source\Nova\Others\JudgeTime.cpp" />
     <ClCompile Include="Source\Game\UI\UIHealth.cpp" />
     <ClCompile Include="Source\Nova\Audio\AudioManager.cpp" />
@@ -351,7 +350,6 @@
     <ClInclude Include="Source\Nova\Collision\CollisionManager.h" />
     <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h" />
     <ClInclude Include="Source\Nova\Graphics\Decal.h" />
-    <ClInclude Include="Source\Nova\Graphics\ShadowMap.h" />
     <ClInclude Include="Source\Nova\Others\JudgeTime.h" />
     <ClInclude Include="Source\Game\UI\UIHealth.h" />
     <ClInclude Include="Source\Nova\Audio\AudioManager.h" />

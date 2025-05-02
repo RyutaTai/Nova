@@ -348,6 +348,9 @@ void SceneGame::Render()
 			bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, 2, pixelShaders_[0].Get());
 		}
 
+		//	シャドウマップ
+		MakeShadow();
+		DrawShadow();
 	}
 
 	/* ----- エフェクト描画 ----- */
@@ -413,10 +416,6 @@ void SceneGame::Render()
 
 	/* ----- UI描画 ----- */
 	UIManager::Instance().Render();
-
-	//	シャドウマップ
-	MakeShadow();
-	DrawShadow();
 
 	framebuffers_[1]->Clear(deviceContext);
 	framebuffers_[1]->Activate(deviceContext);

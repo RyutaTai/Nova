@@ -259,7 +259,6 @@
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
     <ClCompile Include="Source\Game\UI\UIRank.cpp" />
     <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\ShadowMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h">
@@ -535,7 +534,6 @@
     <ClInclude Include="External\nlohmann\detail\value_t.hpp" />
     <ClInclude Include="Source\Game\UI\UIRank.h" />
     <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h" />
-    <ClInclude Include="Source\Nova\Graphics\ShadowMap.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
