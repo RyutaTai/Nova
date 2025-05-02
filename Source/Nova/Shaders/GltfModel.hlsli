@@ -48,3 +48,15 @@ cbuffer EMISSIVE_CONSTANTS : register(b3)
 {
     float emissiveIntensity;
 }
+
+//  シャドウマップ
+struct VS_OUT_CSM
+{
+    float4  position    : SV_POSITION;
+    uint    instanceId  : INSTANCEID;   //  何回目のインスタンス描画か
+};
+struct GS_OUTPUT_CSM
+{
+    float4  position                : SV_POSITION;
+    uint    renderTargetArrayIndex  : SV_RENDERTARGETARRAYINDEX;    //  何枚目のレンダーターゲット
+};

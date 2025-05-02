@@ -3,7 +3,6 @@
 #include "../Core/Framework.h"
 #include "../Graphics/Graphics.h"
 #include "../Graphics/Camera.h"
-#include "../Graphics/ShadowMap.h"
 #include "../Scenes/SceneManager.h"
 #include "../Scenes/SceneTitle.h"
 #include "../Scenes/SceneLoading.h"
@@ -272,15 +271,15 @@ void SceneDemo::Render()
 #endif
 			Graphics::Instance().SetViewProjection(V * Projection);
 
-			ID3D11Buffer* shadowConstantBuffer = ShadowMap::Instance().GetConstantBuffer();
-			Graphics::SceneConstants sceneConstant = Graphics::Instance().GetSceneConstant();
-			deviceContext->UpdateSubresource(shadowConstantBuffer, 0, 0, &sceneConstant, 0, 0);
-			deviceContext->VSSetConstantBuffers(1, 1, &shadowConstantBuffer);
-			deviceContext->PSSetConstantBuffers(1, 1, &shadowConstantBuffer);
+			//ID3D11Buffer* shadowConstantBuffer = ShadowMap::Instance().GetConstantBuffer();
+			//Graphics::SceneConstants sceneConstant = Graphics::Instance().GetSceneConstant();
+			//deviceContext->UpdateSubresource(shadowConstantBuffer, 0, 0, &sceneConstant, 0, 0);
+			//deviceContext->VSSetConstantBuffers(1, 1, &shadowConstantBuffer);
+			//deviceContext->PSSetConstantBuffers(1, 1, &shadowConstantBuffer);
 
-			// SHADOW : bind shadow map at slot 8
-			ID3D11ShaderResourceView* srv = ShadowMap::Instance().GetShaderResourceView();
-			deviceContext->PSSetShaderResources(8, 1, &srv);
+			//// SHADOW : bind shadow map at slot 8
+			//ID3D11ShaderResourceView* srv = ShadowMap::Instance().GetShaderResourceView();
+			//deviceContext->PSSetShaderResources(8, 1, &srv);
 		}
 #endif
 
@@ -471,9 +470,6 @@ void SceneDemo::DrawDebug()
 	UINT numViewports{ 1 };
 	Graphics::Instance().GetDeviceContext()->RSGetViewports(&numViewports, &viewport);
 
-	auto srv = ShadowMap::Instance().GetShaderResourceView();
-	ImGui::Image(reinterpret_cast<void*>(srv), ImVec2(viewport.Width / 5.0f, viewport.Height / 5.0f));
-
 	//	3Dオーディオ
 	if (ImGui::TreeNode("3DAudio"))
 	{
@@ -508,7 +504,6 @@ void SceneDemo::DrawDebug()
 
 	Camera::Instance().DrawDebug();		//	Camera
 	stage_[0]->DrawDebug();				//	Stage
-	ShadowMap::Instance().DrawDebug();	//	Shadow
 	player_->DrawDebug();				//	Player
 
 	BulletManager::Instance().DrawDebug();	//	BulletManager

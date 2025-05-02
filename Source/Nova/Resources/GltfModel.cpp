@@ -151,14 +151,14 @@ GltfModel::GltfModel(const std::string& filename, const std::string& rootNodeNam
     const std::map<std::string, BufferView>& vertexBufferViews{ meshes_.at(0).primitives_.at(0).vertexBufferViews_ };
     D3D11_INPUT_ELEMENT_DESC inputElementDesc[]
     {
-        {"POSITION",0,vertexBufferViews.at("POSITION").format_,     0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        {"NORMAL",  0,vertexBufferViews.at("NORMAL").format_,       1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        {"TANGENT", 0,vertexBufferViews.at("TANGENT").format_,      2, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        {"TEXCOORD",0,vertexBufferViews.at("TEXCOORD_0").format_,   3, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        {"JOINTS",  0,vertexBufferViews.at("JOINTS_0").format_,     4, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        {"WEIGHTS", 0,vertexBufferViews.at("WEIGHTS_0").format_,    5, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        { "JOINTS", 1,vertexBufferViews.at("JOINTS_1").format_,     6, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        { "WEIGHTS",1,vertexBufferViews.at("WEIGHTS_1").format_,    7, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "POSITION",0,vertexBufferViews.at("POSITION").format_,     0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "NORMAL",  0,vertexBufferViews.at("NORMAL").format_,       1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "TANGENT", 0,vertexBufferViews.at("TANGENT").format_,      2, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "TEXCOORD",0,vertexBufferViews.at("TEXCOORD_0").format_,   3, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "JOINTS",  0,vertexBufferViews.at("JOINTS_0").format_,     4, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "WEIGHTS", 0,vertexBufferViews.at("WEIGHTS_0").format_,    5, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "JOINTS",  1,vertexBufferViews.at("JOINTS_1").format_,     6, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "WEIGHTS", 1,vertexBufferViews.at("WEIGHTS_1").format_,    7, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 
     };
     Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/GltfModelVS.cso", vertexShader_.ReleaseAndGetAddressOf(),

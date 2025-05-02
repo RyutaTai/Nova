@@ -4,7 +4,6 @@
 
 #include "../Graphics/Graphics.h"
 #include "../Graphics/Shader.h"
-#include "../Graphics/ShadowMap.h"
 #include "../Scenes/SceneManager.h"
 #include "../Scenes/SceneTitle.h"
 #include "../Scenes/SceneGame.h"
@@ -219,14 +218,6 @@ void Framework::Render()
 
 	//	サンプラーステート設定
 	graphics_.GetShader()->SetSamplerState(graphics_.GetDeviceContext());
-
-	//	ShadowMap生成
-	//	Activate
-	ShadowMap::Instance().Activate();
-	//	ShadowRender
-	SceneManager::Instance().ShadowRender();
-	//	Deactivate
-	ShadowMap::Instance().Deactivate();
 
 	//	Scene描画
 	FLOAT color[]{ 1, 0, 0, 1 };

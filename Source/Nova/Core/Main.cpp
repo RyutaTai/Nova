@@ -18,6 +18,7 @@ int WINAPI WinMain(_In_ HINSTANCE instance, _In_opt_  HINSTANCE prevInstance, _I
 	//_CrtSetBreakAlloc(249295);
 	//_CrtSetBreakAlloc(414);
 	//_CrtSetBreakAlloc(547);
+	//_CrtSetBreakAlloc(249424);
 #endif
 	WNDCLASSEXW wcex{};
 	wcex.cbSize = sizeof(WNDCLASSEX);

@@ -3,7 +3,6 @@
 #include "../Core/Framework.h"
 #include "../Graphics/Graphics.h"
 #include "../Graphics/Camera.h"
-#include "../Graphics/ShadowMap.h"
 #include "../Scenes/SceneManager.h"
 #include "../Scenes/SceneTitle.h"
 #include "../Scenes/SceneLoading.h"
@@ -124,7 +123,7 @@ void SceneModelCheck::Render()
 
 		//	Shadow描画はこの関数じゃなくてShadowRender()でやってる
 		{
-			Graphics::Instance().SetLightDirection(ShadowMap::Instance().GetLightDirection());
+			//Graphics::Instance().SetLightDirection(ShadowMap::Instance().GetLightDirection());
 			DirectX::XMFLOAT4 cameraPosition_ = { Camera::Instance().GetEye().x,Camera::Instance().GetEye().y,Camera::Instance().GetEye().z,1.0f };
 			Graphics::Instance().SetCameraPosition(cameraPosition_);
 
@@ -148,15 +147,15 @@ void SceneModelCheck::Render()
 #endif
 			Graphics::Instance().SetViewProjection(V * Projection);
 
-			ID3D11Buffer* shadowConstantBuffer = ShadowMap::Instance().GetConstantBuffer();
+			/*ID3D11Buffer* shadowConstantBuffer = ShadowMap::Instance().GetConstantBuffer();
 			Graphics::SceneConstants sceneConstant = Graphics::Instance().GetSceneConstant();
 			Graphics::Instance().GetDeviceContext()->UpdateSubresource(shadowConstantBuffer, 0, 0, &sceneConstant, 0, 0);
 			Graphics::Instance().GetDeviceContext()->VSSetConstantBuffers(1, 1, &shadowConstantBuffer);
-			Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(1, 1, &shadowConstantBuffer);
+			Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(1, 1, &shadowConstantBuffer);*/
 
 			// SHADOW : bind shadow map at slot 8
-			ID3D11ShaderResourceView* srv = ShadowMap::Instance().GetShaderResourceView();
-			Graphics::Instance().GetDeviceContext()->PSSetShaderResources(8, 1, &srv);	//	TODO:出力で警告出てる
+			//ID3D11ShaderResourceView* srv = ShadowMap::Instance().GetShaderResourceView();
+			//Graphics::Instance().GetDeviceContext()->PSSetShaderResources(8, 1, &srv);	//	TODO:出力で警告出てる
 		}
 
 		//	モデル描画
@@ -273,9 +272,6 @@ void SceneModelCheck::DrawDebug()
 	UINT numViewports{ 1 };
 	Graphics::Instance().GetDeviceContext()->RSGetViewports(&numViewports, &viewport);
 
-	auto srv = ShadowMap::Instance().GetShaderResourceView();
-	ImGui::Image(reinterpret_cast<void*>(srv), ImVec2(viewport.Width / 5.0f, viewport.Height / 5.0f));
-
 	if (ImGui::TreeNode(u8"Cameraカメラ"))	//	カメラ
 	{
 		Camera::Instance().DrawDebug();
@@ -291,7 +287,4 @@ void SceneModelCheck::DrawDebug()
 			ImGui::TreePop();
 		}
 	}
-
-	ShadowMap::Instance().DrawDebug();	//	SHADOW
-
 }

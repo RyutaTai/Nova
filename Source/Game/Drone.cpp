@@ -5,6 +5,7 @@
 #include "../Nova/Core/Framework.h"
 #include "../Nova/Others/MathHelper.h"
 #include "../Nova/Others/Converter.h"
+#include "../Nova/Resources/ResourceManager.h"
 #include "DroneState.h"
 #include "BulletStraight.h"
 #include "BulletHorming.h"

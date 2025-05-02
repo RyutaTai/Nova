@@ -5,6 +5,7 @@
 #include "../Nova/Graphics/Graphics.h"
 #include "../Nova/Audio/AudioManager.h"
 #include "../Nova/Resources/Texture.h"
+#include "../Nova/Resources/ResourceManager.h"
 
 #include "Player.h"
 

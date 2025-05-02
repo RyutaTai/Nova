@@ -3,7 +3,6 @@
 #include "../Core/Framework.h"
 #include "../Graphics/Graphics.h"
 #include "../Graphics/Camera.h"
-#include "../Graphics/ShadowMap.h"
 #include "../Scenes/SceneManager.h"
 #include "../Scenes/SceneTitle.h"
 #include "../Scenes/SceneLoading.h"
@@ -120,6 +119,11 @@ void SceneGame::Initialize()
 	bloomer_ = std::make_unique<Bloom>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/FinalPassPs.cso", pixelShaders_[0].ReleaseAndGetAddressOf());
 
+	//	シャドウ
+	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/CascadedShadowPs.cso", pixelShaders_[2].GetAddressOf());
+	cascadedShadowMaps_ = std::make_unique<decltype(cascadedShadowMaps_)::element_type>(device, 1024 * 4, 1024 * 4);
+
+
 	//	----- ステート登録 -----
 	stateMachine_.reset(new StateMachine<State<SceneGame>>());
 	stateMachine_->RegisterState(new GameState::Wave1State(this));		//	Wave1
@@ -130,9 +134,6 @@ void SceneGame::Initialize()
 	stateMachine_->RegisterState(new GameState::ContinueState(this));	//	コンティニュー
 	//	初期ステート設定
 	stateMachine_->SetState(static_cast<int>(SceneGameState::Wave1));	//	初期ステートセット
-
-	//	----- タイムラインエディタ生成 -----
-	timelineEdiotor_ = TimelineEditor(0, 100);
 
 }
 
@@ -284,14 +285,14 @@ void SceneGame::Render()
 #endif
 			Graphics::Instance().SetViewProjection(V * Projection);
 
-			ID3D11Buffer* shadowConstantBuffer = ShadowMap::Instance().GetConstantBuffer();
+			//ID3D11Buffer* shadowConstantBuffer = ShadowMap::Instance().GetConstantBuffer();
 			//Graphics::SceneConstants sceneConstant = Graphics::Instance().GetSceneConstant();
 			//deviceContext->UpdateSubresource(shadowConstantBuffer, 0, 0, &sceneConstant, 0, 0);
 			//deviceContext->VSSetConstantBuffers(1, 1, &shadowConstantBuffer);
 			//deviceContext->PSSetConstantBuffers(1, 1, &shadowConstantBuffer);
 
 			// SHADOW : bind shadow map at slot 8
-			ID3D11ShaderResourceView* srv = ShadowMap::Instance().GetShaderResourceView();
+			//ID3D11ShaderResourceView* srv = ShadowMap::Instance().GetShaderResourceView();
 			//deviceContext->PSSetShaderResources(8, 1, &srv);
 		}
 #endif
@@ -413,6 +414,10 @@ void SceneGame::Render()
 	/* ----- UI描画 ----- */
 	UIManager::Instance().Render();
 
+	//	シャドウマップ
+	MakeShadow();
+	DrawShadow();
+
 	framebuffers_[1]->Clear(deviceContext);
 	framebuffers_[1]->Activate(deviceContext);
 	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
@@ -420,6 +425,40 @@ void SceneGame::Render()
 	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::NONE);
 	bitBlockTransfer_->Blit(deviceContext, framebuffers_[0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, pixelShaders_[0].Get());
 	framebuffers_[1]->Deactivate(deviceContext);
+
+}
+
+//	シャドウ生成
+void SceneGame::MakeShadow()
+{
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
+	DirectX::XMFLOAT4X4 cameraView;
+	DirectX::XMStoreFloat4x4(&cameraView, Camera::Instance().GetViewMatrix());
+	DirectX::XMFLOAT4X4 cameraProjection;
+	DirectX::XMStoreFloat4x4(&cameraProjection, Camera::Instance().GetProjectionMatrix());
+	cascadedShadowMaps_->Clear(deviceContext);
+	cascadedShadowMaps_->Activate(deviceContext, cameraView, cameraProjection, lightDirection_, criticalDepthValue_, 3/*cb_slot*/);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::NONE);
+	stage_->CastShadows();
+	cascadedShadowMaps_->Deactivate(deviceContext);
+}
+
+//	シャドウ描画
+void SceneGame::DrawShadow()
+{
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::NONE);
+	ID3D11ShaderResourceView* shaderResourceViews[]
+	{
+		framebuffers_[0]->shaderResourceViews_[0].Get(),	// color_map
+		framebuffers_[0]->shaderResourceViews_[1].Get(),	// depth_map
+		cascadedShadowMaps_->depth_map().Get()				// cascaded_shadow_maps
+	};
+	bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[2].Get());
 
 }
 
@@ -447,9 +486,6 @@ void SceneGame::DrawDebug()
 	UINT numViewports{ 1 };
 	Graphics::Instance().GetDeviceContext()->RSGetViewports(&numViewports, &viewport);
 
-	auto srv = ShadowMap::Instance().GetShaderResourceView();
-	ImGui::Image(reinterpret_cast<void*>(srv), ImVec2(viewport.Width / 5.0f, viewport.Height / 5.0f));
-
 	//	----- DebugRenderer -----
 	Graphics::Instance().GetDebugRenderer()->DrawDebugGUI();
 
@@ -457,8 +493,6 @@ void SceneGame::DrawDebug()
 
 	//	----- ブルーム -----
 	if (bloomer_)bloomer_->DrawDebug();	//	Bloom
-	//	----- シャドウマップ -----
-	ShadowMap::Instance().DrawDebug();	//	Shadow
 
 	//	----- カメラ -----
 	Camera::Instance().DrawDebug();
@@ -476,9 +510,5 @@ void SceneGame::DrawDebug()
 	UIManager::Instance().DrawDebug();
 	//	----- Rhythm -----
 	Rhythm::Instance().DrawDebug();
-
-	//	----- タイムラインエディタ -----
-	//timelineEdiotor_.DrawUI();
-	//timelineEdiotor_.DrawTimeline();
 
 }

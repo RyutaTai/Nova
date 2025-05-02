@@ -6,6 +6,7 @@
 #include "Graphics.h"
 #include "../Resources/Texture.h"
 #include "../Others/Misc.h"
+#include "../../imgui/imgui.h"
 
 Decal::Decal(ID3D11Device* device, const wchar_t* filename)
 {

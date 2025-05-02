@@ -52,6 +52,9 @@ public:
 	const float					GetProjectionMappingFovy(const int& index)	const { return projectionMapping_[index].fovy_; }
 	const DirectX::XMFLOAT4X4	GetProjectionMappingTransform(const int& index)	const { return projectionMappingConstants_[index].transform_; }
 
+	//	シャドウマップ
+	void CastShadows() { gltfStaticModelResource_->CastShadows(); }
+
 private:
 	enum class CollisionModel
 	{

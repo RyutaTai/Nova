@@ -4,14 +4,14 @@
 #include "../Others/Converter.h"
 
 //	FBXモデルリソース読み込み
-std::shared_ptr<Model> ResourceManager::LoadFbxModelResource(const char* filename, bool triangulate, float samplingRate)
+std::shared_ptr<FbxModel> ResourceManager::LoadFbxModelResource(const char* filename, bool triangulate, float samplingRate)
 {
 	//	モデルを検索
 	for (auto& modelPair : models_)
 	{
 		if (modelPair.first == filename)	//	文字列比較
 		{
-			std::shared_ptr<Model> existModel = modelPair.second.lock();
+			std::shared_ptr<FbxModel> existModel = modelPair.second.lock();
 			if (existModel)
 			{
 				return existModel;
@@ -19,7 +19,7 @@ std::shared_ptr<Model> ResourceManager::LoadFbxModelResource(const char* filenam
 		}
 	}
 	//	モデル作成、読み込み
-	std::shared_ptr<Model> model = std::make_shared<Model>(Graphics::Instance().GetDevice(), filename);
+	std::shared_ptr<FbxModel> model = std::make_shared<FbxModel>(Graphics::Instance().GetDevice(), filename);
 	models_[filename] = model;
 
 	//	見つからなかった

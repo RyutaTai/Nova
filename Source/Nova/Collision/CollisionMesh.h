@@ -42,7 +42,7 @@ public:
 	std::vector<Mesh> meshes_;
 
 public:
-	CollisionMesh(ID3D11Device* device, const std::string& fileName, bool triangulate = false);
+	CollisionMesh(ID3D11Device* device, const std::string& filename, bool triangulate = false);
 
 	//	デバッグ描画
 	void DrawDebug();

@@ -109,7 +109,7 @@
     <ClCompile Include="Source\Nova\Resources\GeometricPrimitive.cpp">
       <Filter>Nova\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Nova\Resources\Model.cpp">
+    <ClCompile Include="Source\Nova\Resources\FbxModel.cpp">
       <Filter>Nova\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Resources\Sprite.cpp">
@@ -155,9 +155,6 @@
       <Filter>Nova\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\Shader.cpp">
-      <Filter>Nova\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Graphics\ShadowMap.cpp">
       <Filter>Nova\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Core\Framework.cpp">
@@ -259,9 +256,10 @@
     <ClCompile Include="Source\Game\UI\UIRhythmJudgment.cpp" />
     <ClCompile Include="Source\Nova\Collision\CollisionData.cpp" />
     <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp" />
-    <ClCompile Include="Source\Nova\Others\TimelineEditor.cpp" />
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
     <ClCompile Include="Source\Game\UI\UIRank.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\ShadowMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h">
@@ -318,7 +316,7 @@
     <ClInclude Include="Source\Nova\Resources\GeometricPrimitive.h">
       <Filter>Nova\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\Resources\Model.h">
+    <ClInclude Include="Source\Nova\Resources\FbxModel.h">
       <Filter>Nova\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Resources\Sprite.h">
@@ -376,9 +374,6 @@
       <Filter>Nova\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\Shader.h">
-      <Filter>Nova\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Graphics\ShadowMap.h">
       <Filter>Nova\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Core\Framework.h">
@@ -492,7 +487,6 @@
     <ClInclude Include="Source\Game\UI\UIRhythmJudgment.h" />
     <ClInclude Include="Source\Nova\Collision\CollisionData.h" />
     <ClInclude Include="Source\Nova\Collision\CollisionManager.h" />
-    <ClInclude Include="Source\Nova\Others\TimelineEditor.h" />
     <ClInclude Include="External\nlohmann\ordered_map.hpp" />
     <ClInclude Include="External\nlohmann\adl_serializer.hpp" />
     <ClInclude Include="External\nlohmann\byte_container_with_subtype.hpp" />
@@ -540,6 +534,8 @@
     <ClInclude Include="External\nlohmann\detail\string_utils.hpp" />
     <ClInclude Include="External\nlohmann\detail\value_t.hpp" />
     <ClInclude Include="Source\Game\UI\UIRank.h" />
+    <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h" />
+    <ClInclude Include="Source\Nova\Graphics\ShadowMap.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
@@ -642,6 +638,15 @@
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Source\Game\Shaders\UIRankPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\CascadedShadowPs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelCsmVs.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelCsmGs.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
   </ItemGroup>

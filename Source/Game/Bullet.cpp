@@ -4,6 +4,7 @@
 #include "../Nova/Graphics/Graphics.h"
 #include "../Nova/Collision/Collision.h"
 #include "../Nova/Audio/AudioManager.h"
+#include "../Nova/Resources/ResourceManager.h"
 #include "Player.h"
 
 //	コンストラクタ

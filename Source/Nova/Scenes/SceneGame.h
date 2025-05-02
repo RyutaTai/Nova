@@ -4,14 +4,13 @@
 #include "../Resources/Sprite.h"
 #include "../Input/Input.h"
 #include "../Audio/AudioManager.h"
-#include "../Graphics/ShadowMap.h"
 #include "../../Game/Stage.h"
 #include "../../Game/Player.h"
 #include "../../Game/Dragonkin.h"
 #include "../../Game/Drone.h"
 #include "../PostProcess/Bloom.h"
 #include "../../Game/UI/UI.h"
-#include "../Others/TimelineEditor.h"
+#include "../../Nova/Graphics/CascadedShadowMaps.h"
 
 class SceneGame : public Scene
 {
@@ -59,6 +58,11 @@ public:
 	bool	GetIsResult()			{ return isResult_; }
 
 private:
+	//	シャドウマップ
+	void MakeShadow();	//	シャドウ生成
+	void DrawShadow();	//	シャドウ描画
+
+private:
 	/* ----- オブジェクト ----- */
 	std::unique_ptr	<Stage>		stage_;
 	std::unique_ptr	<Player>	player_;
@@ -71,13 +75,13 @@ private:
 	std::unique_ptr<FrameBuffer>				framebuffers_[8];
 	std::unique_ptr<FullScreenQuad>				bitBlockTransfer_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShaders_[8];
-	DirectX::XMFLOAT4							lightDirection_ = { 0,-1,0,0 };
+	DirectX::XMFLOAT4							lightDirection_ = { +0.545f, -0.860f, -0.526f, 0.0f };
 	float										nearZ_ = 50.0f;
 	float										farZ_ = 400000.0f;
-	Microsoft::WRL::ComPtr <ID3D11Buffer> sceneConstantBuffer_;
-
-	/* ----- タイムライン ----- */
-	TimelineEditor timelineEdiotor_;
+	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;
+	//	シャドウマップ
+	std::unique_ptr<CascadedShadowMaps> cascadedShadowMaps_;
+	float criticalDepthValue_ = 0.0f; // If this value is 0, the camera's far panel distance is used.
 
 	/* ----- スプライト ----- */
 	enum SPRITE_GAME

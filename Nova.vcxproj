@@ -205,7 +205,9 @@
     <ClCompile Include="Source\Nova\Audio\Audio.cpp" />
     <ClCompile Include="Source\Nova\Collision\CollisionData.cpp" />
     <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Decal.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\ShadowMap.cpp" />
     <ClCompile Include="Source\Nova\Others\JudgeTime.cpp" />
     <ClCompile Include="Source\Game\UI\UIHealth.cpp" />
     <ClCompile Include="Source\Nova\Audio\AudioManager.cpp" />
@@ -260,7 +262,6 @@
     <ClCompile Include="Source\Nova\Graphics\FullScreenQuad.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Graphics.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Shader.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\ShadowMap.cpp" />
     <ClCompile Include="Source\Nova\Input\GamePad.cpp" />
     <ClCompile Include="Source\Nova\Input\Input.cpp" />
     <ClCompile Include="Source\Nova\Input\Microphone.cpp" />
@@ -273,7 +274,7 @@
     <ClCompile Include="Source\Nova\Resources\GltfModel.cpp" />
     <ClCompile Include="Source\Nova\Resources\GltfModelStaticBatching.cpp" />
     <ClCompile Include="Source\Nova\Audio\Midi.cpp" />
-    <ClCompile Include="Source\Nova\Resources\Model.cpp" />
+    <ClCompile Include="Source\Nova\Resources\FbxModel.cpp" />
     <ClCompile Include="Source\Nova\Resources\ResourceManager.cpp" />
     <ClCompile Include="Source\Nova\Resources\Sprite.cpp" />
     <ClCompile Include="Source\Nova\Resources\SpriteBatch.cpp" />
@@ -288,7 +289,6 @@
     <ClCompile Include="Source\Game\TitleState.cpp" />
     <ClCompile Include="Source\Game\UI\UITempo.cpp" />
     <ClCompile Include="Source\Game\UI\UIRhythmJudgment.cpp" />
-    <ClCompile Include="Source\Nova\Others\TimelineEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\nlohmann\adl_serializer.hpp" />
@@ -349,7 +349,9 @@
     <ClInclude Include="Source\Nova\Audio\Audio.h" />
     <ClInclude Include="Source\Nova\Collision\CollisionData.h" />
     <ClInclude Include="Source\Nova\Collision\CollisionManager.h" />
+    <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h" />
     <ClInclude Include="Source\Nova\Graphics\Decal.h" />
+    <ClInclude Include="Source\Nova\Graphics\ShadowMap.h" />
     <ClInclude Include="Source\Nova\Others\JudgeTime.h" />
     <ClInclude Include="Source\Game\UI\UIHealth.h" />
     <ClInclude Include="Source\Nova\Audio\AudioManager.h" />
@@ -410,7 +412,6 @@
     <ClInclude Include="Source\Nova\Graphics\FullScreenQuad.h" />
     <ClInclude Include="Source\Nova\Graphics\Graphics.h" />
     <ClInclude Include="Source\Nova\Graphics\Shader.h" />
-    <ClInclude Include="Source\Nova\Graphics\ShadowMap.h" />
     <ClInclude Include="Source\Nova\Input\GamePad.h" />
     <ClInclude Include="Source\Nova\Input\Input.h" />
     <ClInclude Include="Source\Nova\Input\Microphone.h" />
@@ -427,7 +428,7 @@
     <ClInclude Include="Source\Nova\Resources\GltfModel.h" />
     <ClInclude Include="Source\Nova\Resources\GltfModelStaticBatching.h" />
     <ClInclude Include="Source\Nova\Audio\Midi.h" />
-    <ClInclude Include="Source\Nova\Resources\Model.h" />
+    <ClInclude Include="Source\Nova\Resources\FbxModel.h" />
     <ClInclude Include="Source\Nova\Resources\ResourceManager.h" />
     <ClInclude Include="Source\Nova\Resources\Sprite.h" />
     <ClInclude Include="Source\Nova\Resources\SpriteBatch.h" />
@@ -442,7 +443,6 @@
     <ClInclude Include="Source\Game\TitleState.h" />
     <ClInclude Include="Source\Game\UI\UITempo.h" />
     <ClInclude Include="Source\Game\UI\UIRhythmJudgment.h" />
-    <ClInclude Include="Source\Nova\Others\TimelineEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Game\Shaders\BulletCoverPS.hlsl">
@@ -493,6 +493,12 @@
     </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\CascadedShadowPs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\DebugPS.hlsl">
@@ -550,6 +556,22 @@
     <FxCompile Include="Source\Nova\Shaders\GlowExtractionPs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelCsmGs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelCsmVs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\GltfModelPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

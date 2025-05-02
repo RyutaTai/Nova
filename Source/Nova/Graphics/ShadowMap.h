@@ -9,7 +9,7 @@
 
 #include "../Graphics/FullScreenQuad.h"
 #include "../Graphics/FrameBuffer.h"
-#include "../Resources/Model.h"
+#include "../Resources/GltfModel.h"
 
 class ShadowMap
 {

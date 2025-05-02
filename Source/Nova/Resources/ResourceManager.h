@@ -4,13 +4,13 @@
 #include <string>
 #include <map>
 
-#include "Model.h"
+#include "FbxModel.h"
 #include "GltfModel.h"
 #include "GltfModelStaticBatching.h"
 #include "Sprite.h"
 #include "Effect.h"
 
-class Model;
+class FbxModel;
 
 //	リソースマネージャー
 class ResourceManager
@@ -26,7 +26,7 @@ public:
 	}
 
 	//	Fbxモデルリソース読み込み
-	std::shared_ptr <Model>						LoadFbxModelResource(const char* fileName, bool triangulate = false, float samplingRate = 0);
+	std::shared_ptr <FbxModel>					LoadFbxModelResource(const char* fileName, bool triangulate = false, float samplingRate = 0);
 
 	//	Gltfモデルリソース読み込み
 	std::shared_ptr <GltfModel>					LoadGltfModelResource(const std::string& fileName, const std::string& rootNodeName = "root");
@@ -42,7 +42,7 @@ public:
 
 private:
 	//	Fbxモデルリソースマップ
-	using ModelMap = std::map<std::string, std::weak_ptr <Model>>;
+	using ModelMap = std::map<std::string, std::weak_ptr <FbxModel>>;
 	ModelMap models_;
 
 	//	Gltfモデルリソースマップ

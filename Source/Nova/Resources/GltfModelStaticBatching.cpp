@@ -113,7 +113,7 @@ GltfModelStaticBatching::GltfModelStaticBatching(const std::string& filename, co
 
 		_ASSERT_EXPR_A(warning.empty(), warning.c_str());
 		_ASSERT_EXPR_A(error.empty(), error.c_str());
-		_ASSERT_EXPR_A(succeeded, L"Failed to load glTF file");
+		_ASSERT_EXPR_A(succeeded, L"Failed to load gltf file");
 
 		for (std::vector<tinygltf::Scene>::const_reference gltfScene : gltfModel.scenes)
 		{
@@ -145,6 +145,11 @@ GltfModelStaticBatching::GltfModelStaticBatching(const std::string& filename, co
 	};
 	Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/GltfModelStaticBatchingVs.cso", vertexShader_.ReleaseAndGetAddressOf(), inputLayout_.ReleaseAndGetAddressOf(), inputElementDesc, _countof(inputElementDesc));
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GltfModelPs.cso", pixelShader_.ReleaseAndGetAddressOf());
+
+	//  シャドウマップ
+	Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/GltfModelCsmVS.cso", vertexShaderCsm_.ReleaseAndGetAddressOf(),
+		NULL, NULL, 0);
+	Graphics::Instance().GetShader()->CreateGsFromCso(device, "./Resources/Shader/GltfModelCsmGS.cso", geometryShaderCsm_.ReleaseAndGetAddressOf());
 
 	D3D11_BUFFER_DESC bufferDesc{};
 	bufferDesc.ByteWidth = sizeof(PrimitiveConstants);
@@ -768,6 +773,68 @@ void GltfModelStaticBatching::Render()
 		deviceContext->DrawIndexed(static_cast<UINT>(primitive.indexBufferView_.count()), 0, 0);
 
 	}
+}
+
+//  シャドウマップ
+void GltfModelStaticBatching::CastShadows()
+{
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
+	deviceContext->VSSetShader(vertexShaderCsm_.Get(), NULL, 0);
+	deviceContext->GSSetShader(geometryShaderCsm_.Get(), NULL, 0);
+	deviceContext->PSSetShader(NULL, NULL, 0);
+
+	DirectX::XMMATRIX world = GetTransform()->CalcWorld();
+
+	for (decltype(primitives_)::const_reference primitive : primitives_)
+	{
+		ID3D11Buffer* vertexBuffers[] = {
+			primitive.vertexBufferViews_.at("POSITION").buffer_.Get(),
+			primitive.vertexBufferViews_.at("NORMAL").buffer_.Get(),
+			primitive.vertexBufferViews_.at("TANGENT").buffer_.Get(),
+			primitive.vertexBufferViews_.at("TEXCOORD_0").buffer_.Get(),
+		};
+		UINT strides[] = {
+			static_cast<UINT>(primitive.vertexBufferViews_.at("POSITION").strideInBytes_),
+			static_cast<UINT>(primitive.vertexBufferViews_.at("NORMAL").strideInBytes_),
+			static_cast<UINT>(primitive.vertexBufferViews_.at("TANGENT").strideInBytes_),
+			static_cast<UINT>(primitive.vertexBufferViews_.at("TEXCOORD_0").strideInBytes_),
+		};
+		UINT offsets[_countof(vertexBuffers)] = {};
+		deviceContext->IASetVertexBuffers(0, _countof(vertexBuffers), vertexBuffers, strides, offsets);
+		deviceContext->IASetIndexBuffer(primitive.indexBufferView_.buffer_.Get(), primitive.indexBufferView_.format_, 0);
+
+		PrimitiveConstants primitiveData = {};
+		primitiveData.material_ = primitive.material_;
+		primitiveData.hasTangent_ = primitive.vertexBufferViews_.at("TANGENT").buffer_ != NULL;
+		XMStoreFloat4x4(&primitiveData.world_, GetTransform()->CalcWorld());
+		deviceContext->UpdateSubresource(primitiveCbuffer_.Get(), 0, 0, &primitiveData, 0, 0);
+		deviceContext->VSSetConstantBuffers(0, 1, primitiveCbuffer_.GetAddressOf());
+		deviceContext->PSSetConstantBuffers(0, 1, primitiveCbuffer_.GetAddressOf());
+
+		const Material& material = materials_.at(primitive.material_);
+		const int textureIndices[] =
+		{
+			material.data_.pbrMetallicRoughness_.basecolorTexture_.index_,
+			material.data_.pbrMetallicRoughness_.metallicRoughnessTexture_.index_,
+			material.data_.normalTexture_.index_,
+			material.data_.emissiveTexture_.index_,
+			material.data_.occlusionTexture_.index_,
+		};
+		ID3D11ShaderResourceView* nullShaderResourceView = {};
+		std::vector<ID3D11ShaderResourceView*> shaderResourceViews(_countof(textureIndices));
+		for (int textureIndex = 0; textureIndex < shaderResourceViews.size(); ++textureIndex)
+		{
+			shaderResourceViews.at(textureIndex) = textureIndices[textureIndex] > -1 ? textureResourceViews_.at(textures_.at(textureIndices[textureIndex]).source_).Get() : nullShaderResourceView;
+		}
+		deviceContext->PSSetShaderResources(1, static_cast<UINT>(shaderResourceViews.size()), shaderResourceViews.data());
+
+		deviceContext->DrawIndexedInstanced(static_cast<UINT>(primitive.indexBufferView_.count()), 4, 0, 0, 0);
+
+	}
+
+	deviceContext->VSSetShader(NULL, NULL, 0);
+	deviceContext->GSSetShader(NULL, NULL, 0);
+	deviceContext->PSSetShader(NULL, NULL, 0);
 }
 
 //  デバッグ描画

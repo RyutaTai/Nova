@@ -12,7 +12,13 @@
 #include <unordered_map>
 
 #include "../../tinygltf-release/tiny_gltf.h"
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/vector.hpp>
+#include <cereal/types/set.hpp>
+#include <cereal/types/unordered_map.hpp>
 #include "../Others/Transform.h"
+#include "../Resources/GltfModel.h"
 
 class GltfModelStaticBatching
 {
@@ -247,6 +253,9 @@ public:
 
 	Transform* GetTransform() { return &transform_; }
 
+	//	シャドウマップ
+	void CastShadows();
+
 private:
 	void FetchNodes(const tinygltf::Model& gltfModel);
 	void FetchMeshes(ID3D11Device* device, const tinygltf::Model& gltfModel);
@@ -260,7 +269,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShader_;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout>	inputLayout_;
 
-	std::string filename_;
+	std::string filename_ = {};
 	Transform transform_ = {};
+
+	//	シャドウマップ
+	Microsoft::WRL::ComPtr<ID3D11VertexShader> vertexShaderCsm_;
+	Microsoft::WRL::ComPtr<ID3D11GeometryShader> geometryShaderCsm_;
 
 };

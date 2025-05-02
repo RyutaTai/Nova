@@ -5,6 +5,7 @@
 #include "../Nova/Core/Framework.h"
 #include "../Nova/Others/MathHelper.h"
 #include "../Nova/Collision/Collision.h"
+#include "../Nova/Resources/ResourceManager.h"
 #include "../Game/UI/UIManager.h"
 #include "../Game/UI/UITempo.h"
 #include "PlayerState.h"

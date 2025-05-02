@@ -18,7 +18,6 @@
 #include "../Graphics/FullScreenQuad.h"
 #include "../Graphics/Shader.h"
 #include "../Debug/DebugRenderer.h"
-#include "ShadowMap.h"
 
 #if 0
 CONST LONG SCREEN_WIDTH{ 1280 };
@@ -37,8 +36,8 @@ public:	//	構造体
 		DirectX::XMFLOAT4X4 viewProjection_ = {};
 		DirectX::XMFLOAT4   lightDirection_ = {};
 		DirectX::XMFLOAT4   cameraPosition_ = {};
-		DirectX::XMFLOAT4X4 lightViewProjection_ = {};	//	Shadow
-		DirectX::XMFLOAT4X4 invViewProjection_ = {};		//	Skymap
+		DirectX::XMFLOAT4X4 lightViewProjection_ = {};
+		DirectX::XMFLOAT4X4 invViewProjection_ = {};
 		//DirectX::XMFLOAT4X4 projectionMappingTransform_;
 	};
 
@@ -73,7 +72,7 @@ public:
 	void SetLightViewProjection(const DirectX::XMFLOAT4X4& lightViewProjection) { sceneConstant_.lightViewProjection_ = lightViewProjection; }
 	void SetInvViewProjection(const DirectX::XMFLOAT4X4& invViewProjection)		{ sceneConstant_.invViewProjection_ = invViewProjection; }
 	void SetInvViewProjection(const DirectX::XMMATRIX& invViewProjection)		{ DirectX::XMStoreFloat4x4(&sceneConstant_.invViewProjection_, invViewProjection); }
-	void SetIsVSync(bool isVSync);
+	void SetIsVSync(const bool& isVSync);
 
 	//	ゲッター
 	CONST HWND					GetHwnd()					CONST	{ return hwnd_; }
@@ -95,20 +94,20 @@ public:
 
 private:
 	static Graphics*								instance_;
-	std::unique_ptr<Shader>							shader_ = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11Device>			device_ = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext>		deviceContext_ = nullptr;
-	Microsoft::WRL::ComPtr<IDXGISwapChain1>			swapChain_ = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>	renderTargetView_ = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>	depthStencilView_ = nullptr;
+	std::unique_ptr<Shader>							shader_				= nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Device>			device_				= nullptr;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext>		deviceContext_		= nullptr;
+	Microsoft::WRL::ComPtr<IDXGISwapChain1>			swapChain_			= nullptr;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>	renderTargetView_	= nullptr;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>	depthStencilView_	= nullptr;
 
 	//	SceneConstant
 	SceneConstants	sceneConstant_ = {};
 
 	//	ConstantBuffer
-	Microsoft::WRL::ComPtr<ID3D11Buffer>	constantBuffer_ = nullptr;
-	std::unique_ptr<FrameBuffer>			frameBuffers_[8] = {nullptr};	//	使われていない
-	std::unique_ptr<FullScreenQuad>			bitBlockTransfer_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Buffer>	constantBuffer_		= nullptr;
+	std::unique_ptr<FrameBuffer>			frameBuffers_[8]	= { nullptr };
+	std::unique_ptr<FullScreenQuad>			bitBlockTransfer_	= nullptr;
 
 	//	垂直同期
 	bool	isVSync_ = true;			//	垂直同期フラグ
@@ -122,8 +121,8 @@ private:
 	Microsoft::WRL::ComPtr<IDWriteTextFormat>		dwriteTextFormats_[8];
 	Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>	d2dSolidColorBrushes_[8];
 #endif
-	bool	fullScreenMode_ = false;
-	bool	tearingSupported_ = false;
+	bool	fullScreenMode_		= false;
+	bool	tearingSupported_	= false;
 	RECT	windowedRect_;
 	DWORD	windowedStyle_;
 	SIZE	frameBufferDimensions_;

@@ -264,7 +264,7 @@ void Graphics::CreateSwapChain(IDXGIFactory6* dxgiFactory6)
 void Graphics::OnSizeChanged(UINT64 width, UINT height)
 {
 	HRESULT hr = S_OK;
-	if (width != frameBufferDimensions_.cx || height != frameBufferDimensions_.cy)
+	if (width > 0 && height > 0 && (width != frameBufferDimensions_.cx || height != frameBufferDimensions_.cy))
 	{
 		frameBufferDimensions_.cx = static_cast<LONG>(width);
 		frameBufferDimensions_.cy = height;
@@ -367,7 +367,7 @@ void Graphics::StylizeWindow(bool fullscreen)
 }
 
 //	êÇíºìØä˙ê›íË
-void Graphics::SetIsVSync(bool isVSync)
+void Graphics::SetIsVSync(const bool& isVSync)
 {
 	isVSync_ = isVSync;
 	if (isVSync_ == false)vSyncInterval_ = 0;

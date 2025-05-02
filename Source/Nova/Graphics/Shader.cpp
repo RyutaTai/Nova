@@ -63,16 +63,20 @@ Shader::Shader()
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
 	// SHADOW
-	samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL; // D3D11_COMPARISON_LESS_EQUAL
+	samplerDesc.MipLODBias = 0;
+	samplerDesc.MaxAnisotropy = 16;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
 	samplerDesc.BorderColor[0] = 1;
 	samplerDesc.BorderColor[1] = 1;
 	samplerDesc.BorderColor[2] = 1;
 	samplerDesc.BorderColor[3] = 1;
-	hr = Graphics::Instance().GetDevice()->CreateSamplerState(&samplerDesc, samplerStates_[static_cast<int>(SAMPLER_STATE::COMPARISON_LINEAR_BORDER_WHITE)].GetAddressOf());
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	hr = Graphics::Instance().GetDevice()->CreateSamplerState(&samplerDesc, samplerStates_[static_cast<int>(SAMPLER_STATE::COMPARISON)].GetAddressOf());
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -261,7 +265,6 @@ Shader::~Shader()
 
 }
 
-//	ステート設定
 //	SamplerState設定
 void Shader::SetSamplerState(ID3D11DeviceContext* deviceContext)
 {
@@ -270,7 +273,7 @@ void Shader::SetSamplerState(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetSamplers(2, 1, samplerStates_[static_cast<UINT>(SAMPLER_STATE::ANISOTROPIC)].GetAddressOf());
 	deviceContext->PSSetSamplers(3, 1, samplerStates_[static_cast<UINT>(SAMPLER_STATE::LINEAR_BORDER_BLACK)].GetAddressOf());
 	deviceContext->PSSetSamplers(4, 1, samplerStates_[static_cast<UINT>(SAMPLER_STATE::LINEAR_BORDER_WHITE)].GetAddressOf());
-	deviceContext->PSSetSamplers(5, 1, samplerStates_[static_cast<UINT>(SAMPLER_STATE::COMPARISON_LINEAR_BORDER_WHITE)].GetAddressOf());
+	deviceContext->PSSetSamplers(5, 1, samplerStates_[static_cast<UINT>(SAMPLER_STATE::COMPARISON)].GetAddressOf());
 	deviceContext->PSSetSamplers(6, 1, samplerStates_[static_cast<UINT>(SAMPLER_STATE::LINEAR_BORDER_OPAQUE_BLACK)].GetAddressOf());
 	deviceContext->PSSetSamplers(7, 1, samplerStates_[static_cast<UINT>(SAMPLER_STATE::POINT_CLAMP)].GetAddressOf());
 

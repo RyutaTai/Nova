@@ -7,16 +7,16 @@
 #include "../Resources/GltfModel.h"
 #include "../Others/Converter.h"
 
-CollisionMesh::CollisionMesh(ID3D11Device* device, const std::string& fileName, bool triangulate)
+CollisionMesh::CollisionMesh(ID3D11Device* device, const std::string& filename, bool triangulate)
 {
 	//	Fbx“Ç‚Ýž‚Ý
-	if (fileName.find(".fbx") != std::string::npos)
+	if (filename.find(".fbx") != std::string::npos)
 	{
 		FbxManager* fbxManager = FbxManager::Create();
 		FbxScene* fbxScene = FbxScene::Create(fbxManager, "");
 		FbxImporter* fbxImporter = FbxImporter::Create(fbxManager, "");
 		bool importStatus = false;
-		importStatus = fbxImporter->Initialize(fileName.c_str());
+		importStatus = fbxImporter->Initialize(filename.c_str());
 		assert(importStatus && "Failed to call FbxImporter::Initialize");
 		importStatus = fbxImporter->Import(fbxScene);
 		assert(importStatus && "Failed to call FbxImporter::Import");
@@ -95,13 +95,13 @@ CollisionMesh::CollisionMesh(ID3D11Device* device, const std::string& fileName, 
 		std::string error, warning;
 		bool succeeded{ false };
 
-		if (fileName.find(".glb") != std::string::npos)
+		if (filename.find(".glb") != std::string::npos)
 		{
-			succeeded = tinyGltf.LoadBinaryFromFile(&gltfModel, &error, &warning, fileName.c_str());
+			succeeded = tinyGltf.LoadBinaryFromFile(&gltfModel, &error, &warning, filename.c_str());
 		}
-		else if (fileName.find(".gltf") != std::string::npos)
+		else if (filename.find(".gltf") != std::string::npos)
 		{
-			succeeded = tinyGltf.LoadASCIIFromFile(&gltfModel, &error, &warning, fileName.c_str());
+			succeeded = tinyGltf.LoadASCIIFromFile(&gltfModel, &error, &warning, filename.c_str());
 		}
 		assert(succeeded && "Failed to load glTF file");
 

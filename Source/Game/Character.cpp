@@ -3,6 +3,7 @@
 #include "Stage.h"
 #include "../Nova/Core/Framework.h"
 #include "../Nova/Others/MathHelper.h"
+#include "../Nova/Resources/ResourceManager.h"
 
 //	コンストラクタ
 Character::Character(const std::string& filename, const std::string& rootNodeName)
