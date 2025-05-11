@@ -41,6 +41,22 @@ public:	//	ç\ë¢ëÃ
 		//DirectX::XMFLOAT4X4 projectionMappingTransform_;
 	};
 
+	//struct parametric_constants
+	//{
+	//	float extraction_threshold{ 0.8f };
+	//	float gaussian_sigma{ 1.0f };
+	//	float bloom_intensity{ 1.0f };
+	//	float exposure{ 1.0f };
+
+	//	// CASCADED_SHADOW_MAPS
+	//	float shadow_color = 0.2f;
+	//	float shadow_depth_bias = 0.0001f;
+	//	bool colorize_cascaded_layer = true;
+	//	float align;
+	//};
+	//parametric_constants parametric_constants;
+
+
 public:
 	Graphics(HWND hwnd, bool fullscreen);
 	~Graphics() {}

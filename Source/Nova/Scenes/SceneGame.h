@@ -79,9 +79,10 @@ private:
 	float										nearZ_ = 50.0f;
 	float										farZ_ = 400000.0f;
 	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;
+
 	//	シャドウマップ
 	std::unique_ptr<CascadedShadowMaps> cascadedShadowMaps_;
-	float criticalDepthValue_ = 0.0f; // If this value is 0, the camera's far panel distance is used.
+	float criticalDepthValue_ = 30.0f; // If this value is 0, the camera's far panel distance is used.
 
 	/* ----- スプライト ----- */
 	enum SPRITE_GAME

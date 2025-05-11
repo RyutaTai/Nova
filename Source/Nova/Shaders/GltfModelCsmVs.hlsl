@@ -14,7 +14,6 @@ VS_OUT_CSM main(VS_IN vin, uint instanceId : SV_INSTANCEID)
 {
     VS_OUT_CSM vout;
     
-    float sigma = vin.tangent.w;
     
     if (skin > -1)
     {
@@ -33,10 +32,7 @@ VS_OUT_CSM main(VS_IN vin, uint instanceId : SV_INSTANCEID)
         vin.tangent = normalize(mul(float4(vin.tangent.xyz, 0), skinMatrix));
         
     }
-    
-    vin.position.w = 1;
-    vout.position = mul(vin.position, mul(world, viewProjection));
-    
+
     vout.instanceId = instanceId;
     vout.position = mul(float4(vin.position.xyz, 1), mul(world, csmData.cascadedMatrices[instanceId]));
     

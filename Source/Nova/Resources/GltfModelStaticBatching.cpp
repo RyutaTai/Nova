@@ -782,6 +782,8 @@ void GltfModelStaticBatching::CastShadows()
 	deviceContext->VSSetShader(vertexShaderCsm_.Get(), NULL, 0);
 	deviceContext->GSSetShader(geometryShaderCsm_.Get(), NULL, 0);
 	deviceContext->PSSetShader(NULL, NULL, 0);
+	deviceContext->IASetInputLayout(inputLayout_.Get());
+	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	DirectX::XMMATRIX world = GetTransform()->CalcWorld();
 

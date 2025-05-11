@@ -29,10 +29,12 @@ public:
 	{
 		deviceContext->ClearDepthStencilView(depthStencilView_.Get(), D3D11_CLEAR_DEPTH, 1, 0);
 	}
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& depth_map()
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& DepthMap()
 	{
 		return shaderResourceView_;
 	}
+
+	void DrawDebug();
 
 public:
 	const UINT cascadeCount_;

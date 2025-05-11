@@ -342,10 +342,13 @@ void SceneGame::Render()
 			Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
 			ID3D11ShaderResourceView* shaderResourceViews[] =
 			{
-				framebuffers_[0]->shaderResourceViews_[0].Get(),
-				bloomer_->ShaderResourceView(),
+				framebuffers_[0]->shaderResourceViews_[0].Get(),	//	colorMap
+				bloomer_->ShaderResourceView(),						//	boom
+				framebuffers_[0]->shaderResourceViews_[1].Get(),	//	depthMap
+				cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMap
+
 			};
-			bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, 2, pixelShaders_[0].Get());
+			bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[0].Get());
 		}
 
 		//	シャドウマップ
@@ -454,8 +457,8 @@ void SceneGame::DrawShadow()
 	ID3D11ShaderResourceView* shaderResourceViews[]
 	{
 		framebuffers_[0]->shaderResourceViews_[0].Get(),	// color_map
-		framebuffers_[0]->shaderResourceViews_[1].Get(),	// depth_map
-		cascadedShadowMaps_->depth_map().Get()				// cascaded_shadow_maps
+		framebuffers_[0]->shaderResourceViews_[1].Get(),	// DepthMap
+		cascadedShadowMaps_->DepthMap().Get()				// cascaded_shadow_maps
 	};
 	bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[2].Get());
 
@@ -491,7 +494,15 @@ void SceneGame::DrawDebug()
 	ImGui::DragFloat4("LightDirection", &lightDirection_.x, 0.1f, -FLT_MAX, FLT_MAX);	//	ライトの向き
 
 	//	----- ブルーム -----
-	if (bloomer_)bloomer_->DrawDebug();	//	Bloom
+	if (bloomer_)bloomer_->DrawDebug();
+
+	//	----- シャドウ -----
+	if (ImGui::TreeNode("Shadow"))
+	{
+		ImGui::DragFloat("CriticcalDepthValue", &criticalDepthValue_, 0.1f);
+		cascadedShadowMaps_->DrawDebug();
+		ImGui::TreePop();
+	}
 
 	//	----- カメラ -----
 	Camera::Instance().DrawDebug();

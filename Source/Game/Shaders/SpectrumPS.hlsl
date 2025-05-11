@@ -39,24 +39,24 @@ float4 main(VS_OUT pin) : SV_TARGET
     float fft = amp[(int) offset % 4];
     
     
-    float3 fft_color = float3(1.0, 0.0, 0.0);
+    float3 fftColor = float3(color[MY_COLOR_INDEX].rgb);
     //float3 fft_color = float3(0.8, 0.6, 0.3);
     if (pin.texcoord.y > 0.5)
     {
         float y = (pin.texcoord.y - 0.5) * 2.0;
         //return float4(step(y, fft), 0, 0, 1);
-        fft_color *= step(y, fft);
+        fftColor *= step(y, fft);
         
     }
     else if (pin.texcoord.y < 0.5)
     {
         float y = (0.5 - pin.texcoord.y) * 2.0;
         //return float4(step(y, fft), 0, 0, 1);
-        fft_color *= step(y, fft);
+        fftColor *= step(y, fft);
 
     }
     
-    return float4(fft_color, 1.0);
+    return float4(fftColor, 1.0);
     //return float4(fft_color, 0.5);
     
     

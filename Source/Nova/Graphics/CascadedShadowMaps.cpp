@@ -4,6 +4,7 @@
 #include <array>
 
 #include "../../Nova/Others/Misc.h"
+#include "../../imgui/imgui.h"
 
 // Calculate the 8 vertices of the view frustum based on the provided view and projection matrices.
 std::array<DirectX::XMFLOAT4, 8> ExtractFrustumCorners(const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
@@ -213,4 +214,10 @@ void CascadedShadowMaps::Deactivate(ID3D11DeviceContext* deviceContext)
 {
 	deviceContext->RSSetViewports(viewportCount_, cachedViewports_);
 	deviceContext->OMSetRenderTargets(1, cachedRenderTargetView_.GetAddressOf(), cachedDepthStencilView_.Get());
+}
+
+void CascadedShadowMaps::DrawDebug()
+{
+	ImGui::Checkbox("FitToCascade", &fitToCascade_);
+	ImGui::DragFloat("zMulti", &zMult_, 0.01f);
 }

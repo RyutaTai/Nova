@@ -233,10 +233,11 @@ public:
 private:
 	struct PrimitiveConstants
 	{
-		DirectX::XMFLOAT4X4 world_;
-		int material_ = -1;
-		int hasTangent_ = 0;
-		int pad_[2];
+		DirectX::XMFLOAT4X4 world_ = {};
+		int					material_ = -1;
+		int					hasTangent_ = 0;
+		int					skin_ = -1;
+		int					pad_ = 0;
 	};
 	Microsoft::WRL::ComPtr<ID3D11Buffer> primitiveCbuffer_;
 

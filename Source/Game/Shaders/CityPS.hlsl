@@ -9,8 +9,8 @@
 #define OCCLUSION_TEXTURE 4
 
 Texture2D<float4> materialTextures[5] : register(t1);
-// PROJECTION_MAPPING
-Texture2D circleSpectrumTexture : register(t15);
+//  プロジェクションマッピング
+Texture2D circleSpectrumTexture   : register(t15);
 Texture2D waveformSpectrumTexture : register(t16);
 
 struct TextureInfo

@@ -4,6 +4,7 @@
 #include "../Rhythm.h"
 #include "../UI/UIRhythmJudgment.h"
 #include "../../../External/imgui/imgui.h"
+#include "../Stage.h"
 
 UITempo::UITempo()
 	:UI(UIManager::UIType::Tempo)
@@ -171,6 +172,9 @@ bool UITempo::JudgeRythm()
 		semicircles_[nearSemicircleIndex]->isJudged_ = true;
 		Rhythm::Instance().AddComboCount(1);
 
+		//	プレイヤーの足元のオーディオスペクトラムの色を変更
+		Stage::Instance().SetSpectrumColor(Stage::ProjectionMappingType::Circle, { 1.0f,1.0f,0.0f,1.0f });
+		
 		return true;
 
 	}

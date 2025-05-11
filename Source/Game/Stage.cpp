@@ -45,9 +45,20 @@ Stage::Stage()
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
 	//	オーディオスペクトラムカラー初期化
-	fftConstant_.color_[1] = { 0.0f, 0.325f, 1.0f, 1.0f };
-	//fftConstant_.color_[1] = { 0.1f, 0.2f, 0.3f, 1.0f };
+	fftConstant_.color_[static_cast<int>(ProjectionMappingType::Waveform)]		= { 1.0f, 0.0f, 0.0f, 1.0f};
+	defaultSpectrumColor_[static_cast<int>(ProjectionMappingType::Waveform)]	= { 1.0f, 0.0f, 0.0f, 1.0f };
+	currentSpectrumColor_[static_cast<int>(ProjectionMappingType::Waveform)]	= { 1.0f, 0.0f, 0.0f, 1.0f };
+	
+	fftConstant_.color_[static_cast<int>(ProjectionMappingType::Circle)]	= { 0.0f, 0.325f, 1.0f, 1.0f};
+	defaultSpectrumColor_[static_cast<int>(ProjectionMappingType::Circle)]	= { 0.0f, 0.325f, 1.0f, 1.0f};
+	currentSpectrumColor_[static_cast<int>(ProjectionMappingType::Circle)]	= { 0.0f, 0.325f, 1.0f, 1.0f};
 
+	for (int i = 0; i < static_cast<int>(ProjectionMappingType::Max); ++i)
+	{
+		isTemporaryColorActive_[i] = false;
+		colorTimer_[i] = 0.0f;
+		colorDuration_[i] = 0.8f;
+	}
 
 	//	音の周波数データ生成、初期化
 	frequency_ = std::make_unique<Frequency>();
@@ -192,6 +203,7 @@ void Stage::UpdateEmissive(const float& elapsedTime)
 //	オーディオスペクトラムk更新
 void Stage::UpdateAudioSpectrum(const float& elapsedTime)
 {
+	UpdateSpectrumColor(elapsedTime);		//	オーディオスペクトラムの色更新
 	UpdateCircleAudioSpectrum(elapsedTime);
 	UpdateWaveformAudioSpectrum();
 }
@@ -216,6 +228,32 @@ void Stage::UpdateWaveformAudioSpectrum()
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(projectionMappingBuffer_[projectionMappingIndex].Get(), 0, 0, &projectionMappingConstants_[projectionMappingIndex], 0, 0);
 	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(5, 1, projectionMappingBuffer_[projectionMappingIndex].GetAddressOf());
 
+}
+
+//	オーディオスペクトラムの色変更に関する更新処理
+void Stage::UpdateSpectrumColor(const float& elapsedTime)
+{
+	for (int i = 0; i < static_cast<int>(ProjectionMappingType::Max); ++i)
+	{
+		if (isTemporaryColorActive_[i])	//	色変更フラグが立っていたら
+		{
+			colorTimer_[i] += elapsedTime;
+			if (colorTimer_[i] >= colorDuration_[i])	//	一定時間経過したらデフォルト色にリセット
+			{
+				currentSpectrumColor_[i]	= defaultSpectrumColor_[i];
+				fftConstant_.color_[i]		= defaultSpectrumColor_[i];
+				isTemporaryColorActive_[i]	= false;
+			}
+		}
+	}
+}
+
+//	オーディオスペクトラムの色変更
+void Stage::SetSpectrumColor(const ProjectionMappingType& projectionMappingType, const DirectX::XMFLOAT4& color)
+{
+	fftConstant_.color_[static_cast<int>(projectionMappingType)] = color;
+	isTemporaryColorActive_[static_cast<int>(projectionMappingType)] = true;
+	colorTimer_[static_cast<int>(projectionMappingType)] = 0.0f;	//	タイマーをリセット
 }
 
 //	円形オーディオスペクトラム更新
@@ -467,7 +505,7 @@ void Stage::DrawDebug()
 			if (ImGui::TreeNode("Waveform"))
 			{
 				ImGui::PushID(projectionMappingIndex);
-				ImGui::ColorEdit4("Color", &fftConstant_.color_[0].x);
+				ImGui::ColorEdit4("Color", &fftConstant_.color_[projectionMappingIndex].x);
 				ImGui::DragFloat3("Eye", &projectionMapping_[projectionMappingIndex].eye_.x);
 				ImGui::DragFloat3("Focus", &projectionMapping_[projectionMappingIndex].focus_.x);
 				ImGui::DragFloat("Rotation", &projectionMapping_[projectionMappingIndex].rotation_);
@@ -480,7 +518,7 @@ void Stage::DrawDebug()
 			if (ImGui::TreeNode("Circle"))
 			{
 				projectionMappingIndex = static_cast<int>(ProjectionMappingType::Circle);
-				ImGui::ColorEdit4("Color", &fftConstant_.color_[1].x);
+				ImGui::ColorEdit4("Color", &fftConstant_.color_[projectionMappingIndex].x);
 				ImGui::PushID(projectionMappingIndex);
 				ImGui::DragFloat3("Eye", &projectionMapping_[projectionMappingIndex].eye_.x);
 				ImGui::DragFloat3("Focus", &projectionMapping_[projectionMappingIndex].focus_.x);
