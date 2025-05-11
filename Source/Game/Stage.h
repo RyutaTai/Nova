@@ -55,10 +55,11 @@ public:
 
 	struct ProjectionMapping
 	{
-		DirectX::XMFLOAT3	eye_ = { 0, 50, 0 };
-		DirectX::XMFLOAT3	focus_ = { 0, 0, 0 };
+		DirectX::XMFLOAT3	eye_	= { 0.0f, 50.0f, 0.0f };
+		DirectX::XMFLOAT3	focus_	= { 0.0f, 0.0f,  0.0f };
+		DirectX::XMFLOAT3	scale_	= { 1.0f, 1.0f,  1.0f };
 		float				rotation_ = 0.0f;
-		float				fovy_ = 10.0f;
+		float				fovy_	= 10.0f;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture_;	//	ピクセルシェーダーでここに書き出す
 	};
 	ProjectionMapping projectionMapping_[static_cast<int>(ProjectionMappingType::Max)];
@@ -94,6 +95,10 @@ public:
 	//	オーディオスペクトラムの色
 	void UpdateSpectrumColor(const float& elapsedTime);
 	void SetSpectrumColor(const ProjectionMappingType& projectionMappingType, const DirectX::XMFLOAT4& color);
+
+	//	オーディオスペクトラムのスケール
+	void UpdateSpectrumScale(const float& elapsedTime);
+	void SetSpectrumScale(const ProjectionMappingType& projectionMappingType, const DirectX::XMFLOAT3& scale);
 
 	//	プロジェクションマッピング情報
 	void SetProjectionMappingEye(const DirectX::XMFLOAT3& eye, const int& index) { projectionMapping_[index].eye_ = eye; }
@@ -156,5 +161,12 @@ private:
 	bool	isTemporaryColorActive_[static_cast<int>(ProjectionMappingType::Max)];	//	オーディオスペクトラムの一時的な色変更フラグ
 	float	colorTimer_[static_cast<int>(ProjectionMappingType::Max)];
 	float	colorDuration_[static_cast<int>(ProjectionMappingType::Max)];				//	何秒間色を変更するか
+
+	//	オーディオスペクトラムのスケール変更
+	DirectX::XMFLOAT3 defaultSpectrumScale_[static_cast<int>(ProjectionMappingType::Max)];
+	DirectX::XMFLOAT3 currentSpectrumScale_[static_cast<int>(ProjectionMappingType::Max)];
+	bool	isTemporaryScaleActive_[static_cast<int>(ProjectionMappingType::Max)];
+	float	scaleTimer_[static_cast<int>(ProjectionMappingType::Max)];
+	float	scaleDuration_[static_cast<int>(ProjectionMappingType::Max)];
 
 };

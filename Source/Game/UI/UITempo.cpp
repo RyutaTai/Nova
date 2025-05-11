@@ -174,7 +174,9 @@ bool UITempo::JudgeRythm()
 
 		//	プレイヤーの足元のオーディオスペクトラムの色を変更
 		Stage::Instance().SetSpectrumColor(Stage::ProjectionMappingType::Circle, { 1.0f,1.0f,0.0f,1.0f });
-		
+		//	プレイヤーの足元のオーディオスペクトラムのスケールを変更
+		Stage::Instance().SetSpectrumScale(Stage::ProjectionMappingType::Circle, { 1.3f,1.3f,1.3f });
+
 		return true;
 
 	}

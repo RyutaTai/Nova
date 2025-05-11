@@ -58,6 +58,12 @@ Stage::Stage()
 		isTemporaryColorActive_[i] = false;
 		colorTimer_[i] = 0.0f;
 		colorDuration_[i] = 0.8f;
+
+		defaultSpectrumScale_[i] = { 1.0f,1.0f,1.0f };
+		currentSpectrumScale_[i] = { 1.0f,1.0f,1.0f };
+		isTemporaryScaleActive_[i] = false;
+		scaleTimer_[i] = 0.0f;
+		scaleDuration_[i] = 0.8f;
 	}
 
 	//	音の周波数データ生成、初期化
@@ -77,6 +83,7 @@ Stage::Stage()
 	//	プロジェクションマッピング初期設定
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].eye_		= { 72.0f,7.0f,8.8f};
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].focus_	= { 33.0f,10.0f,-1.0f };
+	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].scale_	= { 1.0f,1.0f,1.0f };
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].rotation_ = -104.2f;
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].fovy_		=	10.0f;
 	bufferDesc = {};
@@ -88,6 +95,7 @@ Stage::Stage()
 
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].eye_		= { 0.0f,32.0f,0.0f };
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].focus_		= { 0.0f,0.0f,0.0f };
+	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].scale_	= { 1.0f,1.0f,1.0f };
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].rotation_	= 0.0f;
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].fovy_		=	10.0f;
 	bufferDesc = {};
@@ -204,6 +212,7 @@ void Stage::UpdateEmissive(const float& elapsedTime)
 void Stage::UpdateAudioSpectrum(const float& elapsedTime)
 {
 	UpdateSpectrumColor(elapsedTime);		//	オーディオスペクトラムの色更新
+	UpdateSpectrumScale(elapsedTime);		//	オーディオスペクトラムのスケール更新
 	UpdateCircleAudioSpectrum(elapsedTime);
 	UpdateWaveformAudioSpectrum();
 }
@@ -227,6 +236,72 @@ void Stage::UpdateWaveformAudioSpectrum()
 	//	定数バッファをGPUに送る
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(projectionMappingBuffer_[projectionMappingIndex].Get(), 0, 0, &projectionMappingConstants_[projectionMappingIndex], 0, 0);
 	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(5, 1, projectionMappingBuffer_[projectionMappingIndex].GetAddressOf());
+
+}
+
+//	円形オーディオスペクトラム更新
+void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
+{
+	//	座標更新
+	int projectionMappingIndex = static_cast<int>(ProjectionMappingType::Circle);
+	DirectX::XMFLOAT3 projectionMappingEye = Player::Instance().GetTransform()->GetPosition();					//	プレイヤーの位置
+	DirectX::XMFLOAT3 projectionMappingFocus = Player::Instance().GetTransform()->GetPosition();	//	注視点
+	projectionMapping_[projectionMappingIndex].focus_ = projectionMappingFocus;
+
+	projectionMappingEye.y += eyeHeight_;								//	視点をプレイヤーの真上から投影するように設定
+
+	projectionMapping_[projectionMappingIndex].eye_ = projectionMappingEye;
+
+	//	回転値更新
+	float projectionMappingRotation = projectionMapping_[projectionMappingIndex].rotation_;
+	//projectionMappingRotation += 90.0f * elapsedTime;
+	if (projectionMappingRotation > 360.0f)
+	{
+		projectionMappingRotation = 0.0f;
+	}
+	projectionMapping_[projectionMappingIndex].rotation_ = projectionMappingRotation;
+
+	float projectionMappingFovy = projectionMapping_[projectionMappingIndex].fovy_;
+#if 0
+	DirectX::XMMATRIX ProjectionMappingTransform =
+		DirectX::XMMatrixLookAtLH(
+			DirectX::XMLoadFloat3(&projectionMappingEye),
+			DirectX::XMLoadFloat3(&projectionMappingFocus),
+			DirectX::XMVector3Transform(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XMMatrixRotationRollPitchYaw(0, DirectX::XMConvertToRadians(projectionMappingRotation), 0))) *
+		DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(projectionMappingFovy), 1.0f, 1.0f, 500.0f);
+	DirectX::XMStoreFloat4x4(&projectionMappingConstants_[projectionMappingIndex].transform_, ProjectionMappingTransform);
+#else
+	//	スケール変更あり(scale_)
+	// スケール行列
+	DirectX::XMMATRIX scaleMatrix = DirectX::XMMatrixScaling(
+		projectionMapping_[projectionMappingIndex].scale_.x,
+		projectionMapping_[projectionMappingIndex].scale_.y,
+		projectionMapping_[projectionMappingIndex].scale_.z
+	);
+
+	// ビュー行列
+	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(
+		DirectX::XMLoadFloat3(&projectionMappingEye),
+		DirectX::XMLoadFloat3(&projectionMappingFocus),
+		DirectX::XMVector3Transform(
+			DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f),
+			DirectX::XMMatrixRotationRollPitchYaw(0, DirectX::XMConvertToRadians(projectionMappingRotation), 0))
+	);
+
+	// プロジェクション行列
+	DirectX::XMMATRIX projMatrix = DirectX::XMMatrixPerspectiveFovLH(
+		DirectX::XMConvertToRadians(projectionMappingFovy), 1.0f, 1.0f, 500.0f
+	);
+
+	// 変換行列にスケールを掛ける
+	DirectX::XMMATRIX ProjectionMappingTransform = scaleMatrix * viewMatrix * projMatrix;
+	DirectX::XMStoreFloat4x4(&projectionMappingConstants_[projectionMappingIndex].transform_, ProjectionMappingTransform);
+
+#endif
+
+	//	定数バッファをGPUに送る
+	Graphics::Instance().GetDeviceContext()->UpdateSubresource(projectionMappingBuffer_[projectionMappingIndex].Get(), 0, 0, &projectionMappingConstants_[projectionMappingIndex], 0, 0);
+	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(4, 1, projectionMappingBuffer_[projectionMappingIndex].GetAddressOf());
 
 }
 
@@ -256,41 +331,30 @@ void Stage::SetSpectrumColor(const ProjectionMappingType& projectionMappingType,
 	colorTimer_[static_cast<int>(projectionMappingType)] = 0.0f;	//	タイマーをリセット
 }
 
-//	円形オーディオスペクトラム更新
-void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
+//	オーディオスペクトラムのスケール変更に関する更新処理
+void Stage::UpdateSpectrumScale(const float& elapsedTime)
 {
-	//	座標更新
-	int projectionMappingIndex = static_cast<int>(ProjectionMappingType::Circle);
-	DirectX::XMFLOAT3 projectionMappingEye = Player::Instance().GetTransform()->GetPosition();					//	プレイヤーの位置
-	DirectX::XMFLOAT3 projectionMappingFocus = Player::Instance().GetTransform()->GetPosition();	//	注視点
-	projectionMapping_[projectionMappingIndex].focus_ = projectionMappingFocus;
-
-	projectionMappingEye.y += eyeHeight_;								//	視点をプレイヤーの真上から投影するように設定
-	
-	projectionMapping_[projectionMappingIndex].eye_ = projectionMappingEye;
-
-	//	回転値更新
-	float projectionMappingRotation = projectionMapping_[projectionMappingIndex].rotation_;
-	//projectionMappingRotation += 90.0f * elapsedTime;
-	if (projectionMappingRotation > 360.0f)
+	for (int i = 0; i < static_cast<int>(ProjectionMappingType::Max); ++i)
 	{
-		projectionMappingRotation = 0.0f;
+		if (isTemporaryScaleActive_[i])	//	色変更フラグが立っていたら
+		{
+			scaleTimer_[i] += elapsedTime;
+			if (scaleTimer_[i] >= scaleDuration_[i])	//	一定時間経過したらデフォルト色にリセット
+			{
+				currentSpectrumScale_[i] = defaultSpectrumScale_[i];
+				projectionMapping_[i].scale_ = defaultSpectrumScale_[i];
+				isTemporaryScaleActive_[i] = false;
+			}
+		}
 	}
-	projectionMapping_[projectionMappingIndex].rotation_ = projectionMappingRotation;
+}
 
-	float projectionMappingFovy = projectionMapping_[projectionMappingIndex].fovy_;
-	DirectX::XMMATRIX ProjectionMappingTransform =
-		DirectX::XMMatrixLookAtLH(	
-			DirectX::XMLoadFloat3(&projectionMappingEye),
-			DirectX::XMLoadFloat3(&projectionMappingFocus),
-			DirectX::XMVector3Transform(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XMMatrixRotationRollPitchYaw(0, DirectX::XMConvertToRadians(projectionMappingRotation), 0))) *
-		DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(projectionMappingFovy), 1.0f, 1.0f, 500.0f);
-	DirectX::XMStoreFloat4x4(&projectionMappingConstants_[projectionMappingIndex].transform_, ProjectionMappingTransform);
-
-	//	定数バッファをGPUに送る
-	Graphics::Instance().GetDeviceContext()->UpdateSubresource(projectionMappingBuffer_[projectionMappingIndex].Get(), 0, 0, &projectionMappingConstants_[projectionMappingIndex], 0, 0);
-	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(4, 1, projectionMappingBuffer_[projectionMappingIndex].GetAddressOf());
-	
+//	オーディオスペクトラムのスケール変更
+void Stage::SetSpectrumScale(const ProjectionMappingType& projectionMappingType, const DirectX::XMFLOAT3& scale)
+{
+	projectionMapping_[static_cast<int>(projectionMappingType)].scale_ = scale;
+	isTemporaryScaleActive_[static_cast<int>(projectionMappingType)] = true;
+	scaleTimer_[static_cast<int>(projectionMappingType)] = 0.0f;	//	タイマーをリセット
 }
 
 //	振幅最小値更新処理
