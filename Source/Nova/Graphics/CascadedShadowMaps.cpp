@@ -78,7 +78,7 @@ CascadedShadowMaps::CascadedShadowMaps(ID3D11Device* device, UINT width, UINT he
 	viewport_.TopLeftY = 0.0f;
 
 	D3D11_BUFFER_DESC bufferDesc = {};
-	bufferDesc.ByteWidth = (sizeof(Constants) + 0x0f) & ~0x0f;
+	bufferDesc.ByteWidth = (sizeof(ShadowConstants) + 0x0f) & ~0x0f;
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	bufferDesc.MiscFlags = 0;
 	bufferDesc.StructureByteStride = 0;
@@ -186,18 +186,17 @@ void CascadedShadowMaps::Activate(ID3D11DeviceContext* deviceContext,
 		DirectX::XMStoreFloat4x4(&cascadedMatrices_.at(cascadeIndex), V * P);
 	}
 
-	Constants data;
-	data.cascadedMatrices_[0] = cascadedMatrices_.at(0);
-	data.cascadedMatrices_[1] = cascadedMatrices_.at(1);
-	data.cascadedMatrices_[2] = cascadedMatrices_.at(2);
-	data.cascadedMatrices_[3] = cascadedMatrices_.at(3);
+	shadowConstants_.cascadedMatrices_[0] = cascadedMatrices_.at(0);
+	shadowConstants_.cascadedMatrices_[1] = cascadedMatrices_.at(1);
+	shadowConstants_.cascadedMatrices_[2] = cascadedMatrices_.at(2);
+	shadowConstants_.cascadedMatrices_[3] = cascadedMatrices_.at(3);
 
-	data.cascadedPlaneDistances_[0] = cascadedPlaneDistances_.at(1);
-	data.cascadedPlaneDistances_[1] = cascadedPlaneDistances_.at(2);
-	data.cascadedPlaneDistances_[2] = cascadedPlaneDistances_.at(3);
-	data.cascadedPlaneDistances_[3] = cascadedPlaneDistances_.at(4);
+	shadowConstants_.cascadedPlaneDistances_[0] = cascadedPlaneDistances_.at(1);
+	shadowConstants_.cascadedPlaneDistances_[1] = cascadedPlaneDistances_.at(2);
+	shadowConstants_.cascadedPlaneDistances_[2] = cascadedPlaneDistances_.at(3);
+	shadowConstants_.cascadedPlaneDistances_[3] = cascadedPlaneDistances_.at(4);
 
-	deviceContext->UpdateSubresource(constantBuffer_.Get(), 0, 0, &data, 0, 0);
+	deviceContext->UpdateSubresource(constantBuffer_.Get(), 0, 0, &shadowConstants_, 0, 0);
 	deviceContext->VSSetConstantBuffers(cbSlot, 1, constantBuffer_.GetAddressOf());
 	deviceContext->PSSetConstantBuffers(cbSlot, 1, constantBuffer_.GetAddressOf());
 
@@ -218,6 +217,12 @@ void CascadedShadowMaps::Deactivate(ID3D11DeviceContext* deviceContext)
 
 void CascadedShadowMaps::DrawDebug()
 {
+	ImGui::SliderFloat("SplitSchemeWeight", &splitSchemeWeight_, 0.0f, +1.0f);
 	ImGui::Checkbox("FitToCascade", &fitToCascade_);
 	ImGui::DragFloat("zMulti", &zMult_, 0.01f);
+
+	ImGui::SliderFloat("ShadowColor", &shadowConstants_.shadowColor_, +0.0f, +1.0f);
+	ImGui::DragFloat("ShadowDepthBias", &shadowConstants_.shadowDepthBias_, 0.00001f, 0.0f, 0.01f, "%.8f");
+	ImGui::Checkbox("ColorizeCascadedLayer", &shadowConstants_.colorizeCascadedLayer_);
+
 }

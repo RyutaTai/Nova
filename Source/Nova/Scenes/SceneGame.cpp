@@ -230,21 +230,6 @@ void SceneGame::Render()
 	Graphics::Instance().SetCameraPosition({ 0,0,1,0 });
 	Graphics::Instance().SetInvViewProjection(Camera::Instance().CalcInvViewProjectionMatrix());
 	
-	// PROJECTION_MAPPING
-	//float projectionMappingRotation = Graphics::Instance().GetProjectionMappingRotation();
-	//DirectX::XMFLOAT3 projectionMappingEye = Graphics::Instance().GetProjectionMappingEye();
-	//DirectX::XMFLOAT3 projectionMappingFocus = Graphics::Instance().GetProjectionMappingFocus();
-	//float projectionMappingFovy = Graphics::Instance().GetProjectionMappingFovy();
-	////projectionMappingRotation += elapsedTime * 180;
-	//DirectX::XMMATRIX ProjectionMappingTransform =
-	//	DirectX::XMMatrixLookAtLH(
-	//		DirectX::XMLoadFloat3(&projectionMappingEye),
-	//		DirectX::XMLoadFloat3(&projectionMappingFocus),
-	//		DirectX::XMVector3Transform(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XMMatrixRotationRollPitchYaw(0, DirectX::XMConvertToRadians(projectionMappingRotation), 0))) *
-	//	DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(projectionMappingFovy), 1.0f, 1.0f, 500.0f);
-	//Graphics::Instance().SetProjectionMappingTransform(ProjectionMappingTransform);
-	//Graphics::Instance().SetProjectionMappingRotation(projectionMappingRotation);
-
 	Graphics::SceneConstants sceneConstants = Graphics::Instance().GetSceneConstant();
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
 	deviceContext->VSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());

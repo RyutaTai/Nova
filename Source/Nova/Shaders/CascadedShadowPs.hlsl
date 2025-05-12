@@ -23,21 +23,13 @@ cbuffer SceneConstantBuffer : register(b1)
     row_major float4x4 invViewProjection;
 };
 
-cbuffer PARAMETRIC_CONSTANT_BUFFER : register(b2)
-{
-    float extractionThreshold;
-    float gaussianSigma;
-    float bloomIntensity;
-    float exposure;
-	// CASCADED_SHADOW_MAPS
-    float shadowColor;
-    float shadowDepthBias;
-    bool colorizeCascadedLayer;
-};
 cbuffer CsmConstants : register(b3)
 {
-    row_major float4x4 cascadedMatrices[4];
-    float4 cascadedPlaneDistances;
+    row_major float4x4  cascadedMatrices[4];
+    float4              cascadedPlaneDistances;
+    float               shadowColor;
+    float               shadowDepthBias;
+    bool                colorizeCascadedLayer;
 }
 
 float4 main(VS_OUT pin) : SV_TARGET

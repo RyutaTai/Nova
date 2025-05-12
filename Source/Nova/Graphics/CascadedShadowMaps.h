@@ -65,11 +65,16 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shaderResourceView_;
 
-	struct Constants
+	struct ShadowConstants
 	{
 		DirectX::XMFLOAT4X4 cascadedMatrices_[4];
-		float cascadedPlaneDistances_[4];
+		float				cascadedPlaneDistances_[4];
+		float				shadowColor_ = 0.2f;
+		float				shadowDepthBias_ = 0.0001f;
+		bool				colorizeCascadedLayer_ = true;
+		float				pad_;							//	16バイトアライメントに合わせるため
 	};
+	ShadowConstants shadowConstants_;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer_;
 
 private:
