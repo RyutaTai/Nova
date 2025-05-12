@@ -59,8 +59,6 @@ Stage::Stage()
 		colorTimer_[i] = 0.0f;
 		colorDuration_[i] = 0.8f;
 
-		defaultSpectrumScale_[i] = { 1.0f,1.0f,1.0f };
-		currentSpectrumScale_[i] = { 1.0f,1.0f,1.0f };
 		isTemporaryScaleActive_[i] = false;
 		scaleTimer_[i] = 0.0f;
 		scaleDuration_[i] = 0.8f;
@@ -81,11 +79,11 @@ Stage::Stage()
 #endif	
 
 	//	プロジェクションマッピング初期設定
-	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].eye_		= { 72.0f,7.0f,8.8f};
-	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].focus_	= { 33.0f,10.0f,-1.0f };
-	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].scale_	= { 1.0f,1.0f,1.0f };
-	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].rotation_ = -104.2f;
-	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].fovy_		=	10.0f;
+	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].eye_			= { 72.0f,7.0f,8.8f};
+	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].defaultEye_	= { 72.0f,7.0f,8.8f};
+	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].focus_		= { 33.0f,10.0f,-1.0f };
+	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].rotation_		= -104.2f;
+	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].fovy_			=	10.0f;
 	bufferDesc = {};
 	bufferDesc.ByteWidth = sizeof(ProjectionMappingConstant);
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -94,8 +92,8 @@ Stage::Stage()
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].eye_		= { 0.0f,32.0f,0.0f };
+	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].defaultEye_	= { 0.0f,32.0f,0.0f };
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].focus_		= { 0.0f,0.0f,0.0f };
-	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].scale_	= { 1.0f,1.0f,1.0f };
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].rotation_	= 0.0f;
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].fovy_		=	10.0f;
 	bufferDesc = {};
@@ -248,7 +246,7 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 	DirectX::XMFLOAT3 projectionMappingFocus = Player::Instance().GetTransform()->GetPosition();	//	注視点
 	projectionMapping_[projectionMappingIndex].focus_ = projectionMappingFocus;
 
-	projectionMappingEye.y += eyeHeight_;								//	視点をプレイヤーの真上から投影するように設定
+	projectionMappingEye.y += eyeOffsetY_;								//	視点をプレイヤーの真上から投影するように設定
 
 	projectionMapping_[projectionMappingIndex].eye_ = projectionMappingEye;
 
@@ -271,14 +269,6 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 		DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(projectionMappingFovy), 1.0f, 1.0f, 500.0f);
 	DirectX::XMStoreFloat4x4(&projectionMappingConstants_[projectionMappingIndex].transform_, ProjectionMappingTransform);
 #else
-	//	スケール変更あり(scale_)
-	// スケール行列
-	DirectX::XMMATRIX scaleMatrix = DirectX::XMMatrixScaling(
-		projectionMapping_[projectionMappingIndex].scale_.x,
-		projectionMapping_[projectionMappingIndex].scale_.y,
-		projectionMapping_[projectionMappingIndex].scale_.z
-	);
-
 	// ビュー行列
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(
 		DirectX::XMLoadFloat3(&projectionMappingEye),
@@ -294,7 +284,7 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 	);
 
 	// 変換行列にスケールを掛ける
-	DirectX::XMMATRIX ProjectionMappingTransform = scaleMatrix * viewMatrix * projMatrix;
+	DirectX::XMMATRIX ProjectionMappingTransform = viewMatrix * projMatrix;
 	DirectX::XMStoreFloat4x4(&projectionMappingConstants_[projectionMappingIndex].transform_, ProjectionMappingTransform);
 
 #endif
@@ -341,9 +331,9 @@ void Stage::UpdateSpectrumScale(const float& elapsedTime)
 			scaleTimer_[i] += elapsedTime;
 			if (scaleTimer_[i] >= scaleDuration_[i])	//	一定時間経過したらデフォルト色にリセット
 			{
-				currentSpectrumScale_[i] = defaultSpectrumScale_[i];
-				projectionMapping_[i].scale_ = defaultSpectrumScale_[i];
 				isTemporaryScaleActive_[i] = false;
+				projectionMapping_[i].eye_ = projectionMapping_[i].defaultEye_;
+				eyeOffsetY_ = defaultEyeOffsetY_;	//	円形オーディオスペクトラムの大きさリセット
 			}
 		}
 	}
@@ -352,9 +342,11 @@ void Stage::UpdateSpectrumScale(const float& elapsedTime)
 //	オーディオスペクトラムのスケール変更
 void Stage::SetSpectrumScale(const ProjectionMappingType& projectionMappingType, const DirectX::XMFLOAT3& scale)
 {
-	projectionMapping_[static_cast<int>(projectionMappingType)].scale_ = scale;
+	//projectionMapping_[static_cast<int>(projectionMappingType)].scale_ = scale;
 	isTemporaryScaleActive_[static_cast<int>(projectionMappingType)] = true;
 	scaleTimer_[static_cast<int>(projectionMappingType)] = 0.0f;	//	タイマーをリセット
+	eyeOffsetY_ = 40.0f;	//	円形オーディオスペクトラムの大きさを変化
+	//eyeOffsetY_ += 2.5f;	//	円形オーディオスペクトラムの大きさを変化
 }
 
 //	振幅最小値更新処理
@@ -585,6 +577,8 @@ void Stage::DrawDebug()
 				ImGui::ColorEdit4("Color", &fftConstant_.color_[projectionMappingIndex].x);
 				ImGui::PushID(projectionMappingIndex);
 				ImGui::DragFloat3("Eye", &projectionMapping_[projectionMappingIndex].eye_.x);
+				ImGui::DragFloat("EyeOffsetY", &eyeOffsetY_, 0.01f);
+				ImGui::DragFloat("DefaultEyeOffsetY", &defaultEyeOffsetY_, 0.01f);
 				ImGui::DragFloat3("Focus", &projectionMapping_[projectionMappingIndex].focus_.x);
 				ImGui::DragFloat("Rotation", &projectionMapping_[projectionMappingIndex].rotation_);
 				ImGui::SliderFloat("Fovy", &projectionMapping_[projectionMappingIndex].fovy_, 10.0f, 180.0f);
@@ -611,7 +605,7 @@ void Stage::DrawDebug()
 			ImGui::DragFloat("EmissiveFactor", &emissiveFactor_, 1.0f, 0.0f);
 			ImGui::DragFloat("EmissiveIntencityMin", &emissiveIntencityMin_, 1.0f, 0.0f);
 			ImGui::DragFloat("EmissiveIntencityMax", &emissiveIntencityMax_, 1.0f, 0.0f);
-			ImGui::DragFloat("EyeHeight", &eyeHeight_, 1.0f, 0.0f);
+			ImGui::DragFloat("EyeHeight", &eyeOffsetY_, 1.0f, 0.0f);
 
 			ImGui::TreePop();
 		}
