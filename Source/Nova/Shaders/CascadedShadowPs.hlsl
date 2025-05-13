@@ -18,9 +18,9 @@ cbuffer SceneConstantBuffer : register(b1)
     row_major float4x4 viewProjection;
     float4 lightDirection;
     float4 cameraPosition;
-	// CASCADED_SHADOW_MAPS
-    row_major float4x4 invProjection;
+    row_major float4x4 lightViewProjection;
     row_major float4x4 invViewProjection;
+    row_major float4x4 invProjection;
 };
 
 cbuffer CsmConstants : register(b3)
@@ -30,6 +30,7 @@ cbuffer CsmConstants : register(b3)
     float               shadowColor;
     float               shadowDepthBias;
     bool                colorizeCascadedLayer;
+    float               pad;
 }
 
 float4 main(VS_OUT pin) : SV_TARGET

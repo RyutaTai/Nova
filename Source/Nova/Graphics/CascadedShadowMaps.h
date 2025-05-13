@@ -38,22 +38,9 @@ public:
 
 public:
 	const UINT cascadeCount_;
-	float splitSchemeWeight_ = 0.7f; // logarithmic_split_scheme * _split_scheme_weight + uniform_split_scheme * (1 - _split_scheme_weight)
-	// https://learn.microsoft.com/en-us/windows/win32/dxtecharts/cascaded-shadow-maps
-	// Fit to scene vs.fit to cascade
-	// - Fit to Scene
-	//	All of the frusta can be created with the same near plane.This forces the cascades to overlap.
-	// - Fit to Cascade
-	//	Alternatively, frusta can be created with the actual partition interval being used as near and far planes.This causes a tighter fit, but degenerates to fit to scene in the case of dueling frusta.
-	// Fit to cascade wastes less resolution.The problem with fit to cascade is that the orthographic projection grows and shrinks based on the orientation of the view frustum.
-	// The fit to scene technique pads the orthographic projection by the max size of the view frustum removing the artifacts that appear when the view - camera moves.
-		// Common Techniques to Improve Shadow Depth Maps addresses the artifacts that appear when the light moves in the section "Moving the light in texel sized increments."
+	float splitSchemeWeight_ = 0.7f;
 	bool fitToCascade_ = true;
-	// Before creating the actual projection matrix we are going to increase the size of the space covered by the nearand far plane of the light frustum.
-	// We do this by "pulling back" the near plane, and "pushing away" the far plane.In the code we achieve this by dividing or multiplying by zMult.
-	// This is because we want to include geometry which is behind or in front of our frustum in camera space. Think about it : not only geometry which 
-	// is in the frustum can cast shadows on a surface in the frustum!
-	float zMult_ = 10.0f;
+	float zMult_ = 1.5f;
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer_;
@@ -69,7 +56,7 @@ private:
 	{
 		DirectX::XMFLOAT4X4 cascadedMatrices_[4];
 		float				cascadedPlaneDistances_[4];
-		float				shadowColor_ = 0.2f;
+		float				shadowColor_ = 0.58f;
 		float				shadowDepthBias_ = 0.0001f;
 		bool				colorizeCascadedLayer_ = true;
 		float				pad_;							//	16バイトアライメントに合わせるため

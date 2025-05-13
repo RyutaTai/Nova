@@ -51,6 +51,13 @@ void Camera::SetPerspectiveFov()
 
 }
 
+//	プロジェクション逆行列算出
+const DirectX::XMMATRIX Camera::CalcInvProjectionMatrix()
+{
+	invProjectionMatrix_ = DirectX::XMMatrixInverse(NULL, GetProjectionMatrix());
+	return invProjectionMatrix_;
+}
+
 //	ビュープロジェクション行列算出
 const DirectX::XMMATRIX Camera::CalcViewProjectionMatrix()
 {

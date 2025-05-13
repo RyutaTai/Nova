@@ -75,14 +75,14 @@ private:
 	std::unique_ptr<FrameBuffer>				framebuffers_[8];
 	std::unique_ptr<FullScreenQuad>				bitBlockTransfer_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShaders_[8];
-	DirectX::XMFLOAT4							lightDirection_ = { +0.545f, -0.860f, -0.526f, 0.0f };
+	DirectX::XMFLOAT4							lightDirection_ = { +3.545f, -3.860f, -0.326f, 0.0f };
 	float										nearZ_ = 50.0f;
 	float										farZ_ = 400000.0f;
 	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;
 
 	//	シャドウマップ
 	std::unique_ptr<CascadedShadowMaps> cascadedShadowMaps_;
-	float criticalDepthValue_ = 30.0f; // If this value is 0, the camera's far panel distance is used.
+	float criticalDepthValue_ = 85.0f; // If this value is 0, the camera's far panel distance is used.
 
 	/* ----- スプライト ----- */
 	enum SPRITE_GAME

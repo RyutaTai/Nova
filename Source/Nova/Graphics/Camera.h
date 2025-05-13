@@ -44,8 +44,9 @@ public:
 	Transform*					GetTransform()		{ return &transform_; }
 	const DirectX::XMMATRIX		GetViewMatrix()const{ return viewMatrix_; }					//	ビュー行列取得
 	const DirectX::XMMATRIX		GetProjectionMatrix()const{ return projectionMatrix_; }		//	プロジェクション行列取得
+	const DirectX::XMMATRIX		CalcInvProjectionMatrix();									//	プロジェクション逆行列取得	
 	const DirectX::XMMATRIX		CalcViewProjectionMatrix();									//	ビュープロジェクション行列取得	
-	const DirectX::XMMATRIX		CalcInvViewProjectionMatrix();								//	ビュープロジェクション行列取得	
+	const DirectX::XMMATRIX		CalcInvViewProjectionMatrix();								//	ビュープロジェクション逆行列取得	
 	const DirectX::XMFLOAT3		GetEye()	const	{ return eye_; }						//	視点取得
 	const DirectX::XMFLOAT3		GetFocus()	const	{ return focus_; }						//	注視点取得
 	const DirectX::XMFLOAT3		GetUp()		const	{ return up_; }							//	カメラ上方向取得
@@ -72,6 +73,7 @@ private:
 
 	DirectX::XMMATRIX viewMatrix_;								//	ビュー行列
 	DirectX::XMMATRIX projectionMatrix_;						//	プロジェクション行列
+	DirectX::XMMATRIX invProjectionMatrix_;						//	プロジェクション逆行列
 	DirectX::XMMATRIX viewProjectionMatrix_;					//	ビュープロジェクション行列
 	DirectX::XMMATRIX invViewProjectionMatrix_;					//	ビュープロジェクション逆行列
 	DirectX::XMFLOAT3 eye_ = {};								//	カメラの視点

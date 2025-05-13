@@ -229,7 +229,8 @@ void SceneGame::Render()
 	Graphics::Instance().SetLightDirection(lightDirection_);
 	Graphics::Instance().SetCameraPosition({ 0,0,1,0 });
 	Graphics::Instance().SetInvViewProjection(Camera::Instance().CalcInvViewProjectionMatrix());
-	
+	Graphics::Instance().SetInvProjection(Camera::Instance().CalcInvProjectionMatrix());
+
 	Graphics::SceneConstants sceneConstants = Graphics::Instance().GetSceneConstant();
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
 	deviceContext->VSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
@@ -484,7 +485,7 @@ void SceneGame::DrawDebug()
 	//	----- ƒVƒƒƒhƒE -----
 	if (ImGui::TreeNode("Shadow"))
 	{
-		ImGui::DragFloat("CriticcalDepthValue", &criticalDepthValue_, 0.1f);
+		ImGui::DragFloat("CriticalDepthValue", &criticalDepthValue_, 0.1f);
 		cascadedShadowMaps_->DrawDebug();
 		ImGui::TreePop();
 	}

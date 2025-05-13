@@ -19,6 +19,15 @@ float3 ReinhardToneMapping(float3 color)
 	return color;
 }
 
+cbuffer SCENE_CONSTANT_BUFFER : register(b1)
+{
+    row_major float4x4 viewProjection;
+    float4 lightDirection;
+    float4 cameraPosition;
+    row_major float4x4 lightViewProjection;
+    row_major float4x4 invViewProjection;
+};
+
 float4 main(VS_OUT pin) : SV_TARGET
 {
 //	//	‚±‚±‚©‚ç(bloom‚Ì‘O‚É“ü‚ê‚é)

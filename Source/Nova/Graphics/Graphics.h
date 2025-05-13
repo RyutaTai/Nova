@@ -38,6 +38,7 @@ public:	//	構造体
 		DirectX::XMFLOAT4   cameraPosition_ = {};
 		DirectX::XMFLOAT4X4 lightViewProjection_ = {};
 		DirectX::XMFLOAT4X4 invViewProjection_ = {};
+		DirectX::XMFLOAT4X4 invProjection_ = {};
 		//DirectX::XMFLOAT4X4 projectionMappingTransform_;
 	};
 
@@ -88,6 +89,7 @@ public:
 	void SetLightViewProjection(const DirectX::XMFLOAT4X4& lightViewProjection) { sceneConstant_.lightViewProjection_ = lightViewProjection; }
 	void SetInvViewProjection(const DirectX::XMFLOAT4X4& invViewProjection)		{ sceneConstant_.invViewProjection_ = invViewProjection; }
 	void SetInvViewProjection(const DirectX::XMMATRIX& invViewProjection)		{ DirectX::XMStoreFloat4x4(&sceneConstant_.invViewProjection_, invViewProjection); }
+	void SetInvProjection(const DirectX::XMMATRIX& invProjection)				{ DirectX::XMStoreFloat4x4(&sceneConstant_.invProjection_, invProjection); }
 	void SetIsVSync(const bool& isVSync);
 
 	//	ゲッター

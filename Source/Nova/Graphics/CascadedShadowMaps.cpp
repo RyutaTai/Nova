@@ -219,7 +219,7 @@ void CascadedShadowMaps::DrawDebug()
 {
 	ImGui::SliderFloat("SplitSchemeWeight", &splitSchemeWeight_, 0.0f, +1.0f);
 	ImGui::Checkbox("FitToCascade", &fitToCascade_);
-	ImGui::DragFloat("zMulti", &zMult_, 0.01f);
+	ImGui::DragFloat("zMult", &zMult_, 0.01f);
 
 	ImGui::SliderFloat("ShadowColor", &shadowConstants_.shadowColor_, +0.0f, +1.0f);
 	ImGui::DragFloat("ShadowDepthBias", &shadowConstants_.shadowDepthBias_, 0.00001f, 0.0f, 0.01f, "%.8f");
