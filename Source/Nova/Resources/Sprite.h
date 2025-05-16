@@ -69,7 +69,7 @@ public:
 		float GetTexPosX() { return texPos_.x; }
 		float GetTexPosY() { return texPos_.y; }
 
-		void SetTexSize(const DirectX::XMFLOAT2 texSize) { texSize_ = texSize; }
+		void SetTexSize(const DirectX::XMFLOAT2& texSize) { texSize_ = texSize; }
 		void SetTexSize(const float& x, const float& y) { texSize_ = { x, y }; }
 		void SetTexSizeX(const float& x) { texSize_.x = x; }
 		void SetTexSizeY(const float& y) { texSize_.y = y; }

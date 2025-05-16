@@ -29,6 +29,9 @@ public:
 	//	描画処理
 	void Render();
 
+	//	シャドウマップ
+	void CastShadows();
+
 	//	弾丸登録
 	void Register(Bullet* bullet);
 

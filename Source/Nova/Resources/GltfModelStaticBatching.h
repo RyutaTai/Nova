@@ -249,7 +249,7 @@ public:
 
 	void DrawDebug();
 
-	void SetPixelShader(ID3D11PixelShader* pixelShader) { pixelShader_ = pixelShader; }		//	PixelShader設定
+	void SetPixelShader(ID3D11PixelShader* pixelShader) { pixelShader_ = pixelShader; }
 	void SetPixelShaderFromName(const char* csoName);
 
 	Transform* GetTransform() { return &transform_; }
@@ -274,7 +274,7 @@ private:
 	Transform transform_ = {};
 
 	//	シャドウマップ
-	Microsoft::WRL::ComPtr<ID3D11VertexShader> vertexShaderCsm_;
-	Microsoft::WRL::ComPtr<ID3D11GeometryShader> geometryShaderCsm_;
+	Microsoft::WRL::ComPtr<ID3D11VertexShader>		vertexShaderCsm_;
+	Microsoft::WRL::ComPtr<ID3D11GeometryShader>	geometryShaderCsm_;
 
 };

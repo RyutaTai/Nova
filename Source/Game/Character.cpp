@@ -381,7 +381,7 @@ CollisionDetectionData& Character::GetCollisionDetectionData(const int& index)
 //	描画処理
 void Character::Render()
 {
-	gltfModelResource_->Render(GetTransform()->CalcWorld());
+	gltfModelResource_->Render();
 }
 
 //	デバッグ描画

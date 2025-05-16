@@ -364,7 +364,7 @@ public:
 	GltfModel(const std::string& filename, const std::string& rootNodename = "root");
 	virtual ~GltfModel() = default;
 
-	void Render(const DirectX::XMMATRIX& world/*, const std::vector<Node>& animatedNodes*/);
+	void Render();
 	void DrawDebug();
 
 	void PlayAnimation(const int& index, const bool& loop = false, const float& blendTime = 1.0f, const float& animSpeed = 1.0f, const float& startFrame = 0.0f, const float& endFrame = 0.0f);
@@ -394,6 +394,9 @@ public:
 	void SetUseRootMotion(const bool& useRootMotion);
 	void SetRootMotionSpeed(const float& rootMotionSpeed) { rootMotionSpeed_ = rootMotionSpeed; }
 
+	//	シャドウマップ
+	void CastShadows();
+
 private:
 	void FetchNodes(const tinygltf::Model& gltfModel, const std::string& rootNodeName);
 	void FetchMeshes(ID3D11Device* device, const tinygltf::Model& gltfModel);
@@ -411,6 +414,10 @@ private:
 	std::string filename_ = {};
 
 	Transform	transform_ = {};
+
+	//	シャドウマップ
+	Microsoft::WRL::ComPtr<ID3D11VertexShader>		vertexShaderCsm_;
+	Microsoft::WRL::ComPtr<ID3D11GeometryShader>	geometryShaderCsm_;
 
 	// ----- gltf Animation -----
 	bool	isAnimationLoop_			= false;	//	アニメーションループフラグ

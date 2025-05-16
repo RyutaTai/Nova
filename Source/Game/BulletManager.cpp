@@ -36,35 +36,6 @@ void BulletManager::Register(Bullet* bullet)
 //	更新処理
 void BulletManager::Update(const float& elapsedTime)
 {
-	////	破棄処理
-	////	※bulletsの範囲for文内でerase()すると不具合が発生するため,
-	////	更新処理が終わった後に、破棄リストに積まれたオブジェクトを削除する
-	//for (Bullet* remove : removes_)
-	//{
-	//	//	std::vectorから要素を破棄するときはイテレーターで削除しなければならない
-	//	//	std::vectorで管理されている要素を削除するにはerase()関数を使用する
-	//	//	破棄リストのポインタからイテレーターを検索し、erase()に渡す
-	//	std::vector	<Bullet*>::iterator it =
-	//		std::find(bullets_.begin(), bullets_.end(), remove);
-	//
-	//	if (it != bullets_.end())
-	//	{
-	//		bullets_.erase(it);
-	//	}
-	//
-	//	//	弾丸処理
-	//	delete remove;
-	//}
-	////	破棄リストをクリア
-	//removes_.clear();
-	//
-	//
-	////	更新処理
-	//for (Bullet* bullet : bullets_)
-	//{
-	//	bullet->Update(elapsedTime);
-	//}
-	//
 	// -------------------------
 	//          生成
 	// -------------------------
@@ -174,6 +145,15 @@ void BulletManager::Render()
 		{
 			bullet->RnederCoverModel();
 		}
+	}
+}
+
+//	シャドウマップ
+void BulletManager::CastShadows()
+{
+	for (Bullet* bullet : bullets_)
+	{
+		bullet->CastShadows();
 	}
 }
 

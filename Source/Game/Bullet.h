@@ -39,6 +39,9 @@ public:
 	virtual void			DrawDebug();																//	デバッグ描画
 	void					DrawDebugPrimitive();														//	デバッグプリミティブ描画
 
+	//	----- シャドウマップ -----
+	void CastShadows();
+
 	//	----- 弾丸の所有者 -----
 	void					SetOwnerPosition(const DirectX::XMFLOAT3& pos)	{ ownerPosition_ = pos; }	//	弾丸所有者の位置設定
 	const DirectX::XMFLOAT3 GetOwnerPosition()								{ return ownerPosition_; }	//	弾丸所有者の位置取得

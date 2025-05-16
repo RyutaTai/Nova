@@ -141,6 +141,13 @@ void Bullet::UpdateLifeTimer(const float& elapsedTime)
 
 }
 
+//	シャドウマップ
+void Bullet::CastShadows()
+{
+	gltfStaticModelResource_->CastShadows();
+	coverModel_->CastShadows();
+}
+
 //	デバッグプリミティブ描画
 void Bullet::DrawDebugPrimitive()
 {

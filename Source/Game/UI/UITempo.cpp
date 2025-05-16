@@ -205,66 +205,46 @@ void UITempo::DrawDebug()
 		ImGui::DragFloat("RangeMax", &semicircleRangeMax_);
 		ImGui::DragFloat("RangeMin", &semicircleRangeMin_);
 
-		if (ImGui::TreeNode("Semi0"))
+		ImGui::Text("----- Semicircle -----");
+		for (int i = 0; i < UITempo::SemicircleMax_; ++i)
 		{
-			ImGui::PushID(static_cast<int>(Side::Left));
-			semicircles_[0]->left_->DrawDebug();
-			ImGui::PopID();
+			std::string name = "Semi" + std::to_string(i);
+			if (ImGui::TreeNode(name.c_str()))
+			{
+				if (ImGui::TreeNode("Left"))
+				{
+					ImGui::PushID(static_cast<int>(Side::Left));
+					if (ImGui::TreeNode("SpriteTransform"))
+					{
+						semicircles_[i]->left_->DrawDebug();
+						ImGui::TreePop();
+					}
+					ImGui::PopID();
+					ImGui::TreePop();
+				}
 
-			ImGui::PushID(static_cast<int>(Side::Right));
-			semicircles_[0]->right_->DrawDebug();
-			ImGui::PopID();
+				if (ImGui::TreeNode("Right"))
+				{
+					ImGui::PushID(static_cast<int>(Side::Right));
+					if (ImGui::TreeNode("SpriteTransform"))
+					{
+						semicircles_[i]->right_->DrawDebug();
+						ImGui::TreePop();
+					}
+					ImGui::PopID();
+					ImGui::TreePop();
+				}
+				
+				ImGui::DragFloat("Range", &semicircles_[i]->range_);
 
-			ImGui::DragFloat("Range", &semicircles_[0]->range_);
+				//	スケール確認用
+				static float scaleFactor = 1.0f;
+				ImGui::DragFloat("Scale", &scaleFactor, 0.01f);
+				semicircles_[i]->left_->GetTransform()->Scaling(scaleFactor);
 
-			//	スケール確認用
-			static float scaleFactor = 1.0f;
-			ImGui::DragFloat("Scale", &scaleFactor, 0.01f);
-			semicircles_[0]->left_->GetTransform()->Scaling(scaleFactor);
+				ImGui::TreePop();
+			}
 
-			ImGui::TreePop();
-		}
-
-		if (ImGui::TreeNode("Semi1"))
-		{
-			ImGui::PushID(static_cast<int>(Side::Left));
-			semicircles_[1]->left_->DrawDebug();
-			ImGui::PopID();
-
-			ImGui::PushID(static_cast<int>(Side::Right));
-			semicircles_[1]->right_->DrawDebug();
-			ImGui::PopID();
-
-			ImGui::DragFloat("Range", &semicircles_[1]->range_);
-			ImGui::TreePop();
-		}
-
-		if (ImGui::TreeNode("Semi2"))
-		{
-			ImGui::PushID(static_cast<int>(Side::Left));
-			semicircles_[2]->left_->DrawDebug();
-			ImGui::PopID();
-
-			ImGui::PushID(static_cast<int>(Side::Right));
-			semicircles_[2]->right_->DrawDebug();
-			ImGui::PopID();
-
-			ImGui::DragFloat("Range", &semicircles_[2]->range_);
-			ImGui::TreePop();
-		}
-
-		if (ImGui::TreeNode("Semi3"))
-		{
-			ImGui::PushID(static_cast<int>(Side::Left));
-			semicircles_[3]->left_->DrawDebug();
-			ImGui::PopID();
-
-			ImGui::PushID(static_cast<int>(Side::Right));
-			semicircles_[3]->right_->DrawDebug();
-			ImGui::PopID();
-
-			ImGui::DragFloat("Range", &semicircles_[3]->range_);
-			ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	}

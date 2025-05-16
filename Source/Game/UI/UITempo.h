@@ -56,12 +56,14 @@ private:
 	void UpdatePosition(const float& elapsedTime);	//	UIの位置更新処理
 	void UpdateScale(const float& elapsedTime);		//	UIのスケール更新処理
 
-private:
+public:
 	static constexpr int		SemicircleMax_ = 4;				//	半円の数
+
+private:
 	std::unique_ptr<Sprite>		center_;						//	テンポガイドの中心
 	std::unique_ptr<Semicircle> semicircles_[SemicircleMax_];	//	半円の組
 	
-	float quarterNoteDuration_ = 0.429f;	//	BPM140のときの、4分音符1つ分の長さ
+	float quarterNoteDuration_ = 0.429f;		//	BPM140のときの、4分音符1つ分の長さ
 
 	//	中心円からの距離
 	float	rangePerOne_ = 1.0f;				//	半円1つ当たりの距離 ( 最大距離/個数 に設定し、等間隔に配置する)

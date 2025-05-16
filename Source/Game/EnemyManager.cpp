@@ -138,7 +138,15 @@ void EnemyManager::Render()
 	{
 		enemy->Render();
 	}
+}
 
+//	シャドウマップ
+void EnemyManager::CastShadows()
+{
+	for (Enemy* enemy : enemies_)
+	{
+		enemy->CastShadows();
+	}
 }
 
 //	デバッグプリミティブ描画

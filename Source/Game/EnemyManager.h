@@ -26,6 +26,9 @@ public:
 	void Remove(Enemy* enemy);			//	エネミー削除
 	void DroneSpawn(const int& spawn);			//	ドローン生成
 	
+	//	シャドウマップ
+	void CastShadows();
+
 	void DrawDebug();
 	void DrawDebugPrimitive();
 

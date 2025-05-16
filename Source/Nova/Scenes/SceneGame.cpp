@@ -225,9 +225,9 @@ void SceneGame::ShadowRender()
 //	•`‰æˆ—
 void SceneGame::Render()
 {
-	ID3D11ShaderResourceView* nullSrv[17] = { NULL };
+	ID3D11ShaderResourceView* nullSrv[] = { nullptr };
 	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
-	Graphics::Instance().GetDeviceContext()->PSSetShaderResources(0, 17, nullSrv);
+	Graphics::Instance().GetDeviceContext()->PSSetShaderResources(0, 1, nullSrv);
 
 	Camera::Instance().SetPerspectiveFov();
 
@@ -436,6 +436,9 @@ void SceneGame::MakeShadow()
 	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
 	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::NONE);
 	stage_->CastShadows();
+	player_->CastShadows();
+	EnemyManager::Instance().CastShadows();
+	BulletManager::Instance().CastShadows();
 	cascadedShadowMaps_->Deactivate(deviceContext);
 }
 

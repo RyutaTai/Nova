@@ -16,6 +16,8 @@ public:
 	virtual bool RayVsHorizontal(const float& elapsedTime) = 0;
 	virtual void Render();
 	virtual void DrawDebug();	//	デバッグ描画
+	
+	Transform* GetTransform() { return gltfModelResource_->GetTransform(); }
 
 	//	----- 移動 -----
 	virtual void Move(const float& elpasedTime);
@@ -63,6 +65,9 @@ public:
 	//	-----	ピクセルシェーダー -----
 	void SetPixelShader(const char* csoName);
 	
+	//	----- シャドウマップ -----
+	void CastShadows() { gltfModelResource_->CastShadows(); }
+
 	//	----- HP -----
 	void			SubtractHp(const int& hp);
 	void			SetHp(const int& hp){ hp_ = hp; }
@@ -127,7 +132,6 @@ public:
 	DirectX::XMFLOAT3	blowDirection_ = {};		//	吹っ飛ばす方向
 	float				decelerationForce_ = 0.0f;	//	1フレームでどれくらい力を減衰させるか
 
-	Transform* GetTransform() { return gltfModelResource_->GetTransform(); }
 
 protected:
 	//	----- 移動 -----

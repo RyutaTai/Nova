@@ -53,12 +53,6 @@ bool JudgeRhythm::Judge()
 		//	プレイヤーの足元のオーディオスペクトラムのスケールを変更
 		Stage::Instance().SetCircleSpectrumEyeOffsetY(Stage::ProjectionMappingType::Circle, 40.0f, 0.5f);
 
-		//	コントローラー振動
-		//	TODO:判定部分をUIから移動させたい
-		//	もっと肥大化しそう
-		//	判定とそれに応じた処理を全てUIがやるのは違和感がある
-
-
 		return true;
 
 	}
@@ -132,7 +126,7 @@ void JudgeRhythm::DrawDebug()
 		ImGui::DragFloat("InputTime", &debugInputTime_, 0.01f);                 //  入力時間
 
 		//	判定範囲
-		ImGui::Text("----- JudgeRange -----");
+		ImGui::Text(u8"----- 判定範囲 -----");
 		ImGui::DragFloat("PerfectRange", &perfectRange_, 0.1f);
 		ImGui::DragFloat("GoodRange", &goodRange_, 0.1f);
 
