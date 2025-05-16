@@ -489,7 +489,7 @@ void SceneGame::DrawDebug()
 	//	SceneConstant
 	if (ImGui::TreeNode("SceneConstant"))
 	{
-		ImGui::DragFloat4("LightDirection", &lightDirection_.x, 0.1f, -FLT_MAX, FLT_MAX);	//	ライトの向き
+		ImGui::DragFloat4("LightDirection", &lightDirection_.x, 0.01f, -1.0f, 1.0f);	//	ライトの向き
 		ImGui::ColorEdit4("AdjustColor", &adjustColor_.x);
 		ImGui::TreePop();
 	}

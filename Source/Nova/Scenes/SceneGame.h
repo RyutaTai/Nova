@@ -80,7 +80,7 @@ private:
 	float										nearZ_ = 50.0f;
 	float										farZ_ = 400000.0f;
 	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;
-	DirectX::XMFLOAT4							lightDirection_ = { +3.545f, -3.860f, -0.326f, 0.0f };
+	DirectX::XMFLOAT4							lightDirection_ = { +0.63f, -0.67f, 0.12f, 0.0f };
 	DirectX::XMFLOAT4							adjustColor_ = {};
 
 	//	シャドウマップ
