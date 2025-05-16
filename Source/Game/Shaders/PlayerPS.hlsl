@@ -1,14 +1,6 @@
 #include "../../Nova/Shaders/GltfModel.hlsli"
 #include "../../Nova/Shaders/BidirectionalReflectanceDistributionFunction.hlsli"
-
-#if 0
-float4 main(VS_OUT pin) : SV_TARGET
-{
-	float3 N = normalize(pin.world_normal.xyz);
-	float3 L = normalize(-light_direction.xyz);
-	return float4(max(0, dot(N, L)) * pin.color.rgb, pin.color.a);
-}
-#endif
+#include "../../Nova/Shaders/SceneConstantBuffer.hlsli"
 
 struct TextureInfo
 {

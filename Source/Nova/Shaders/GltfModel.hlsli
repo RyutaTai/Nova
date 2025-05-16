@@ -17,7 +17,7 @@ struct VS_OUT
     float2  texcoord     : TEXCOORD;
 };
 
-cbuffer PRIMITIVE_CONSTANT_BUFFER : register(b0)
+cbuffer PrimitiveConstantBuffer : register(b0)
 {
     row_major float4x4  world;
     int                 material;
@@ -26,23 +26,14 @@ cbuffer PRIMITIVE_CONSTANT_BUFFER : register(b0)
     int                 pad;
 };
 
-cbuffer SCENE_CONSTANT_BUFFER : register(b1)
-{
-    row_major float4x4  viewProjection;
-    float4              lightDirection;
-    float4              cameraPosition;
-    row_major float4x4  lightViewProjection;    //	Shadow
-    row_major float4x4  invViewProjection;      //	Skymap
-};
-
 static const uint PRIMITIVE_MAX_JOINTS = 512;
 
-cbuffer PRIMITIVE_JOINT_CONSTANTS : register(b2)
+cbuffer PrimitiveJointConstants : register(b2)
 {
     row_major float4x4 jointMatrices[PRIMITIVE_MAX_JOINTS];
 };
 
-cbuffer EMISSIVE_CONSTANTS : register(b3)
+cbuffer EmissiveConstants : register(b3)
 {
     float emissiveIntensity;
 }

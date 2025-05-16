@@ -98,7 +98,7 @@ public:
 
 	//	オーディオスペクトラムのスケール
 	void UpdateSpectrumScale(const float& elapsedTime);
-	void SetSpectrumScale(const ProjectionMappingType& projectionMappingType, const DirectX::XMFLOAT3& scale);
+	void SetCircleSpectrumEyeOffsetY(const ProjectionMappingType& projectionMappingType, const float& eyeOffsetY, const float& lerpTime);
 
 	//	プロジェクションマッピング情報
 	void SetProjectionMappingEye(const DirectX::XMFLOAT3& eye, const int& index) { projectionMapping_[index].eye_ = eye; }

@@ -1,6 +1,7 @@
 #include "../../Nova/Shaders/GltfModel.hlsli"
 #include "../../Nova/Shaders/BidirectionalReflectanceDistributionFunction.hlsli"
 #include "../../Nova/Shaders/ProjectionMapping.hlsli"
+#include "../../Nova/Shaders/SceneConstantBuffer.hlsli"
 
 #define BASECOLOR_TEXTURE 0
 #define METALLIC_ROUGHNESS_TEXTURE 1

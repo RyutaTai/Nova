@@ -1,5 +1,7 @@
 #include "Model.hlsli"
 
+#include "SceneConstantBuffer.hlsli"
+
 VS_OUT main(VS_IN vin)
 {
     vin.normal.w = 0;

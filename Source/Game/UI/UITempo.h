@@ -7,18 +7,18 @@
 class UITempo : public UI
 {
 public:
-	//	判定の種類
+	//	リズム判定の種類
 	enum class JudgmentType
 	{
-		Perfect = 0,
-		Good,
+		Perfect = 0,	//	パーフェクト
+		Good,			//	グッド
 		Miss,			//	ミス
 		None,			//	判定済み
 		Max
 	};
 
 private:
-	//	半円の構造体(左右でペア)
+	//	半円の構造体(左右のペアで管理)
 	struct Semicircle
 	{
 		std::unique_ptr<Sprite> left_;		//	左側の半円
@@ -29,7 +29,11 @@ private:
 	public:
 		Sprite* GetLeft()	{ return left_.get(); }			//	左側の半円取得
 		Sprite* GetRight()	{ return right_.get(); }		//	右側の半円取得
+		
+		void SetRage(const float& range) { range_ = range; }
 		const float GetRange()const { return range_; }		//	中心円からの距離取得
+		
+		void SetIsJudged(const bool& isJudged) { isJudged_ = isJudged; }
 		const bool	IsJudged()const { return isJudged_; }	//	判定済みフラグ取得
 
 	};

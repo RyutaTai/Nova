@@ -1,4 +1,4 @@
-#include "Rhythm.h"
+#include "JudgeRhythm.h"
 
 #include "UI/UIManager.h"
 #include "UI/UITempo.h"
@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-void Rhythm::Initialize()
+void JudgeRhythm::Initialize()
 {
 	//	midiの生成と初期化
 	//midi_ = std::make_unique<Midi>("./Resources/Audio/MIDI/fourOnTheFloor_140bpm.mid", 1.714);
@@ -20,7 +20,7 @@ void Rhythm::Initialize()
 
 }
 
-void Rhythm::Update()
+void JudgeRhythm::Update()
 {
 	//	midi更新処理
 	midi_->Update(Framework::GetDoubleDeltaTime());
@@ -28,7 +28,7 @@ void Rhythm::Update()
 }
 
 //	midiを見てノートオンならtrueを返す(テンポに合わせた動きをさせるために使用する)
-bool Rhythm::GetRhythm()
+bool JudgeRhythm::GetRhythm()
 {
 	//  現在ノートオンならtrueを返す
 	if (midi_->IsInputNoteOn(GetCurrentMidiTime()))
@@ -38,15 +38,15 @@ bool Rhythm::GetRhythm()
 }
 
 //	コンボ加算
-void Rhythm::AddComboCount(const int& comboCount)
+void JudgeRhythm::AddComboCount(const int& comboCount)
 {
 	comboCount_ += comboCount;										//	コンボ加算
 	UIManager::Instance().GetUIRank()->AddRankPoint(comboCount);	//	ランクポイント加算
 }
 
-void Rhythm::DrawDebug()
+void JudgeRhythm::DrawDebug()
 {
-	if (ImGui::TreeNode("Rhythm"))
+	if (ImGui::TreeNode("JudgeRhythm"))
 	{
 		float currentMidiTimer = static_cast<float>(midi_->GetCurrentTimer());
 		float maxMidiTimer = debugMaxMidiTimer_;

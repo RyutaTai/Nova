@@ -251,7 +251,7 @@
     <ClCompile Include="Source\Game\DragonkinAction.cpp" />
     <ClCompile Include="Source\Nova\AI\BehaviorData.cpp" />
     <ClCompile Include="Source\Nova\AI\NodeBase.cpp" />
-    <ClCompile Include="Source\Game\Rhythm.cpp" />
+    <ClCompile Include="Source\Game\JudgeRhythm.cpp" />
     <ClCompile Include="Source\Nova\Audio\Audio.cpp" />
     <ClCompile Include="Source\Game\UI\UIRhythmJudgment.cpp" />
     <ClCompile Include="Source\Nova\Collision\CollisionData.cpp" />
@@ -259,6 +259,8 @@
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
     <ClCompile Include="Source\Game\UI\UIRank.cpp" />
     <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\Vignette.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h">
@@ -481,7 +483,7 @@
     <ClInclude Include="Source\Nova\AI\BehaviorData.h" />
     <ClInclude Include="Source\Nova\AI\JudgmentBase.h" />
     <ClInclude Include="Source\Nova\AI\NodeBase.h" />
-    <ClInclude Include="Source\Game\Rhythm.h" />
+    <ClInclude Include="Source\Game\JudgeRhythm.h" />
     <ClInclude Include="Source\Nova\Audio\Audio.h" />
     <ClInclude Include="Source\Game\UI\UIRhythmJudgment.h" />
     <ClInclude Include="Source\Nova\Collision\CollisionData.h" />
@@ -534,6 +536,8 @@
     <ClInclude Include="External\nlohmann\detail\value_t.hpp" />
     <ClInclude Include="Source\Game\UI\UIRank.h" />
     <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h" />
+    <ClInclude Include="Source\Nova\Graphics\Vignette.h" />
+    <ClInclude Include="Source\Nova\Graphics\ColorFilter.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
@@ -647,6 +651,9 @@
     <FxCompile Include="Source\Nova\Shaders\GltfModelCsmGs.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\VignettePS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Nova\Shaders\Debug.hlsli">
@@ -683,6 +690,15 @@
       <Filter>Nova\Shaders</Filter>
     </None>
     <None Include="Source\Nova\Shaders\ProjectionMapping.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\SceneConstantBuffer.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\ColorFilter.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\FilterFunctions.hlsli">
       <Filter>Nova\Shaders</Filter>
     </None>
   </ItemGroup>

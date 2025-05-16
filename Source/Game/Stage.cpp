@@ -6,6 +6,7 @@
 #include "../Nova/Audio/AudioManager.h"
 #include "../Nova/Resources/Texture.h"
 #include "../Nova/Resources/ResourceManager.h"
+#include "../Nova/Others/Easing.h"
 
 #include "Player.h"
 
@@ -22,7 +23,7 @@ Stage::Stage()
 
 	GetTransform()->SetPosition(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
 
-	collisionMesh_ = std::make_unique<decltype(collisionMesh_)::element_type>(Graphics::Instance().GetDevice(), "./Resources/Model/City/city.gltf");
+	collisionMesh_ = std::make_unique<CollisionMesh>(Graphics::Instance().GetDevice(), "./Resources/Model/City/city.gltf");
 	GetTransform()->SetScaleFactor(0.0025f);	//	CityModel
 	//GetTransform()->SetScaleFactor(100.0f);
 
@@ -211,8 +212,8 @@ void Stage::UpdateAudioSpectrum(const float& elapsedTime)
 {
 	UpdateSpectrumColor(elapsedTime);		//	オーディオスペクトラムの色更新
 	UpdateSpectrumScale(elapsedTime);		//	オーディオスペクトラムのスケール更新
-	UpdateCircleAudioSpectrum(elapsedTime);
-	UpdateWaveformAudioSpectrum();
+	UpdateCircleAudioSpectrum(elapsedTime);	//	波形オーディオスペクトラム更新
+	UpdateWaveformAudioSpectrum();			//	円形オーディオスペクトラム更新
 }
 
 //	波形オーディオスペクトラム更新
@@ -322,6 +323,7 @@ void Stage::SetSpectrumColor(const ProjectionMappingType& projectionMappingType,
 }
 
 //	オーディオスペクトラムのスケール変更に関する更新処理
+//	プロジェクションマッピングの視点を変化させることでスケールが変わったように見せる
 void Stage::UpdateSpectrumScale(const float& elapsedTime)
 {
 	for (int i = 0; i < static_cast<int>(ProjectionMappingType::Max); ++i)
@@ -329,23 +331,22 @@ void Stage::UpdateSpectrumScale(const float& elapsedTime)
 		if (isTemporaryScaleActive_[i])	//	色変更フラグが立っていたら
 		{
 			scaleTimer_[i] += elapsedTime;
-			if (scaleTimer_[i] >= scaleDuration_[i])	//	一定時間経過したらデフォルト色にリセット
+			if (scaleTimer_[i] >= scaleDuration_[i])	//	一定時間経過したら視点をデフォルト位置にリセット
 			{
 				isTemporaryScaleActive_[i] = false;
 				projectionMapping_[i].eye_ = projectionMapping_[i].defaultEye_;
-				eyeOffsetY_ = defaultEyeOffsetY_;	//	円形オーディオスペクトラムの大きさリセット
+				eyeOffsetY_ = defaultEyeOffsetY_;		//	円形オーディオスペクトラムの大きさをリセット
 			}
 		}
 	}
 }
 
 //	オーディオスペクトラムのスケール変更
-void Stage::SetSpectrumScale(const ProjectionMappingType& projectionMappingType, const DirectX::XMFLOAT3& scale)
+void Stage::SetCircleSpectrumEyeOffsetY(const ProjectionMappingType& projectionMappingType, const float& eyeOffsetY,const float& lerpTime/*イージング用*/)
 {
-	//projectionMapping_[static_cast<int>(projectionMappingType)].scale_ = scale;
 	isTemporaryScaleActive_[static_cast<int>(projectionMappingType)] = true;
 	scaleTimer_[static_cast<int>(projectionMappingType)] = 0.0f;	//	タイマーをリセット
-	eyeOffsetY_ = 40.0f;	//	円形オーディオスペクトラムの大きさを変化
+	eyeOffsetY_ = eyeOffsetY;	//	円形オーディオスペクトラムの大きさを変化
 	//eyeOffsetY_ += 2.5f;	//	円形オーディオスペクトラムの大きさを変化
 }
 
@@ -392,7 +393,6 @@ float Stage::CalculateAutocorrelation(const float data[], const int& lag)
 bool Stage::Collision(_In_ const DirectX::XMFLOAT3& rayStartPosition, _In_ const DirectX::XMFLOAT3& rayDirection, _In_ const DirectX::XMFLOAT4X4& stageTransform, _Out_ DirectX::XMFLOAT3& intersectionPosition, _Out_ DirectX::XMFLOAT3& intersectionNormal,
 	_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ float rayLengthLimit, _In_ bool skipIf) const
 {
-	return false;
 #if 0
 	if (collisionMesh_->Raycast(rayStartPosition, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
 	{

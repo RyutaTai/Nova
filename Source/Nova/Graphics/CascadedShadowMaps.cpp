@@ -6,10 +6,10 @@
 #include "../../Nova/Others/Misc.h"
 #include "../../imgui/imgui.h"
 
-// Calculate the 8 vertices of the view frustum based on the provided view and projection matrices.
+//	Calculate the 8 vertices of the view frustum based on the provided view and projection matrices.
 std::array<DirectX::XMFLOAT4, 8> ExtractFrustumCorners(const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection)
 {
-	// Define the NDC space corners
+	//	Define the NDC space corners
 	std::array<DirectX::XMFLOAT4, 8> frustumCorners =
 	{
 		DirectX::XMFLOAT4{-1.0f, -1.0f, -1.0f, 1.0f},
@@ -26,7 +26,7 @@ std::array<DirectX::XMFLOAT4, 8> ExtractFrustumCorners(const DirectX::XMFLOAT4X4
 	{
 		DirectX::XMStoreFloat4(&frustumCorner, DirectX::XMVector3TransformCoord(DirectX::XMLoadFloat4(&frustumCorner), invViewProjection));
 	}
-	// Return a array of 8 vertices representing the corners of the view frustum in world space.
+	//	Return a array of 8 vertices representing the corners of the view frustum in world space.
 	return frustumCorners;
 }
 

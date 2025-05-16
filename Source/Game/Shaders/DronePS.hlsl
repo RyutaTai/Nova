@@ -1,4 +1,5 @@
 #include "../../Nova/Shaders/Model.hlsli"
+#include "../../Nova/Shaders/SceneConstantBuffer.hlsli"
 
 #define POINT 0
 #define LINEAR 1

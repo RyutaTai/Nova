@@ -1,5 +1,7 @@
 #include "Model.hlsli"
 
+#include "SceneConstantBuffer.hlsli"
+
 #define POINT 0
 #define LINEAR 1
 #define ANISOTROPIC 2
@@ -16,8 +18,6 @@ float4 main(VS_OUT pin) : SV_TARGET
     float4 color = textureMaps[0].Sample(samplerStates[ANISOTROPIC], pin.texcoord);
     float alpha = color.a;
     
-    //return color;
-    
 #if 1
     //Inverse gamma process(ãtÉKÉìÉ}ï‚ê≥)
     //const float GAMMA = 2.2f;
@@ -32,14 +32,11 @@ float4 main(VS_OUT pin) : SV_TARGET
     float3 N = textureMaps[1].Sample(samplerStates[ANISOTROPIC], pin.texcoord).xyz;
 #endif
     float3 T = normalize(pin.worldTangent.xyz);
-    //float3 T = float3(1.001, 0,0);                                                                                                  
     float sigma = pin.worldTangent.w;
     T = normalize(T - N * dot(N, T));
-    //float3 B = normalize(cross(N, T)/* * sigma*/);
     float3 B = normalize(cross(N, T) * sigma);
     
     float4 normal = textureMaps[1].Sample(samplerStates[LINEAR], pin.texcoord);
-    //return normal;
     normal = (normal * 2.0) - 1.0;
     N = normalize((normal.x * T) + (normal.y * B) + (normal.z * N));
 
@@ -49,11 +46,9 @@ float4 main(VS_OUT pin) : SV_TARGET
     float3 specular = pow(max(0, dot(N, normalize(v * L))), 128);
     
     float3 finalColor = diffuse + specular;
-    //finalColor.rgb += 0.3f;
-    //finalColor.rgb += 0.9f;
     finalColor *= pin.color.rgb;
     
-    	// SHADOW
+    // SHADOW
 #if 0
 	const float shadowDepthBias = 0.001;
 #else
@@ -79,9 +74,7 @@ float4 main(VS_OUT pin) : SV_TARGET
     
 #if 0
     return float4(shadowFactor, 1.0f); //  âeÇÃílÇ™éÊÇÍÇƒÇ¢ÇÈÇ©É`ÉFÉbÉN(éÊÇÍÇƒÇ»Ç©Ç¡ÇΩÇÁê^Ç¡îí)
-#endif   
-    //return float4(pin.color.rgb,1.0f);
-    //return float4((diffuse + specular) * shadowFactor /*SHADOW*/, alpha); //  Shadowï`âÊ
+#endif
     return float4((diffuse + specular) * shadowFactor /*SHADOW*/, alpha) * pin.color; //  Shadowï`âÊ x3dgp.shadow
-    //return float4(finalColor, alpha);
+    
 }

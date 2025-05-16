@@ -1,7 +1,7 @@
 #include "UIHealth.h"
 
 #include "../Player.h"
-#include "../Rhythm.h"
+#include "../JudgeRhythm.h"
 #include "../../Nova/Others/MathHelper.h"
 
 UIHealth::UIHealth()

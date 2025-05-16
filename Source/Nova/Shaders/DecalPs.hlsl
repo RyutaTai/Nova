@@ -1,5 +1,7 @@
 #include "Decal.hlsli"
 
+#include "SceneConstantBuffer.hlsli"
+
 #define POINT 0
 #define LINEAR 1
 #define ANISOTROPIC 2
@@ -10,16 +12,16 @@ SamplerState		samplerStates[5]	: register(s0);
 Texture2D			decalTexture		: register(t0);
 Texture2D<float>	sceneDepthTexture	: register(t1);
 
-float4 main(float4 sv_position : SV_POSITION) : SV_TARGET
+float4 main(float4 svPosition : SV_POSITION) : SV_TARGET
 {
 	float2 dimension;
 	sceneDepthTexture.GetDimensions(dimension.x, dimension.y);
-	float2 texcoord = sv_position.xy / dimension;
+	float2 texcoord = svPosition.xy / dimension;
 	float depth = sceneDepthTexture.Sample(samplerStates[LINEAR_BORDER_BLACK], texcoord);
 	
 	float4 ndc = float4(2.0 * texcoord.x - 1.0, 1.0 - 2.0 * texcoord.y, depth, 1.0);
 	
-	float4 position = mul(ndc, inverseViewProjection);
+	float4 position = mul(ndc, invViewProjection);
 	position /= position.w;
 	
 	position = mul(position, decalInverseProjection);

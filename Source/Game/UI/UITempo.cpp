@@ -1,7 +1,7 @@
 #include "UITempo.h"
 
 #include "../../Nova/Input/Input.h"
-#include "../Rhythm.h"
+#include "../JudgeRhythm.h"
 #include "../UI/UIRhythmJudgment.h"
 #include "../../../External/imgui/imgui.h"
 #include "../Stage.h"
@@ -170,12 +170,18 @@ bool UITempo::JudgeRythm()
 
 		//	判定フラグをtrueにしてコンボ加算
 		semicircles_[nearSemicircleIndex]->isJudged_ = true;
-		Rhythm::Instance().AddComboCount(1);
+		JudgeRhythm::Instance().AddComboCount(1);
 
 		//	プレイヤーの足元のオーディオスペクトラムの色を変更
 		Stage::Instance().SetSpectrumColor(Stage::ProjectionMappingType::Circle, { 1.0f,1.0f,0.0f,1.0f });
 		//	プレイヤーの足元のオーディオスペクトラムのスケールを変更
-		Stage::Instance().SetSpectrumScale(Stage::ProjectionMappingType::Circle, { 1.3f,1.3f,1.3f });
+		Stage::Instance().SetCircleSpectrumEyeOffsetY(Stage::ProjectionMappingType::Circle, 40.0f, 0.5f);
+
+		//	コントローラー振動
+		//	TODO:判定部分をUIから移動させたい
+		//	もっと肥大化しそう
+		//	判定とそれに応じた処理を全てUIがやるのは違和感がある
+
 
 		return true;
 
@@ -190,7 +196,7 @@ bool UITempo::JudgeRythm()
 
 		//	判定フラグをtrueにしてコンボ加算
 		semicircles_[nearSemicircleIndex]->isJudged_ = true;
-		Rhythm::Instance().AddComboCount(1);
+		JudgeRhythm::Instance().AddComboCount(1);
 
 		return true;
 	}
@@ -203,7 +209,7 @@ bool UITempo::JudgeRythm()
 		uiRhythm->SetIsVisible(true);
 
 		//	コンボ数リセット
-		Rhythm::Instance().SetComboCount(0);
+		JudgeRhythm::Instance().SetComboCount(0);
 
 		return false;
 	}
@@ -248,7 +254,7 @@ void UITempo::DrawDebug()
 	if (ImGui::TreeNode("Tempo"))
 	{
 		UI::DrawDebug();
-		float bpm = Rhythm::Instance().GetBPM();
+		float bpm = JudgeRhythm::Instance().GetBPM();
 		ImGui::DragFloat("BPM", &bpm, 0.1f);
 		ImGui::DragFloat("QuarterNoteDuration", &quarterNoteDuration_);	
 

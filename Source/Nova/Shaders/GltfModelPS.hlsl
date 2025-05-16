@@ -1,6 +1,7 @@
 #include "GltfModel.hlsli"
 
 #include "BidirectionalReflectanceDistributionFunction.hlsli"
+#include "SceneConstantBuffer.hlsli"
 
 #define BASECOLOR_TEXTURE 0
 #define METALLIC_ROUGHNESS_TEXTURE 1
@@ -70,11 +71,6 @@ float4 main(VS_OUT pin) : SV_TARGET
         sampled.rgb = pow(sampled.rgb, GAMMA);
         baseColorFactor *= sampled;
     }
-    
-    
-    //return baseColorFactor;
- 
-    
     
     float3 emissiveFactor = materialConstant.emissiveFactor;
     const int emissiveTexture = materialConstant.emissiveTexture.index;
@@ -159,24 +155,5 @@ float4 main(VS_OUT pin) : SV_TARGET
     return float4(Lo, baseColorFactor.a);
 
 #endif
-    
-#if 0   //  Unit38ˆÈ‘O
-    const MaterialConstants materialConstant = materials[material];
-    
-    float4 baseColor = materialConstant.pbrMetallicRoughness.baseColorTexture.index > -1 ?
-    materialTextures[BASECOLOR_TEXTURE].Sample(samplerStates[ANISOTROPIC], pin.texcoord) :
-    materialConstant.pbrMetallicRoughness.baseColorFactor;
-    
-    float3 emissive = materialConstant.emissiveTexture.index > -1 ?
-    materialTextures[EMISSIVE_TEXTURE].Sample(samplerStates[ANISOTROPIC], pin.texcoord).rgb :
-    materialConstant.emissiveFactor;
-
-    float3 N = normalize(pin.wNormal.xyz);
-    float3 L = normalize(-lightDirection.xyz);
-    
-    float3 color = max(0, dot(N, L)) * baseColor.rgb + emissive;
-    
-    return float4(color, baseColor.a);
-#endif
-    
+   
 }

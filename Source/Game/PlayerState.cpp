@@ -5,7 +5,7 @@
 #include "Bullet.h"
 #include "BulletManager.h"
 #include "EnemyManager.h"
-#include "Rhythm.h"
+#include "JudgeRhythm.h"
 #include "UI/UIManager.h"
 #include "UI/UITempo.h"
 #include "../Nova/Debug/DebugRenderer.h"

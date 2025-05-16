@@ -1,27 +1,19 @@
 #include "FullScreenQuad.hlsli"
 
+#include "SceneConstantBuffer.hlsli"
+
 #define POINT 0
 #define LINEAR 1
 #define ANISOTROPIC 2
 #define LINEAR_BORDER_BLACK 3
 #define LINEAR_BORDER_WHITE 4
+
 SamplerState samplerStates[5] : register(s0);
-// CASCADED_SHADOW_MAPS
 SamplerComparisonState comparisonSamplerState : register(s5);
 
 Texture2D colorMap : register(t0);
 Texture2D depthMap : register(t1);
 Texture2DArray cascadedShadowMaps : register(t2);
-
-cbuffer SceneConstantBuffer : register(b1)
-{
-    row_major float4x4 viewProjection;
-    float4 lightDirection;
-    float4 cameraPosition;
-    row_major float4x4 lightViewProjection;
-    row_major float4x4 invViewProjection;
-    row_major float4x4 invProjection;
-};
 
 cbuffer CsmConstants : register(b3)
 {

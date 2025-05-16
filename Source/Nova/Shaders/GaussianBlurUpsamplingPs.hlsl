@@ -5,6 +5,7 @@
 #define ANISOTROPIC 2
 #define LINEAR_BORDER_BLACK 3
 #define LINEAR_BORDER_WHITE 4
+
 SamplerState samplerStates[5] : register(s0);
 
 static const uint downsampledCount = 6;

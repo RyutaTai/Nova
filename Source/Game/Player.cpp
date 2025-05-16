@@ -93,7 +93,6 @@ void Player::Initialize()
 	GetTransform()->SetRotationY(DirectX::XMConvertToRadians(44.0f));
 
 	//	スケール設定
-	//GetTransform()->SetScaleFactor(3.0f);
 	GetTransform()->SetScaleFactor(1.9f);
 
 	//	座標系変換
@@ -1015,10 +1014,6 @@ void Player::DrawDebug()
 		ImGui::TreePop();
 	}
 
-	//	ImGuiでの変化を反映させる
-	//SetWeight(weight);
-	//SetBlendRate(blendRate);
-
 }
 
 //	デバッグプリミティブ描画
@@ -1065,7 +1060,7 @@ void Player::DrawDebugPrimitive()
 
 void Player::DrawDummyRay()
 {
-	if (ImGui::TreeNode(u8"RayHIt"))
+	if (ImGui::TreeNode(u8"RayHit"))
 	{
 		//ImGui::Checkbox("DummyHitReset", &isDummyReset_);
 		//ImGui::Checkbox("DummyHit", &isDummyHit_);

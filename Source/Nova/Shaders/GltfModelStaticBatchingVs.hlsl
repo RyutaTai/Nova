@@ -1,5 +1,7 @@
 #include "GltfModel.hlsli"
 
+#include "SceneConstantBuffer.hlsli"
+
 VS_OUT main(float4 position : POSITION, float4 normal : NORMAL, float4 tangent : TANGENT, float2 texcoord : TEXCOORD)
 {
 	VS_OUT vout;

@@ -1,5 +1,7 @@
 #include "GltfModel.hlsli"
 
+#include "SceneConstantBuffer.hlsli"
+
 VS_OUT main(VS_IN vin)
 {
     float sigma = vin.tangent.w;

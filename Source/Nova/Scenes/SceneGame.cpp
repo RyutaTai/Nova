@@ -16,7 +16,7 @@
 #include "../../Game/UI/UIInstructions.h"
 #include "../../Game/UI/UITempo.h"
 #include "../../Game/UI/UIRank.h"
-#include "../../Game/Rhythm.h"
+#include "../../Game/JudgeRhythm.h"
 #include "../Collision/CollisionManager.h"
 
 //	初期化
@@ -51,7 +51,7 @@ void SceneGame::Initialize()
 	UIManager::Instance().Initialize();					//	登録し終わってから初期化処理をする
 
 	/* ----- Rhythmクラス初期化 ----- */
-	Rhythm::Instance().Initialize();
+	JudgeRhythm::Instance().Initialize();
 
 	/* ----- ステージ初期化 ----- */
 	stage_ = std::make_unique<Stage>();					//	シティモデル
@@ -115,14 +115,18 @@ void SceneGame::Initialize()
 	framebuffers_[0] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	framebuffers_[1] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);	//	sprite
 	bitBlockTransfer_ = std::make_unique<FullScreenQuad>(device);
-	//	BLOOM
 	bloomer_ = std::make_unique<Bloom>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/FinalPassPs.cso", pixelShaders_[0].ReleaseAndGetAddressOf());
 
-	//	シャドウ
+	//	----- シャドウ -----
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/CascadedShadowPs.cso", pixelShaders_[2].GetAddressOf());
 	cascadedShadowMaps_ = std::make_unique<decltype(cascadedShadowMaps_)::element_type>(device, 1024 * 4, 1024 * 4);
 
+	//	----- ヴィネット -----
+	vignette_ = std::make_unique<Vignette>();
+
+	//	----- カラーフィルター -----
+	colorFilter_ = std::make_unique<ColorFilter>();
 
 	//	----- ステート登録 -----
 	stateMachine_.reset(new StateMachine<State<SceneGame>>());
@@ -176,10 +180,13 @@ void SceneGame::Update(const float& elapsedTime)
 	UIManager::Instance().Update(elapsedTime);
 
 	// ----- Rhythm更新処理 -----
-	Rhythm::Instance().Update();
+	JudgeRhythm::Instance().Update();
 
 	// ----- Collision更新処理 -----
 	CollisionManager::Instance().Update(elapsedTime);
+
+	//	----- カラーフィルター更新処理 -----
+	colorFilter_->Update();
 
 	//	ゲームクリアへの遷移はWeve3 State内で行っている	
 	//	ゲームオーバー
@@ -230,6 +237,7 @@ void SceneGame::Render()
 	Graphics::Instance().SetCameraPosition({ 0,0,1,0 });
 	Graphics::Instance().SetInvViewProjection(Camera::Instance().CalcInvViewProjectionMatrix());
 	Graphics::Instance().SetInvProjection(Camera::Instance().CalcInvProjectionMatrix());
+	Graphics::Instance().SetAdjustColor(adjustColor_);
 
 	Graphics::SceneConstants sceneConstants = Graphics::Instance().GetSceneConstant();
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
@@ -244,11 +252,9 @@ void SceneGame::Render()
 		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
 		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
 
-		//	Shadowはこの関数じゃなくてShadowRender()で行っている
 		{
-			//Graphics::Instance().SetLightDirection(ShadowMap::Instance().GetLightDirection());
-			DirectX::XMFLOAT4 cameraPosition_ = { Camera::Instance().GetEye().x,Camera::Instance().GetEye().y,Camera::Instance().GetEye().z,1.0f };
-			Graphics::Instance().SetCameraPosition(cameraPosition_);
+			DirectX::XMFLOAT4 cameraPosition = { Camera::Instance().GetEye().x,Camera::Instance().GetEye().y,Camera::Instance().GetEye().z,1.0f };
+			Graphics::Instance().SetCameraPosition(cameraPosition);
 
 			D3D11_VIEWPORT viewport;
 			UINT numViewports{ 1 };
@@ -271,15 +277,6 @@ void SceneGame::Render()
 #endif
 			Graphics::Instance().SetViewProjection(V * Projection);
 
-			//ID3D11Buffer* shadowConstantBuffer = ShadowMap::Instance().GetConstantBuffer();
-			//Graphics::SceneConstants sceneConstant = Graphics::Instance().GetSceneConstant();
-			//deviceContext->UpdateSubresource(shadowConstantBuffer, 0, 0, &sceneConstant, 0, 0);
-			//deviceContext->VSSetConstantBuffers(1, 1, &shadowConstantBuffer);
-			//deviceContext->PSSetConstantBuffers(1, 1, &shadowConstantBuffer);
-
-			// SHADOW : bind shadow map at slot 8
-			//ID3D11ShaderResourceView* srv = ShadowMap::Instance().GetShaderResourceView();
-			//deviceContext->PSSetShaderResources(8, 1, &srv);
 		}
 #endif
 
@@ -295,7 +292,6 @@ void SceneGame::Render()
 		/* ----- ステージ ----- */
 		//	ステート設定
 		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
-		//Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::WIREFRAME);
 		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
 		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
 		stage_->Render();
@@ -303,7 +299,6 @@ void SceneGame::Render()
 		/* ----- プレイヤー ----- */
 		//	ステート設定
 		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::SOLID);
-		//Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::WIREFRAME);
 		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
 		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
 		player_->Render();
@@ -314,32 +309,51 @@ void SceneGame::Render()
 		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
 		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
 		EnemyManager::Instance().Render();
-		//dragonkin_->Render();
-		//drone_->Render();
 
+		framebuffers_[0]->Deactivate(deviceContext);
+
+		//	BLOOM
 		if (bloomer_)
 		{
-			framebuffers_[0]->Deactivate(deviceContext);
-			// BLOOM
 			bloomer_->Make(deviceContext, framebuffers_[0]->shaderResourceViews_[0].Get());
-
-			Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
-			Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
-			Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-			ID3D11ShaderResourceView* shaderResourceViews[] =
-			{
-				framebuffers_[0]->shaderResourceViews_[0].Get(),	//	colorMap
-				bloomer_->ShaderResourceView(),						//	boom
-				framebuffers_[0]->shaderResourceViews_[1].Get(),	//	depthMap
-				cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMap
-
-			};
-			bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[0].Get());
 		}
 
 		//	シャドウマップ
 		MakeShadow();
+		framebuffers_[1]->Clear(deviceContext);
+		framebuffers_[1]->Activate(deviceContext); 
 		DrawShadow();
+		framebuffers_[1]->Deactivate(deviceContext);
+#if 0
+
+		//	ヴィネット
+		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);//	各ステート毎のスプライト描画
+		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
+		//Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
+		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+		framebuffers_[0]->Clear(deviceContext);
+		framebuffers_[0]->Activate(deviceContext);
+		vignette_->Make();
+		bitBlockTransfer_->Blit(deviceContext, framebuffers_[1]->shaderResourceViews_[0].GetAddressOf(), 0, 1, vignette_->GetVignettePixelShader());
+		framebuffers_[0]->Deactivate(deviceContext);
+#endif		
+
+		vignette_->Make();
+
+		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
+		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
+		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+		ID3D11ShaderResourceView* shaderResourceViews[] =
+		{
+			framebuffers_[1]->shaderResourceViews_[0].Get(),	//	colorMap
+			bloomer_->ShaderResourceView(),						//	boom
+			framebuffers_[1]->shaderResourceViews_[1].Get(),	//	depthMap
+			cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMap
+
+		};
+		bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[0].Get());
+
 	}
 
 	/* ----- エフェクト描画 ----- */
@@ -406,14 +420,6 @@ void SceneGame::Render()
 	/* ----- UI描画 ----- */
 	UIManager::Instance().Render();
 
-	framebuffers_[1]->Clear(deviceContext);
-	framebuffers_[1]->Activate(deviceContext);
-	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
-	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
-	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::NONE);
-	bitBlockTransfer_->Blit(deviceContext, framebuffers_[0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, pixelShaders_[0].Get());
-	framebuffers_[1]->Deactivate(deviceContext);
-
 }
 
 //	シャドウ生成
@@ -442,9 +448,9 @@ void SceneGame::DrawShadow()
 	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::NONE);
 	ID3D11ShaderResourceView* shaderResourceViews[]
 	{
-		framebuffers_[0]->shaderResourceViews_[0].Get(),	// color_map
+		framebuffers_[0]->shaderResourceViews_[0].Get(),	// colorMap
 		framebuffers_[0]->shaderResourceViews_[1].Get(),	// DepthMap
-		cascadedShadowMaps_->DepthMap().Get()				// cascaded_shadow_maps
+		cascadedShadowMaps_->DepthMap().Get()				// cascadedShadowMaps
 	};
 	bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[2].Get());
 
@@ -477,7 +483,13 @@ void SceneGame::DrawDebug()
 	//	----- DebugRenderer -----
 	Graphics::Instance().GetDebugRenderer()->DrawDebugGUI();
 
-	ImGui::DragFloat4("LightDirection", &lightDirection_.x, 0.1f, -FLT_MAX, FLT_MAX);	//	ライトの向き
+	//	SceneConstant
+	if (ImGui::TreeNode("SceneConstant"))
+	{
+		ImGui::DragFloat4("LightDirection", &lightDirection_.x, 0.1f, -FLT_MAX, FLT_MAX);	//	ライトの向き
+		ImGui::ColorEdit4("AdjustColor", &adjustColor_.x);
+		ImGui::TreePop();
+	}
 
 	//	----- ブルーム -----
 	if (bloomer_)bloomer_->DrawDebug();
@@ -489,6 +501,12 @@ void SceneGame::DrawDebug()
 		cascadedShadowMaps_->DrawDebug();
 		ImGui::TreePop();
 	}
+
+	//	----- ヴィネット -----
+	vignette_->DrawDebug();
+
+	//	----- カラーフィルター -----
+	colorFilter_->DrawDebug();
 
 	//	----- カメラ -----
 	Camera::Instance().DrawDebug();
@@ -505,6 +523,6 @@ void SceneGame::DrawDebug()
 	//	----- UI -----
 	UIManager::Instance().DrawDebug();
 	//	----- Rhythm -----
-	Rhythm::Instance().DrawDebug();
+	JudgeRhythm::Instance().DrawDebug();
 
 }

@@ -26,7 +26,7 @@ public:
 	struct Scene
 	{
 		std::string name_;
-		std::vector<int> nodes_; // Array of 'root' nodes_
+		std::vector<int> nodes_; // Array of 'root' nodes
 	
 		template<class T>
 		void serialize(T& archive)
@@ -42,7 +42,7 @@ public:
 		int skin_ = -1;  // index_ of skin_ referenced by this Node
 		int mesh_ = -1;  // index_ of mesh_ referenced by this Node
 
-		std::vector<int> children_; // An array of indices of child nodes_ of this Node
+		std::vector<int> children_; // An array of indices of child nodes of this Node
 
 		// Local transforms
 		DirectX::XMFLOAT4 rotation_		= { 0, 0, 0, 1 };

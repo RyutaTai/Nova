@@ -1,6 +1,6 @@
 #include "UIRank.h"
 
-#include "../Rhythm.h"
+#include "../JudgeRhythm.h"
 #include "../../Nova/Graphics/Graphics.h"
 #include "../../../External/imgui/imgui.h"
 

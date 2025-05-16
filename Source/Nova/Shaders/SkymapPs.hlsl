@@ -1,16 +1,11 @@
 #include "FullScreenQuad.hlsli"
 
-cbuffer SCENE_CONSTANT_BUFFER : register(b5)
-{
-	row_major float4x4	viewProjection;
-	float4				lightDirection;
-	float4				cameraPosition;
-	row_major float4x4	invViewProjection;
-};
+#include "SceneConstantBuffer.hlsli"
 
 #define POINT 0
 #define LINEAR 1
 #define ANISOTROPIC 2
+
 SamplerState samplerStates[3] : register(s0);
 Texture2D skybox : register(t5);
 

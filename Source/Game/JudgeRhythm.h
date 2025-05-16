@@ -2,19 +2,19 @@
 
 #include "../Nova/Audio/Midi.h"
 
-class Rhythm
+class JudgeRhythm
 {
 public:
-	Rhythm() {}
-	~Rhythm() {}
+	JudgeRhythm() {}
+	~JudgeRhythm() {}
 
 	void Initialize();
 	void Update();
 	void DrawDebug();
 
-	static Rhythm& Instance()
+	static JudgeRhythm& Instance()
 	{
-		static Rhythm rhythm;
+		static JudgeRhythm rhythm;
 		return rhythm;
 	}
 	

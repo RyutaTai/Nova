@@ -30,7 +30,7 @@ CONST BOOL FULLSCREEN{ TRUE };
 
 class Graphics
 {
-public:	//	構造体
+public:
 	struct SceneConstants
 	{
 		DirectX::XMFLOAT4X4 viewProjection_ = {};
@@ -39,24 +39,8 @@ public:	//	構造体
 		DirectX::XMFLOAT4X4 lightViewProjection_ = {};
 		DirectX::XMFLOAT4X4 invViewProjection_ = {};
 		DirectX::XMFLOAT4X4 invProjection_ = {};
-		//DirectX::XMFLOAT4X4 projectionMappingTransform_;
+		DirectX::XMFLOAT4	adjustColor_ = {};
 	};
-
-	//struct parametric_constants
-	//{
-	//	float extraction_threshold{ 0.8f };
-	//	float gaussian_sigma{ 1.0f };
-	//	float bloom_intensity{ 1.0f };
-	//	float exposure{ 1.0f };
-
-	//	// CASCADED_SHADOW_MAPS
-	//	float shadow_color = 0.2f;
-	//	float shadow_depth_bias = 0.0001f;
-	//	bool colorize_cascaded_layer = true;
-	//	float align;
-	//};
-	//parametric_constants parametric_constants;
-
 
 public:
 	Graphics(HWND hwnd, bool fullscreen);
@@ -79,8 +63,8 @@ public:
 	void	CreateDirect2dObjects();
 #endif
 
-	//	セッター
 	void ClearSceneConstant() { sceneConstant_ = {}; }
+	//	セッター
 	void SetSceneConstant(const SceneConstants& sceneConstant)					{ sceneConstant_ = sceneConstant; }
 	void SetViewProjection(const DirectX::XMFLOAT4X4& viewProjection)			{ sceneConstant_.viewProjection_ = viewProjection; }
 	void SetViewProjection(const DirectX::XMMATRIX& viewProjection)				{ DirectX::XMStoreFloat4x4(&sceneConstant_.viewProjection_, viewProjection); }
@@ -88,6 +72,7 @@ public:
 	void SetCameraPosition(const DirectX::XMFLOAT4& cameraPosition)				{ sceneConstant_.cameraPosition_ = cameraPosition; }
 	void SetLightViewProjection(const DirectX::XMFLOAT4X4& lightViewProjection) { sceneConstant_.lightViewProjection_ = lightViewProjection; }
 	void SetInvViewProjection(const DirectX::XMFLOAT4X4& invViewProjection)		{ sceneConstant_.invViewProjection_ = invViewProjection; }
+	void SetAdjustColor(const DirectX::XMFLOAT4& color)							{ sceneConstant_.adjustColor_ = color; }
 	void SetInvViewProjection(const DirectX::XMMATRIX& invViewProjection)		{ DirectX::XMStoreFloat4x4(&sceneConstant_.invViewProjection_, invViewProjection); }
 	void SetInvProjection(const DirectX::XMMATRIX& invProjection)				{ DirectX::XMStoreFloat4x4(&sceneConstant_.invProjection_, invProjection); }
 	void SetIsVSync(const bool& isVSync);
@@ -107,6 +92,7 @@ public:
 	const DirectX::XMFLOAT4		GetCameraPosition()			const	{ return sceneConstant_.cameraPosition_; }
 	const DirectX::XMFLOAT4X4	GetLightViewProjection()	const	{ return sceneConstant_.lightViewProjection_; }
 	const DirectX::XMFLOAT4X4	GetInvViewProjection()		const	{ return sceneConstant_.invViewProjection_; }
+	const DirectX::XMFLOAT4		GetAdjustColor()			const	{ return sceneConstant_.adjustColor_; }
 	DebugRenderer*				GetDebugRenderer()					{ return debugRenderer_.get(); }
 	std::mutex&					GetMutex()							{ return mutex_; }			//ミューテックス取得
 
