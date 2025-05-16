@@ -5,6 +5,17 @@
 class JudgeRhythm
 {
 public:
+	//	リズム判定の種類
+	enum class JudgmentType
+	{
+		Perfect = 0,	//	パーフェクト
+		Good,			//	グッド
+		Miss,			//	ミス
+		None,			//	判定済み
+		Max
+	};
+
+public:
 	JudgeRhythm() {}
 	~JudgeRhythm() {}
 
@@ -21,7 +32,7 @@ public:
 	const double GetCurrentMidiTime()const { return midi_->GetCurrentTimer(); }
 
 	//	関数を呼んだタイミングがリズムにあっているか
-	bool RythmJudge();
+	bool	Judge();
 
 	//	BPM
 	void	SetBPM(const float& bpm){ bpm_ = bpm; }
@@ -43,6 +54,10 @@ private:
 
 	//	コンボ数
 	int comboCount_ = 0;
+
+	//	各判定の範囲
+	float perfectRange_ = 36.0f;	//	Perfectの範囲
+	float goodRange_ = 72.0f;		//	Goodの範囲
 
 	//	デバッグ用変数
 	double	debugMaxMidiTimer_ = 0.0f;

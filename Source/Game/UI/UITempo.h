@@ -6,17 +6,6 @@
 //	テンポガイドUI	真ん中の円1つ、サイドの半円4つずつ
 class UITempo : public UI
 {
-public:
-	//	リズム判定の種類
-	enum class JudgmentType
-	{
-		Perfect = 0,	//	パーフェクト
-		Good,			//	グッド
-		Miss,			//	ミス
-		None,			//	判定済み
-		Max
-	};
-
 private:
 	//	半円の構造体(左右のペアで管理)
 	struct Semicircle
@@ -55,19 +44,17 @@ public:
 	void Render()override;
 	void DrawDebug()override;
 
-	bool JudgeRythm();	//	入力タイミングがリズムにあっているか判定
-
 	Sprite*		GetCenterCircle()				{ return center_.get(); }				//	中心円取得
 	Semicircle* GetSemicircle(const int& index) { return semicircles_[index].get(); }	//	半円取得
 	const float GetTotalRange()const			{ return totalRange_; }					//	中心円からのそれぞれの半円の合計
+
+	int FindNearSemicircleIndex();					//	中心円に一番近い半円の番号を見つける
 
 private:
 	void UpdateDrawFlag();							//	描画フラグ切り替え処理
 	void UpdateCenterCircleAnimation();				//	中心円のアニメーション更新処理
 	void UpdatePosition(const float& elapsedTime);	//	UIの位置更新処理
 	void UpdateScale(const float& elapsedTime);		//	UIのスケール更新処理
-
-	int FindNearSemicircleIndex();					//	中心円に一番近い半円の番号を見つける
 
 private:
 	static constexpr int		SemicircleMax_ = 4;				//	半円の数
@@ -92,10 +79,6 @@ private:
 	bool	centerCircleAnimFlag_ = false;		//	中心円のアニメーション更新フラグ
 	int		animChangeThreshold_ = 9;			//	何フレームでアニメーションを遷移するか
 	int		centerAnimTime_ = 0;				//	中心円のアニメーション時間カウント
-
-	//	各判定の範囲
-	float perfectRange_ = 36.0f;	//	Perfectの範囲
-	float goodRange_ = 72.0f;		//	Goodの範囲
 
 };
 

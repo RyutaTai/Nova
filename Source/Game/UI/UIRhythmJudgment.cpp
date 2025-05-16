@@ -3,7 +3,7 @@
 #include "UIManager.h"
 #include "../../../External/imgui/imgui.h"
 
-UIRhythmJudgment::UIRhythmJudgment(const UITempo::JudgmentType& judgmentType)
+UIRhythmJudgment::UIRhythmJudgment(const JudgeRhythm::JudgmentType& judgmentType)
 	:UI(UIManager::UIType::Rhythm)
 {
 	judgmentText_ = std::make_unique<Sprite>(L"./Resources/Image/RythmJudgment.png");
@@ -37,10 +37,10 @@ void UIRhythmJudgment::Render()
 }
 
 //	”»’èŒ‹‰Ê‚É‰ž‚¶‚Ä•`‰æ‚ÌÝ’è‚ð‚·‚é
-void UIRhythmJudgment::TextSetting(const UITempo::JudgmentType& type)
+void UIRhythmJudgment::TextSetting(const JudgeRhythm::JudgmentType& type)
 {
 	SetIsVisible(true);
-	if (type == UITempo::JudgmentType::Perfect)
+	if (type == JudgeRhythm::JudgmentType::Perfect)
 	{
 		judgmentText_->GetTransform()->SetPosition(900.0f, 1000.0f);
 		judgmentText_->GetTransform()->SetTexPosX(0.0f);
@@ -48,7 +48,7 @@ void UIRhythmJudgment::TextSetting(const UITempo::JudgmentType& type)
 		judgmentText_->GetTransform()->SetSizeX(255.0f);
 		judgmentText_->GetTransform()->SetDefaultSize(552.0f, 42.0f);
 	}
-	else if (type == UITempo::JudgmentType::Good)
+	else if (type == JudgeRhythm::JudgmentType::Good)
 	{
 		judgmentText_->GetTransform()->SetPosition(900.0f, 1000.0f);
 		judgmentText_->GetTransform()->SetTexPosX(260.0f);
@@ -56,7 +56,7 @@ void UIRhythmJudgment::TextSetting(const UITempo::JudgmentType& type)
 		judgmentText_->GetTransform()->SetSizeX(165.0f);
 		judgmentText_->GetTransform()->SetDefaultSize(552.0f, 42.0f);
 	}
-	else if (type == UITempo::JudgmentType::Miss)
+	else if (type == JudgeRhythm::JudgmentType::Miss)
 	{
 		judgmentText_->GetTransform()->SetPosition(900.0f, 1000.0f);
 		judgmentText_->GetTransform()->SetTexPosX(430.0f);
@@ -79,7 +79,7 @@ void UIRhythmJudgment::DrawDebug()
 	{
 		UI::DrawDebug();
 		ImGui::DragFloat("DisplayDuration", &displayDuration_);
-		ImGui::DragFloat("ElapsedDIspayTime", &elapsedDisplayTime_);
+		ImGui::DragFloat("ElapsedDisplayTime", &elapsedDisplayTime_);
 		ImGui::TreePop();
 	}
 }

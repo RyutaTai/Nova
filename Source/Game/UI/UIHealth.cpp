@@ -35,7 +35,7 @@ void UIHealth::UpdateHpGauge(const float& elapsedTime)
 	const float maxHealth = Player::Instance().GetMaxHp();
 	const float currentHealth = Player::Instance().GetHp();
 	const float health = currentHealth / maxHealth;	//	0`1‚É‚·‚é
-	hpGauge_->GetTransform()->SetSizeX(GAUGE_SIZE_X * health);
+	hpGauge_->GetTransform()->SetTexSizeX(GAUGE_SIZE_X * health);
 
 }
 
@@ -48,7 +48,7 @@ void UIHealth::UpdateHpGaugeBack(const float& elapsedTime)
 	gaugeLerpTimer_ = min(gaugeLerpTimer_, 1.0f);
 
 	const float sizeX = XMFloatLerp(startValue_, endValue_, gaugeLerpTimer_);
-	hpGaugeBack_->GetTransform()->SetSizeX(sizeX);
+	hpGaugeBack_->GetTransform()->SetTexSizeX(sizeX);
 
 	if (gaugeLerpTimer_ == 1.0f)isUpdateHpGaugeBack_ = false;
 }

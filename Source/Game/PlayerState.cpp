@@ -52,7 +52,7 @@ namespace PlayerState
 			owner_->ChangeState(Player::StateType::ComboOne1);
 
 			//	リズム判定処理
-			UIManager::Instance().GetUITempo()->JudgeRythm();
+			JudgeRhythm::Instance().Judge();
 
 			return;
 		}
@@ -61,7 +61,7 @@ namespace PlayerState
 			owner_->ChangeState(Player::StateType::ComboTwo1);
 
 			//	リズム判定処理
-			UIManager::Instance().GetUITempo()->JudgeRythm();
+			JudgeRhythm::Instance().Judge();
 			return;
 		}
 
@@ -131,7 +131,7 @@ namespace PlayerState
 			owner_->ChangeState(Player::StateType::ComboOne1);
 
 			//	リズム判定処理
-			UIManager::Instance().GetUITempo()->JudgeRythm();
+			JudgeRhythm::Instance().Judge();
 			return;
 		}
 		else if(Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_X/*Cキー*/)
@@ -139,7 +139,7 @@ namespace PlayerState
 			owner_->ChangeState(Player::StateType::ComboTwo1);
 
 			//	リズム判定処理
-			UIManager::Instance().GetUITempo()->JudgeRythm();
+			JudgeRhythm::Instance().Judge();
 			return;
 		}
 
@@ -272,7 +272,7 @@ namespace PlayerState
 		if (JudgeInput(cancellationTime_))
 		{
 			//	リズム判定処理(missならreturn)
-			if (UIManager::Instance().GetUITempo()->JudgeRythm() == false)
+			if (JudgeRhythm::Instance().Judge() == false)
 				return;
 
 			//	miss以外なら次のステートへ遷移
@@ -434,7 +434,7 @@ namespace PlayerState
 		if (JudgeInput(cancellationTime_))	//	入力判定がtrueならコンボを進める
 		{
 			//	リズム判定処理(missならreturn)
-			if (UIManager::Instance().GetUITempo()->JudgeRythm() == false)
+			if (JudgeRhythm::Instance().Judge() == false)
 				return;
 
 			//	次のステートへ遷移
@@ -600,7 +600,7 @@ namespace PlayerState
 		if (JudgeInput(cancellationTime_))	//	入力判定がtrueなら
 		{
 			//	リズム判定処理(missならreturn)
-			if (UIManager::Instance().GetUITempo()->JudgeRythm() == false)
+			if (JudgeRhythm::Instance().Judge() == false)
 				return;
 
 			//	次のステートへ遷移
@@ -711,7 +711,7 @@ namespace PlayerState
 		//	リズム判定をとって判定文字を出すため
 		if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_A/*Zキー*/)
 		{
-			UIManager::Instance().GetUITempo()->JudgeRythm();
+			JudgeRhythm::Instance().Judge();
 		}
 
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間

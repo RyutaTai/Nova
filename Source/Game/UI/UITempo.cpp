@@ -38,7 +38,6 @@ UITempo::UITempo()
 		semicircles_[index]->left_->GetTransform()->SetPivot(0.5f, 0.5f);
 		semicircles_[index]->left_->GetTransform()->SetTexPosX(200.0f);
 		semicircles_[index]->left_->GetTransform()->SetTexSizeX(100.0f);
-		semicircles_[index]->left_->GetTransform()->SetSizeX(100.0f);
 		semicircles_[index]->left_->GetTransform()->SetDefaultSize(100.0f, 100.0f);
 
 		//	右
@@ -48,7 +47,6 @@ UITempo::UITempo()
 		semicircles_[index]->right_->GetTransform()->SetPivot(0.5f, 0.5f);
 		semicircles_[index]->right_->GetTransform()->SetTexPosX(300.0f);
 		semicircles_[index]->right_->GetTransform()->SetTexSizeX(100.0f);
-		semicircles_[index]->right_->GetTransform()->SetSizeX(100.0f);
 		semicircles_[index]->right_->GetTransform()->SetDefaultSize(100.0f, 100.0f);
 
 		//	判定済みフラグ初期化
@@ -153,70 +151,6 @@ void UITempo::UpdateCenterCircleAnimation()
 
 }
 
-//	タイミング判定
-bool UITempo::JudgeRythm()
-{
-	//	中心円に一番近い半円の番号
-	int nearSemicircleIndex = FindNearSemicircleIndex();
-	
-	//	入力タイミングが判定範囲に入っているか
-	if (semicircles_[nearSemicircleIndex]->range_ < perfectRange_)		//	Perfect
-	{
-		//  判定文字UIを生成
-		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
-		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Perfect);
-		uiRhythm->Initialize();
-		uiRhythm->SetIsVisible(true);
-
-		//	判定フラグをtrueにしてコンボ加算
-		semicircles_[nearSemicircleIndex]->isJudged_ = true;
-		JudgeRhythm::Instance().AddComboCount(1);
-
-		//	プレイヤーの足元のオーディオスペクトラムの色を変更
-		Stage::Instance().SetSpectrumColor(Stage::ProjectionMappingType::Circle, { 1.0f,1.0f,0.0f,1.0f });
-		//	プレイヤーの足元のオーディオスペクトラムのスケールを変更
-		Stage::Instance().SetCircleSpectrumEyeOffsetY(Stage::ProjectionMappingType::Circle, 40.0f, 0.5f);
-
-		//	コントローラー振動
-		//	TODO:判定部分をUIから移動させたい
-		//	もっと肥大化しそう
-		//	判定とそれに応じた処理を全てUIがやるのは違和感がある
-
-
-		return true;
-
-	}
-	else if (semicircles_[nearSemicircleIndex]->range_ < goodRange_)	//	Good
-	{
-		//  判定文字UIを生成
-		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
-		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Good);
-		uiRhythm->Initialize();
-		uiRhythm->SetIsVisible(true);
-
-		//	判定フラグをtrueにしてコンボ加算
-		semicircles_[nearSemicircleIndex]->isJudged_ = true;
-		JudgeRhythm::Instance().AddComboCount(1);
-
-		return true;
-	}
-	else
-	{
-		//  判定文字UIを生成
-		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
-		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Miss);
-		uiRhythm->Initialize();
-		uiRhythm->SetIsVisible(true);
-
-		//	コンボ数リセット
-		JudgeRhythm::Instance().SetComboCount(0);
-
-		return false;
-	}
-
-	return false;
-}
-
 //	中心円に一番近い半円の番号を見つける
 int UITempo::FindNearSemicircleIndex()
 {
@@ -263,18 +197,13 @@ void UITempo::DrawDebug()
 		
 		ImGui::Text("----- Center -----");
 		ImGui::DragInt("AnimChangeThreshold_", &animChangeThreshold_);
+		center_->DrawDebug();
 
 		ImGui::Text("----- Range -----");
 		ImGui::DragFloat("RangePerOne", &rangePerOne_);
 		ImGui::DragFloat("TotalRange", &totalRange_);
 		ImGui::DragFloat("RangeMax", &semicircleRangeMax_);
 		ImGui::DragFloat("RangeMin", &semicircleRangeMin_);
-
-		//	判定範囲
-		ImGui::Text("----- JudgeRange -----");
-		ImGui::DragFloat("GoodRange", &goodRange_, 0.1f);
-
-		center_->DrawDebug();
 
 		if (ImGui::TreeNode("Semi0"))
 		{

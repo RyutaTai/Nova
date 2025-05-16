@@ -1,8 +1,10 @@
 #include "JudgeRhythm.h"
 
+#include "Stage.h"
 #include "UI/UIManager.h"
 #include "UI/UITempo.h"
 #include "UI/UIRank.h"
+#include "UI/UIRhythmJudgment.h"
 #include "../Nova/Core/Framework.h"
 #include "../../imgui/imgui.h"
 
@@ -27,6 +29,70 @@ void JudgeRhythm::Update()
 
 }
 
+//	読んだタイミングがリズムに合っているかをテンポUIを利用して判定する
+bool JudgeRhythm::Judge()
+{
+	//	中心円に一番近い半円の番号を取得
+	int nearSemicircleIndex = UIManager::Instance().GetUITempo()->FindNearSemicircleIndex();
+
+	//	入力タイミングが判定範囲に入っているか
+	if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetRange() < perfectRange_)		//	Perfect
+	{
+		//  判定文字UIを生成
+		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
+		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Perfect);
+		uiRhythm->Initialize();
+		uiRhythm->SetIsVisible(true);
+
+		//	判定フラグをtrueにしてコンボ加算
+		UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->SetIsJudged(true);
+		JudgeRhythm::Instance().AddComboCount(1);
+
+		//	プレイヤーの足元のオーディオスペクトラムの色を変更
+		Stage::Instance().SetSpectrumColor(Stage::ProjectionMappingType::Circle, { 1.0f,1.0f,0.0f,1.0f });
+		//	プレイヤーの足元のオーディオスペクトラムのスケールを変更
+		Stage::Instance().SetCircleSpectrumEyeOffsetY(Stage::ProjectionMappingType::Circle, 40.0f, 0.5f);
+
+		//	コントローラー振動
+		//	TODO:判定部分をUIから移動させたい
+		//	もっと肥大化しそう
+		//	判定とそれに応じた処理を全てUIがやるのは違和感がある
+
+
+		return true;
+
+	}
+	else if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetRange() < goodRange_)	//	Good
+	{
+		//  判定文字UIを生成
+		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
+		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Good);
+		uiRhythm->Initialize();
+		uiRhythm->SetIsVisible(true);
+
+		//	判定フラグをtrueにしてコンボ加算
+		UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->SetIsJudged(true);
+		JudgeRhythm::Instance().AddComboCount(1);
+
+		return true;
+	}
+	else
+	{
+		//  判定文字UIを生成
+		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
+		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Miss);
+		uiRhythm->Initialize();
+		uiRhythm->SetIsVisible(true);
+
+		//	コンボ数リセット
+		JudgeRhythm::Instance().SetComboCount(0);
+
+		return false;
+	}
+
+	return false;
+}
+
 //	midiを見てノートオンならtrueを返す(テンポに合わせた動きをさせるために使用する)
 bool JudgeRhythm::GetRhythm()
 {
@@ -48,20 +114,27 @@ void JudgeRhythm::DrawDebug()
 {
 	if (ImGui::TreeNode("JudgeRhythm"))
 	{
+		//	midi
 		float currentMidiTimer = static_cast<float>(midi_->GetCurrentTimer());
 		float maxMidiTimer = debugMaxMidiTimer_;
-		debugMaxMidiTimer_ = max(debugMaxMidiTimer_, midi_->GetCurrentTimer());
+		debugMaxMidiTimer_ = std::max(debugMaxMidiTimer_, midi_->GetCurrentTimer());
 
 		ImGui::DragFloat("CurrentMidiTimer", &currentMidiTimer);
 		ImGui::DragFloat("MaxMidiTimer", &maxMidiTimer);
 		//ImGui::DragFloat("ClosestNoteTime", &midi_->FindClosestNoteInLoop(currentMidiTimer)->time_);
 
+		ImGui::Text("----- midi -----");
 		float midiDuration = midi_->GetMidiFileDurationSeconds();
 		ImGui::DragFloat("MidiDuration", &midiDuration);   //   midiファイルの長さ[s]
 
 		ImGui::DragFloat("Delta", &debugDelta_, 0.01f);                         //  入力時間と一番近いノートの差
 		ImGui::DragFloat("ClosestNoteTime", &debugClosestNoteTime_, 0.01f);     //  一番近いノートの開始時間
 		ImGui::DragFloat("InputTime", &debugInputTime_, 0.01f);                 //  入力時間
+
+		//	判定範囲
+		ImGui::Text("----- JudgeRange -----");
+		ImGui::DragFloat("PerfectRange", &perfectRange_, 0.1f);
+		ImGui::DragFloat("GoodRange", &goodRange_, 0.1f);
 
 		ImGui::Text(u8"----- コンボ -----");
 		ImGui::DragInt("ComboCount", &comboCount_);

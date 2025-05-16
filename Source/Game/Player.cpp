@@ -8,6 +8,7 @@
 #include "../Nova/Resources/ResourceManager.h"
 #include "../Game/UI/UIManager.h"
 #include "../Game/UI/UITempo.h"
+#include "JudgeRhythm.h"
 #include "PlayerState.h"
 #include "Stage.h"
 #include "EnemyManager.h"
@@ -920,7 +921,7 @@ void Player::ChangeDodgeState()
 {
 	if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_B/*XƒL[*/)
 	{
-		UIManager::Instance().GetUITempo()->JudgeRythm();
+		JudgeRhythm::Instance().Judge();
 		ChangeState(Player::StateType::Dodge);
 	}
 }
