@@ -57,7 +57,7 @@ private:
 		DirectX::XMFLOAT4X4 cascadedMatrices_[4];
 		float				cascadedPlaneDistances_[4];
 		float				shadowColor_ = 0.58f;
-		float				shadowDepthBias_ = 0.0001f;
+		float				shadowDepthBias_ = 0.004f;
 		bool				colorizeCascadedLayer_ = true;
 		float				pad_;							//	16バイトアライメントに合わせるため
 	};

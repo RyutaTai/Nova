@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "../Nova/Resources/Effect.h"
 
+//	’Ç”ö‚·‚é’eŠÛ‚ÌƒNƒ‰ƒX
 class BulletHorming :public Bullet
 {
 public:

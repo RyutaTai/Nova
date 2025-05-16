@@ -9,6 +9,7 @@
 #include "../Nova/Audio/AudioManager.h"
 #include "../Nova/Others/JudgeTime.h"
 
+//	ドローンクラス(浮いている敵)
 class Drone :public Enemy
 {
 public:

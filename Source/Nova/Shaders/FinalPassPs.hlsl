@@ -39,6 +39,7 @@ float4 main(VS_OUT pin) : SV_TARGET
 	float4 color = textureMaps[0].Sample(samplerStates[POINT], pin.texcoord);
 	float4 bloom = textureMaps[1].Sample(samplerStates[POINT], pin.texcoord);
 
+    //  ÉuÉãÅ[ÉÄ
 	float3 fragmentColor = color.rgb + bloom.rgb;
 	float alpha = color.a;
 
@@ -77,12 +78,12 @@ float4 main(VS_OUT pin) : SV_TARGET
         //  ã˜ÇÃîZÇ≥
         d = pow(saturate(d), vignetteRoundness);
         half vignetteFactor = pow(saturate(1.0f - dot(d, d)), vignetteSmoothness);
-        fragmentColor.rgb *= lerp(vignetteColor.rgb, (float3) 1.0f, vignetteFactor);
+        fragmentColor.rgb *= lerp(vignetteColor.rgb, (float3)1.0f, vignetteFactor);
     }
         
 	// Gamma correction
-	//const float INV_GAMMA = 1.0 / 2.2;
-	//fragmentColor = pow(fragmentColor, INV_GAMMA);
+    const float INV_GAMMA = 1.0 / 2.2;
+    fragmentColor = pow(fragmentColor, INV_GAMMA);
 
 	return float4(fragmentColor, alpha);
 }

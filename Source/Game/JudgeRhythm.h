@@ -2,6 +2,7 @@
 
 #include "../Nova/Audio/Midi.h"
 
+//	リズムに関する判定を行うクラス
 class JudgeRhythm
 {
 public:

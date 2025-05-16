@@ -9,8 +9,8 @@
 #include "../Nova/Graphics/FullScreenQuad.h"
 
 #define MAGIC_CIRCLE 0
-#define SPECTRUM_CIRCLE 1
 
+//	ステージクラス
 class Stage
 {
 public:
@@ -123,7 +123,7 @@ private:
 	std::unique_ptr<CollisionMesh>				collisionMesh_;
 
 	//	----- プロジェクションマッピング -----
-	std::unique_ptr<FullScreenQuad>				bitBlockTransfer_;
+	std::unique_ptr<FullScreenQuad>				fullScreenQuad_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	spectrumWaveformPS_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	spectrumCirclePS_;
 	std::unique_ptr<FrameBuffer>				spectrumFramebuffer_[static_cast<int>(ProjectionMappingType::Max)];

@@ -34,7 +34,7 @@ void ColorFilter::DrawDebug()
 {
 	if (ImGui::TreeNode("ColorFilter"))
 	{
-		ImGui::SliderFloat("HueShift", &colorFilterConstant_.hueShift_, 0.0f, +360.0f);
+		ImGui::SliderFloat("HueShift", &colorFilterConstant_.hueShift_, 0.1f, +359.0f);
 		ImGui::SliderFloat("Saturation", &colorFilterConstant_.saturation_, 0.0f, +2.0f);
 		ImGui::SliderFloat("Brightness", &colorFilterConstant_.brightness_, 0.0f, +2.0f);
 

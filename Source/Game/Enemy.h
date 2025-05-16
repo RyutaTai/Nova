@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "../Nova/Others/JudgeTime.h"
 
+//	エネミークラス
 class Enemy :public Character
 {
 public:

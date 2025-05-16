@@ -90,14 +90,14 @@ float4 main(VS_OUT pin) : SV_TARGET
         color *= lerp(shadowColor, 1.0, shadowFactor) * layerColor;
     }
 
-#if 1
+#if 0
 	// Tone mapping : HDR -> SDR
     const float exposure = 1.2;
     color = 1 - exp(-color * exposure);
 #endif
 
 
-#if 1
+#if 0
 	// Gamma process
     const float GAMMA = 2.2;
     color = pow(color, 1.0 / GAMMA);

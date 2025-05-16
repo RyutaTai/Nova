@@ -8,6 +8,7 @@ class BehaviorTree;
 class BehaviorData;
 class NodeBase;
 
+//	竜人クラス(人型の敵)
 class Dragonkin : public Enemy
 {
 public:

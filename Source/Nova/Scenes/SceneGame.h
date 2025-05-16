@@ -75,13 +75,12 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	shaderResourceViews_[8];
 	std::unique_ptr<Bloom>						bloomer_ = nullptr;		//	BLOOM
 	std::unique_ptr<FrameBuffer>				framebuffers_[8];
-	std::unique_ptr<FullScreenQuad>				bitBlockTransfer_;
+	std::unique_ptr<FullScreenQuad>				fullScreenQuad_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShaders_[8];
 	float										nearZ_ = 50.0f;
 	float										farZ_ = 400000.0f;
 	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;
 	DirectX::XMFLOAT4							lightDirection_ = { +0.63f, -0.67f, 0.12f, 0.0f };
-	DirectX::XMFLOAT4							adjustColor_ = {};
 
 	//	シャドウマップ
 	std::unique_ptr<CascadedShadowMaps> cascadedShadowMaps_;

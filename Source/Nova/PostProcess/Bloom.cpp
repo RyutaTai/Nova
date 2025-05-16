@@ -8,7 +8,7 @@
 
 Bloom::Bloom(ID3D11Device* device, uint32_t width, uint32_t height)
 {
-	bitBlockTransfer_ = std::make_unique<FullScreenQuad>(device);
+	fullScreenQuad_ = std::make_unique<FullScreenQuad>(device);
 
 	glowExtraction_ = std::make_unique<FrameBuffer>(device, width, height, false);
 	for (size_t downsampledIndex = 0; downsampledIndex < downsampledCount_; ++downsampledIndex)
@@ -104,7 +104,7 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 	//	Extracting bright color
 	glowExtraction_->Clear(deviceContext, 0, 0, 0, 1);
 	glowExtraction_->Activate(deviceContext);
-	bitBlockTransfer_->Blit(deviceContext, &colorMap, 0, 1, glowExtractionPs_.Get());
+	fullScreenQuad_->Blit(deviceContext, &colorMap, 0, 1, glowExtractionPs_.Get());
 	glowExtraction_->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
@@ -113,20 +113,20 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 	//	Downsampling
 	gaussianBlur_[0][0]->Clear(deviceContext, 0, 0, 0, 1);
 	gaussianBlur_[0][0]->Activate(deviceContext);
-	bitBlockTransfer_->Blit(deviceContext, glowExtraction_->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurDownsamplingPs_.Get());
+	fullScreenQuad_->Blit(deviceContext, glowExtraction_->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurDownsamplingPs_.Get());
 	gaussianBlur_[0][0]->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
 	//	Ping-pong gaussian blur
 	gaussianBlur_[0][1]->Clear(deviceContext, 0, 0, 0, 1);
 	gaussianBlur_[0][1]->Activate(deviceContext);
-	bitBlockTransfer_->Blit(deviceContext, gaussianBlur_[0][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurHorizontalPs_.Get());
+	fullScreenQuad_->Blit(deviceContext, gaussianBlur_[0][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurHorizontalPs_.Get());
 	gaussianBlur_[0][1]->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
 	gaussianBlur_[0][0]->Clear(deviceContext, 0, 0, 0, 1);
 	gaussianBlur_[0][0]->Activate(deviceContext);
-	bitBlockTransfer_->Blit(deviceContext, gaussianBlur_[0][1]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurVerticalPs_.Get());
+	fullScreenQuad_->Blit(deviceContext, gaussianBlur_[0][1]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurVerticalPs_.Get());
 	gaussianBlur_[0][0]->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
@@ -135,20 +135,20 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 		//	Downsampling
 		gaussianBlur_[downsampledIndex][0]->Clear(deviceContext, 0, 0, 0, 1);
 		gaussianBlur_[downsampledIndex][0]->Activate(deviceContext);
-		bitBlockTransfer_->Blit(deviceContext, gaussianBlur_[downsampledIndex - 1][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurDownsamplingPs_.Get());
+		fullScreenQuad_->Blit(deviceContext, gaussianBlur_[downsampledIndex - 1][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurDownsamplingPs_.Get());
 		gaussianBlur_[downsampledIndex][0]->Deactivate(deviceContext);
 		deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
 		//	Ping-pong gaussian blur
 		gaussianBlur_[downsampledIndex][1]->Clear(deviceContext, 0, 0, 0, 1);
 		gaussianBlur_[downsampledIndex][1]->Activate(deviceContext);
-		bitBlockTransfer_->Blit(deviceContext, gaussianBlur_[downsampledIndex][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurHorizontalPs_.Get());
+		fullScreenQuad_->Blit(deviceContext, gaussianBlur_[downsampledIndex][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurHorizontalPs_.Get());
 		gaussianBlur_[downsampledIndex][1]->Deactivate(deviceContext);
 		deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
 		gaussianBlur_[downsampledIndex][0]->Clear(deviceContext, 0, 0, 0, 1);
 		gaussianBlur_[downsampledIndex][0]->Activate(deviceContext);
-		bitBlockTransfer_->Blit(deviceContext, gaussianBlur_[downsampledIndex][1]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurVerticalPs_.Get());
+		fullScreenQuad_->Blit(deviceContext, gaussianBlur_[downsampledIndex][1]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurVerticalPs_.Get());
 		gaussianBlur_[downsampledIndex][0]->Deactivate(deviceContext);
 		deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 	}
@@ -161,7 +161,7 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 	{
 		shaderResourceViews.emplace_back(gaussianBlur_[downsampledIndex][0]->shaderResourceViews_[0].Get());
 	}
-	bitBlockTransfer_->Blit(deviceContext, shaderResourceViews.data(), 0, downsampledCount_, gaussianBlurUpsamplingPs_.Get());
+	fullScreenQuad_->Blit(deviceContext, shaderResourceViews.data(), 0, downsampledCount_, gaussianBlurUpsamplingPs_.Get());
 	glowExtraction_->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 

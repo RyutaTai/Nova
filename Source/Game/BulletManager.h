@@ -5,6 +5,7 @@
 
 class Bullet;
 
+//	’eŠÛŠÇ—ƒNƒ‰ƒX
 class BulletManager
 {
 public:

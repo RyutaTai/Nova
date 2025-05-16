@@ -31,7 +31,7 @@ public:
 	float bloomIntensity_ = 0.036f;
 
 private:
-	std::unique_ptr<FullScreenQuad>	bitBlockTransfer_;
+	std::unique_ptr<FullScreenQuad>	fullScreenQuad_;
 	std::unique_ptr<FrameBuffer>	glowExtraction_;
 
 	static const size_t				downsampledCount_ = 6;

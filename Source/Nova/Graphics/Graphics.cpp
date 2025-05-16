@@ -64,7 +64,7 @@ Graphics::Graphics(HWND hwnd, bool fullscreen)
 	//	FrameBuffer
 	frameBuffers_[0] = std::make_unique<FrameBuffer>(device_.Get(), SCREEN_WIDTH, SCREEN_HEIGHT);
 	frameBuffers_[1] = std::make_unique<FrameBuffer>(device_.Get(), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	bitBlockTransfer_ = std::make_unique<FullScreenQuad>(device_.Get());
+	fullScreenQuad_ = std::make_unique<FullScreenQuad>(device_.Get());
 
 	shader_ = std::make_unique<Shader>();
 

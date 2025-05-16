@@ -5,6 +5,7 @@
 
 #include "Enemy.h"
 
+//	エネミー管理クラス
 class EnemyManager
 {
 private:

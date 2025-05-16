@@ -9,6 +9,7 @@
 #include "../Nova/Audio/AudioSource.h"
 #include "../Nova/Input/Input.h"
 
+//	プレイヤークラス
 class Player :public Character
 {
 public:

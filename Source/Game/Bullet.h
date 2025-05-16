@@ -131,13 +131,13 @@ protected:
 	bool updateFlag_ = true;
 
 private:
-	//	----- エフェクト -----
-		enum class EffectType
-		{
-			Fire = 0,		//	弾の周りのエフェクト
-			Explosion,		//	爆発
-			Max,			//	最大数
-		};
+	//	エフェクトの種類
+	enum class EffectType
+	{
+		Fire = 0,		//	弾の周りのエフェクト
+		Explosion,		//	爆発
+		Max,			//	最大数
+	};
 
 private:
 	//	----- エフェクト -----

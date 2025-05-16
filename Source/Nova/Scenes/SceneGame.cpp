@@ -114,7 +114,7 @@ void SceneGame::Initialize()
 	//	----- ブルーム -----
 	framebuffers_[0] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	framebuffers_[1] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);	//	sprite
-	bitBlockTransfer_ = std::make_unique<FullScreenQuad>(device);
+	fullScreenQuad_ = std::make_unique<FullScreenQuad>(device);
 	bloomer_ = std::make_unique<Bloom>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/FinalPassPs.cso", pixelShaders_[0].ReleaseAndGetAddressOf());
 
@@ -237,7 +237,6 @@ void SceneGame::Render()
 	Graphics::Instance().SetCameraPosition({ 0,0,1,0 });
 	Graphics::Instance().SetInvViewProjection(Camera::Instance().CalcInvViewProjectionMatrix());
 	Graphics::Instance().SetInvProjection(Camera::Instance().CalcInvProjectionMatrix());
-	Graphics::Instance().SetAdjustColor(adjustColor_);
 
 	Graphics::SceneConstants sceneConstants = Graphics::Instance().GetSceneConstant();
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
@@ -335,7 +334,7 @@ void SceneGame::Render()
 		framebuffers_[0]->Clear(deviceContext);
 		framebuffers_[0]->Activate(deviceContext);
 		vignette_->Make();
-		bitBlockTransfer_->Blit(deviceContext, framebuffers_[1]->shaderResourceViews_[0].GetAddressOf(), 0, 1, vignette_->GetVignettePixelShader());
+		fullScreenQuad_->Blit(deviceContext, framebuffers_[1]->shaderResourceViews_[0].GetAddressOf(), 0, 1, vignette_->GetVignettePixelShader());
 		framebuffers_[0]->Deactivate(deviceContext);
 #endif		
 
@@ -352,7 +351,7 @@ void SceneGame::Render()
 			cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMap
 
 		};
-		bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[0].Get());
+		fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[0].Get());
 
 	}
 
@@ -386,9 +385,6 @@ void SceneGame::Render()
 		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
 		//Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
 		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-
-		//sprite_[static_cast<int>(SPRITE_GAME::BACK)]->GetTransform()->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-		//sprite_[static_cast<int>(SPRITE_GAME::BACK)]->Render();	//	ゲームスプライト描画
 
 		//	ウェーブ数描画
 		if (sprite_[SPRITE_GAME::WAVE] && waveStartTimer_ > 0)
@@ -455,7 +451,7 @@ void SceneGame::DrawShadow()
 		framebuffers_[0]->shaderResourceViews_[1].Get(),	// DepthMap
 		cascadedShadowMaps_->DepthMap().Get()				// cascadedShadowMaps
 	};
-	bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[2].Get());
+	fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[2].Get());
 
 }
 
@@ -490,7 +486,6 @@ void SceneGame::DrawDebug()
 	if (ImGui::TreeNode("SceneConstant"))
 	{
 		ImGui::DragFloat4("LightDirection", &lightDirection_.x, 0.01f, -1.0f, 1.0f);	//	ライトの向き
-		ImGui::ColorEdit4("AdjustColor", &adjustColor_.x);
 		ImGui::TreePop();
 	}
 

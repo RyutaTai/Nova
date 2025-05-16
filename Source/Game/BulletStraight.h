@@ -4,7 +4,7 @@
 
 class BulletManager;
 
-//	直進弾丸
+//	直進する弾丸のクラス
 class BulletStraight :public Bullet
 {
 public:

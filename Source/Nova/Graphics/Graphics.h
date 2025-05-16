@@ -39,7 +39,6 @@ public:
 		DirectX::XMFLOAT4X4 lightViewProjection_ = {};
 		DirectX::XMFLOAT4X4 invViewProjection_ = {};
 		DirectX::XMFLOAT4X4 invProjection_ = {};
-		DirectX::XMFLOAT4	adjustColor_ = {};
 	};
 
 public:
@@ -72,7 +71,6 @@ public:
 	void SetCameraPosition(const DirectX::XMFLOAT4& cameraPosition)				{ sceneConstant_.cameraPosition_ = cameraPosition; }
 	void SetLightViewProjection(const DirectX::XMFLOAT4X4& lightViewProjection) { sceneConstant_.lightViewProjection_ = lightViewProjection; }
 	void SetInvViewProjection(const DirectX::XMFLOAT4X4& invViewProjection)		{ sceneConstant_.invViewProjection_ = invViewProjection; }
-	void SetAdjustColor(const DirectX::XMFLOAT4& color)							{ sceneConstant_.adjustColor_ = color; }
 	void SetInvViewProjection(const DirectX::XMMATRIX& invViewProjection)		{ DirectX::XMStoreFloat4x4(&sceneConstant_.invViewProjection_, invViewProjection); }
 	void SetInvProjection(const DirectX::XMMATRIX& invProjection)				{ DirectX::XMStoreFloat4x4(&sceneConstant_.invProjection_, invProjection); }
 	void SetIsVSync(const bool& isVSync);
@@ -92,7 +90,6 @@ public:
 	const DirectX::XMFLOAT4		GetCameraPosition()			const	{ return sceneConstant_.cameraPosition_; }
 	const DirectX::XMFLOAT4X4	GetLightViewProjection()	const	{ return sceneConstant_.lightViewProjection_; }
 	const DirectX::XMFLOAT4X4	GetInvViewProjection()		const	{ return sceneConstant_.invViewProjection_; }
-	const DirectX::XMFLOAT4		GetAdjustColor()			const	{ return sceneConstant_.adjustColor_; }
 	DebugRenderer*				GetDebugRenderer()					{ return debugRenderer_.get(); }
 	std::mutex&					GetMutex()							{ return mutex_; }			//ミューテックス取得
 
@@ -111,7 +108,7 @@ private:
 	//	ConstantBuffer
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	constantBuffer_		= nullptr;
 	std::unique_ptr<FrameBuffer>			frameBuffers_[8]	= { nullptr };
-	std::unique_ptr<FullScreenQuad>			bitBlockTransfer_	= nullptr;
+	std::unique_ptr<FullScreenQuad>			fullScreenQuad_	= nullptr;
 
 	//	垂直同期
 	bool	isVSync_ = true;			//	垂直同期フラグ

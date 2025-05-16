@@ -4,6 +4,7 @@
 #include "../Nova/Resources/GltfModel.h"
 #include "../Nova/Collision/CollisionData.h"
 
+//	キャラクタークラス
 class Character
 {
 public:

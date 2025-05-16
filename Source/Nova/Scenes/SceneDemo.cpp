@@ -88,7 +88,7 @@ void SceneDemo::Initialize()
 
 	//	ÉuÉãÅ[ÉÄ
 	framebuffers_[0] = std::make_unique<FrameBuffer>(device, 1280, 720);
-	bitBlockTransfer_ = std::make_unique<FullScreenQuad>(device);
+	fullScreenQuad_ = std::make_unique<FullScreenQuad>(device);
 	//	BLOOM
 	bloomer_ = std::make_unique<Bloom>(device, 1280, 720);
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/FinalPassPs.cso", pixelShaders_[static_cast<int>(PixelShader::Bloom)].ReleaseAndGetAddressOf());
@@ -232,7 +232,7 @@ void SceneDemo::Render()
 		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
 		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
 		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
-		bitBlockTransfer_->Blit(deviceContext, skymap_.GetAddressOf(), 5, 1, pixelShaders_[static_cast<int>(PixelShader::Skymap)].Get());
+		fullScreenQuad_->Blit(deviceContext, skymap_.GetAddressOf(), 5, 1, pixelShaders_[static_cast<int>(PixelShader::Skymap)].Get());
 
 	}
 
@@ -334,7 +334,7 @@ void SceneDemo::Render()
 				framebuffers_[0]->shaderResourceViews_[0].Get(),
 				bloomer_->ShaderResourceView(),
 			};
-			bitBlockTransfer_->Blit(deviceContext, shaderResourceViews, 0, 2, pixelShaders_[static_cast<int>(PixelShader::Bloom)].Get());
+			fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, 2, pixelShaders_[static_cast<int>(PixelShader::Bloom)].Get());
 		}
 
 	}

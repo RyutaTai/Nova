@@ -71,13 +71,11 @@ Stage::Stage()
 
 	//	オーディオスペクトラム関連初期化
 	//	フレームバッファ
-	bitBlockTransfer_ = std::make_unique<FullScreenQuad>(Graphics::Instance().GetDevice());
+	fullScreenQuad_ = std::make_unique<FullScreenQuad>(Graphics::Instance().GetDevice());
 	spectrumFramebuffer_[static_cast<int>(ProjectionMappingType::Circle)] = std::make_unique<FrameBuffer>(Graphics::Instance().GetDevice(), SPECTRUM_WIDTH, SPECTRUM_HEIGHT);
 	spectrumFramebuffer_[static_cast<int>(ProjectionMappingType::Waveform)] = std::make_unique<FrameBuffer>(Graphics::Instance().GetDevice(), SPECTRUM_WIDTH, SPECTRUM_HEIGHT);
 	Graphics::Instance().GetShader()->CreatePsFromCso(Graphics::Instance().GetDevice(), "./Resources/Shader/SpectrumPS.cso", spectrumWaveformPS_.GetAddressOf());
-#if SPECTRUM_CIRCLE
 	Graphics::Instance().GetShader()->CreatePsFromCso(Graphics::Instance().GetDevice(), "./Resources/Shader/SpectrumCirclePS.cso", spectrumCirclePS_.GetAddressOf());
-#endif	
 
 	//	プロジェクションマッピング初期設定
 	projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].eye_			= { 72.0f,7.0f,8.8f};
@@ -207,7 +205,7 @@ void Stage::UpdateEmissive(const float& elapsedTime)
 #endif
 }
 
-//	オーディオスペクトラムk更新
+//	オーディオスペクトラム更新
 void Stage::UpdateAudioSpectrum(const float& elapsedTime)
 {
 	UpdateSpectrumColor(elapsedTime);		//	オーディオスペクトラムの色更新
@@ -460,7 +458,7 @@ void Stage::Render()
 	int spectrumIndex = static_cast<int>(ProjectionMappingType::Circle);
 	spectrumFramebuffer_[spectrumIndex]->Clear(deviceContext, 0, 0, 0, 1);
 	spectrumFramebuffer_[spectrumIndex]->Activate(deviceContext);
-	bitBlockTransfer_->Blit(deviceContext, projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].texture_.GetAddressOf(), 1, 0, spectrumCirclePS_.Get());
+	fullScreenQuad_->Blit(deviceContext, projectionMapping_[static_cast<int>(ProjectionMappingType::Circle)].texture_.GetAddressOf(), 1, 0, spectrumCirclePS_.Get());
 	spectrumFramebuffer_[spectrumIndex]->Deactivate(deviceContext);
 	Graphics::Instance().GetDeviceContext()->PSSetShaderResources(15, 1, spectrumFramebuffer_[spectrumIndex]->shaderResourceViews_[0].GetAddressOf());
 	
@@ -468,7 +466,7 @@ void Stage::Render()
 	spectrumIndex = static_cast<int>(ProjectionMappingType::Waveform);
 	spectrumFramebuffer_[spectrumIndex]->Clear(deviceContext, 0, 0, 0, 1);
 	spectrumFramebuffer_[spectrumIndex]->Activate(deviceContext);
-	bitBlockTransfer_->Blit(deviceContext, projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].texture_.GetAddressOf(), 1, 0, spectrumWaveformPS_.Get());
+	fullScreenQuad_->Blit(deviceContext, projectionMapping_[static_cast<int>(ProjectionMappingType::Waveform)].texture_.GetAddressOf(), 1, 0, spectrumWaveformPS_.Get());
 	spectrumFramebuffer_[spectrumIndex]->Deactivate(deviceContext);
 	Graphics::Instance().GetDeviceContext()->PSSetShaderResources(16, 1, spectrumFramebuffer_[spectrumIndex]->shaderResourceViews_[0].GetAddressOf());
 
