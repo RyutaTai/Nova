@@ -216,12 +216,6 @@ void SceneGame::LoadWaveSprite(const wchar_t* filename)
 	sprite_[SPRITE_GAME::WAVE] = std::make_unique<Sprite>(filename);
 }
 
-//	Shadow描画
-void SceneGame::ShadowRender()
-{
-	stage_->ShadowRender();	//	シティモデル
-}
-
 //	描画処理
 void SceneGame::Render()
 {

@@ -710,7 +710,7 @@ void GltfModelStaticBatching::FetchTextures(ID3D11Device* device, const tinygltf
 	}
 }
 
-void GltfModelStaticBatching::SetPixelShaderFromName(const char* csoName)
+void GltfModelStaticBatching::SetPixelShader(const char* csoName)
 {
 	ID3D11Device* device = Graphics::Instance().GetDevice();
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, csoName, pixelShader_.ReleaseAndGetAddressOf());

@@ -18,15 +18,13 @@ Stage::Stage()
 	_ASSERT_EXPR(instance_ == instance_, L"already instance");
 	instance_ = this;
 
-	gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/City/city.gltf");
-	//gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/Stage/Stage.gltf");
-
+	//	モデル読み込み
+	gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/Stage/stage.gltf");
+	collisionMesh_ = std::make_unique<CollisionMesh>(Graphics::Instance().GetDevice(), "./Resources/Model/Stage/stage.gltf");
+	//	位置設定
 	GetTransform()->SetPosition(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
-
-	collisionMesh_ = std::make_unique<CollisionMesh>(Graphics::Instance().GetDevice(), "./Resources/Model/City/city.gltf");
-	GetTransform()->SetScaleFactor(0.0025f);	//	CityModel
-	//GetTransform()->SetScaleFactor(100.0f);
-
+	//	スケール設定
+	GetTransform()->SetScaleFactor(0.0025f);
 
 	//	エミッシブ定数バッファ生成
 	D3D11_BUFFER_DESC bufferDesc = {};
@@ -102,10 +100,8 @@ Stage::Stage()
 	hr = Graphics::Instance().GetDevice()->CreateBuffer(&bufferDesc, nullptr, projectionMappingBuffer_[static_cast<int>(ProjectionMappingType::Circle)].ReleaseAndGetAddressOf());
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
-#if MAGIC_CIRCLE
-	D3D11_TEXTURE2D_DESC texture2dDesc;
-	LoadTextureFromFile(Graphics::Instance().GetDevice(), L"./Resources/Image/magic circle.png", projectionMappingTexture_.GetAddressOf(), &texture2dDesc);
-#endif
+	//	ピクセルシェーダーセット
+	gltfStaticModelResource_->SetPixelShader("./Resources/Shader/CityPS.cso");
 
 }
 
@@ -154,9 +150,6 @@ void Stage::UpdateEmissive(const float& elapsedTime)
 	//	フーリエ変換で取得した振幅
 	float frequencyValue = currentFrequencyValue_;
 	if (frequencyMaxValue_ > 0.0f)frequencyValue = (frequencyValue - frequencyMinValue_) / frequencyMaxValue_;
-
-	//	BPM取得
-	//float bpm = AudioManager::Instance().GetAudioResource("Game.wav")->GetWaveFormat().GetBPM();
 
 	//	emissiveIntensity_更新
 	emissiveConstant_.emissiveIntensity_ = frequencyValue * emissiveFactor_;
@@ -245,8 +238,8 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 	DirectX::XMFLOAT3 projectionMappingFocus = Player::Instance().GetTransform()->GetPosition();	//	注視点
 	projectionMapping_[projectionMappingIndex].focus_ = projectionMappingFocus;
 
-	projectionMappingEye.y += eyeOffsetY_;								//	視点をプレイヤーの真上から投影するように設定
-
+	//	視点をプレイヤーの真上から投影するように設定
+	projectionMappingEye.y += eyeOffsetY_;								
 	projectionMapping_[projectionMappingIndex].eye_ = projectionMappingEye;
 
 	//	回転値更新
@@ -391,69 +384,34 @@ float Stage::CalculateAutocorrelation(const float data[], const int& lag)
 bool Stage::Collision(_In_ const DirectX::XMFLOAT3& rayStartPosition, _In_ const DirectX::XMFLOAT3& rayDirection, _In_ const DirectX::XMFLOAT4X4& stageTransform, _Out_ DirectX::XMFLOAT3& intersectionPosition, _Out_ DirectX::XMFLOAT3& intersectionNormal,
 	_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ float rayLengthLimit, _In_ bool skipIf) const
 {
-#if 0
-	if (collisionMesh_->Raycast(rayStartPosition, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
+	//	空間分割レイキャスト
+	if (collisionMesh_->RaycastWithSpaceDivision(rayStartPosition, rayDirection, stageTransform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
 	{
+#if 0	//	結果を出力画面で確認する用
 		OutputDebugStringA("Position:");
 		OutputDebugStringA("Intersected : ");
 		OutputDebugStringA(intersectionMesh.c_str());
 		OutputDebugStringA(" : ");
 		OutputDebugStringA(intersectionMaterial.c_str());
 		OutputDebugStringA("\n");
-		return true;
-	}
-	else
-	{
-		OutputDebugStringA("Unintersected...\n");
-		return false;
-	}
-#else
-	//	空間分割
-	if (collisionMesh_->RaycastWithSpaceDivision(rayStartPosition, rayDirection, stageTransform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
-	{
-		//OutputDebugStringA("Position:");
-		//OutputDebugStringA("Intersected : ");
-		//OutputDebugStringA(intersectionMesh.c_str());
-		//OutputDebugStringA(" : ");
-		//OutputDebugStringA(intersectionMaterial.c_str());
-		//OutputDebugStringA("\n");
-		return true;
-	}
-	else
-	{
-		//OutputDebugStringA("Unintersected...\n");
-		return false;
-	}
 #endif
-}
-
-//	Shadow描画
-void Stage::ShadowRender(const float& scale)
-{
+		return true;
+	}
+	else
+	{
+		//	結果を出力画面で確認する用
 #if 0
-	ID3D11RenderTargetView* null_render_target_views[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT]{};
-	Graphics::Instance().GetDeviceContext()->OMSetRenderTargets(_countof(null_render_target_views), null_render_target_views, 0);
-	ID3D11ShaderResourceView* null_shader_resource_views[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT]{};
-	Graphics::Instance().GetDeviceContext()->VSSetShaderResources(0, _countof(null_shader_resource_views), null_shader_resource_views);
-	Graphics::Instance().GetDeviceContext()->PSSetShaderResources(0, _countof(null_shader_resource_views), null_shader_resource_views);
+		OutputDebugStringA("Unintersected...\n");
 #endif
-	ID3D11PixelShader* nullPixelShader{ NULL };
-
-	//gltfStaticModelResource_->Render(GetTransform()->CalcWorldMatrix(scale));
-	//gltfStaticModelResource_->Render(GetTransform()->CalcWorldMatrix(scale), GetTransform()->GetColor(), nullptr, &nullPixelShader);
-
+		return false;
+	}
 }
 
 //	描画処理
 void Stage::Render()
 {
 	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
-	// PROJECTION_MAPPING
-	UpdateFFTConstantBuffer();
 	
-#if MAGIC_CIRCLE
-	Graphics::Instance().GetDeviceContext()->PSSetShaderResources(15, 1, projectionMappingTexture_.GetAddressOf());
-#else
 	//	円形のオーディオスペクトラム
 	int spectrumIndex = static_cast<int>(ProjectionMappingType::Circle);
 	spectrumFramebuffer_[spectrumIndex]->Clear(deviceContext, 0, 0, 0, 1);
@@ -470,17 +428,12 @@ void Stage::Render()
 	spectrumFramebuffer_[spectrumIndex]->Deactivate(deviceContext);
 	Graphics::Instance().GetDeviceContext()->PSSetShaderResources(16, 1, spectrumFramebuffer_[spectrumIndex]->shaderResourceViews_[0].GetAddressOf());
 
-
-#endif
-
 	//	エミッシブ定数バッファをGPUに送る
 	deviceContext->UpdateSubresource(emissiveConstantBuffer_.Get(), 0, 0, &emissiveConstant_, 0, 0);
 	deviceContext->PSSetConstantBuffers(3, 1, emissiveConstantBuffer_.GetAddressOf());
 
-	//	ピクセルシェーダーセット
-	gltfStaticModelResource_->SetPixelShaderFromName("./Resources/Shader/CityPS.cso");
-
-	gltfStaticModelResource_->Render();		//	描画
+	//	描画
+	gltfStaticModelResource_->Render();
 
 }
 
@@ -510,14 +463,11 @@ void Stage::UpdateFFTConstantBuffer()
 	}
 #endif
 
-
 	//	FFT定数バッファ更新
 	for (int index = 0; index < Frequency::BlockCount; ++index)
 	{
 		fftConstant_.fftData_[index] = fftData.at(index);
 	}
-
-	int size = sizeof(FFTConstant);
 
 	//	FFT定数バッファをGPUに送る
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(fftConstantBuffer_.Get(), 0, 0, &fftConstant_, 0, 0);
@@ -532,6 +482,8 @@ void Stage::DrawDebug()
 	{
 		GetTransform()->DrawDebug();
 
+		//	コリジョンメッシュ
+		collisionMesh_->DrawDebug();
 
 		//	円形のオーディオスペクトラムテクスチャ
 		ImGui::Text(u8"CircleSpectrumSRV_Slot15");
@@ -556,6 +508,7 @@ void Stage::DrawDebug()
 		if (ImGui::TreeNode("ProjectionMapping"))
 		{
 			int projectionMappingIndex = static_cast<int>(ProjectionMappingType::Waveform);
+			//	波形オーディオスペクトラム
 			if (ImGui::TreeNode("Waveform"))
 			{
 				ImGui::PushID(projectionMappingIndex);
@@ -568,7 +521,7 @@ void Stage::DrawDebug()
 				ImGui::TreePop();
 			}
 
-
+			//	円形オーディオスペクトラム
 			if (ImGui::TreeNode("Circle"))
 			{
 				projectionMappingIndex = static_cast<int>(ProjectionMappingType::Circle);
@@ -583,7 +536,6 @@ void Stage::DrawDebug()
 				ImGui::PopID();
 				ImGui::TreePop();
 			}
-
 			ImGui::TreePop();
 		}
 

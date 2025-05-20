@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Imgui">
-      <UniqueIdentifier>{5d2ed881-4062-49d0-a1ce-86240074d016}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{fbda7416-56ec-4494-9e2c-d64e4b86339a}</UniqueIdentifier>
     </Filter>
@@ -47,43 +44,133 @@
     <Filter Include="Nova\AI">
       <UniqueIdentifier>{1c31d348-952a-4ff8-b203-504c9b5f0684}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Nova\AI\State">
-      <UniqueIdentifier>{e754a4d1-501a-4e6e-bb87-bf51a1b6f9ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Nova\AI\MetaAI">
-      <UniqueIdentifier>{ecd5b889-641f-44a7-8802-107071e00456}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Nova\AI\BehaviorBaseAI">
-      <UniqueIdentifier>{e2f3a1cb-1e77-4cae-ba09-1ed1e8f36ecc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Nova\Object">
       <UniqueIdentifier>{df55fadd-f76d-49ad-81ba-8179114cefda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{eee26e01-e8ca-491d-8a89-6cf1daaaa205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\Imgui">
+      <UniqueIdentifier>{5d2ed881-4062-49d0-a1ce-86240074d016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character">
+      <UniqueIdentifier>{7e882c05-d8f6-4d72-8a3d-b6f7bc3beef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character\Player">
+      <UniqueIdentifier>{56672ea1-beaa-4ff3-9162-255086a39d42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character\Enemy">
+      <UniqueIdentifier>{4170b05d-cfaf-4f44-9848-639c9ea1f651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character\Enemy\Drone">
+      <UniqueIdentifier>{bad0338e-ff78-4769-b5ab-eb10aa4d8d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character\Enemy\Dragonkin">
+      <UniqueIdentifier>{8d3fc796-d801-47fe-b210-ef8be3628892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Bullet">
+      <UniqueIdentifier>{04c345c3-e3b5-4488-997d-c042affdaed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Stage">
+      <UniqueIdentifier>{5c6eda4d-b4bb-4319-8d64-4c4cbea2a63c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics\Camera">
+      <UniqueIdentifier>{b600e7e4-d06a-4a53-a19c-82c211786a91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics\ColorFilter">
+      <UniqueIdentifier>{4609035c-fb95-4cfc-8ea0-7741d583b817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics\Decal">
+      <UniqueIdentifier>{b24176e0-3cd0-439e-b561-6677360a4349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics\Bloom">
+      <UniqueIdentifier>{2b154183-8161-4eb8-a32e-94132dfbd62b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics\CascadedShadowMaps">
+      <UniqueIdentifier>{bcc6f163-98ca-4724-80bd-89353d85e3eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{d64dbb33-3d03-4dcd-ae81-40896519c817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics\Vignette">
+      <UniqueIdentifier>{2f82940c-2b2b-4adc-8173-92969cb1631d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\SceneState">
+      <UniqueIdentifier>{1b7dee42-5917-4c77-bd8d-44eb8134133a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\MidiFile">
+      <UniqueIdentifier>{f87338ed-5178-4f26-af00-18d3581912e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\MidiFile\Src">
+      <UniqueIdentifier>{19456d12-c550-4966-8720-3bf16113e193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\MidiFile\include">
+      <UniqueIdentifier>{352844c8-119d-4981-8127-be8fef725c68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann">
+      <UniqueIdentifier>{28018e65-fdef-460f-a614-9d785f5b3d11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\thirdparty">
+      <UniqueIdentifier>{f84fd5b1-8b5d-4b21-9b16-09157d94a81d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\thirdparty\hedley">
+      <UniqueIdentifier>{734e1dce-cae0-4d36-8a41-cb05811b4f95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\detail">
+      <UniqueIdentifier>{afa57780-114d-425f-9f0c-5d98112f24cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\detail\conversions">
+      <UniqueIdentifier>{cc2a3680-e1d7-4d27-b1b4-e8f34b03186e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\detail\input">
+      <UniqueIdentifier>{e87776c1-e179-44f5-b200-d9ce6b8c32c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\detail\iterators">
+      <UniqueIdentifier>{e0c263f0-ff42-4706-83d1-ee13e4c46765}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\detail\meta">
+      <UniqueIdentifier>{63f51e06-59ca-405a-84fb-ecde252305fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\detail\conversions\output">
+      <UniqueIdentifier>{862b093a-18d9-4ec6-bc2e-3b3d72c02abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\detail\output">
+      <UniqueIdentifier>{ebf34f84-ea35-475b-8b35-91e142435fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\tinygltf-release">
+      <UniqueIdentifier>{54831016-a7a2-448e-af6a-a9907493b16d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\ImGuizmo-master">
+      <UniqueIdentifier>{c733ef46-6797-473c-b10d-1776309cbe19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\nlohmann\detail\meta\call_std">
+      <UniqueIdentifier>{6c1cdba1-132d-46da-a07b-f40c1b49c284}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_demo.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_draw.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_impl_dx11.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_tables.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_widgets.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\ImGuiCtrl.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Scenes\SceneDemo.cpp">
       <Filter>Nova\Scenes</Filter>
@@ -142,9 +229,6 @@
     <ClCompile Include="Source\Nova\Input\Mouse.cpp">
       <Filter>Nova\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Nova\Graphics\Camera.cpp">
-      <Filter>Nova\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\FrameBuffer.cpp">
       <Filter>Nova\Graphics</Filter>
     </ClCompile>
@@ -175,120 +259,211 @@
     <ClCompile Include="Source\Nova\Resources\ResourceManager.cpp">
       <Filter>Nova\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Nova\AI\MetaAI.cpp">
-      <Filter>Nova\AI\MetaAI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\AI\BehaviorTree.cpp">
-      <Filter>Nova\AI\BehaviorBaseAI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Audio\Midi.cpp" />
-    <ClCompile Include="External\MidiFile\Src\Binasc.cpp" />
-    <ClCompile Include="External\MidiFile\Src\MidiEvent.cpp" />
-    <ClCompile Include="External\MidiFile\Src\MidiEventList.cpp" />
-    <ClCompile Include="External\MidiFile\Src\MidiFile.cpp" />
-    <ClCompile Include="External\MidiFile\Src\MidiMessage.cpp" />
-    <ClCompile Include="External\MidiFile\Src\Options.cpp" />
-    <ClCompile Include="Source\Game\Bullet.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\BulletHorming.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\BulletManager.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\BulletStraight.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Dragonkin.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Drone.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Enemy.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\EnemyManager.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Character.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game\Player.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Stage.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Character\Player</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\PlayerState.cpp">
+      <Filter>Game\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character.cpp">
+      <Filter>Game\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Dragonkin.cpp">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Drone.cpp">
+      <Filter>Game\Character\Enemy\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Enemy.cpp">
+      <Filter>Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\EnemyManager.cpp">
+      <Filter>Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bullet.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\BulletHorming.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\BulletManager.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\BulletStraight.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Stage.cpp">
+      <Filter>Game\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\AI\MetaAI.cpp">
+      <Filter>Nova\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\AI\BehaviorTree.cpp">
+      <Filter>Nova\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\Audio.cpp">
+      <Filter>Nova\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\Audio3DSystem.cpp">
+      <Filter>Nova\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\AudioManager.cpp">
+      <Filter>Nova\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\AudioSource.cpp">
+      <Filter>Nova\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\AudioSource3D.cpp">
+      <Filter>Nova\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Collision\CollisionData.cpp">
+      <Filter>Nova\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp">
+      <Filter>Nova\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Collision\CollisionMesh.cpp">
+      <Filter>Nova\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\Camera.cpp">
+      <Filter>Nova\Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp">
+      <Filter>Nova\Graphics\ColorFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\Decal.cpp">
+      <Filter>Nova\Graphics\Decal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\PostProcess\Bloom.cpp">
+      <Filter>Nova\Graphics\Bloom</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\BulletCover.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\DragonkinAction.cpp">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\DragonkinJudgment.cpp">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp">
+      <Filter>Nova\Graphics\CascadedShadowMaps</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\DroneState.cpp">
+      <Filter>Game\Character\Enemy\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Others\JudgeTime.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\DroneState.cpp" />
-    <ClCompile Include="Source\Nova\Resources\GltfModel.cpp" />
-    <ClCompile Include="External\tinygltf-release\tiny_gltf.cc" />
-    <ClCompile Include="Source\Nova\Collision\CollisionMesh.cpp" />
-    <ClCompile Include="Source\Nova\PostProcess\Bloom.cpp" />
-    <ClCompile Include="Source\Nova\Resources\GltfModelStaticBatching.cpp" />
-    <ClCompile Include="Source\Game\BulletCover.cpp" />
-    <ClCompile Include="Source\Game\GameState.cpp" />
-    <ClCompile Include="Source\Game\UI\UI.cpp" />
-    <ClCompile Include="Source\Game\UI\UIManager.cpp" />
-    <ClCompile Include="Source\Nova\Audio\AudioManager.cpp" />
-    <ClCompile Include="Source\Nova\Audio\Audio3DSystem.cpp" />
-    <ClCompile Include="Source\Nova\Audio\AudioSource.cpp" />
-    <ClCompile Include="Source\Nova\Audio\AudioSource3D.cpp" />
-    <ClCompile Include="Source\Nova\Audio\Frequency.cpp" />
-    <ClCompile Include="Source\Nova\Audio\PitchShifter.cpp" />
-    <ClCompile Include="Source\Nova\Audio\WaveRead.cpp" />
-    <ClCompile Include="Source\Game\TitleState.cpp" />
-    <ClCompile Include="Source\Game\UI\UIHealth.cpp" />
-    <ClCompile Include="Source\Nova\Others\JudgeTime.cpp" />
-    <ClCompile Include="Source\Game\UI\UIInstructions.cpp" />
-    <ClCompile Include="Source\Game\UI\UITempo.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\Decal.cpp" />
-    <ClCompile Include="Source\Game\DragonkinJudgment.cpp" />
-    <ClCompile Include="Source\Game\DragonkinAction.cpp" />
-    <ClCompile Include="Source\Nova\AI\BehaviorData.cpp" />
-    <ClCompile Include="Source\Nova\AI\NodeBase.cpp" />
-    <ClCompile Include="Source\Game\JudgeRhythm.cpp" />
-    <ClCompile Include="Source\Nova\Audio\Audio.cpp" />
-    <ClCompile Include="Source\Game\UI\UIRhythmJudgment.cpp" />
-    <ClCompile Include="Source\Nova\Collision\CollisionData.cpp" />
-    <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp" />
-    <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
-    <ClCompile Include="Source\Game\UI\UIRank.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\Vignette.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp" />
+    <ClCompile Include="Source\Game\JudgeRhythm.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UIHealth.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UIInstructions.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UIManager.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UIRank.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UIRhythmJudgment.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UITempo.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\GltfModelStaticBatching.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Resources\GltfModel.cpp">
+      <Filter>Nova\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\Vignette.cpp">
+      <Filter>Nova\Graphics\Vignette</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\AI\BehaviorData.cpp">
+      <Filter>Nova\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\WaveRead.cpp">
+      <Filter>Nova\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\PitchShifter.cpp">
+      <Filter>Nova\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\Midi.cpp">
+      <Filter>Nova\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\AI\NodeBase.cpp">
+      <Filter>Nova\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Audio\Frequency.cpp">
+      <Filter>Nova\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\GameState.cpp">
+      <Filter>Game\SceneState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\TitleState.cpp">
+      <Filter>Game\SceneState</Filter>
+    </ClCompile>
+    <ClCompile Include="External\MidiFile\Src\Binasc.cpp">
+      <Filter>External\MidiFile\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="External\MidiFile\Src\MidiEvent.cpp">
+      <Filter>External\MidiFile\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="External\MidiFile\Src\MidiEventList.cpp">
+      <Filter>External\MidiFile\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="External\MidiFile\Src\MidiFile.cpp">
+      <Filter>External\MidiFile\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="External\MidiFile\Src\MidiMessage.cpp">
+      <Filter>External\MidiFile\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="External\MidiFile\Src\Options.cpp">
+      <Filter>External\MidiFile\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="External\tinygltf-release\tiny_gltf.cc">
+      <Filter>External\tinygltf-release</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp">
+      <Filter>External\ImGuizmo-master</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imgui.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imgui_impl_dx11.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imgui_impl_win32.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imgui_internal.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\ImGuiCtrl.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imstb_rectpack.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imstb_textedit.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imstb_truetype.h">
-      <Filter>Imgui</Filter>
+      <Filter>External\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Scenes\Scene.h">
       <Filter>Nova\Scenes</Filter>
@@ -362,9 +537,6 @@
     <ClInclude Include="Source\Nova\Input\Mouse.h">
       <Filter>Nova\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\Graphics\Camera.h">
-      <Filter>Nova\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\FrameBuffer.h">
       <Filter>Nova\Graphics</Filter>
     </ClInclude>
@@ -395,149 +567,336 @@
     <ClInclude Include="Source\Nova\Resources\ResourceManager.h">
       <Filter>Nova\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\AI\MetaAI.h">
-      <Filter>Nova\AI\MetaAI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\AI\Telegram.h">
-      <Filter>Nova\AI\MetaAI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\AI\State.h">
-      <Filter>Nova\AI\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\AI\StateMachine.h">
-      <Filter>Nova\AI\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\AI\BehaviorTree.h">
-      <Filter>Nova\AI\BehaviorBaseAI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Audio\Midi.h" />
-    <ClInclude Include="External\MidiFile\include\Binasc.h" />
-    <ClInclude Include="External\MidiFile\include\MidiEvent.h" />
-    <ClInclude Include="External\MidiFile\include\MidiEventList.h" />
-    <ClInclude Include="External\MidiFile\include\MidiFile.h" />
-    <ClInclude Include="External\MidiFile\include\MidiMessage.h" />
-    <ClInclude Include="External\MidiFile\include\Options.h" />
-    <ClInclude Include="Source\Game\Bullet.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\BulletHorming.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\BulletManager.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\BulletStraight.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Dragonkin.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Drone.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Enemy.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\EnemyManager.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Character.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\Player.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Stage.h">
-      <Filter>Game</Filter>
+      <Filter>Game\Character\Player</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\PlayerState.h">
+      <Filter>Game\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character.h">
+      <Filter>Game\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Dragonkin.h">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Drone.h">
+      <Filter>Game\Character\Enemy\Drone</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\EnemyManager.h">
+      <Filter>Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Enemy.h">
+      <Filter>Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bullet.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\BulletHorming.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\BulletManager.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\BulletStraight.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Stage.h">
+      <Filter>Game\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\ActionBase.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\State.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\StateMachine.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\MetaAI.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\Telegram.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\BehaviorTree.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\Audio.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\Audio3DSystem.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\AudioManager.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\AudioSource.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\AudioSource3D.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\AudioStructures.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Collision\CollisionData.h">
+      <Filter>Nova\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Collision\CollisionManager.h">
+      <Filter>Nova\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Collision\CollisionMesh.h">
+      <Filter>Nova\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\Camera.h">
+      <Filter>Nova\Graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\ColorFilter.h">
+      <Filter>Nova\Graphics\ColorFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\Decal.h">
+      <Filter>Nova\Graphics\Decal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\PostProcess\Bloom.h">
+      <Filter>Nova\Graphics\Bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\BulletCover.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\DragonkinAction.h">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\DragonkinJudgment.h">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h">
+      <Filter>Nova\Graphics\CascadedShadowMaps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\DroneState.h">
+      <Filter>Game\Character\Enemy\Drone</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\JudgeRhythm.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\DroneState.h" />
-    <ClInclude Include="Source\Nova\Resources\GltfModel.h" />
-    <ClInclude Include="External\tinygltf-release\tiny_gltf.h" />
-    <ClInclude Include="Source\Nova\Collision\CollisionMesh.h" />
-    <ClInclude Include="Source\Nova\PostProcess\Bloom.h" />
-    <ClInclude Include="Source\Nova\Resources\GltfModelStaticBatching.h" />
-    <ClInclude Include="Source\Game\BulletCover.h" />
-    <ClInclude Include="Source\Game\GameState.h" />
-    <ClInclude Include="Source\Game\UI\UI.h" />
-    <ClInclude Include="Source\Game\UI\UIManager.h" />
-    <ClInclude Include="Source\Nova\Audio\AudioManager.h" />
-    <ClInclude Include="Source\Nova\Audio\Audio3DSystem.h" />
-    <ClInclude Include="Source\Nova\Audio\AudioSource.h" />
-    <ClInclude Include="Source\Nova\Audio\AudioSource3D.h" />
-    <ClInclude Include="Source\Nova\Audio\AudioStructures.h" />
-    <ClInclude Include="Source\Nova\Audio\Frequency.h" />
-    <ClInclude Include="Source\Nova\Audio\PitchShifter.h" />
-    <ClInclude Include="Source\Nova\Audio\WaveRead.h" />
-    <ClInclude Include="Source\Game\TitleState.h" />
-    <ClInclude Include="Source\Game\UI\UIHealth.h" />
-    <ClInclude Include="Source\Nova\Others\JudgeTime.h" />
-    <ClInclude Include="Source\Game\UI\UIInstructions.h" />
-    <ClInclude Include="Source\Game\UI\UITempo.h" />
-    <ClInclude Include="Source\Nova\Graphics\Decal.h" />
-    <ClInclude Include="Source\Game\DragonkinJudgment.h" />
-    <ClInclude Include="Source\Game\DragonkinAction.h" />
-    <ClInclude Include="Source\Nova\AI\ActionBase.h" />
-    <ClInclude Include="Source\Nova\AI\BehaviorData.h" />
-    <ClInclude Include="Source\Nova\AI\JudgmentBase.h" />
-    <ClInclude Include="Source\Nova\AI\NodeBase.h" />
-    <ClInclude Include="Source\Game\JudgeRhythm.h" />
-    <ClInclude Include="Source\Nova\Audio\Audio.h" />
-    <ClInclude Include="Source\Game\UI\UIRhythmJudgment.h" />
-    <ClInclude Include="Source\Nova\Collision\CollisionData.h" />
-    <ClInclude Include="Source\Nova\Collision\CollisionManager.h" />
-    <ClInclude Include="External\nlohmann\ordered_map.hpp" />
-    <ClInclude Include="External\nlohmann\adl_serializer.hpp" />
-    <ClInclude Include="External\nlohmann\byte_container_with_subtype.hpp" />
-    <ClInclude Include="External\nlohmann\json.hpp" />
-    <ClInclude Include="External\nlohmann\json_fwd.hpp" />
-    <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley.hpp" />
-    <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
-    <ClInclude Include="External\nlohmann\detail\conversions\from_json.hpp" />
-    <ClInclude Include="External\nlohmann\detail\conversions\to_chars.hpp" />
-    <ClInclude Include="External\nlohmann\detail\conversions\to_json.hpp" />
-    <ClInclude Include="External\nlohmann\detail\input\binary_reader.hpp" />
-    <ClInclude Include="External\nlohmann\detail\input\input_adapters.hpp" />
-    <ClInclude Include="External\nlohmann\detail\input\json_sax.hpp" />
-    <ClInclude Include="External\nlohmann\detail\input\lexer.hpp" />
-    <ClInclude Include="External\nlohmann\detail\input\parser.hpp" />
-    <ClInclude Include="External\nlohmann\detail\input\position_t.hpp" />
-    <ClInclude Include="External\nlohmann\detail\iterators\internal_iterator.hpp" />
-    <ClInclude Include="External\nlohmann\detail\iterators\iter_impl.hpp" />
-    <ClInclude Include="External\nlohmann\detail\iterators\iteration_proxy.hpp" />
-    <ClInclude Include="External\nlohmann\detail\iterators\iterator_traits.hpp" />
-    <ClInclude Include="External\nlohmann\detail\iterators\json_reverse_iterator.hpp" />
-    <ClInclude Include="External\nlohmann\detail\iterators\primitive_iterator.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\call_std\begin.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\call_std\end.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\cpp_future.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\detected.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\identity_tag.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\is_sax.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\std_fs.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\type_traits.hpp" />
-    <ClInclude Include="External\nlohmann\detail\meta\void_t.hpp" />
-    <ClInclude Include="External\nlohmann\detail\output\binary_writer.hpp" />
-    <ClInclude Include="External\nlohmann\detail\output\output_adapters.hpp" />
-    <ClInclude Include="External\nlohmann\detail\output\serializer.hpp" />
-    <ClInclude Include="External\nlohmann\detail\abi_macros.hpp" />
-    <ClInclude Include="External\nlohmann\detail\exceptions.hpp" />
-    <ClInclude Include="External\nlohmann\detail\hash.hpp" />
-    <ClInclude Include="External\nlohmann\detail\json_custom_base_class.hpp" />
-    <ClInclude Include="External\nlohmann\detail\json_pointer.hpp" />
-    <ClInclude Include="External\nlohmann\detail\json_ref.hpp" />
-    <ClInclude Include="External\nlohmann\detail\macro_scope.hpp" />
-    <ClInclude Include="External\nlohmann\detail\macro_unscope.hpp" />
-    <ClInclude Include="External\nlohmann\detail\string_concat.hpp" />
-    <ClInclude Include="External\nlohmann\detail\string_escape.hpp" />
-    <ClInclude Include="External\nlohmann\detail\string_utils.hpp" />
-    <ClInclude Include="External\nlohmann\detail\value_t.hpp" />
-    <ClInclude Include="Source\Game\UI\UIRank.h" />
-    <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h" />
-    <ClInclude Include="Source\Nova\Graphics\Vignette.h" />
-    <ClInclude Include="Source\Nova\Graphics\ColorFilter.h" />
+    <ClInclude Include="Source\Nova\Others\JudgeTime.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UIHealth.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UIInstructions.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UIManager.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UIRank.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UIRhythmJudgment.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UITempo.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\GltfModelStaticBatching.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Resources\GltfModel.h">
+      <Filter>Nova\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\Vignette.h">
+      <Filter>Nova\Graphics\Vignette</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\BehaviorData.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\WaveRead.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\PitchShifter.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\Midi.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\NodeBase.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Audio\Frequency.h">
+      <Filter>Nova\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\AI\JudgmentBase.h">
+      <Filter>Nova\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\GameState.h">
+      <Filter>Game\SceneState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\TitleState.h">
+      <Filter>Game\SceneState</Filter>
+    </ClInclude>
+    <ClInclude Include="External\MidiFile\include\Binasc.h">
+      <Filter>External\MidiFile\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\MidiFile\include\MidiEvent.h">
+      <Filter>External\MidiFile\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\MidiFile\include\MidiEventList.h">
+      <Filter>External\MidiFile\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\MidiFile\include\MidiFile.h">
+      <Filter>External\MidiFile\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\MidiFile\include\MidiMessage.h">
+      <Filter>External\MidiFile\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\MidiFile\include\Options.h">
+      <Filter>External\MidiFile\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\adl_serializer.hpp">
+      <Filter>External\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\byte_container_with_subtype.hpp">
+      <Filter>External\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\json.hpp">
+      <Filter>External\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\json_fwd.hpp">
+      <Filter>External\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\ordered_map.hpp">
+      <Filter>External\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley.hpp">
+      <Filter>External\nlohmann\thirdparty\hedley</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley_undef.hpp">
+      <Filter>External\nlohmann\thirdparty\hedley</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\abi_macros.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\exceptions.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\hash.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\json_custom_base_class.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\json_pointer.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\json_ref.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\macro_scope.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\macro_unscope.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\string_concat.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\string_escape.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\string_utils.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\value_t.hpp">
+      <Filter>External\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\conversions\from_json.hpp">
+      <Filter>External\nlohmann\detail\conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\conversions\to_chars.hpp">
+      <Filter>External\nlohmann\detail\conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\conversions\to_json.hpp">
+      <Filter>External\nlohmann\detail\conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\input\binary_reader.hpp">
+      <Filter>External\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\input\input_adapters.hpp">
+      <Filter>External\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\input\json_sax.hpp">
+      <Filter>External\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\input\lexer.hpp">
+      <Filter>External\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\input\parser.hpp">
+      <Filter>External\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\input\position_t.hpp">
+      <Filter>External\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\iterators\internal_iterator.hpp">
+      <Filter>External\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\iterators\iter_impl.hpp">
+      <Filter>External\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\iterators\iteration_proxy.hpp">
+      <Filter>External\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\iterators\iterator_traits.hpp">
+      <Filter>External\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\iterators\json_reverse_iterator.hpp">
+      <Filter>External\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\iterators\primitive_iterator.hpp">
+      <Filter>External\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\cpp_future.hpp">
+      <Filter>External\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\detected.hpp">
+      <Filter>External\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\identity_tag.hpp">
+      <Filter>External\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\is_sax.hpp">
+      <Filter>External\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\std_fs.hpp">
+      <Filter>External\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\type_traits.hpp">
+      <Filter>External\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\void_t.hpp">
+      <Filter>External\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\output\binary_writer.hpp">
+      <Filter>External\nlohmann\detail\output</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\output\output_adapters.hpp">
+      <Filter>External\nlohmann\detail\output</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\output\serializer.hpp">
+      <Filter>External\nlohmann\detail\output</Filter>
+    </ClInclude>
+    <ClInclude Include="External\tinygltf-release\tiny_gltf.h">
+      <Filter>External\tinygltf-release</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\call_std\begin.hpp">
+      <Filter>External\nlohmann\detail\meta\call_std</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\detail\meta\call_std\end.hpp">
+      <Filter>External\nlohmann\detail\meta\call_std</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">

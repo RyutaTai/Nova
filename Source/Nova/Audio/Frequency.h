@@ -39,7 +39,8 @@ public:
 	float	GetBPM() { return bpm_; }	//	BPM取得
 
 public:
-	static constexpr int BlockCount = 2048;		//	ハミング窓サンプル数(何分割するか)
+	static constexpr int BlockCount = 512;		//	ハミング窓サンプル数(何分割するか)
+	//static constexpr int BlockCount = 2048;		//	ハミング窓サンプル数(何分割するか)
 	//static constexpr int blockCount_ = 1024;	//	ハミング窓サンプル数(何分割するか)
 
 private:

@@ -103,11 +103,7 @@ public:
 	//	----- 判定処理 -----
 	bool RayVsVertical(const float& elapsedTime)override;		//	ステージとの当たり判定(垂直方向)
 	bool RayVsHorizontal(const float& elapsedTime)override;		//	ステージとの当たり判定(水平方向)	
-	bool PlayerVsEnemies(const float& elapsedTime);				//	押し合い処理
 
-	bool JointVsEnemiesAndBullet(const float& elapsedTime, const std::string& boneName, const float& jointRadius);
-	bool JointVsEnemies(const float& elapsedTime, const DirectX::XMFLOAT3& jointPos, const float& jointRadius);	//	ジョイントと敵の当たり判定
-	bool JointVsBullet(const DirectX::XMFLOAT3& jointPos, const float& jointRadius);	//	ジョイントと弾丸の当たり判定
 	bool DummyRay(const float& elapsedTime);	//	レイキャストでちゃんと情報が取れているか
 
 	//	----- エフェクト -----

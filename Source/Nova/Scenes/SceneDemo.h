@@ -33,7 +33,6 @@ public:
 	void Finalize()							override;
 
 	void Update(const float& elapsedTime)	override;
-	void ShadowRender() 					override;
 	void Render()							override;
 	void DrawDebug()						override;
 

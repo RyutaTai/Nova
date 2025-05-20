@@ -12,7 +12,6 @@ public:
 	virtual void Finalize()							= 0;
 	virtual void Update(const float& elapsedTime)	= 0;
 
-	virtual void ShadowRender()						= 0; // ‰e—p
 	virtual void Render()							= 0;
 
 	virtual void DrawDebug()						= 0;

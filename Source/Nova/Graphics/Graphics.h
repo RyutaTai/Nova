@@ -19,13 +19,8 @@
 #include "../Graphics/Shader.h"
 #include "../Debug/DebugRenderer.h"
 
-#if 0
-CONST LONG SCREEN_WIDTH{ 1280 };
-CONST LONG SCREEN_HEIGHT{ 720 };
-#else
 CONST LONG SCREEN_WIDTH{ 1980 };
 CONST LONG SCREEN_HEIGHT{ 1080 };
-#endif
 CONST BOOL FULLSCREEN{ TRUE };
 
 class Graphics

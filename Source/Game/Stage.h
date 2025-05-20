@@ -8,8 +8,6 @@
 #include "../Nova/Graphics/FrameBuffer.h"
 #include "../Nova/Graphics/FullScreenQuad.h"
 
-#define MAGIC_CIRCLE 0
-
 //	ステージクラス
 class Stage
 {
@@ -70,7 +68,6 @@ public:
 
 	static Stage& Instance();
 
-	void ShadowRender(const float& scale = 1.0f);
 	void Update(const float& elapsedTime);
 	void Render();
 	void DrawDebug();
@@ -127,20 +124,17 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	spectrumWaveformPS_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	spectrumCirclePS_;
 	std::unique_ptr<FrameBuffer>				spectrumFramebuffer_[static_cast<int>(ProjectionMappingType::Max)];
-#if MAGIC_CIRCLE
-	const int SPECTRUM_WIDTH = 512;
-	const int SPECTRUM_HEIGHT = 512;
-#else
+
 	const int SPECTRUM_WIDTH = 256;
 	const int SPECTRUM_HEIGHT = 256;
-#endif
 
 	float fftDivisionValue_ = 10000.0f;	//	GPUに渡すFFTデータを割る値
 
 	bool				useFrequency_ = true;
 	static const int	FrequencyDataMax = 120;
 	float				frequencyData_[FrequencyDataMax];
-	int					frequencyIndex_ = 265;
+	int					frequencyIndex_ = 25;
+	//int					frequencyIndex_ = 265;
 	//int					frequencyIndex_			= 509;
 	float				currentFrequencyValue_ = 0.0f;
 	float				frequencyMinValue_ = 0.0f;

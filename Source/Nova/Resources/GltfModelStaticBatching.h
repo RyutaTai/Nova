@@ -250,7 +250,7 @@ public:
 	void DrawDebug();
 
 	void SetPixelShader(ID3D11PixelShader* pixelShader) { pixelShader_ = pixelShader; }
-	void SetPixelShaderFromName(const char* csoName);
+	void SetPixelShader(const char* csoName);
 
 	Transform* GetTransform() { return &transform_; }
 

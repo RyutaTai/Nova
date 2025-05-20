@@ -8,9 +8,8 @@
 
 #define LINEAR 1
 
-#define FFT_BLOCK_COUNT 2048
+#define FFT_BLOCK_COUNT 512
 
-// PROJECTION_MAPPING
 SamplerState samplerStates[8] : register(s0);
 
 #define KIND_OF_COLOR 2 //  オーディオスペクトラムの数だけcolorを作る

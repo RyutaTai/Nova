@@ -9,7 +9,7 @@
 
 //	コンストラクタ
 Dragonkin::Dragonkin()
-	:Enemy("./Resources/Model/silver-dragonkin-mir4/source/Silver_Dragonkin/Mon_BlackDragon31_Skeleton2.gltf")
+	:Enemy("./Resources/Model/Dragonkin/Dragonkin.gltf")
 {
 	//	自身の種類設定
 	myType_ = EnemyType::Dragonkin;
@@ -57,18 +57,11 @@ Dragonkin::Dragonkin()
 //	初期化
 void Dragonkin::Initialize()
 {
-	//stateMachine_->SetState(static_cast<int>(StateType::Idle));		//	初期ステートセット
-	//PlayAnimation(Player::AnimationType::Idle, true, 1.0f, 0.0f);		//	待機アニメーション再生
-	//SetAnimation(DragonkinAnimation::Idle02);							//	待機アニメーションセット
-
 	//	位置設定
 	GetTransform()->SetPosition({ 23.0f, 0.0f,3.0f });
 
 	//	回転値設定
 	GetTransform()->SetRotationY(DirectX::XMConvertToRadians(-182.499f));
-
-	//	座標系変換
-	//GetTransform()->SetCoordinateSystem(Transform::CoordinateSystem::cRightYup);
 
 	//	スケール
 	GetTransform()->SetScaleFactor(0.015f);
@@ -332,11 +325,6 @@ void Dragonkin::Destroy()
 //	描画処理
 void Dragonkin::Render()
 {
-	//	ピクセルシェーダーセット
-	//Graphics::Instance().GetShader()->CreatePsFromCso(Graphics::Instance().GetDevice(), "./Resources/Shader/DronePS.cso", pixelShader_.ReleaseAndGetAddressOf());
-	//this->SetPixelShader(pixelShader_.Get());
-
-	//	描画
 	Character::Render();
 }
 

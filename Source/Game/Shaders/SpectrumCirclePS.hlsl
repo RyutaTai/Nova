@@ -9,7 +9,7 @@
 #define LINEAR 1
 
 #define M_PI 3.14159265359
-#define FFT_BLOCK_COUNT 2048
+#define FFT_BLOCK_COUNT 512
 
 #define KIND_OF_COLOR 2 //  オーディオスペクトラムの数だけcolorを作る
 #define MY_COLOR_INDEX 1
@@ -17,14 +17,12 @@
 #define SCREEN_WIDTH  1980
 #define SCREEN_HEIGHT 1080
 
-// PROJECTION_MAPPING
 SamplerState samplerStates[8] : register(s0);
 
 cbuffer fftConstant : register(b10)
 {
     float4 data[FFT_BLOCK_COUNT / 4];
     float4 fftColor[KIND_OF_COLOR];
-
 }
 
 float4 capsule(float4 color, float4 background, float4 region, float2 uv);

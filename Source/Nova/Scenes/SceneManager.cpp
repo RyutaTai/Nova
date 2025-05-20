@@ -43,15 +43,6 @@ void SceneManager::Update(const float& elapsedTime)
 	}
 }
 
-//	Shadow•`‰æ
-void SceneManager::ShadowRender()
-{
-	if (currentScene_ != nullptr)
-	{
-		currentScene_->ShadowRender();
-	}
-}
-
 //	•`‰æˆ—
 void SceneManager::Render()
 {

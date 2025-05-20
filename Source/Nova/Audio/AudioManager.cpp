@@ -147,7 +147,7 @@ Audio* AudioManager::GetAudioResource(const std::string& name)
 			return audioResources_.at(i);
 		}
 	}
-	_ASSERT_EXPR(false, L"Audio is not found.");
+	_ASSERT_EXPR(false, L"AudioResource is not found.");
 	return nullptr;
 }
 

@@ -19,7 +19,6 @@ public:
 
 	void Update(const float& elapsedTime);
 
-	void ShadowRender();
 	void Render();
 	void DrawDebug();
 

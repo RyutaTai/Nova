@@ -9,20 +9,17 @@
 BulletHorming::BulletHorming(const std::string& filename)
 	:Bullet(filename)
 {
-	//	カバーモデル
+	//	カバーモデル読み込み
 	DirectX::XMFLOAT4 coverModelColor = { 1.0f,0.0f,0.0f,1.0f };
-	coverModel_ = std::make_unique<GltfModelStaticBatching>("./Resources/Model/Cube/source/Cube2.gltf", true, coverModelColor);
-	
+	coverModel_ = std::make_unique<GltfModelStaticBatching>("./Resources/Model/Cube/Cube.gltf", true, coverModelColor);
+	//	スケール設定
 	coverModel_->GetTransform()->SetScaleFactor(0.4f);
 
-	//	透明処理
-#if 1
-	//coverModel_->GetTransform()->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
-#else
-	coverModel_->GetTransform()->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
-#endif
 	//	移動速度設定
 	moveSpeed_ = 6.0f;
+
+	//	ピクセルシェーダーセット
+	coverModel_->SetPixelShader("./Resources/Shader/BulletCoverPS.cso");
 
 }
 
@@ -100,7 +97,6 @@ void BulletHorming::RnederCoverModel()
 	
 	//coverModel_->SetPixelShader("./Resources/Shader/GltfModelPS.cso");
 	
-	coverModel_->SetPixelShaderFromName("./Resources/Shader/BulletCoverPS.cso");
 	coverModel_->GetTransform()->SetScaleFactor(coverScale);
 	coverModel_->Render();
 }

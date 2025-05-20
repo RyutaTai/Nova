@@ -32,7 +32,7 @@ Player::Player()
 	_ASSERT_EXPR(instance_ == instance_, L"already instance");
 	instance_ = this;
 
-	//	ステートセット(Player::StateTypeの順と合わせる)
+	//	ステートセット(Player::StateTypeの順番に合わせる)
 	stateMachine_.reset(new StateMachine<State<Player>>());
 	stateMachine_->RegisterState(new PlayerState::IdleState(this));		//	待機
 	stateMachine_->RegisterState(new PlayerState::MoveState(this));		//	移動
@@ -55,7 +55,7 @@ Player::Player()
 	int rootNodeIndex = GetNodeIndex("root");
 	SetRootJointIndex(rootNodeIndex);
 
-	//	----- Collision -----
+	//	当たり判定登録
 	RegisterCollisionData();
 
 	//	----- オーディオ初期設定 -----
@@ -103,13 +103,15 @@ void Player::Initialize()
 	radius_ = 0.7f;
 	height_ = 3.4f;
 
-	//	----- 移動速度 -----
+	//	移動速度
 	defaultMoveSpeed_ = 4.0f;
 	moveSpeed_ = 4.0f;
 	//moveSpeed_ = 25.0f;
 
+	//	HP設定
 	hp_ = MaxHp_;
 
+	//	ピクセルシェーダーセット
 	SetPixelShader("./Resources/Shader/PlayerPS.cso");
 
 }
@@ -131,7 +133,7 @@ void Player::Update(const float& elapsedTime)
 	//	空中にいれば
 	if (isHitStage_ == false && isAddGravity_)
 	{
-		//	適当に重力処理
+		//	重力処理
 		AddVelocityY(gravity_, elapsedTime);
 		//GetTransform()->SetPositionY(GetTransform()->GetPositionY() - gravity_ * elapsedTime);
 		//Move(elapsedTime);	//	inputMoveにもある
@@ -147,8 +149,6 @@ void Player::Update(const float& elapsedTime)
 		RayVsHorizontal(elapsedTime);	//	水平方向(壁)
 	}
 
-	//Move(elapsedTime);	//	inputMoveにもある
-
 	//	----- アニメーション更新処理 -----
 	UpdateAnimation(elapsedTime);
 	
@@ -160,7 +160,6 @@ void Player::Update(const float& elapsedTime)
 //	リスナー情報更新
 void Player::UpdateListener()
 {
-	//	処理中に変化する値
 	DirectX::XMFLOAT3 position = GetTransform()->GetPosition();
 	DirectX::XMFLOAT3 scale = GetTransform()->GetScale();
 
@@ -270,116 +269,6 @@ void Player::UpdateCollisionDetectionData(const float& elapsedTime)
 	}
 }
 
-//	プレイヤーと敵の当たり判定(押し合い処理）
-bool Player::PlayerVsEnemies(const float& elapsedTime)
-{
-	DirectX::XMFLOAT3 pos = GetTransform()->GetPosition();
-	pos.y += height_ / 2.0f;
-	EnemyManager& enemyManager = EnemyManager::Instance();
-	DirectX::XMFLOAT3 outPosition = {};
-
-	bool isHitEnemy = false;
-
-	for (Enemy* enemy : enemyManager.GetEnemies())
-	{
-		DirectX::XMFLOAT3 ePos = enemy->GetTransform()->GetPosition();
-		//float eRadius = enemy->GetRadius() - 5.0f;
-		float eRadius = enemy->GetRadius();
-		float eHeight = enemy->GetHeight();
-		DirectX::XMFLOAT3 ePosOffset = { 0.0f,-eHeight / 2.0f,0.0f };
-
-		//	円柱と円柱で当たり判定
-		if (Collision::IntersectCylinderVsCyliner(pos, radius_, height_, ePos + ePosOffset, eRadius, eHeight, outPosition, true))
-		{
-			isHitEnemy = true;
-			GetTransform()->SetPositionX(outPosition.x);
-			GetTransform()->SetPositionZ(outPosition.z);
-		}
-
-	}
-	return isHitEnemy;
-}
-
-//	ジョイントに敵または弾丸が一方でも当たっているか判定
-bool Player::JointVsEnemiesAndBullet(const float& elapsedTime, const std::string& boneName, const float& jointRadius)
-{
-	bool isHit = false;
-
-	//	ジョイントのワールド座標取得
-	DirectX::XMFLOAT3 jointPos = GetJointPosition(boneName);
-	
-	//	衝突判定用のデバッグ球を描画
-	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-	//debugRenderer->DrawSphere(leftHandPos, leftHandRadius, DirectX::XMFLOAT4(1, 1, 1, 1));
-
-	//	ジョイントと敵の当たり判定
-	if (JointVsEnemies(elapsedTime, jointPos, jointRadius) == true)isHit = true;
-	//	ジョイントと弾の当たり判定
-	if (JointVsBullet(jointPos, jointRadius) == true)isHit = true;
-
-	return isHit;
-}
-
-//	ジョイントと敵の当たり判定
-bool Player::JointVsEnemies(const float& elapsedTime, const DirectX::XMFLOAT3& jointPos, const float& jointRadius)
-{
-	DirectX::XMFLOAT3 outPosition = {};
-	bool isHitEnemy = false;
-
-	for (Enemy* enemy : EnemyManager::Instance().GetEnemies())
-	{
-		//	敵の位置、半径、高さ
-		DirectX::XMFLOAT3 ePos = enemy->GetTransform()->GetPosition();
-		float eRadius = enemy->GetRadius() + 0.1f;
-		float eHeight = enemy->GetHeight() * 2;
-		DirectX::XMFLOAT3 ePosOffset = {};
-		if (enemy->IsUseOffsetY())
-		{
-			ePosOffset = { 0.0f,-eHeight / 2.0f,0.0f };
-		}
-
-		//	球と円柱で当たり判定
-		if (Collision::IntersectSphereVsCylinder(jointPos, jointRadius, ePos + ePosOffset, eRadius, eHeight, outPosition))
-		{
-			enemy->SubtractHp(1);
-			float effectScale = 50.0f;
-			isHitEnemy = true;
-		}
-		else isHitEnemy = false;
-
-		//	エフェクト再生設定(PlayerのRender()で描画される)
-		if (isHitEnemy)
-		{
-			isHitEnemy = true;
-			SetPlayEffectFlag(true);
-			SetEffectPos(jointPos);
-
-		}
-	}
-	return isHitEnemy;
-}
-
-//	ジョイントと弾丸の当たり判定
-bool Player::JointVsBullet(const DirectX::XMFLOAT3& jointPos, const float& jointRadius)
-{
-	bool isHitBullet = false;
-	BulletManager& bulletManager = BulletManager::Instance();
-	for (int bulletNum = 0; bulletNum < bulletManager.GetBulletCount(); ++bulletNum)
-	{
-		//	弾丸と右手との当たり判定
-		Bullet* bullet = bulletManager.GetBullet(bulletNum);
-		DirectX::XMFLOAT3	bulletPos = bullet->GetTransform()->GetPosition();	//	弾丸の位置
-		float				bulletRadius = bullet->GetRadius();					//	弾丸の半径
-		DirectX::XMFLOAT3	outPos = {};
-		if (Collision::IntersectSphereVsSphere(jointPos, jointRadius, bulletPos, bulletRadius, outPos))
-		{
-			isHitBullet = true;
-		}
-
-	}
-	return isHitBullet;
-}
-
 //	移動入力処理
 bool Player::InputMove(const float& elapsedTime)
 {
@@ -400,103 +289,6 @@ bool Player::InputMove(const float& elapsedTime)
 
 }
 
-////	ブレンドアニメーション
-//void Player::PlayBlendAnimation(AnimationType index, bool loop, float speed)
-//{
-//	GameObject::PlayBlendAnimation(GetCurrentBlendAnimationIndex(), static_cast<int>(index), loop, speed);
-//}
-
-////	ステージとの当たり判定	垂直方向
-//bool Player::RayVsVertical(const float& elapsedTime)
-//{
-//	DirectX::XMFLOAT3 rayStartPos = GetTransform()->GetPosition();	//	レイの始点
-//	float centerOffset = height_ / 2.0f;							//	始点をプレイヤーの中心へ補正
-//	rayStartPos.y += centerOffset;
-//	DirectX::XMFLOAT3	rayDirection = { 0,-1,0 };					//	レイの方向(真下)
-//	DirectX::XMFLOAT4X4 transform	= {};							//	ステージのワールド変換行列
-//	DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
-//
-//	float	rayLimit = centerOffset - velocity_.y * elapsedTime;	//	レイの長さ
-//	//float	rayLimit = 9.0f;	//	レイの長さ
-//	bool	skipIf = false;
-//
-//	//	レイの開始点描画
-//#if 1
-//	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-//	debugRenderer->DrawSphere(rayStartPos, rayPosRadius_, DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));	//	青
-//#endif
-//
-//	//	レイの終点描画
-//#if 1
-//	DirectX::XMFLOAT3 rayEndPos = {};
-//	DirectX::XMVECTOR RayEndPos = DirectX::XMVectorAdd(DirectX::XMLoadFloat3(&rayStartPos), DirectX::XMVectorScale(DirectX::XMLoadFloat3(&rayDirection), rayLimit));
-//	DirectX::XMStoreFloat3(&rayEndPos, RayEndPos);
-//	debugRenderer = Graphics::Instance().GetDebugRenderer();
-//	debugRenderer->DrawSphere(rayEndPos, rayPosRadius_, DirectX::XMFLOAT4(0.0f, 1.0f, 0.6f, 1.0f));		//	緑
-//#endif
-//
-//	DirectX::XMFLOAT3	intersectionPosition	= {};			//	当たった位置
-//	DirectX::XMFLOAT3	intersectionNormal		= {};			//	法線の方向
-//	std::string			intersectionMesh		= {};			//	メッシュ名
-//	std::string			intersectionMaterial	= {};			//	マテリアル名
-//
-//	//	当たり判定処理
-//	bool isHit = false;
-//	isHit = Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLimit, skipIf);
-//
-//	//	地面にレイが当たったら
-//	if (isHit)
-//	{
-//		hitPosition_ = intersectionPosition;
-//		hitNormal_ = intersectionNormal;
-//#if 0 
-//		DirectX::XMFLOAT3 pos = {};
-//		DirectX::XMVECTOR intersectPos = DirectX::XMLoadFloat3(&intersectionPosition);
-//		DirectX::XMVECTOR pushVec = DirectX::XMVectorScale(DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&intersectionNormal)), rayLimit);
-//		
-//		DirectX::XMStoreFloat3(&pos, DirectX::XMVectorSubtract(intersectPos, pushVec));
-//
-//		GetTransform()->SetPosition(pos);
-//#else
-//		DirectX::XMVECTOR	IntersectionPos = DirectX::XMLoadFloat3(&intersectionPosition);			//	レイが当たった位置
-//		DirectX::XMFLOAT3	pos				= GetTransform()->GetPosition();						//	プレイヤーの現在の位置(足元)
-//		DirectX::XMVECTOR	Pos				= DirectX::XMLoadFloat3(&pos);							//	プレイヤーの現在の位置ベクトル
-//		DirectX::XMVECTOR	Push			= DirectX::XMVectorSubtract(IntersectionPos, Pos);		//	当たった位置からプレイヤーまでのベクトル
-//		
-//		DirectX::XMVectorSetX(Push, 0.0f);
-//		DirectX::XMVectorSetZ(Push, 0.0f);
-//
-//		float				pushLength		= DirectX::XMVectorGetY(DirectX::XMVector3Length(Push));
-//		DirectX::XMFLOAT3	push = {};
-//		DirectX::XMStoreFloat3(&push, Push);
-//		if (pushLength > 0.0001f)
-//		{
-//			//GetTransform()->SetPosition(intersectionPosition);
-//			//GetTransform()->AddPosition(push);
-//			//GetTransform()->AddPositionY(push.y);
-//		}
-//
-//		DirectX::XMFLOAT3 posDebug = GetTransform()->GetPosition();
-//
-//		/*DirectX::XMVECTOR Velocity = DirectX::XMLoadFloat3(&velocity_);
-//		Velocity = DirectX::XMVectorAdd(Velocity, Push);
-//		DirectX::XMStoreFloat3(&velocity_, Velocity);*/
-//
-//		velocity_.y = 0.0f;
-//#endif
-//
-//		//	レイが当たった位置
-//#if 1
-//		DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-//		debugRenderer->DrawSphere(intersectionPosition, rayPosRadius_ + 1.0f, DirectX::XMFLOAT4(1, 1, 1, 1));	//	白
-//#endif
-//		
-//	}
-//
-//	return isHit;
-//}
-
-//	COLLISION_MESH_2
 //	ステージとの当たり判定	垂直方向
 bool Player::RayVsVertical(const float& elapsedTime)
 {
@@ -564,125 +356,6 @@ bool Player::RayVsVertical(const float& elapsedTime)
 	return isHit;
 }
 
-//	ステージとの当たり判定	水平方向
-//bool Player::RayVsHorizontal(const float& elapsedTime)
-//{
-//	//	水平速力計算
-//	float velocityLengthXZ = sqrtf(velocity_.x * velocity_.x + velocity_.z * velocity_.z);
-//	if (velocityLengthXZ > 0.0f)
-//	{
-//		//	水平移動値
-//		float mx = velocity_.x * elapsedTime;
-//		float mz = velocity_.z * elapsedTime;
-//
-//		//	レイの開始位置と方向
-//		DirectX::XMFLOAT3	position		= GetTransform()->GetPosition();
-//		DirectX::XMFLOAT3	rayStartPos			= position;
-//		DirectX::XMFLOAT3	radiusOffset	= {};
-//		DirectX::XMVECTOR	Move			= DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&GetMoveVec()));
-//		Move = DirectX::XMVectorSetY(Move, 0.0f);
-//		DirectX::XMVECTOR	RadiusOffset	= DirectX::XMVectorScale(Move, radius_);				//	移動方向の向きに半径を足す
-//		DirectX::XMStoreFloat3(&radiusOffset, RadiusOffset);
-//		float				heightOffset	= height_ / 2.0f;										//	レイの始点をプレイヤーの中心へ補正
-//		rayStartPos.y += heightOffset;
-//
-//		DirectX::XMFLOAT3	rayEnd			= { rayStartPos.x + mx  ,rayStartPos.y , rayStartPos.z + mz };	//	レイの終了地点
-//		DirectX::XMVECTOR	RayPos			= DirectX::XMLoadFloat3(&rayStartPos);				//	レイの開始点
-//		DirectX::XMVECTOR	RayEnd			= DirectX::XMLoadFloat3(&rayEnd);
-//		RayEnd = DirectX::XMVectorAdd(RayEnd, Move);
-//		float				rayLimit		= DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(RayEnd, RayPos))) + radius_;
-//		DirectX::XMFLOAT3	rayDirection	= {};
-//		DirectX::XMVECTOR	RayDirection	= DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(RayEnd, RayPos));
-//		DirectX::XMStoreFloat3(&rayDirection, RayDirection);
-//		//	水平に飛ばす
-//		rayDirection.y = 0;
-//
-//		//	ステージのワールド変換行列
-//		DirectX::XMFLOAT4X4 transform = {};							
-//		DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
-//
-//		//	レイの開始点描画
-//#if 1
-//		DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-//		debugRenderer->DrawSphere(rayStartPos, rayPosRadius_, DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));	//	青
-//#endif
-//
-//		//	レイの終点描画
-//#if 0
-//		DirectX::XMFLOAT3 rayEndPos = {};
-//		DirectX::XMVECTOR RayEndPos = DirectX::XMVectorAdd(DirectX::XMLoadFloat3(&rayStartPos), DirectX::XMVectorScale(DirectX::XMLoadFloat3(&rayDirection), rayLimit));
-//		DirectX::XMStoreFloat3(&rayEndPos, RayEndPos);
-//		debugRenderer = Graphics::Instance().GetDebugRenderer();
-//		debugRenderer->DrawSphere(rayEndPos, rayPosRadius_, DirectX::XMFLOAT4(0.0f, 1.0f, 0.6f, 1.0f));	//	緑
-//#endif
-//
-//		//	レイキャストによる壁判定
-//		DirectX::XMFLOAT3	intersectionPosition	= {};			//	当たった位置
-//		DirectX::XMFLOAT3	intersectionNormal		= {};			//	法線の方向
-//		std::string			intersectionMesh		= {};			//	メッシュ名
-//		std::string			intersectionMaterial	= {};			//	マテリアル名
-//		bool skipIf = false;
-//
-//		if (Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLimit, skipIf))
-//		{
-//			//	壁までのベクトル
-//			DirectX::XMVECTOR Start = DirectX::XMLoadFloat3(&intersectionPosition);
-//			DirectX::XMVECTOR End = DirectX::XMLoadFloat3(&rayEnd);
-//			DirectX::XMVECTOR Vec = DirectX::XMVectorSubtract(End, Start);
-//
-//			//	壁の法線
-//			DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&intersectionNormal);
-//
-//			//	入射ベクトルを法線に射影
-//			float projectionL = DirectX::XMVectorGetX(DirectX::XMVector3Dot(DirectX::XMVectorNegate(Vec), Normal)) * 1.5f;
-//
-//			//	補正位置の計算
-//			DirectX::XMVECTOR CollectPosition = DirectX::XMVectorAdd(
-//				DirectX::XMVectorScale(Normal, projectionL), End);
-//			DirectX::XMFLOAT3 collectPosition{};
-//			DirectX::XMStoreFloat3(&collectPosition, CollectPosition);
-//
-//			//	壁ずり後の位置がめりこんでいないかチェック
-//			intersectionPosition	= {};			//	当たった位置
-//			intersectionNormal		= {};			//	法線の方向
-//			intersectionMesh		= {};			//	メッシュ名
-//			intersectionMaterial	= {};			//	マテリアル名
-//			DirectX::XMStoreFloat3(&rayEnd, CollectPosition);
-//			rayLimit = DirectX::XMVectorGetX(DirectX::XMVectorSubtract(RayEnd, RayPos));
-//			rayDirection = {};
-//			RayDirection = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(RayEnd, RayPos));
-//			DirectX::XMStoreFloat3(&rayDirection, RayDirection);
-//
-//			if (Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLimit, skipIf))
-//			{
-//				CollectPosition = DirectX::XMLoadFloat3(&intersectionPosition);
-//			}
-//			else
-//			{
-//				position.x = collectPosition.x;
-//				position.z = collectPosition.z;
-//			}
-//
-//			//	レイが当たった位置
-//#if 1
-//			DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-//			debugRenderer->DrawSphere(intersectionPosition, rayPosRadius_, DirectX::XMFLOAT4(1, 1, 1, 1));	//	白
-//#endif
-//
-//		}
-//		else
-//		{
-//			////	移動
-//			//position.x += mx;
-//			//position.z += mz;
-//		}
-//
-//		GetTransform()->SetPosition(position);
-//	}
-//
-//	return false;
-//}
-
 bool Player::RayVsHorizontal(const float& elapsedTime)
 {
 	DirectX::XMFLOAT3 rayStartPos;									//	レイの始点
@@ -710,7 +383,7 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 	debugRenderer->DrawSphere(rayStartPos, rayPosRadius_, DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));	//	青
 #endif
 
-	//	Collision()の結果格納用
+	//	当たり判定結果格納用
 	DirectX::XMFLOAT3	intersectionPosition = {};			//	当たった位置
 	DirectX::XMFLOAT3	intersectionNormal = {};			//	法線の方向
 	std::string			intersectionMesh = {};				//	メッシュ名
@@ -738,7 +411,7 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 			GetTransform()->SetPosition(playerPos);
 
 			// Reflection
-			DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
+			//DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
 
 			isHit = true;
 
@@ -871,9 +544,6 @@ DirectX::XMFLOAT3 Player::GetMoveVec()const
 //	描画処理
 void Player::Render()
 {
-	//	ピクセルシェーダーセット
-	//Graphics::Instance().GetShader()->CreatePsFromCso(Graphics::Instance().GetDevice(), "./Resources/Shader/DronePS.cso", pixelShader_.ReleaseAndGetAddressOf());
-	//this->SetPixelShader(pixelShader_.Get());
 	Character::Render();
 
 	//	エフェクト描画
@@ -957,7 +627,6 @@ void Player::DrawDebug()
 		DrawStateStr();
 		stateMachine_->DrawDebug();
 
-		//	
 		Character::DrawDebug();
 
 		//	ステージヒット文字列
@@ -981,7 +650,6 @@ void Player::DrawDebug()
 		ImGui::Checkbox("IsAttackSphere", &isAttackSphere_);					//	攻撃判定
 		ImGui::Checkbox("IsDamageSphere", &isDamageSphere_);					//	くらい判定
 
-
 		ImGui::DragFloat("Gravity", &gravity_, 0.1f, 0.0f);												//	重力
 		ImGui::DragFloat("EffectScale", &effectScale_, 0.01f, -FLT_MAX, FLT_MAX);						//	エフェクトスケール
 		//ImGui::DragFloat("AnimationSpeed", &animationSpeed_, 0.01f, -FLT_MAX, FLT_MAX);				//	アニメーション再生速度
@@ -998,9 +666,9 @@ void Player::DrawDebug()
 
 		DrawDummyRay();
 
+		//	3Dオーディオのリスナー情報
 		if (ImGui::TreeNode("3DAudio_Listener"))
 		{
-			//	リスナー情報
 			ImGui::DragFloat3("Position", &listener_.position_.x);
 			ImGui::DragFloat("InnerRadius", &listener_.innerRadius_);
 			ImGui::DragFloat("OuterRadius", &listener_.outerRadius_);

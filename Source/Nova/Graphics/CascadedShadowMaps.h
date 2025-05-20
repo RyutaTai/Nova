@@ -3,7 +3,6 @@
 #include <d3d11.h>
 #include <wrl.h>
 #include <directxmath.h>
-
 #include <vector>
 #include <functional>
 
@@ -58,7 +57,7 @@ private:
 		float				cascadedPlaneDistances_[4];
 		float				shadowColor_ = 0.58f;
 		float				shadowDepthBias_ = 0.004f;
-		bool				colorizeCascadedLayer_ = true;
+		bool				colorizeCascadedLayer_ = false;
 		float				pad_;							//	16バイトアライメントに合わせるため
 	};
 	ShadowConstants shadowConstants_;

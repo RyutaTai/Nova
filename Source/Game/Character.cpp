@@ -112,17 +112,17 @@ void Character::AddMoveSpeed(const float& addMoveSpeed, const float& elapsedTime
 //	吹っ飛ばし処理更新
 void Character::UpdateForce(const float& elapsedTime)
 {
-	// パワーが無いときは処理しない
+	//	パワーが無いときは処理しない
 	if (blowPower_ <= 0) return;
 
 	blowPower_ -= decelerationForce_ * elapsedTime;
-	blowPower_ = std::max(blowPower_, 0.0f); // 0.0f以下にならないようにする
+	blowPower_ = std::max(blowPower_, 0.0f); // 0.0f未満にならないようにする
 
-	// 吹っ飛び方向にどれだけ、吹っ飛ばすかを計算する
+	//	吹っ飛び方向にどれだけ、吹っ飛ばすかを計算する
 	DirectX::XMFLOAT3 direction = {};
 	direction = Normalize(blowDirection_) * blowPower_ * elapsedTime;
 
-	// 吹っ飛ばす。
+	//	吹っ飛ばす
 	GetTransform()->AddPosition(direction);
 }
 

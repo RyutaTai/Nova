@@ -86,11 +86,6 @@ void SceneLoading::SetAllSpriteAlpha()
 	}
 }
 
-void SceneLoading::ShadowRender()
-{
-
-}
-
 //	•`‰æˆ—
 void SceneLoading::Render()
 {
