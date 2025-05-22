@@ -209,7 +209,7 @@
     <ClCompile Include="Source\Game\Character\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Source\Game\Character\Player\Player.cpp" />
     <ClCompile Include="Source\Game\Character\Player\PlayerState.cpp" />
-    <ClCompile Include="Source\Game\JudgeTime.cpp" />
+    <ClCompile Include="Source\Game\TimeRangeJudge.cpp" />
     <ClCompile Include="Source\Game\Scenes\GameState.cpp" />
     <ClCompile Include="Source\Game\Scenes\SceneGame.cpp" />
     <ClCompile Include="Source\Game\Scenes\SceneLoading.cpp" />
@@ -305,7 +305,7 @@
     <ClInclude Include="Source\Game\Character\Enemy\EnemyManager.h" />
     <ClInclude Include="Source\Game\Character\Player\Player.h" />
     <ClInclude Include="Source\Game\Character\Player\PlayerState.h" />
-    <ClInclude Include="Source\Game\JudgeTime.h" />
+    <ClInclude Include="Source\Game\TimeRangeJudge.h" />
     <ClInclude Include="Source\Game\Scenes\GameState.h" />
     <ClInclude Include="Source\Game\Scenes\Scene.h" />
     <ClInclude Include="Source\Game\Scenes\SceneGame.h" />

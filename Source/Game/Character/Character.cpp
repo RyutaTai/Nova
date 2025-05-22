@@ -23,27 +23,7 @@ void Character::Update(const float& elapsedTime)
 //	ベロシティ更新
 void Character::UpdateVelocity(const float& elapsedTime)
 {
-	//#if 0 //	キャラの前方向に移動させる処理
-	//	DirectX::XMFLOAT3 front = this->GetTransform()->CalcForward();	//	キャラクターの前方向取得
-	//	DirectX::XMVECTOR frontV = DirectX::XMLoadFloat3(&front);
-	//	frontV = DirectX::XMVector3Normalize(frontV);
-	//	DirectX::XMStoreFloat3(&front, frontV);
-	//
-	//	float range = 10.0f;
-	//	velocity_ = front * range * Framework::tictoc_.GetDeltaTime();
-	//	this->GetTransform()->AddPosition(velocity_);
-	//#endif
-
-#if 0
-	float vecLength = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&moveVec_)));
-	if (vecLength > 0)
-	{
-		velocity_ = moveVec_ * moveSpeed_ * elapsedTime;
-	}
-#else
 	velocity_ = moveVec_ * moveSpeed_ * elapsedTime + acceleration_ * elapsedTime;
-
-#endif
 }
 
 //	ベロシティ加算
@@ -118,7 +98,7 @@ void Character::UpdateForce(const float& elapsedTime)
 	blowPower_ -= decelerationForce_ * elapsedTime;
 	blowPower_ = std::max(blowPower_, 0.0f); // 0.0f未満にならないようにする
 
-	//	吹っ飛び方向にどれだけ、吹っ飛ばすかを計算する
+	//	吹っ飛び方向にどれだけ吹っ飛ばすかを計算する
 	DirectX::XMFLOAT3 direction = {};
 	direction = Normalize(blowDirection_) * blowPower_ * elapsedTime;
 
@@ -148,7 +128,6 @@ void Character::Turn(const float& elapsedTime, float vx, float vz, float speed)
 	//	進行ベクトルがゼロベクトルの場合は処理する必要なし
 	float length;
 	length = sqrtf(vx * vx + vz * vz);
-
 	if (length <= 0)
 	{
 		return;

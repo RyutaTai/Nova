@@ -7,6 +7,11 @@ class ActionBase
 {
 public:
 	ActionBase(Enemy* enemy):owner_(enemy){}
+
+	virtual ActionBase::State Run(const float& elapsedTime) = 0;	//	実行処理
+	virtual void DrawDebug() = 0;									//	デバッグ描画
+
+public:
 	//	実行情報
 	enum class State
 	{
@@ -14,9 +19,6 @@ public:
 		Failed,		//	実行失敗
 		Complete,	//	実行成功
 	};
-
-	virtual ActionBase::State Run(const float& elapsedTime) = 0;	//	実行処理
-	virtual void DrawDebug() = 0;									//	デバッグ描画
 
 protected:
 	Enemy* owner_ = nullptr;

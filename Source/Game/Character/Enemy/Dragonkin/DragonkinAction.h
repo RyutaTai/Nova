@@ -2,7 +2,7 @@
 
 #include "Dragonkin.h"
 #include "../../../../Nova/AI/ActionBase.h"
-#include "../../../../Game/JudgeTime.h"
+#include "../../../../Game/TimeRangeJudge.h"
 
 //	‘Ò‹@s“®
 namespace DragonkinAction
@@ -46,7 +46,7 @@ namespace DragonkinAction
 		void DrawDebug()override;
 
 	private:
-		JudgeTime	animJudgeTime_ = {};	//	”»’èŠÔ
+		TimeRangeJudge	animJudgeTime_ = {};	//	”»’èŠÔ
 
 	};
 }
@@ -62,7 +62,7 @@ namespace DragonkinAction
 		void DrawDebug()override;
 
 	private:
-		JudgeTime	animJudgeTime_ = {};	//	”»’èŠÔ
+		TimeRangeJudge	animJudgeTime_ = {};	//	”»’èŠÔ
 
 	};
 }
@@ -78,7 +78,7 @@ namespace DragonkinAction
 		void DrawDebug()override;
 
 	private:
-		JudgeTime	animJudgeTime_ = {};	//	”»’èŠÔ
+		TimeRangeJudge	animJudgeTime_ = {};	//	”»’èŠÔ
 
 	};
 }
@@ -96,7 +96,7 @@ namespace DragonkinAction
 		void DrawDebug()override;
 
 	private:
-		JudgeTime	animJudgeTime_ = {};	//	”»’èŠÔ
+		TimeRangeJudge	animJudgeTime_ = {};	//	”»’èŠÔ
 
 	};
 }

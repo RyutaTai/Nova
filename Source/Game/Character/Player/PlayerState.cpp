@@ -23,7 +23,7 @@ namespace PlayerState
 {
 	void IdleState::Initialize()
 	{
-		//	アニメーションセット
+		//	----- アニメーションセット -----
 		//owner_->PlayAnimation(Player::AnimationType::Idle, true, 0.2f);
 		owner_->PlayAnimation(Player::AnimationType::Idle, true, blendAnimTime_);
 		owner_->SetAnimationSpeed(1.0f);
@@ -31,7 +31,7 @@ namespace PlayerState
 
 	void IdleState::Update(const float& elapsedTime)
 	{
-		//	ステートへ遷移
+		//	----- ステート遷移を判断する -----
 		DetermineStateTransition(elapsedTime);
 
 	}
@@ -39,14 +39,14 @@ namespace PlayerState
 	//	ステート遷移を判断する
 	void IdleState::DetermineStateTransition(const float& elapsedTime)
 	{
-		//	移動入力があれば、移動ステートへ遷移
+		//	----- 移動入力があれば、移動ステートへ遷移 -----
 		if (owner_->InputMove(elapsedTime))
 		{
 			owner_->ChangeState(Player::StateType::Move);
 			return;
 		}
 
-		//	攻撃ステートへ遷移
+		//	----- 攻撃ステートへ遷移 -----
 		if(Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_A/*Zキー*/)
 		{
 			owner_->ChangeState(Player::StateType::ComboOne1);
@@ -65,7 +65,7 @@ namespace PlayerState
 			return;
 		}
 
-		//	回避ステートへ遷移
+		//	----- 回避ステートへ遷移 -----
 		owner_->ChangeDodgeState();
 
 	}
@@ -92,24 +92,24 @@ namespace PlayerState
 {
 	void MoveState::Initialize()
 	{
-		//	アニメーションセット
+		//	----- アニメーションセット -----
 		owner_->PlayAnimation(Player::AnimationType::Run, true, blendAnimTime_);
 		owner_->SetAnimationSpeed(1.2f);
 
-		//	移動速度を設定
+		//	----- 移動速度を設定 -----
 		owner_->SetMoveSpeed(moveSpeed_);
 
-		//	足音タイマーリセット
+		//	----- 足音タイマーリセット -----
 		footStepsTimer_ = 0.0f;
 
 	}
 
 	void MoveState::Update(const float& elapsedTime)
 	{
-		//	足音再生
+		//	----- 足音再生 -----
 		PlayFootstepsSE(elapsedTime);
 
-		//	ステート遷移を判断
+		//	----- ステート遷移を判断 -----
 		DetermineStateTransition(elapsedTime);
 		
 	}
@@ -117,15 +117,14 @@ namespace PlayerState
 	//	ステート遷移を判断
 	void MoveState::DetermineStateTransition(const float& elapsedTime)
 	{
-		//	移動入力がなくなったら待機ステートへ遷移
+		//	----- 移動入力がなくなったら待機ステートへ遷移 -----
 		if (owner_->InputMove(elapsedTime) == false)
 		{
-			//	待機ステートへ遷移
 			owner_->ChangeState(Player::StateType::Idle);
 			return;
 		}
 
-		//	攻撃ステートへ遷移
+		//	----- 攻撃ステートへ遷移 -----
 		if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_A/*Zキー*/)
 		{
 			owner_->ChangeState(Player::StateType::ComboOne1);
@@ -143,7 +142,7 @@ namespace PlayerState
 			return;
 		}
 
-		//	回避ステートへ遷移
+		//	----- 回避ステートへ遷移 -----
 		owner_->ChangeDodgeState();
 
 	}
@@ -151,8 +150,8 @@ namespace PlayerState
 	//	足音SE再生
 	void MoveState::PlayFootstepsSE(const float& elapsedTime)
 	{
+#if 1	//	----- 足音のピッチ設定 -----
 		//	ピッチを0.4～0.6の間でランダムに決めている
-#if 1
 		srand(static_cast<unsigned int>(time(NULL)));
 		float pitch = (rand() % 20 + 40) / 100.0f;
 #else
@@ -167,7 +166,7 @@ namespace PlayerState
 
 		}
 
-		//	足音再生間隔更新
+		//	----- 足音再生間隔更新 -----
 		footStepsTimer_ += elapsedTime;
 
 	}
@@ -176,9 +175,6 @@ namespace PlayerState
 	{
 		owner_->ResetMoveSpeed();
 		owner_->SetAnimationSpeed(1.0f);
-
-		//	足音停止
-		//AudioManager::Instance().GetAudioResource("PlayerFootsteps")->Stop();
 
 		//	足音タイマーリセット
 		footStepsTimer_ = 0.0f;
@@ -215,52 +211,52 @@ namespace PlayerState
 {
 	void ComboOne1::Initialize()
 	{
-		//	アニメーションセット
+		//	----- アニメーションセット -----
 		owner_->PlayAnimation(Player::AnimationType::ComboOne1, false, 0.0f);
 		owner_->SetAnimationSpeed(1.0f);
 
-		//	ルートモーション
+		//	----- ルートモーション -----
 		//owner_->SetUseRootMotion(true);
 
-		//	判定時間セット
-		animJudgeTime_.SetJudgeTime(0.180f, 0.38f);			//	アニメーション判定区間
+		//	----- 判定時間セット -----
+		animJudgeTime_.SetRange(0.180f, 0.38f);			//	アニメーション判定区間
 		//acceptInputFrame_ = 10.0f;						//	先行入力受付フレーム
-		cancellationTime_.SetJudgeTime(0.3f, 1.16f);		//	キャンセル可能時間
+		cancellationTime_.SetRange(0.3f, 1.16f);		//	キャンセル可能時間
 		cancellationTime_.SetName("CancellationTime");
 
-		//	アニメーション速度変化区間セット
-		animSpeedChangeInterval_[0].SetJudgeTime(0.0f, 0.32f);		//	パンチ前
-		animSpeedChangeInterval_[1].SetJudgeTime(0.32f, 0.67f);		//	パンチ
-		animSpeedChangeInterval_[2].SetJudgeTime(0.67f, 1.167f);	//	パンチ後
+		//	----- アニメーション速度変化区間セット -----
+		animSpeedChangeInterval_[0].SetRange(0.0f, 0.32f);		//	パンチ前
+		animSpeedChangeInterval_[1].SetRange(0.32f, 0.67f);		//	パンチ
+		animSpeedChangeInterval_[2].SetRange(0.67f, 1.167f);	//	パンチ後
 
-		//	ステート経過時間初期化
+		//	----- ステート経過時間初期化 -----
 		stateElapsedTime_ = 0.0f;
 
-		//	プレイヤーの攻撃判定を無効にする
+		//	----- プレイヤーの攻撃判定を無効にする -----
 		owner_->SetAllAttackDetectionActiveFlag(false);
 		owner_->SetAttackHit(false);
 
-		//	攻撃中は押し出し判定しない
+		//	----- 攻撃中は押し出し判定しない -----
 		owner_->SetIsActiveCollisionDetection(false);
 
-		//	プレイヤーのコンボ数を初期化
+		//	----- コンボ数を初期化 -----
 		owner_->ResetComboCount();
 
 	}
 
 	void ComboOne1::Update(const float& elapsedTime)
 	{
-		//	アニメーション速度更新
+		//	----- アニメーション速度更新 -----
 		UpdateAnimationSpeed();			
 
-		//	プレイヤーの攻撃判定を有効にする
+		//	----- プレイヤーの攻撃判定を有効にする -----
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
-		if (animJudgeTime_.IsJudgeFlag(currentAnimationSeconds))
+		if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 		{
 			owner_->GetAttackDetectionData("RightPunch").SetIsActive(true);
 		}
 
-		//	次のステートへ遷移
+		//	----- 次のステートへ遷移 -----
 		DetermineStateTransition(elapsedTime);
 		
 	}
@@ -268,7 +264,7 @@ namespace PlayerState
 	//	ステート遷移を判断
 	void ComboOne1::DetermineStateTransition(const float& elapsedTime)
 	{
-		//	次のステートへの遷移
+		//	----- 次のステートへの遷移 -----
 		if (JudgeInput(cancellationTime_))
 		{
 			//	リズム判定処理(missならreturn)
@@ -285,14 +281,14 @@ namespace PlayerState
 			return;
 		}
 
-		//	回避ステートへ遷移
+		//	----- 回避ステートへ遷移 -----
 		owner_->ChangeDodgeState();
 
 	}
 
-	bool ComboOne1::JudgeInput(const JudgeTime& cancellationTime)
+	bool ComboOne1::JudgeInput(const TimeRangeJudge& cancellationTime)
 	{
-		//	オートコンボがオンなら入力判定をtrueにする
+		//	----- オートコンボがオンなら入力判定をtrueにする -----
 		if (owner_->IsAutoCombo())
 		{
 			return true;
@@ -308,15 +304,15 @@ namespace PlayerState
 		return false;
 	}
 
-	bool ComboOne1::JudgeInputCommand(const JudgeTime& cancellationTime, const Command& command)
+	bool ComboOne1::JudgeInputCommand(const TimeRangeJudge& cancellationTime, const Command& command)
 	{
-		//	オートコンボがオンなら入力判定をtrueにする
+		//	----- オートコンボがオンなら入力判定をtrueにする -----
 		if (owner_->IsAutoCombo())
 		{
 			return true;
 		}
 
-		if (cancellationTime.IsJudgeFlag(stateElapsedTime_) == false)return false;
+		if (cancellationTime.IsWithinRange(stateElapsedTime_) == false)return false;
 		
 		if (Input::Instance().CommandConfirm(command, acceptInputFrame_))
 		{
@@ -331,23 +327,22 @@ namespace PlayerState
 	{
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 
-		if(animSpeedChangeInterval_[0].IsJudgeFlag(currentAnimationSeconds))
+		if(animSpeedChangeInterval_[0].IsWithinRange(currentAnimationSeconds))
 			owner_->SetAnimationSpeed(2.5f);
-		else if(animSpeedChangeInterval_[1].IsJudgeFlag(currentAnimationSeconds))
+		else if(animSpeedChangeInterval_[1].IsWithinRange(currentAnimationSeconds))
 			owner_->SetAnimationSpeed(1.5f);
-		else if(animSpeedChangeInterval_[2].IsJudgeFlag(currentAnimationSeconds))
+		else if(animSpeedChangeInterval_[2].IsWithinRange(currentAnimationSeconds))
 			owner_->SetAnimationSpeed(1.1f);
 	}
 
 	void ComboOne1::Finalize()
 	{
 		owner_->SetUseRootMotion(false);
-		
 		owner_->SetAnimationSpeed(1.0f);
 
-		//	プレイヤーの攻撃判定を無効にする
+		//	----- プレイヤーの攻撃判定を無効にする -----
 		owner_->SetAllAttackDetectionActiveFlag(false);
-		//	プレイヤーの押し出し判定を有効化
+		//	----- プレイヤーの押し出し判定を有効化 -----
 		owner_->SetIsActiveCollisionDetection(true);
 
 	}
@@ -373,25 +368,25 @@ namespace PlayerState
 {
 	void ComboOne2::Initialize()
 	{
-		//	アニメーションセット
+		//	----- アニメーションセット -----
 		owner_->PlayAnimation(Player::AnimationType::ComboOne2, false, 0.0f);
 		owner_->SetAnimationSpeed(1.0f);
 
-		//	ルートモーション
+		//	----- ルートモーション -----
 		//owner_->SetUseRootMotion(true);
 
-		//	判定時間セット
-		animJudgeTime_[0].SetJudgeTime(0.21f, 0.25f);	//	アニメーション再生中に当たっているか判定(アニメーション再生時間をもとに判定)
-		animJudgeTime_[1].SetJudgeTime(0.29f, 0.63f);
+		//	----- 判定時間セット -----
+		animJudgeTime_[0].SetRange(0.21f, 0.25f);	//	アニメーション再生中に当たっているか判定(アニメーション再生時間をもとに判定)
+		animJudgeTime_[1].SetRange(0.29f, 0.63f);
 		acceptInputFrame_ = 10.0f;
-		cancellationTime_.SetJudgeTime(0.64f, 1.617f);	//	キャンセル可能時間
+		cancellationTime_.SetRange(0.64f, 1.617f);	//	キャンセル可能時間
 		cancellationTime_.SetName("CancellationTime");
 
 		//	アニメーション再生速度変化区間セット
-		animSpeedChangeInterval_[0].SetJudgeTime(0.0f, 0.23f);		//	左パンチ出すまで
-		animSpeedChangeInterval_[1].SetJudgeTime(0.24f, 0.55f);		//	左パンチからアッパー
-		animSpeedChangeInterval_[2].SetJudgeTime(0.56f, 1.3f);		//	アッパーから構え
-		animSpeedChangeInterval_[3].SetJudgeTime(1.1f, 1.617f);		//	構えから待機に戻る
+		animSpeedChangeInterval_[0].SetRange(0.0f, 0.23f);		//	左パンチ出すまで
+		animSpeedChangeInterval_[1].SetRange(0.24f, 0.55f);		//	左パンチからアッパー
+		animSpeedChangeInterval_[2].SetRange(0.56f, 1.3f);		//	アッパーから構え
+		animSpeedChangeInterval_[3].SetRange(1.1f, 1.617f);		//	構えから待機に戻る
 
 		//	ステート経過時間初期化
 		stateElapsedTime_ = 0.0f;
@@ -411,7 +406,7 @@ namespace PlayerState
 		//	当たり判定処理(アニメーションが再生されたら再生時間をもとに判定する)
 		//	一撃目
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
-		if (animJudgeTime_[0].IsJudgeFlag(currentAnimationSeconds))
+		if (animJudgeTime_[0].IsWithinRange(currentAnimationSeconds))
 			owner_->GetAttackDetectionData("LeftPunch").SetIsActive(true);
 
 		//	一撃目のアニメーションが終わったらヒットフラグをオフにする
@@ -419,7 +414,7 @@ namespace PlayerState
 			owner_->SetAttackHit(false);
 
 		//	二撃目
-		if (animJudgeTime_[1].IsJudgeFlag(currentAnimationSeconds))
+		if (animJudgeTime_[1].IsWithinRange(currentAnimationSeconds))
 			owner_->GetAttackDetectionData("RightPunch").SetIsActive(true);
 
 		//	次のステートへ遷移
@@ -454,7 +449,7 @@ namespace PlayerState
 
 	}
 
-	bool ComboOne2::JudgeInput(const JudgeTime& cancellationTime)
+	bool ComboOne2::JudgeInput(const TimeRangeJudge& cancellationTime)
 	{
 		//	オートコンボがオンなら入力判定をtrueにする
 		if (owner_->IsAutoCombo())
@@ -473,7 +468,7 @@ namespace PlayerState
 
 	}
 
-	bool ComboOne2::JudgeInputCommand(const JudgeTime& cancellationTime, const Command& command)
+	bool ComboOne2::JudgeInputCommand(const TimeRangeJudge& cancellationTime, const Command& command)
 	{
 		//	オートコンボがオンなら入力判定をtrueにする
 		if (owner_->IsAutoCombo())
@@ -481,7 +476,7 @@ namespace PlayerState
 			return true;
 		}
 
-		if (cancellationTime.IsJudgeFlag(stateElapsedTime_) == false)return false;
+		if (cancellationTime.IsWithinRange(stateElapsedTime_) == false)return false;
 
 		if (Input::Instance().CommandConfirm(command, acceptInputFrame_))
 		{
@@ -495,13 +490,13 @@ namespace PlayerState
 	{
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();
 
-		if (animSpeedChangeInterval_[0].IsJudgeFlag(currentAnimationSeconds))
+		if (animSpeedChangeInterval_[0].IsWithinRange(currentAnimationSeconds))
 			owner_->SetAnimationSpeed(1.2f);
-		else if (animSpeedChangeInterval_[1].IsJudgeFlag(currentAnimationSeconds))
+		else if (animSpeedChangeInterval_[1].IsWithinRange(currentAnimationSeconds))
 			owner_->SetAnimationSpeed(1.1f);
-		else if (animSpeedChangeInterval_[2].IsJudgeFlag(currentAnimationSeconds))
+		else if (animSpeedChangeInterval_[2].IsWithinRange(currentAnimationSeconds))
 			owner_->SetAnimationSpeed(1.5f);
-		else if (animSpeedChangeInterval_[3].IsJudgeFlag(currentAnimationSeconds))
+		else if (animSpeedChangeInterval_[3].IsWithinRange(currentAnimationSeconds))
 			owner_->SetAnimationSpeed(1.5f);
 	}
 
@@ -545,11 +540,11 @@ namespace PlayerState
 		//owner_->SetUseRootMotion(true);
 
 		//	判定時間セット
-		animJudgeTime_[0].SetJudgeTime(0.07f, 0.127f);
-		animJudgeTime_[1].SetJudgeTime(0.25f, 0.35f);
-		animJudgeTime_[2].SetJudgeTime(0.53f, 0.76f);
+		animJudgeTime_[0].SetRange(0.07f, 0.127f);
+		animJudgeTime_[1].SetRange(0.25f, 0.35f);
+		animJudgeTime_[2].SetRange(0.53f, 0.76f);
 		acceptInputFrame_ = 10.0f;
-		cancellationTime_.SetJudgeTime(0.7f, 1.6f);
+		cancellationTime_.SetRange(0.7f, 1.6f);
 		cancellationTime_.SetName("CancellationTime");
 
 		//	ステート経過時間初期化
@@ -566,7 +561,7 @@ namespace PlayerState
 	{
 		//	一撃目の判定
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
-		if (animJudgeTime_[0].IsJudgeFlag(currentAnimationSeconds))
+		if (animJudgeTime_[0].IsWithinRange(currentAnimationSeconds))
 		{
 			owner_->GetAttackDetectionData("LeftPunch").SetIsActive(true);
 		}
@@ -575,7 +570,7 @@ namespace PlayerState
 			owner_->SetAttackHit(false);
 
 		//	二撃目の判定
-		if (animJudgeTime_[1].IsJudgeFlag(currentAnimationSeconds))
+		if (animJudgeTime_[1].IsWithinRange(currentAnimationSeconds))
 		{
 			owner_->GetAttackDetectionData("RightPunch").SetIsActive(true);
 		}
@@ -584,7 +579,7 @@ namespace PlayerState
 			owner_->SetAttackHit(false);
 
 		//	三撃目の判定
-		if (animJudgeTime_[2].IsJudgeFlag(currentAnimationSeconds))
+		if (animJudgeTime_[2].IsWithinRange(currentAnimationSeconds))
 		{
 			owner_->GetAttackDetectionData("LeftKick").SetIsActive(true);
 		}
@@ -618,7 +613,7 @@ namespace PlayerState
 
 	}
 
-	bool ComboOne3::JudgeInput(const JudgeTime& cancellationTime)
+	bool ComboOne3::JudgeInput(const TimeRangeJudge& cancellationTime)
 	{
 		//	オートコンボがオンなら入力判定をtrueにする
 		if (owner_->IsAutoCombo())
@@ -637,7 +632,7 @@ namespace PlayerState
 
 	}
 
-	bool ComboOne3::JudgeInputCommand(const JudgeTime& cancellationTime, const Command& command)
+	bool ComboOne3::JudgeInputCommand(const TimeRangeJudge& cancellationTime, const Command& command)
 	{
 		//	オートコンボがオンなら入力判定をtrueにする
 		if (owner_->IsAutoCombo())
@@ -645,7 +640,7 @@ namespace PlayerState
 			return true;
 		}
 
-		if (cancellationTime.IsJudgeFlag(stateElapsedTime_) == false)return false;
+		if (cancellationTime.IsWithinRange(stateElapsedTime_) == false)return false;
 
 		//	判定時間内に指定したボタンが押されていたらisCorrectInput_をtrueにする
 		if (Input::Instance().CommandConfirm(command, acceptInputFrame_))
@@ -693,7 +688,7 @@ namespace PlayerState
 		//owner_->SetUseRootMotion(true);
 
 		//	判定時間セット
-		animJudgeTime_.SetJudgeTime(0.4f, 1.185f);
+		animJudgeTime_.SetRange(0.4f, 1.185f);
 		acceptInputFrame_ = 10.0f;
 
 		//	ステート経過時間初期化
@@ -715,7 +710,7 @@ namespace PlayerState
 		}
 
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
-		if (animJudgeTime_.IsJudgeFlag(currentAnimationSeconds))
+		if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 		{
 			owner_->GetAttackDetectionData("RightPunch").SetIsActive(true);
 		}
@@ -740,7 +735,7 @@ namespace PlayerState
 
 	}
 
-	bool ComboOne4::JudgeInput(const JudgeTime& cancellationTime)
+	bool ComboOne4::JudgeInput(const TimeRangeJudge& cancellationTime)
 	{
 		//	オートコンボがオンなら入力判定をtrueにする
 		if (owner_->IsAutoCombo())
@@ -758,7 +753,7 @@ namespace PlayerState
 		return false;
 	}
 
-	bool ComboOne4::JudgeInputCommand(const JudgeTime& cancellationTime, const Command& command)
+	bool ComboOne4::JudgeInputCommand(const TimeRangeJudge& cancellationTime, const Command& command)
 	{
 		//	オートコンボがオンなら入力判定をtrueにする
 		if (owner_->IsAutoCombo())
@@ -766,7 +761,7 @@ namespace PlayerState
 			return true;
 		}
 
-		if (cancellationTime.IsJudgeFlag(stateElapsedTime_) == false)return false;
+		if (cancellationTime.IsWithinRange(stateElapsedTime_) == false)return false;
 
 		//	判定時間内に指定したボタンが押されていたらisCorrectInput_をtrueにする
 		if (Input::Instance().CommandConfirm(command, acceptInputFrame_))
@@ -799,7 +794,7 @@ namespace PlayerState
 			float cancellationTimeMax = cancellationTime_.GetMaxTime();
 			ImGui::DragFloat("CancelTimeMin", &cancellationTimeMin);
 			ImGui::DragFloat("CancelTimeMin", &cancellationTimeMax);
-			cancellationTime_.SetJudgeTime(cancellationTimeMin, cancellationTimeMax);
+			cancellationTime_.SetRange(cancellationTimeMin, cancellationTimeMax);
 
 			ImGui::TreePop();
 		}
@@ -835,7 +830,7 @@ namespace PlayerState
 		//	1撃目が終わっていなければステート遷移しない
 		if (owner_->GetCurrentAnimationSeconds() < playAnimDuration_)return;
 
-		//	入力に成功していたら２撃目へ遷移
+		//	入力に成功していたら2撃目へ遷移
 		if (inputSucessFlag_)owner_->ChangeState(Player::StateType::ComboTwo2);
 		//	待機ステートへ遷移
 		else owner_->ChangeState(Player::StateType::Idle);
@@ -916,9 +911,9 @@ namespace PlayerState
 		//	----- アニメーション再生設定 -----
 		owner_->PlayAnimation(Player::AnimationType::DodgeBack, false, 0.0f, 1.0f, startFrame_, endFrame_);
 		owner_->SetAnimationSpeed(1.0f);
-		animSpeedChangeInterval_[0].SetJudgeTime(0.0f, 0.59f);
+		animSpeedChangeInterval_[0].SetRange(0.0f, 0.59f);
 		animSpeedChangeInterval_[0].SetName("AnimSpeedInterval0");
-		animSpeedChangeInterval_[1].SetJudgeTime(0.60f, 1.333f);
+		animSpeedChangeInterval_[1].SetRange(0.60f, 1.333f);
 		animSpeedChangeInterval_[1].SetName("AnimSpeedInterval1");
 
 		//	----- ルートモーション -----
@@ -950,7 +945,7 @@ namespace PlayerState
 		//	アニメーション速度更新
 		for (int i = 0; i < AnimSpeedSectionCount_; ++i)
 		{
-			if (animSpeedChangeInterval_[i].IsJudgeFlag(currentAnimationSeconds))
+			if (animSpeedChangeInterval_[i].IsWithinRange(currentAnimationSeconds))
 			{
 				owner_->SetAnimationSpeed(animationSpeed_[i]);
 				break;
@@ -1041,8 +1036,8 @@ namespace PlayerState
 		SetGamePadVibration();
 
 		//	アニメーションの速度を変える区間を設定
-		animSpeedChangeInterval_[0].SetJudgeTime(0.0f, 0.54f);		//	地面につく
-		animSpeedChangeInterval_[1].SetJudgeTime(0.55f, 1.1f);		//	動作終わり
+		animSpeedChangeInterval_[0].SetRange(0.0f, 0.54f);		//	地面につく
+		animSpeedChangeInterval_[1].SetRange(0.55f, 1.1f);		//	動作終わり
 
 		//	吹っ飛びアニメーション再生
 		owner_->PlayAnimation(Player::AnimationType::HitDeath, false, 0.1f, 1.0f, startFrame_, endFrame_);
@@ -1088,7 +1083,7 @@ namespace PlayerState
 		//	アニメーション速度更新
 		for (int i = 0; i < AnimSpeedSectionCount_; ++i)
 		{
-			if (animSpeedChangeInterval_[i].IsJudgeFlag(currentAnimationSeconds))
+			if (animSpeedChangeInterval_[i].IsWithinRange(currentAnimationSeconds))
 			{
 				owner_->SetAnimationSpeed(animationSpeed_[i]);
 				break;

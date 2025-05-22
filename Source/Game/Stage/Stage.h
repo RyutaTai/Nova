@@ -12,21 +12,15 @@
 class Stage
 {
 public:
-	enum class CollisionModel
-	{
-		Ground,
-		Building,
-		Max,
-	};
-
-	enum class ProjectionMappingType
+	//	----- オーディオスペクトラムの種類 -----
+	enum class AudioSpectrumType
 	{
 		Waveform,	//	波形
 		Circle,		//	円形	
 		Max
 	};
 
-	//	エミッシブの強度
+	//	----- エミッシブ変化用定数バッファ -----
 	struct EmissiveConstant
 	{
 		float emissiveIntensity_;
@@ -35,32 +29,46 @@ public:
 	EmissiveConstant emissiveConstant_;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> emissiveConstantBuffer_;
 
-	//	FFTデータ
+	//	----- FFTデータ -----
 	struct FFTConstant
 	{
 		float				fftData_[Frequency::BlockCount];						//	FFTのデータを分割数分GPUに渡す
-		DirectX::XMFLOAT4	color_[static_cast<int>(ProjectionMappingType::Max)];	//	オーディオスペクトラムの数だけcolorを設定
+		DirectX::XMFLOAT4	color_[static_cast<int>(AudioSpectrumType::Max)];	//	オーディオスペクトラムの数だけcolorを設定
 	};
 	FFTConstant fftConstant_;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> fftConstantBuffer_;
 
+	//	----- プロジェクションマッピング用定数バッファ -----
 	struct ProjectionMappingConstant
 	{
 		DirectX::XMFLOAT4X4 transform_ = {};
 	};
-	ProjectionMappingConstant			 projectionMappingConstants_[static_cast<int>(ProjectionMappingType::Max)];
-	Microsoft::WRL::ComPtr<ID3D11Buffer> projectionMappingBuffer_[static_cast<int>(ProjectionMappingType::Max)];
+	ProjectionMappingConstant			 projectionMappingConstants_[static_cast<int>(AudioSpectrumType::Max)];
+	Microsoft::WRL::ComPtr<ID3D11Buffer> projectionMappingBuffer_[static_cast<int>(AudioSpectrumType::Max)];
 
+	//	----- プロジェクションマッピングに関するデータ(CPU側でのみ使用) -----
 	struct ProjectionMapping
 	{
+		//	----- 定数バッファの transform_ の計算に利用
 		DirectX::XMFLOAT3	eye_		= { 0.0f, 50.0f, 0.0f };
 		DirectX::XMFLOAT3	defaultEye_ = { 0.0f,50.0f,0.0f };
 		DirectX::XMFLOAT3	focus_		= { 0.0f, 0.0f,  0.0f };
 		float				rotation_	= 0.0f;
 		float				fovy_		= 10.0f;
+		//	----- テクスチャ -----
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture_;	//	ピクセルシェーダーでここに書き出す
+		//	----- 色の変更に使用 -----
+		DirectX::XMFLOAT4 defaultSpectrumColor_;	// デフォルトの色
+		DirectX::XMFLOAT4 currentSpectrumColor_;	// 現在の色
+		bool	isTemporaryColorActive_;			//	オーディオスペクトラムの一時的な色変更フラグ
+		float	colorTimer_;
+		float	colorDuration_;						//	何秒間色を変更するか
+		// ----- スケール変更に使用 -----
+		bool	isTemporaryScaleActive_;
+		float	scaleTimer_;
+		float	scaleDuration_;
 	};
-	ProjectionMapping projectionMapping_[static_cast<int>(ProjectionMappingType::Max)];
+	ProjectionMapping projectionMapping_[static_cast<int>(AudioSpectrumType::Max)];
 
 public:
 	Stage();
@@ -76,7 +84,6 @@ public:
 	void UpdateEmissive(const float& elapsedTime);	//	エミッシブ更新処理
 	void UpdateFrequencyMin();
 	void UpdateFrequencyMax();
-	float CalculateAutocorrelation(const float data[], const int& lag);
 
 	bool Collision(_In_ const DirectX::XMFLOAT3& rayPosition, _In_ const DirectX::XMFLOAT3& rayDirection, _In_ const DirectX::XMFLOAT4X4& stageTransform, _Out_ DirectX::XMFLOAT3& intersectionPosition, _Out_ DirectX::XMFLOAT3& intersectionNormal,
 		_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ float rayLengthLimit = 1.0e+7f, _In_ bool skipIf = false/*Once the first intersection is found, the process is interrupted.*/) const;
@@ -91,11 +98,11 @@ public:
 
 	//	オーディオスペクトラムの色
 	void UpdateSpectrumColor(const float& elapsedTime);
-	void SetSpectrumColor(const ProjectionMappingType& projectionMappingType, const DirectX::XMFLOAT4& color);
+	void SetSpectrumColor(const AudioSpectrumType& projectionMappingType, const DirectX::XMFLOAT4& color);
 
 	//	オーディオスペクトラムのスケール
 	void UpdateSpectrumScale(const float& elapsedTime);
-	void SetCircleSpectrumEyeOffsetY(const ProjectionMappingType& projectionMappingType, const float& eyeOffsetY, const float& lerpTime);
+	void SetCircleSpectrumEyeOffsetY(const AudioSpectrumType& projectionMappingType, const float& eyeOffsetY, const float& lerpTime);
 
 	//	プロジェクションマッピング情報
 	void SetProjectionMappingEye(const DirectX::XMFLOAT3& eye, const int& index) { projectionMapping_[index].eye_ = eye; }
@@ -116,19 +123,18 @@ public:
 private:
 	static Stage* instance_;
 
-	std::shared_ptr<GltfModelStaticBatching>	gltfStaticModelResource_;		//	Gltfモデル
+	//	----- モデル -----
+	std::shared_ptr<GltfModelStaticBatching>	gltfStaticModelResource_;
 	std::unique_ptr<CollisionMesh>				collisionMesh_;
 
 	//	----- プロジェクションマッピング -----
 	std::unique_ptr<FullScreenQuad>				fullScreenQuad_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	spectrumWaveformPS_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	spectrumCirclePS_;
-	std::unique_ptr<FrameBuffer>				spectrumFramebuffer_[static_cast<int>(ProjectionMappingType::Max)];
+	std::unique_ptr<FrameBuffer>				spectrumFramebuffer_[static_cast<int>(AudioSpectrumType::Max)];
 
 	const int SPECTRUM_WIDTH = 256;
 	const int SPECTRUM_HEIGHT = 256;
-
-	float fftDivisionValue_ = 10000.0f;	//	GPUに渡すFFTデータを割る値
 
 	bool				useFrequency_ = true;
 	static const int	FrequencyDataMax = 120;
@@ -139,6 +145,8 @@ private:
 	float				currentFrequencyValue_ = 0.0f;
 	float				frequencyMinValue_ = 0.0f;
 	float				frequencyMaxValue_ = 0.0f;
+
+	//	----- エミッシブの変化に使用する変数 -----
 	float				emissiveFactor_ = 15.0f;
 	float				emissiveIntencityMin_ = 0.1f;
 	float				emissiveIntencityMax_ = 15.0f;
@@ -151,17 +159,5 @@ private:
 	//	円形オーディオスペクトラムのfocusからeyeまでの高さ
 	float defaultEyeOffsetY_ = 30.0f;
 	float eyeOffsetY_ = 30.0f;
-
-	//	オーディオスペクトラムの色変更
-	DirectX::XMFLOAT4 defaultSpectrumColor_[static_cast<int>(ProjectionMappingType::Max)]; // デフォルトの色
-	DirectX::XMFLOAT4 currentSpectrumColor_[static_cast<int>(ProjectionMappingType::Max)]; // 現在の色
-	bool	isTemporaryColorActive_[static_cast<int>(ProjectionMappingType::Max)];	//	オーディオスペクトラムの一時的な色変更フラグ
-	float	colorTimer_[static_cast<int>(ProjectionMappingType::Max)];
-	float	colorDuration_[static_cast<int>(ProjectionMappingType::Max)];				//	何秒間色を変更するか
-
-	//	オーディオスペクトラムのスケール変更
-	bool	isTemporaryScaleActive_[static_cast<int>(ProjectionMappingType::Max)];
-	float	scaleTimer_[static_cast<int>(ProjectionMappingType::Max)];
-	float	scaleDuration_[static_cast<int>(ProjectionMappingType::Max)];
 
 };

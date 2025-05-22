@@ -90,14 +90,14 @@ namespace DragonkinAction
 			owner_->ResetRunTimer();
 			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::AttackPunch), false);
 			//	判定を取る区間を設定
-			animJudgeTime_.SetJudgeTime(0.42f, 0.5f);
+			animJudgeTime_.SetRange(0.42f, 0.5f);
 
 			step_++;
 			break;
 		case 1:
 			//	プレイヤーとの当たり判定
 			float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
-			if (animJudgeTime_.IsJudgeFlag(currentAnimationSeconds))
+			if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 			{
 				owner_->GetAttackDetectionData("Hand_R").SetIsActive(true);
 
@@ -147,14 +147,14 @@ namespace DragonkinAction
 			owner_->ResetRunTimer();
 			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::AttackKick), false);
 			//	判定を取る区間を設定
-			animJudgeTime_.SetJudgeTime(0.52f, 0.6f);
+			animJudgeTime_.SetRange(0.52f, 0.6f);
 			
 			step_++;
 			break;
 		case 1:
 			//	プレイヤーとの当たり判定
 			float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
-			if (animJudgeTime_.IsJudgeFlag(currentAnimationSeconds))
+			if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 			{
 				owner_->GetAttackDetectionData("Foot_L").SetIsActive(true);
 				owner_->GetAttackDetectionData("calf_l").SetIsActive(true);
@@ -207,14 +207,14 @@ namespace DragonkinAction
 			owner_->ResetRunTimer();
 			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::AttackWing), false);
 			//	判定を取る区間を設定
-			animJudgeTime_.SetJudgeTime(0.34f, 0.41f);
+			animJudgeTime_.SetRange(0.34f, 0.41f);
 			
 			step_++;
 			break;
 		case 1:
 			//	プレイヤーとの当たり判定
 			float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
-			if (animJudgeTime_.IsJudgeFlag(currentAnimationSeconds))
+			if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 			{
 				owner_->GetAttackDetectionData("Wing_L03").SetIsActive(true);
 				owner_->GetAttackDetectionData("Wing_L04").SetIsActive(true);

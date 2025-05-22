@@ -12,7 +12,7 @@
 
 #define USE_SERIALIZE 1
 
-GltfModelStaticBatching::GltfModelStaticBatching(const std::string& filename, const bool setColor, const DirectX::XMFLOAT4 color) : filename_(filename)
+GltfModelStaticBatching::GltfModelStaticBatching(const std::string& filename, const bool& setColor, const DirectX::XMFLOAT4& color) : filename_(filename)
 {
 	ID3D11Device* device = Graphics::Instance().GetDevice();
 #if USE_SERIALIZE

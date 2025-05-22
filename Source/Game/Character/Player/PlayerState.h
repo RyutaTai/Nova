@@ -2,7 +2,7 @@
 
 #include "Player.h"
 #include "../../../Nova/AI/State.h"
-#include "../../JudgeTime.h"
+#include "../../TimeRangeJudge.h"
 
 //	待機ステート
 namespace PlayerState
@@ -79,8 +79,8 @@ namespace PlayerState
 
 	private:
 		//	----- 入力判定 -----
-		bool JudgeInput(const JudgeTime& inputJudgeTime);	//	正しい入力が取れていたらtrue
-		bool JudgeInputCommand(const JudgeTime& inputJudgeTime, const Command& command);
+		bool JudgeInput(const TimeRangeJudge& inputJudgeTime);	//	正しい入力が取れていたらtrue
+		bool JudgeInputCommand(const TimeRangeJudge& inputJudgeTime, const Command& command);
 		
 		//	----- アニメーション再生速度を調整 -----
 		void UpdateAnimationSpeed();	//	アニメーション箇所で速度を変化
@@ -89,9 +89,9 @@ namespace PlayerState
 		void DetermineStateTransition(const float& elapsedTime);
 
 	private:
-		JudgeTime	animJudgeTime_	= {};				//	判定を取るアニメーション区間
-		JudgeTime	animSpeedChangeInterval_[3] = {};	//	再生速度を変更するアニメーション区間
-		JudgeTime	cancellationTime_ = {};				//	キャンセル可能時間
+		TimeRangeJudge	animJudgeTime_	= {};				//	判定を取るアニメーション区間
+		TimeRangeJudge	animSpeedChangeInterval_[3] = {};	//	再生速度を変更するアニメーション区間
+		TimeRangeJudge	cancellationTime_ = {};				//	キャンセル可能時間
 		float		acceptInputFrame_ = 0.0f;			//	入力時間を受け付ける時間(CommandConfirm関数でさかのぼるフレーム数)
 
 	};
@@ -113,8 +113,8 @@ namespace PlayerState
 
 	private:
 		//	----- 入力判定 -----
-		bool JudgeInput(const JudgeTime& cancellationTime);
-		bool JudgeInputCommand(const JudgeTime& inputJudgeTime, const Command& command);
+		bool JudgeInput(const TimeRangeJudge& cancellationTime);
+		bool JudgeInputCommand(const TimeRangeJudge& inputJudgeTime, const Command& command);
 		
 		//	----- アニメーション再生速度を調整 -----
 		void UpdateAnimationSpeed();
@@ -124,11 +124,11 @@ namespace PlayerState
 
 	private:
 		static const int	AnimJudgeCount_ = 2;					//	アニメーション判定区間の数
-		JudgeTime			animJudgeTime_[AnimJudgeCount_] = {};	//	判定を取るアニメーション区間
+		TimeRangeJudge			animJudgeTime_[AnimJudgeCount_] = {};	//	判定を取るアニメーション区間
 		
 		static const int	AnimSpeedSectionCount_ = 4;								//	アニメーション速度変化区間の数
-		JudgeTime			animSpeedChangeInterval_[AnimSpeedSectionCount_] = {};	//	再生速度を変更するアニメーション区間
-		JudgeTime			cancellationTime_ = {};									//	キャンセル可能時間
+		TimeRangeJudge			animSpeedChangeInterval_[AnimSpeedSectionCount_] = {};	//	再生速度を変更するアニメーション区間
+		TimeRangeJudge			cancellationTime_ = {};									//	キャンセル可能時間
 		float				acceptInputFrame_ = 0.0f;								//	入力時間を受け付ける範囲
 		bool				isHit_ = false;											//	このコンボの最後の攻撃があたったらtrue
 
@@ -151,16 +151,16 @@ namespace PlayerState
 
 	private:
 		//	----- 入力判定 -----
-		bool JudgeInput(const JudgeTime& cancellationTime);	//	正しい入力が取れていたらtrue
-		bool JudgeInputCommand(const JudgeTime& inputJudgeTime, const Command& command);
+		bool JudgeInput(const TimeRangeJudge& cancellationTime);	//	正しい入力が取れていたらtrue
+		bool JudgeInputCommand(const TimeRangeJudge& inputJudgeTime, const Command& command);
 
 		//	----- ステートの遷移を判断 -----
 		void DetermineStateTransition(const float& elapedTime);
 
 	private:
 		static const int	AnimJudgeCount_ = 3;					//	アニメーション判定区間の数
-		JudgeTime			animJudgeTime_[AnimJudgeCount_] = {};	//	判定を取るアニメーション区間
-		JudgeTime			cancellationTime_ = {};					//	キャンセル可能時間
+		TimeRangeJudge			animJudgeTime_[AnimJudgeCount_] = {};	//	判定を取るアニメーション区間
+		TimeRangeJudge			cancellationTime_ = {};					//	キャンセル可能時間
 		float				acceptInputFrame_ = {};					//	入力時間を受け付ける範囲
 
 	};
@@ -182,15 +182,15 @@ namespace PlayerState
 
 	private:
 		//	----- 入力判定 -----
-		bool JudgeInput(const JudgeTime& cancellationTime);	//	正しい入力が取れていたらtrue
-		bool JudgeInputCommand(const JudgeTime& inputJudgeTime, const Command& command);
+		bool JudgeInput(const TimeRangeJudge& cancellationTime);	//	正しい入力が取れていたらtrue
+		bool JudgeInputCommand(const TimeRangeJudge& inputJudgeTime, const Command& command);
 
 		//	----- ステートの遷移を判断 -----
 		void DetermineStateTransition(const float& elapsedTime);
 
 	private:
-		JudgeTime	animJudgeTime_	= {};		//	判定を取るアニメーション区間
-		JudgeTime	cancellationTime_ = {};		//	キャンセル可能時間
+		TimeRangeJudge	animJudgeTime_	= {};		//	判定を取るアニメーション区間
+		TimeRangeJudge	cancellationTime_ = {};		//	キャンセル可能時間
 		float		acceptInputFrame_ = {};		//	入力時間を受け付ける範囲
 
 	};
@@ -212,15 +212,15 @@ namespace PlayerState
 
 	private:
 		//	----- 入力判定 -----
-		bool JudgeInput(const JudgeTime& cancellationTime);	//	正しい入力が取れていたらtrue
-		bool JudgeInputCommand(const JudgeTime& inputJudgeTime, const Command& command);
+		bool JudgeInput(const TimeRangeJudge& cancellationTime);	//	正しい入力が取れていたらtrue
+		bool JudgeInputCommand(const TimeRangeJudge& inputJudgeTime, const Command& command);
 
 		//	----- ステートの遷移を判断 -----
 		void DetermineStateTransition(const float& elapsedTime);
 
 	private:
-		JudgeTime	animJudgeTime_ = {};		//	判定を取るアニメーション区間
-		JudgeTime	cancellationTime_ = {};		//	キャンセル可能時間
+		TimeRangeJudge	animJudgeTime_ = {};		//	判定を取るアニメーション区間
+		TimeRangeJudge	cancellationTime_ = {};		//	キャンセル可能時間
 		float		acceptInputFrame_ = {};		//	入力時間を受け付ける範囲
 		bool		inputSucessFlag_ = false;	//	入力成功フラグ(trueなら２撃目へ遷移)
 		float		playAnimDuration_ = 0.817f;	//	一撃目のアニメーションの長さ
@@ -244,15 +244,15 @@ namespace PlayerState
 
 	private:
 		//	----- 入力判定 -----
-		bool JudgeInput(const JudgeTime& cancellationTime);	//	正しい入力が取れていたらtrue
-		bool JudgeInputCommand(const JudgeTime& inputJudgeTime, const Command& command);
+		bool JudgeInput(const TimeRangeJudge& cancellationTime);	//	正しい入力が取れていたらtrue
+		bool JudgeInputCommand(const TimeRangeJudge& inputJudgeTime, const Command& command);
 
 		//	----- ステートの遷移を判断 -----
 		void DetermineStateTransition(const float& elapsedTime);
 
 	private:
-		JudgeTime	animJudgeTime_ = {};		//	判定を取るアニメーション区間
-		JudgeTime	cancellationTime_ = {};		//	キャンセル可能時間
+		TimeRangeJudge	animJudgeTime_ = {};		//	判定を取るアニメーション区間
+		TimeRangeJudge	cancellationTime_ = {};		//	キャンセル可能時間
 		float		acceptInputFrame_ = {};		//	入力時間を受け付ける範囲
 
 	};
@@ -292,7 +292,7 @@ namespace PlayerState
 
 		//	----- アニメーション -----
 		static const int	AnimSpeedSectionCount_ = 2;									//	アニメーション速度変化区間の数
-		JudgeTime			animSpeedChangeInterval_[AnimSpeedSectionCount_] = {};		//	再生速度を変更するアニメーション区間
+		TimeRangeJudge			animSpeedChangeInterval_[AnimSpeedSectionCount_] = {};		//	再生速度を変更するアニメーション区間
 		float				animationSpeed_[AnimSpeedSectionCount_] = { 1.0f,1.5f };	//	各区間のアニメーション速度
 
 		float				startFrame_ = 0.19f;	//	アニメーションの再生開始位置
@@ -332,7 +332,7 @@ namespace PlayerState
 		
 		//	----- アニメーション速度 -----
 		static const int	AnimSpeedSectionCount_								= 2;					//	アニメーション速度変化区間の数
-		JudgeTime			animSpeedChangeInterval_[AnimSpeedSectionCount_]	= {};					//	再生速度を変更するアニメーション区間
+		TimeRangeJudge			animSpeedChangeInterval_[AnimSpeedSectionCount_]	= {};					//	再生速度を変更するアニメーション区間
 		float				animationSpeed_[AnimSpeedSectionCount_]				= { 1.2f,2.8f};	//	各区間のアニメーション速度
 
 		//	----- 吹っ飛ばし -----

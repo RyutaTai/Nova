@@ -32,17 +32,17 @@ public:
 	
 	const double GetCurrentMidiTime()const { return midi_->GetCurrentTimer(); }
 
-	//	関数を呼んだタイミングがリズムにあっているか
+	//	関数を呼んだタイミングがリズムにあっているかを判定する
 	bool	Judge();
 
-	//	BPM
+	//	----- BPM -----
 	void	SetBPM(const float& bpm){ bpm_ = bpm; }
 	float	GetBPM()				{ return bpm_; }
 
 	//	midiを見てノートオンならtrueを返す(テンポに合わせた動きをさせるために使用する)
 	bool	GetRhythm();
 
-	//	コンボ
+	//	----- コンボ -----
 	void		SetComboCount(const int& comboCount)	{ comboCount_ = comboCount; }
 	void		AddComboCount(const int& comboCount);
 	const int	GetComboCount() const					{ return comboCount_; }
@@ -56,7 +56,7 @@ private:
 	//	コンボ数
 	int comboCount_ = 0;
 
-	//	各判定の範囲
+	//	----- 各判定の範囲 -----
 	float perfectRange_ = 36.0f;	//	Perfectの範囲
 	float goodRange_ = 72.0f;		//	Goodの範囲
 

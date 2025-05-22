@@ -22,10 +22,10 @@ public:
 	void Update(const float& elapsedTime);
 	void Render();
 
-	void Register(Enemy* enemy);		//	エネミー登録
-	void Clear();						//	エネミー全削除
-	void Remove(Enemy* enemy);			//	エネミー削除
-	void DroneSpawn(const int& spawn);			//	ドローン生成
+	void Register(Enemy* enemy);					//	エネミー登録
+	void Clear();									//	エネミー全削除
+	void Remove(Enemy* enemy);						//	エネミー削除
+	void DroneSpawn(const int& spawn/*生成数*/);	//	ドローン生成
 	
 	//	シャドウマップ
 	void CastShadows();

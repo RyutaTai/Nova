@@ -242,7 +242,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> primitiveCbuffer_;
 
 public:
-	GltfModelStaticBatching(const std::string& filename, const bool setColor = false, const DirectX::XMFLOAT4 color = { 0,0,0,1 });
+	GltfModelStaticBatching(const std::string& filename, const bool& setColor = false, const DirectX::XMFLOAT4& color = { 0,0,0,1 });
 	virtual ~GltfModelStaticBatching() = default;
 
 	void Render();

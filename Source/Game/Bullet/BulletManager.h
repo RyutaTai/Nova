@@ -70,16 +70,6 @@ private:
 	std::vector	<Bullet*>	bullets_;
 	std::set	<Bullet*>	generates_;
 	std::set	<Bullet*>	removes_;
-#if 0
-	float					coverScale_		= 30.0f;	//	カバーモデルのスケール
-	float					scaleAdd_		= 10.0f;	//	どのくらいscaleを加算するか
-	const float				CoverScaleMax_ = 50.0f;	//	スケール上限
-	const float				CoverScaleMin_ = 20.0f;	//	スケール下限	小さすぎると弾に埋まって見えない
-#else
-	//float					coverScale_ = 10;		//	カバーモデルのスケール
-	//float					scaleAdd_ = 5;			//	どのくらいscaleを加算するか
-	//const float				CoverScaleMax_ = 12;	//	スケール上限
-	//const float				CoverScaleMin_ = 7;	//	スケール下限	小さすぎると弾に埋まって見えない
 
 	float					coverScale_ = 0.1f;		//	カバーモデルのスケール
 	float					scaleAdd_ = 0.4f;		//	どのくらいscaleを加算するか
@@ -88,9 +78,8 @@ private:
 
 	float					coverScaleTimer_ = 0.0f;
 
-#endif
-
-private:	//	デバッグ用の変数
+private:	
+	//	デバッグ用の変数
 	bool isInvincible_ = false;			//	無敵状態
 	bool isBulletDestroy_ = false;		//	弾丸破棄
 	bool coverModelDraw_ = true;		//	カバーモデル描画フラグ

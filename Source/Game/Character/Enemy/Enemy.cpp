@@ -26,9 +26,8 @@ void Enemy::Turn(const float& elapsedTime)
 	float vz = targetPosition_.z - dronePos.z;
 
 	//	旋回処理
-#if 1
 	Character::Turn(elapsedTime, vx, vz, turnSpeed_);
-#endif
+	
 }
 
 //	ターゲット位置更新
@@ -80,6 +79,7 @@ bool Enemy::SearchPlayer()
 	float vz = playerPosition.z - enemyPosition.z;
 	float dist = sqrtf(vx * vx + vy * vy + vz * vz);
 
+	//	プレイヤーとの距離が索敵距離に入っていたら前後判定する
 	if (dist < searchRange_)
 	{
 		float distXZ = sqrtf(vx * vx + vz * vz);
@@ -104,8 +104,10 @@ bool Enemy::SearchPlayer()
 //	ダメージ処理
 void Enemy::AddDamage(const float& damage)
 {
+	//	死亡していたら処理しない
 	if (isDead_)return;
 
+	//	ダメージ処理
 	hp_ -= damage;
 	if (hp_ <= 0.0f)
 	{

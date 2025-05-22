@@ -415,7 +415,7 @@
     <ClCompile Include="Source\Game\Stage\Stage.cpp">
       <Filter>Game\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\JudgeTime.cpp">
+    <ClCompile Include="Source\Game\TimeRangeJudge.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Character\Player\Player.cpp">
@@ -870,7 +870,7 @@
     <ClInclude Include="Source\Game\Stage\Stage.h">
       <Filter>Game\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\JudgeTime.h">
+    <ClInclude Include="Source\Game\TimeRangeJudge.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Character\Player\Player.h">

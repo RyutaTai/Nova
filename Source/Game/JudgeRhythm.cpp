@@ -32,53 +32,57 @@ void JudgeRhythm::Update()
 //	読んだタイミングがリズムに合っているかをテンポUIを利用して判定する
 bool JudgeRhythm::Judge()
 {
-	//	中心円に一番近い半円の番号を取得
+	//	----- 中心円に一番近い半円の番号を取得 -----
 	int nearSemicircleIndex = UIManager::Instance().GetUITempo()->FindNearSemicircleIndex();
 
-	//	入力タイミングが判定範囲に入っているか
+	//	----- 入力タイミングの評価(PerfectやGood)ごとの処理 -----
+	//	Perfectのとき
 	if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetRange() < perfectRange_)		//	Perfect
 	{
-		//  判定文字UIを生成
+		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
 		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Perfect);
 		uiRhythm->Initialize();
 		uiRhythm->SetIsVisible(true);
 
-		//	判定フラグをtrueにしてコンボ加算
+		//	----- 判定フラグをtrueにしてコンボ加算 -----
 		UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->SetIsJudged(true);
 		JudgeRhythm::Instance().AddComboCount(1);
 
-		//	プレイヤーの足元のオーディオスペクトラムの色を変更
-		Stage::Instance().SetSpectrumColor(Stage::ProjectionMappingType::Circle, { 1.0f,1.0f,0.0f,1.0f });
-		//	プレイヤーの足元のオーディオスペクトラムのスケールを変更
-		Stage::Instance().SetCircleSpectrumEyeOffsetY(Stage::ProjectionMappingType::Circle, 40.0f, 0.5f);
+		//	----- プレイヤーの足元のオーディオスペクトラムを変化させる -----
+		//	色を変化させる
+		Stage::Instance().SetSpectrumColor(Stage::AudioSpectrumType::Circle, { 1.0f,1.0f,0.0f,1.0f });
+		//	スケールを変化させる
+		Stage::Instance().SetCircleSpectrumEyeOffsetY(Stage::AudioSpectrumType::Circle, 40.0f, 0.5f);
 
 		return true;
 
 	}
+	//	Goodのとき
 	else if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetRange() < goodRange_)	//	Good
 	{
-		//  判定文字UIを生成
+		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
 		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Good);
 		uiRhythm->Initialize();
 		uiRhythm->SetIsVisible(true);
 
-		//	判定フラグをtrueにしてコンボ加算
+		//	----- 判定フラグをtrueにしてコンボ加算 -----
 		UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->SetIsJudged(true);
 		JudgeRhythm::Instance().AddComboCount(1);
 
 		return true;
 	}
+	//	Perfect、Good以外
 	else
 	{
-		//  判定文字UIを生成
+		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
 		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Miss);
 		uiRhythm->Initialize();
 		uiRhythm->SetIsVisible(true);
 
-		//	コンボ数リセット
+		//	----- コンボ数リセット -----
 		JudgeRhythm::Instance().SetComboCount(0);
 
 		return false;
@@ -108,7 +112,8 @@ void JudgeRhythm::DrawDebug()
 {
 	if (ImGui::TreeNode("JudgeRhythm"))
 	{
-		//	midi
+		//	----- midi -----
+		ImGui::Text("----- midi -----");
 		float currentMidiTimer = static_cast<float>(midi_->GetCurrentTimer());
 		float maxMidiTimer = debugMaxMidiTimer_;
 		debugMaxMidiTimer_ = std::max(debugMaxMidiTimer_, midi_->GetCurrentTimer());
@@ -117,7 +122,6 @@ void JudgeRhythm::DrawDebug()
 		ImGui::DragFloat("MaxMidiTimer", &maxMidiTimer);
 		//ImGui::DragFloat("ClosestNoteTime", &midi_->FindClosestNoteInLoop(currentMidiTimer)->time_);
 
-		ImGui::Text("----- midi -----");
 		float midiDuration = midi_->GetMidiFileDurationSeconds();
 		ImGui::DragFloat("MidiDuration", &midiDuration);   //   midiファイルの長さ[s]
 
@@ -125,11 +129,12 @@ void JudgeRhythm::DrawDebug()
 		ImGui::DragFloat("ClosestNoteTime", &debugClosestNoteTime_, 0.01f);     //  一番近いノートの開始時間
 		ImGui::DragFloat("InputTime", &debugInputTime_, 0.01f);                 //  入力時間
 
-		//	判定範囲
+		//	----- 判定範囲 -----
 		ImGui::Text(u8"----- 判定範囲 -----");
 		ImGui::DragFloat("PerfectRange", &perfectRange_, 0.1f);
 		ImGui::DragFloat("GoodRange", &goodRange_, 0.1f);
 
+		//	----- コンボ -----
 		ImGui::Text(u8"----- コンボ -----");
 		ImGui::DragInt("ComboCount", &comboCount_);
 

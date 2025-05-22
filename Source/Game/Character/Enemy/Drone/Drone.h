@@ -7,7 +7,7 @@
 #include "../../../Bullet/BulletManager.h"
 #include "../../../../Nova/AI/StateMachine.h"
 #include "../../../../Nova/Audio/AudioManager.h"
-#include "../../../../Game/JudgeTime.h"
+#include "../../../../Game/TimeRangeJudge.h"
 
 //	ドローンクラス(浮いている敵)
 class Drone :public Enemy

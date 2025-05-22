@@ -26,13 +26,12 @@ Player& Player::Instance()
 //	コンストラクタ
 Player::Player()
 	:Character("./Resources/Model/Player/SKM_Manny_Anim.gltf", "")
-	//:Character("./Resources/Model/Player.gltf", "")
 {
 	//	インスタンス設定
 	_ASSERT_EXPR(instance_ == instance_, L"already instance");
 	instance_ = this;
 
-	//	ステートセット(Player::StateTypeの順番に合わせる)
+	//	----- ステートセット(Player::StateTypeの順番に合わせる) -----
 	stateMachine_.reset(new StateMachine<State<Player>>());
 	stateMachine_->RegisterState(new PlayerState::IdleState(this));		//	待機
 	stateMachine_->RegisterState(new PlayerState::MoveState(this));		//	移動
@@ -49,13 +48,14 @@ Player::Player()
 	stateMachine_->RegisterState(new PlayerState::DeathState(this));	//	死亡
 
 	stateMachine_->SetState(static_cast<int>(StateType::Idle));			//	初期ステートセット
+	//	----- アニメーションセット -----
 	PlayAnimation(Player::AnimationType::Idle, true, 1.0f);
 
-	//	モデルのルート設定
+	//	----- モデルのルート設定 -----
 	int rootNodeIndex = GetNodeIndex("root");
 	SetRootJointIndex(rootNodeIndex);
 
-	//	当たり判定登録
+	//	----- 当たり判定登録 -----
 	RegisterCollisionData();
 
 	//	----- オーディオ初期設定 -----
@@ -64,13 +64,13 @@ Player::Player()
 	listener_.outerRadius_ = 1.67f;
 	listener_.filterParam_ = 0.8f;
 
-	//	足音SE
+	//	----- 足音SE -----
 	sources_[static_cast<int>(AudioStereo::Footsteps)] = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/FootstepsOne2.wav", Audio::AudioType::SENormal, "GameScene");
 	sources_[static_cast<int>(AudioStereo::Footsteps)]->SetVolume(0.3f, false);
 	sources_[static_cast<int>(AudioStereo::Footsteps)]->SetAudioName("PlayerFootsteps");
 	AudioManager::Instance().Register(sources_[static_cast<int>(AudioStereo::Footsteps)]);
 
-	//	攻撃ヒットSE
+	//	----- 攻撃ヒットSE -----
 	sources_[static_cast<int>(AudioStereo::HitAttack)] = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/HitAttack2.wav", Audio::AudioType::SENormal, "GameScene");
 	sources_[static_cast<int>(AudioStereo::HitAttack)]->SetVolume(1.0f, false);
 	sources_[static_cast<int>(AudioStereo::HitAttack)]->SetAudioName("PlayerHitAttack");
@@ -81,37 +81,36 @@ Player::Player()
 //	初期化
 void Player::Initialize()
 {
-	//	エフェクト読み込み
+	//	----- エフェクト読み込み -----
 	effectResource_ = ResourceManager::Instance().LoadEffectResource("./Resources/Effect/HitEff.efk");
 
-	//	エフェクトスケール設定
+	//	----- エフェクトスケール設定 -----
 	effectScale_ = 0.4f;
 
-	//	位置設定
+	//	----- 位置設定 -----
 	GetTransform()->SetPosition({ 14.0f, 0.01f, -20.0f });
 
-	//	回転値設定
+	//	----- 回転値設定 -----
 	GetTransform()->SetRotationY(DirectX::XMConvertToRadians(44.0f));
 
-	//	スケール設定
+	//	----- スケール設定 -----
 	GetTransform()->SetScaleFactor(1.9f);
 
-	//	座標系変換
+	//	----- 座標系変換 -----
 	GetTransform()->SetCoordinateSystem(Transform::CoordinateSystem::cRightYup);
 
-	//	当たり判定用半径、高さ設定
+	//	----- 当たり判定用半径、高さ設定 -----
 	radius_ = 0.7f;
 	height_ = 3.4f;
 
-	//	移動速度
+	//	----- 移動速度 -----
 	defaultMoveSpeed_ = 4.0f;
 	moveSpeed_ = 4.0f;
-	//moveSpeed_ = 25.0f;
 
-	//	HP設定
+	//	----- HP設定 -----
 	hp_ = MaxHp_;
 
-	//	ピクセルシェーダーセット
+	//	----- ピクセルシェーダーセット -----
 	SetPixelShader("./Resources/Shader/PlayerPS.cso");
 
 }
@@ -136,7 +135,6 @@ void Player::Update(const float& elapsedTime)
 		//	重力処理
 		AddVelocityY(gravity_, elapsedTime);
 		//GetTransform()->SetPositionY(GetTransform()->GetPositionY() - gravity_ * elapsedTime);
-		//Move(elapsedTime);	//	inputMoveにもある
 	}
 	//	ステージとの当たり判定
 	if (isCollisionStage_)
@@ -229,7 +227,7 @@ void Player::RegisterCollisionData()
 //	当たり判定更新
 void Player::UpdateCollisionDetectionData(const float& elapsedTime)
 {
-	//	くらい判定更新
+	//	----- くらい判定更新 -----
 	for (DamageDetectionData& data : damageDetectionData_)
 	{
 		// ジョイントの名前で位置設定(名前がジョイントの名前ではないとき別途更新必要)
@@ -237,22 +235,14 @@ void Player::UpdateCollisionDetectionData(const float& elapsedTime)
 
 		data.Update(elapsedTime);
 	}
-	//	攻撃判定更新
+	//	----- 攻撃判定更新 -----
 	for (AttackDetectionData& data : attackDetectionData_)
 	{
 		//	ジョイントの名前で位置設定(名前がジョイントの名前ではないとき別途更新必要)
 		data.SetJointPosition(GetJointPosition(data.GetUpdateName(), data.GetOffsetPosition()));
 	}
 
-	/*for (int i = AttackData::TrunAttackStart; i <= AttackData::TackleAttackEnd; ++i)
-	{
-		AttackDetectionData& data = GetAttackDetectionData(i);
-		DirectX::XMFLOAT3 pos = data.GetPosition();
-		pos.y = 1.0f;
-		data.SetJointPosition(pos);
-	}*/
-
-	//	押し出し判定更新
+	//	----- 押し出し判定更新 -----
 	for (CollisionDetectionData& data : collisionDetectionData_)
 	{
 		//	ジョイントの名前で位置設定(名前がジョイントの名前ではないとき別途更新必要)
@@ -272,14 +262,14 @@ void Player::UpdateCollisionDetectionData(const float& elapsedTime)
 //	移動入力処理
 bool Player::InputMove(const float& elapsedTime)
 {
-	//	進行ベクトル取得
-	moveVec_ = GetMoveVec();
-
-	//	移動処理
+	//	----- 移動処理 -----
 	UpdateVelocity(elapsedTime);
 	Move(elapsedTime);
 
-	//	旋回処理
+	//	----- 進行方向更新 -----
+	moveVec_ = GetMoveVec();
+
+	//	----- 旋回処理 -----
 	Turn(elapsedTime, moveVec_.x, moveVec_.z, turnSpeed_);
 
 	//	進行ベクトルがゼロベクトルでない場合は入力された
@@ -340,13 +330,14 @@ bool Player::RayVsVertical(const float& elapsedTime)
 			// Reflection
 			//DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
 
+			//	当たり判定フラグを立てる
 			isHit = true;
 
 			//	デバッグ描画
 			//	レイが当たった位置
 #if 1
 			DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-			debugRenderer->DrawSphere(intersectionPosition, rayPosRadius_ + 1.0f, DirectX::XMFLOAT4(1, 1, 1, 1));	//	白
+			debugRenderer->DrawSphere(intersectionPosition, rayPosRadius_ , DirectX::XMFLOAT4(1, 1, 1, 1));	//	白
 #endif
 
 		}
@@ -413,13 +404,14 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 			// Reflection
 			//DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
 
+			//	当たり判定フラグを立てる
 			isHit = true;
 
 			//	デバッグ描画
 			//	レイが当たった位置
 #if 1
 			DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-			debugRenderer->DrawSphere(intersectionPosition, rayPosRadius_ + 1.0f, DirectX::XMFLOAT4(1, 1, 1, 1));	//	白
+			debugRenderer->DrawSphere(intersectionPosition, rayPosRadius_ , DirectX::XMFLOAT4(1, 1, 1, 1));	//	白
 #endif
 
 		}
@@ -623,22 +615,27 @@ void Player::DrawDebug()
 {
 	if (ImGui::TreeNode(u8"Playerプレイヤー"))
 	{
-		//	ステート表示
-		DrawStateStr();
-		stateMachine_->DrawDebug();
+		//	----- ステート -----
+		DrawStateStr();				//	現在のステート表示
+		stateMachine_->DrawDebug();	//	各ステートのデバッグ表示
 
+		//	----- キャラクター共通のデバッグ表示 -----
 		Character::DrawDebug();
 
-		//	ステージヒット文字列
+		//	----- レイキャスト -----
 		std::string hitStage = "";
 		if (isHitStage_)hitStage = "true";
 		else hitStage = "false";
-
-		ImGui::Checkbox("IsPose", &isPose_);				//	ポーズフラグ
-		ImGui::Checkbox("PlayEffect", &playEffectFlag_);	//	エフェクト再生フラグ
-		ImGui::Checkbox("DrawEffect", &drawEffectFlag_);	//	エフェクト描画フラグ
-		ImGui::Checkbox("Invincible", &isInvincible_);		//	無敵フラグ
-		ImGui::Checkbox("AddGravity", &isAddGravity_);		//	重力フラグ
+		ImGui::DragFloat("RayPosRadius", &rayPosRadius_);	//	レイキャストの始点終点を表す球の半径
+		ImGui::Checkbox(u8"StageCollision", &isCollisionStage_);										//	ステージとの当たり判定オン/オフ
+		ImGui::Text(u8"HitStage %s", hitStage.c_str());													//	ステージと当たっているか
+		DrawDummyRay();
+		
+		//	----- 重力 -----
+		ImGui::DragFloat("Gravity", &gravity_, 0.01f, -FLT_MAX, FLT_MAX);								//	重力
+		
+		//	----- ポーズフラグ -----
+		ImGui::Checkbox("IsPose", &isPose_);
 
 		//	----- コンボ -----
 		ImGui::Checkbox("AutoCombo", &isAutoCombo_);		//	オートコンボフラグ
@@ -650,21 +647,11 @@ void Player::DrawDebug()
 		ImGui::Checkbox("IsAttackSphere", &isAttackSphere_);					//	攻撃判定
 		ImGui::Checkbox("IsDamageSphere", &isDamageSphere_);					//	くらい判定
 
-		ImGui::DragFloat("Gravity", &gravity_, 0.1f, 0.0f);												//	重力
+		//	----- エフェクト -----
 		ImGui::DragFloat("EffectScale", &effectScale_, 0.01f, -FLT_MAX, FLT_MAX);						//	エフェクトスケール
-		//ImGui::DragFloat("AnimationSpeed", &animationSpeed_, 0.01f, -FLT_MAX, FLT_MAX);				//	アニメーション再生速度
-		//ImGui::DragFloat("AnimationWeight", &weight, 0.005f, 0.0f, 1.0f);								//	アニメーションweight値
-		//ImGui::DragFloat("BlendRate", &blendRate, 0.005f, 0.0f, 1.0f);								//	アニメーションブレンド率
-		//ImGui::InputInt("CurrentBlendAnimationIndex", &currentAnimationIndex);						//	現在のアニメーション番号
-		ImGui::Checkbox(u8"StageCollision", &isCollisionStage_);										//	ステージとの当たり判定オン/オフ
-		ImGui::Text(u8"HitStage %s", hitStage.c_str());													//	ステージと当たっているか
-		ImGui::DragFloat("Gravity", &gravity_, 0.01f, -FLT_MAX, FLT_MAX);								//	重力
-
-		ImGui::DragFloat("RayPosRadius", &rayPosRadius_);	//	レイキャストの始点終点を表す球の半径
-
-		ImGui::DragFloat3("ConeDirection", &coneDirection_.x, 0.01f, -FLT_MAX, FLT_MAX);
-
-		DrawDummyRay();
+		ImGui::Checkbox("PlayEffect", &playEffectFlag_);	//	エフェクト再生フラグ
+		ImGui::Checkbox("DrawEffect", &drawEffectFlag_);	//	エフェクト描画フラグ
+		ImGui::Checkbox("AddGravity", &isAddGravity_);		//	重力フラグ
 
 		//	3Dオーディオのリスナー情報
 		if (ImGui::TreeNode("3DAudio_Listener"))
@@ -679,10 +666,8 @@ void Player::DrawDebug()
 
 			ImGui::TreePop();
 		}
-
 		ImGui::TreePop();
 	}
-
 }
 
 //	デバッグプリミティブ描画
@@ -693,15 +678,12 @@ void Player::DrawDebugPrimitive()
 	//	衝突判定用のデバッグ円柱を描画
 	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), radius_, height_, DirectX::XMFLOAT4(0, 0, 0, 1));
 
-	//	円錐を描画
-	debugRenderer->DrawCone(this->GetTransform()->GetPosition(), coneDirection_, radius_, height_, DirectX::XMFLOAT4{ 0,0,0,1 });
-
 	//	----- Collision -----
 	if (isCollisionSphere_)
 	{
 		for (auto& data : GetCollisionDetectionData())
 		{
-			// 現在アクティブではないため表示しない
+			//	現在アクティブではないため表示しない
 			if (data.GetIsActive() == false) continue;
 
 			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
@@ -718,7 +700,7 @@ void Player::DrawDebugPrimitive()
 	{
 		for (auto& data : GetAttackDetectionData())
 		{
-			// 現在アクティブではないため表示しない
+			//	現在アクティブではないため表示しない
 			if (data.GetIsActive() == false) continue;
 
 			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
@@ -731,10 +713,10 @@ void Player::DrawDummyRay()
 {
 	if (ImGui::TreeNode(u8"RayHit"))
 	{
-		//ImGui::Checkbox("DummyHitReset", &isDummyReset_);
-		//ImGui::Checkbox("DummyHit", &isDummyHit_);
-		//ImGui::DragFloat("RayLimit", &dummyRayLimit_, 0.1f, -FLT_MAX, FLT_MAX);
-		//ImGui::DragFloat("RayDebugOffset", &debugOffset_, 0.1f, -FLT_MAX, FLT_MAX);
+		ImGui::Checkbox("DummyHitReset", &isDummyReset_);
+		ImGui::Checkbox("DummyHit", &isDummyHit_);
+		ImGui::DragFloat("RayLimit", &dummyRayLimit_, 0.1f, -FLT_MAX, FLT_MAX);
+		ImGui::DragFloat("RayDebugOffset", &debugOffset_, 0.1f, -FLT_MAX, FLT_MAX);
 		ImGui::DragFloat3("HitPos", &hitPosition_.x, 0.01f, -FLT_MAX, FLT_MAX);				//	当たった位置
 		ImGui::DragFloat3("HitNormal", &hitNormal_.x, 0.01f, -FLT_MAX, FLT_MAX);			//	当たった面の法線
 		ImGui::Text("Mesh", &hitMesh_);														//	メッシュ名

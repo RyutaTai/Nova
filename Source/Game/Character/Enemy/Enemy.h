@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Character.h"
-#include "../../JudgeTime.h"
+#include "../../TimeRangeJudge.h"
 
 //	エネミークラス
 class Enemy :public Character
@@ -25,8 +25,6 @@ public:
 	virtual void	DrawDebug()		override = 0;
 	virtual void	DrawDebugPrimitive() = 0;
 	
-	//virtual bool OnMessage(const Telegram& msg);							//	メッセージ受信関数
-
 	//	----- 旋回処理 -----
 	virtual void Turn(const float& elapsedTime);
 
@@ -67,8 +65,6 @@ public:
 	void				ResetRunTimer()								{ runTimer_ = 0.0f; }			//	ステートタイマー初期化
 	float				GetRunTimer()const							{ return runTimer_; }			//	ステートタイマー取得
 
-	bool				IsUseOffsetY()const { return useOffsetY_; }
-
 protected:
 	//	----- ターゲット -----
 	DirectX::XMFLOAT3	targetPosition_		=	{ 0.0f,0.0f,0.0f };				//	ターゲット位置
@@ -78,9 +74,7 @@ protected:
 	float				territoryRange_		=	10.0f;							//	索敵範囲
 	float				searchRange_		=	13.0f;							//	索敵距離
 
-	float				runTimer_			=	0.0f;							//
+	float				runTimer_			=	0.0f;							//	ステートタイマー(ステートに入ってからの経過時間)
 	bool				isDamaged_			=	false;							//	攻撃を受けたかどうか
 
-	bool				useOffsetY_			=	true;	//	当たり判定でY方向のオフセット値を使うか
 };
-

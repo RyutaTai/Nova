@@ -41,11 +41,11 @@ public:
 		DodgeAirBack,	//	空中後ろ回避
 		DodgeAirLeft,	//	空中左回避
 		HitBack,		//	くらい(後ろからくらった)
-		HitDeath,		//	くらい(後ろにふっとび)
+		HitDeath,		//	くらい(後ろに吹っ飛ぶ)
 		HitFront,		//	くらい(前からくらった)
 		HitLeft,		//	くらい(左からくらった)
 		HitRight,		//	くらい(右からくらった)
-		Execution01,	//	
+		Execution01,	//	コンボ2として使用
 		GetUp,			//	起き上がり	
 
 		Max,			//	アニメーション最大数
@@ -223,8 +223,7 @@ private://	----- デバッグ用 -----
 	bool				isCollisionStage_	= true;
 	bool				isHitStage_			= false;
 	float				gravity_			= -5.0f;
-	float				rayPosRadius_		= 0.3f;
-	DirectX::XMFLOAT3	coneDirection_		= { 0,1,0 };	//	円錐の方向
+	float				rayPosRadius_		= 0.01f;
 	bool				isAddGravity_		= false;		//	重力加算フラグ
 
 	//	DummyRay

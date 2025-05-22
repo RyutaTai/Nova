@@ -11,7 +11,7 @@
 Dragonkin::Dragonkin()
 	:Enemy("./Resources/Model/Dragonkin/Dragonkin.gltf")
 {
-	//	自身の種類設定
+	//	----- 自身の種類設定 -----
 	myType_ = EnemyType::Dragonkin;
 
 	//	----- モデルのルート設定 -----
@@ -27,8 +27,6 @@ Dragonkin::Dragonkin()
 	//	当たり判定用高さ、半径設定
 	radius_ = 3.0f;
 	height_ = 10.0f;
-
-	useOffsetY_ = false;
 
 	//	HP設定
 	hp_ = MaxHp_;
@@ -63,7 +61,7 @@ void Dragonkin::Initialize()
 	//	回転値設定
 	GetTransform()->SetRotationY(DirectX::XMConvertToRadians(-182.499f));
 
-	//	スケール
+	//	スケール設定
 	GetTransform()->SetScaleFactor(0.015f);
 
 	//	初期アニメーション再生速度設定
@@ -278,7 +276,7 @@ void Dragonkin::PlayAnimation(const AnimationType& animType, const bool& loop, c
 //	当たり判定更新
 void Dragonkin::UpdateCollisions(const float& elapsedTime)
 {
-	//	くらい判定更新
+	//	----- くらい判定更新 -----
 	for (DamageDetectionData& data : damageDetectionData_)
 	{
 		//	ジョイントの名前で位置設定(名前がジョイントの名前ではないとき別途更新必要)
@@ -287,14 +285,14 @@ void Dragonkin::UpdateCollisions(const float& elapsedTime)
 		data.Update(elapsedTime);
 	}
 
-	//	攻撃判定更新
+	//	----- 攻撃判定更新 -----
 	for (AttackDetectionData& data : attackDetectionData_)
 	{
 		//	ジョイントの名前で位置設定(名前がジョイントの名前ではないとき別途更新必要)
 		data.SetJointPosition(GetJointPosition(data.GetUpdateName(), data.GetOffsetPosition()));
 	}
 
-	//	押し出し判定更新
+	//	----- 押し出し判定更新 -----
 	for (CollisionDetectionData& data : collisionDetectionData_)
 	{
 		//	ジョイントの名前で位置設定(名前がジョイントの名前ではないとき別途更新必要)

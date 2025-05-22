@@ -15,10 +15,10 @@
 Drone::Drone()
 	:Enemy("./Resources/Model/Drone/Drone.gltf")
 {
-	//	自分の種類を設定
+	//	----- 自分の種類を設定 -----
 	myType_ = EnemyType::Drone;
 
-	//	ステートセット(Drone::StateTypeの順と合わせる)
+	//	----- ステートセット(Drone::StateTypeの順と合わせる) -----
 	stateMachine_.reset(new StateMachine<State<Drone>>());
 	stateMachine_->RegisterState(new DroneState::IdleState(this));			//	待機
 	stateMachine_->RegisterState(new DroneState::SearchState(this));		//	探索
@@ -29,7 +29,7 @@ Drone::Drone()
 	stateMachine_->RegisterState(new DroneState::DamageState(this));		//	ダメージ
 	stateMachine_->RegisterState(new DroneState::DeathState(this));			//	死亡
 
-	//	初期ステート設定
+	//	----- 初期ステート設定 -----
 	stateMachine_->SetState(static_cast<int>(StateType::Idle));
 
 }
@@ -233,10 +233,10 @@ void Drone::LaunchBullet(const float& elapsedTime)
 	if (isBulletLaunch_ == false)return;
 
 #if 1
-	//	発射タイマー更新
+	//	----- 発射タイマー更新 -----
 	UpdateLaunchTimer(elapsedTime);
 
-	//	一定間隔で弾を発射
+	//	----- 一定間隔で弾を発射 -----
 	if (launchTimer_ >= launchInterval_)
 #else
 	GamePad gamePad = Input::Instance().GetGamePad();
@@ -255,7 +255,7 @@ void Drone::LaunchBullet(const float& elapsedTime)
 		DirectX::XMFLOAT3 pos = this->GetTransform()->GetPosition();
 		pos = pos + dir * 2.0f;
 
-		//	弾丸ファイル名
+		//	弾丸モデルのファイル名
 		const char* bulletName = "./Resources/Model/Bullet/Sphere.gltf";
 #if  0	//	直進する弾丸生成
 		BulletStraight* bullet = new BulletStraight(bulletName);
@@ -294,7 +294,7 @@ bool Drone::RayVsHorizontal(const float& elapsedTime)
 //	破棄処理
 void Drone::Destroy()
 {
-	//	エフェクト再生
+	//	----- エフェクト再生 -----
 	DirectX::XMFLOAT3 effectPos = GetTransform()->GetPosition();
 	effectResource_->Play(effectPos, effectScale_);
 	
