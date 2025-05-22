@@ -4,7 +4,7 @@
 #include "../JudgeRhythm.h"
 #include "../UI/UIRhythmJudgment.h"
 #include "../../../External/imgui/imgui.h"
-#include "../Stage.h"
+#include "../Stage/Stage.h"
 
 UITempo::UITempo()
 	:UI(UIManager::UIType::Tempo)

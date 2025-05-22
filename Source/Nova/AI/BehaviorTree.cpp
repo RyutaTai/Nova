@@ -4,7 +4,7 @@
 #include "NodeBase.h"
 #include "JudgmentBase.h"
 #include "BehaviorData.h"
-#include "../../Game/Enemy.h"
+#include "../../Game/Character/Enemy/Enemy.h"
 
 //	デストラクタ
 BehaviorTree::~BehaviorTree()

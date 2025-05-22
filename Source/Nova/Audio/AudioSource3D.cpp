@@ -14,7 +14,7 @@
 #include "PitchShifter.h"
 #include "../Graphics/Graphics.h"
 #include "../Others/Misc.h"
-#include "../../Game/Player.h"
+#include "../../Game/Character/Player/Player.h"
 
 //	コンストラクタ
 AudioSource3D::AudioSource3D(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType, const std::string& sceneName, SoundEmitter* emitter)

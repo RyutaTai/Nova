@@ -1,6 +1,6 @@
 #include "JudgeRhythm.h"
 
-#include "Stage.h"
+#include "Stage/Stage.h"
 #include "UI/UIManager.h"
 #include "UI/UITempo.h"
 #include "UI/UIRank.h"

@@ -4,11 +4,9 @@
 
 #include "../Graphics/Graphics.h"
 #include "../Graphics/Shader.h"
-#include "../Scenes/SceneManager.h"
-#include "../Scenes/SceneTitle.h"
-#include "../Scenes/SceneGame.h"
-#include "../Scenes/SceneDemo.h"
-#include "../Debug/SceneModelCheck.h"
+#include "../../Game/Scenes/SceneManager.h"
+#include "../../Game/Scenes/SceneTitle.h"
+#include "../../Game/Scenes/SceneGame.h"
 #include "../Resources/EffectManager.h"
 #include "../Audio/AudioManager.h"
 

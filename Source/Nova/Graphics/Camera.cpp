@@ -7,7 +7,7 @@
 #include "../Others/MathHelper.h"
 #include "../Others/Easing.h"
 #include "../Input/Input.h"
-#include "../../Game/Stage.h"
+#include "../../Game/Stage/Stage.h"
 
 //	コンストラクタ
 Camera::Camera()

@@ -23,9 +23,6 @@
       <UniqueIdentifier>{9f64f4ff-d9e0-43d7-88e1-13e6d3656a89}</UniqueIdentifier>
       <Extensions>hlsl;hlsli</Extensions>
     </Filter>
-    <Filter Include="Nova\Scenes">
-      <UniqueIdentifier>{44163571-bdbc-444e-b458-de2ea40e2188}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Nova\Input">
       <UniqueIdentifier>{b0f4ca77-f633-4800-9da3-e7a72acd6b81}</UniqueIdentifier>
     </Filter>
@@ -43,9 +40,6 @@
     </Filter>
     <Filter Include="Nova\AI">
       <UniqueIdentifier>{1c31d348-952a-4ff8-b203-504c9b5f0684}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Nova\Object">
-      <UniqueIdentifier>{df55fadd-f76d-49ad-81ba-8179114cefda}</UniqueIdentifier>
     </Filter>
     <Filter Include="External">
       <UniqueIdentifier>{eee26e01-e8ca-491d-8a89-6cf1daaaa205}</UniqueIdentifier>
@@ -95,9 +89,6 @@
     <Filter Include="Nova\Graphics\Vignette">
       <UniqueIdentifier>{2f82940c-2b2b-4adc-8173-92969cb1631d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\SceneState">
-      <UniqueIdentifier>{1b7dee42-5917-4c77-bd8d-44eb8134133a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="External\MidiFile">
       <UniqueIdentifier>{f87338ed-5178-4f26-af00-18d3581912e2}</UniqueIdentifier>
     </Filter>
@@ -146,6 +137,9 @@
     <Filter Include="External\nlohmann\detail\meta\call_std">
       <UniqueIdentifier>{6c1cdba1-132d-46da-a07b-f40c1b49c284}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Scenes">
+      <UniqueIdentifier>{1b7dee42-5917-4c77-bd8d-44eb8134133a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -171,21 +165,6 @@
     </ClCompile>
     <ClCompile Include="External\imgui\ImGuiCtrl.cpp">
       <Filter>External\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Scenes\SceneDemo.cpp">
-      <Filter>Nova\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Scenes\SceneGame.cpp">
-      <Filter>Nova\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Scenes\SceneLoading.cpp">
-      <Filter>Nova\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Scenes\SceneManager.cpp">
-      <Filter>Nova\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Scenes\SceneTitle.cpp">
-      <Filter>Nova\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Resources\Effect.cpp">
       <Filter>Nova\Resources</Filter>
@@ -253,47 +232,8 @@
     <ClCompile Include="Source\Nova\Collision\Raycast.cpp">
       <Filter>Nova\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Nova\Debug\SceneModelCheck.cpp">
-      <Filter>Nova\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Nova\Resources\ResourceManager.cpp">
       <Filter>Nova\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Player.cpp">
-      <Filter>Game\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\PlayerState.cpp">
-      <Filter>Game\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Character.cpp">
-      <Filter>Game\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Dragonkin.cpp">
-      <Filter>Game\Character\Enemy\Dragonkin</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Drone.cpp">
-      <Filter>Game\Character\Enemy\Drone</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Enemy.cpp">
-      <Filter>Game\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\EnemyManager.cpp">
-      <Filter>Game\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Bullet.cpp">
-      <Filter>Game\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\BulletHorming.cpp">
-      <Filter>Game\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\BulletManager.cpp">
-      <Filter>Game\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\BulletStraight.cpp">
-      <Filter>Game\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Stage.cpp">
-      <Filter>Game\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\AI\MetaAI.cpp">
       <Filter>Nova\AI</Filter>
@@ -337,23 +277,8 @@
     <ClCompile Include="Source\Nova\PostProcess\Bloom.cpp">
       <Filter>Nova\Graphics\Bloom</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\BulletCover.cpp">
-      <Filter>Game\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\DragonkinAction.cpp">
-      <Filter>Game\Character\Enemy\Dragonkin</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\DragonkinJudgment.cpp">
-      <Filter>Game\Character\Enemy\Dragonkin</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp">
       <Filter>Nova\Graphics\CascadedShadowMaps</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\DroneState.cpp">
-      <Filter>Game\Character\Enemy\Drone</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Others\JudgeTime.cpp">
-      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\JudgeRhythm.cpp">
       <Filter>Game</Filter>
@@ -406,12 +331,6 @@
     <ClCompile Include="Source\Nova\Audio\Frequency.cpp">
       <Filter>Nova\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\GameState.cpp">
-      <Filter>Game\SceneState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\TitleState.cpp">
-      <Filter>Game\SceneState</Filter>
-    </ClCompile>
     <ClCompile Include="External\MidiFile\Src\Binasc.cpp">
       <Filter>External\MidiFile\Src</Filter>
     </ClCompile>
@@ -435,6 +354,75 @@
     </ClCompile>
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp">
       <Filter>External\ImGuizmo-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Enemy\Dragonkin\Dragonkin.cpp">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Enemy\Dragonkin\DragonkinAction.cpp">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Enemy\Dragonkin\DragonkinJudgment.cpp">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Enemy\Drone\Drone.cpp">
+      <Filter>Game\Character\Enemy\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Enemy\Drone\DroneState.cpp">
+      <Filter>Game\Character\Enemy\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Enemy\Enemy.cpp">
+      <Filter>Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Enemy\EnemyManager.cpp">
+      <Filter>Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Character.cpp">
+      <Filter>Game\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bullet\Bullet.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bullet\BulletCover.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bullet\BulletHorming.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bullet\BulletManager.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Bullet\BulletStraight.cpp">
+      <Filter>Game\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\GameState.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\SceneGame.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\SceneLoading.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\SceneManager.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\SceneTitle.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\TitleState.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Stage\Stage.cpp">
+      <Filter>Game\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\JudgeTime.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Player\Player.cpp">
+      <Filter>Game\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Player\PlayerState.cpp">
+      <Filter>Game\Character\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,24 +452,6 @@
     </ClInclude>
     <ClInclude Include="External\imgui\imstb_truetype.h">
       <Filter>External\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Scenes\Scene.h">
-      <Filter>Nova\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Scenes\SceneDemo.h">
-      <Filter>Nova\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Scenes\SceneGame.h">
-      <Filter>Nova\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Scenes\SceneLoading.h">
-      <Filter>Nova\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Scenes\SceneManager.h">
-      <Filter>Nova\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Scenes\SceneTitle.h">
-      <Filter>Nova\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Resources\Effect.h">
       <Filter>Nova\Resources</Filter>
@@ -561,47 +531,8 @@
     <ClInclude Include="Source\Nova\Collision\Raycast.h">
       <Filter>Nova\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\Debug\SceneModelCheck.h">
-      <Filter>Nova\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Nova\Resources\ResourceManager.h">
       <Filter>Nova\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Player.h">
-      <Filter>Game\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\PlayerState.h">
-      <Filter>Game\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Character.h">
-      <Filter>Game\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Dragonkin.h">
-      <Filter>Game\Character\Enemy\Dragonkin</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Drone.h">
-      <Filter>Game\Character\Enemy\Drone</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\EnemyManager.h">
-      <Filter>Game\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Enemy.h">
-      <Filter>Game\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Bullet.h">
-      <Filter>Game\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\BulletHorming.h">
-      <Filter>Game\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\BulletManager.h">
-      <Filter>Game\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\BulletStraight.h">
-      <Filter>Game\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Stage.h">
-      <Filter>Game\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\ActionBase.h">
       <Filter>Nova\AI</Filter>
@@ -660,25 +591,10 @@
     <ClInclude Include="Source\Nova\PostProcess\Bloom.h">
       <Filter>Nova\Graphics\Bloom</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\BulletCover.h">
-      <Filter>Game\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\DragonkinAction.h">
-      <Filter>Game\Character\Enemy\Dragonkin</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\DragonkinJudgment.h">
-      <Filter>Game\Character\Enemy\Dragonkin</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h">
       <Filter>Nova\Graphics\CascadedShadowMaps</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\DroneState.h">
-      <Filter>Game\Character\Enemy\Drone</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\JudgeRhythm.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Others\JudgeTime.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\UI\UI.h">
@@ -731,12 +647,6 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\JudgmentBase.h">
       <Filter>Nova\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\GameState.h">
-      <Filter>Game\SceneState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\TitleState.h">
-      <Filter>Game\SceneState</Filter>
     </ClInclude>
     <ClInclude Include="External\MidiFile\include\Binasc.h">
       <Filter>External\MidiFile\include</Filter>
@@ -896,6 +806,78 @@
     </ClInclude>
     <ClInclude Include="External\nlohmann\detail\meta\call_std\end.hpp">
       <Filter>External\nlohmann\detail\meta\call_std</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Enemy\Dragonkin\Dragonkin.h">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Enemy\Dragonkin\DragonkinAction.h">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Enemy\Dragonkin\DragonkinJudgment.h">
+      <Filter>Game\Character\Enemy\Dragonkin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Enemy\Drone\Drone.h">
+      <Filter>Game\Character\Enemy\Drone</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Enemy\Drone\DroneState.h">
+      <Filter>Game\Character\Enemy\Drone</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Enemy\Enemy.h">
+      <Filter>Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Enemy\EnemyManager.h">
+      <Filter>Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Character.h">
+      <Filter>Game\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bullet\Bullet.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bullet\BulletCover.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bullet\BulletHorming.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bullet\BulletManager.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Bullet\BulletStraight.h">
+      <Filter>Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\GameState.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\Scene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\SceneGame.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\SceneLoading.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\SceneManager.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\SceneTitle.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\TitleState.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Stage\Stage.h">
+      <Filter>Game\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\JudgeTime.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Player\Player.h">
+      <Filter>Game\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Player\PlayerState.h">
+      <Filter>Game\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
