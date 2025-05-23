@@ -995,6 +995,9 @@
     <FxCompile Include="Source\Nova\Shaders\VignettePS.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\GltfModelStaticBatchingCsmVS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Nova\Shaders\Debug.hlsli">

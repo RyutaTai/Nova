@@ -33,9 +33,6 @@ public:
 	std::vector<float>	GetAmplitudeSpectrum() { return amplitudeSpectrum_; }
 	float				GetAmplitudeSpectrum(const int& index) { return amplitudeSpectrum_.at(index); }
 
-	double	Power(const double& a, const double& b);		//  ベクトルの平方和を計算する関数
-	void	FindPeak3(const double* r, const int& length, int* peakX);	//	ピークを見つける関数
-	void	AnalyzeBPM(const uint8_t* data, const int& datasize, const int& sampleRate);    //  BPMを算出
 	float	GetBPM() { return bpm_; }	//	BPM取得
 
 public:

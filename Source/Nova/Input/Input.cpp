@@ -6,14 +6,13 @@
 
 Input* Input::instance_ = nullptr;
 
-// コンストラクタ
 Input::Input(HWND hWnd)
 	: mouse_(hWnd)
 {
 	instance_ = this;
 }
 
-// 更新処理
+//	更新処理
 void Input::Update(const float& elapsedTime)
 {
 	gamePad_.Update(elapsedTime);
@@ -149,7 +148,7 @@ void Input::UpdateKeyData(const float& elapsedTime)
 		}
 	}
 #if 1
-	//デバッグで入力キーをログ出力する
+	//	デバッグで入力キーをログ出力する
 	if (key & Key1)OutputDebugStringA("1");
 	if (key & Key2)OutputDebugStringA("2");
 	if (key & Key3)OutputDebugStringA("3");
@@ -176,7 +175,6 @@ void Input::ResetInputData()
 	}
 }
 
-//	デバッグ描画
 void Input::DrawDebug()
 {
 	if (ImGui::TreeNode("Input"))

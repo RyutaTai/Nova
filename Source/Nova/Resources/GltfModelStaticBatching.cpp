@@ -12,7 +12,7 @@
 
 #define USE_SERIALIZE 1
 
-GltfModelStaticBatching::GltfModelStaticBatching(const std::string& filename, const bool& setColor, const DirectX::XMFLOAT4& color) : filename_(filename)
+GltfModelStaticBatching::GltfModelStaticBatching(const std::string& filename, const bool& setColor, const DirectX::XMFLOAT4& color) : resourceFilename_(filename)
 {
 	ID3D11Device* device = Graphics::Instance().GetDevice();
 #if USE_SERIALIZE
@@ -146,8 +146,8 @@ GltfModelStaticBatching::GltfModelStaticBatching(const std::string& filename, co
 	Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/GltfModelStaticBatchingVs.cso", vertexShader_.ReleaseAndGetAddressOf(), inputLayout_.ReleaseAndGetAddressOf(), inputElementDesc, _countof(inputElementDesc));
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GltfModelPs.cso", pixelShader_.ReleaseAndGetAddressOf());
 
-	//  シャドウマップ
-	Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/GltfModelCsmVS.cso", vertexShaderCsm_.ReleaseAndGetAddressOf(),
+	//  シャドウマップ用シェーダー
+	Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/GltfModelStaticBatchingCsmVS.cso", vertexShaderCsm_.ReleaseAndGetAddressOf(),
 		NULL, NULL, 0);
 	Graphics::Instance().GetShader()->CreateGsFromCso(device, "./Resources/Shader/GltfModelCsmGS.cso", geometryShaderCsm_.ReleaseAndGetAddressOf());
 
@@ -693,7 +693,7 @@ void GltfModelStaticBatching::FetchTextures(ID3D11Device* device, const tinygltf
 		}
 		else
 		{
-			const std::filesystem::path path(filename_);
+			const std::filesystem::path path(resourceFilename_);
 			ID3D11ShaderResourceView* shaderResourceView{};
 			D3D11_TEXTURE2D_DESC texture2d_desc;
 			std::wstring fileName

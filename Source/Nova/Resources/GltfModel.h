@@ -411,11 +411,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShader_;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout>	inputLayout_;
 
-	std::string filename_ = {};
+	std::string resourceFilename_ = {};
 
 	Transform	transform_ = {};
 
-	//	シャドウマップ
+	//	シャドウマップ用シェーダー
 	Microsoft::WRL::ComPtr<ID3D11VertexShader>		vertexShaderCsm_;
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader>	geometryShaderCsm_;
 

@@ -19,7 +19,7 @@
 
 #define USE_SERIALIZE 1
 
-GltfModel::GltfModel(const std::string& filename, const std::string& rootNodeName) : filename_(filename)
+GltfModel::GltfModel(const std::string& filename, const std::string& rootNodeName) : resourceFilename_(filename)
 {
     ID3D11Device* device = Graphics::Instance().GetDevice();
 
@@ -164,7 +164,7 @@ GltfModel::GltfModel(const std::string& filename, const std::string& rootNodeNam
     Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/GltfModelVS.cso", vertexShader_.ReleaseAndGetAddressOf(),
         inputLayout_.ReleaseAndGetAddressOf(), inputElementDesc, _countof(inputElementDesc));
     Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GltfModelPS.cso", pixelShader_.ReleaseAndGetAddressOf());
-    //  シャドウマップ
+    //  シャドウマップ用シェーダー
     Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/GltfModelCsmVS.cso", vertexShaderCsm_.ReleaseAndGetAddressOf(),
         NULL, NULL, 0);
     Graphics::Instance().GetShader()->CreateGsFromCso(device, "./Resources/Shader/GltfModelCsmGS.cso", geometryShaderCsm_.ReleaseAndGetAddressOf());
@@ -266,7 +266,7 @@ void GltfModel::FetchMeshes(ID3D11Device* device, const tinygltf::Model& gltfMod
             Mesh::Primitive& primitive{mesh.primitives_.emplace_back()};
             primitive.material_ = gltfPrimitive.material;
 
-            //Create Index Buffer
+            //  Create Index Buffer
             const tinygltf::Accessor& gltfAccessor{gltfModel.accessors.at(gltfPrimitive.indices)};
             const tinygltf::BufferView& gltfBufferView{gltfModel.bufferViews.at(gltfAccessor.bufferView)};
 
@@ -474,7 +474,7 @@ void GltfModel::FetchTextures(ID3D11Device* device, const tinygltf::Model& gltfM
         }
         else
         {
-            const std::filesystem::path path(filename_);
+            const std::filesystem::path path(resourceFilename_);
             ID3D11ShaderResourceView* shaderResourceView{};
             D3D11_TEXTURE2D_DESC texture2dDesc;
             std::wstring filename

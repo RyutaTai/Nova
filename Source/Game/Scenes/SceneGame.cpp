@@ -219,10 +219,11 @@ void SceneGame::LoadWaveSprite(const wchar_t* filename)
 //	描画処理
 void SceneGame::Render()
 {
-	ID3D11ShaderResourceView* nullSrv[] = { nullptr };
 	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
-	Graphics::Instance().GetDeviceContext()->PSSetShaderResources(0, 1, nullSrv);
-
+	ID3D11ShaderResourceView* nullShaderResourceViews[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT]{};
+	deviceContext->VSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
+	deviceContext->PSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
+	
 	Camera::Instance().SetPerspectiveFov();
 
 	//	シーン定数バッファ更新
@@ -233,7 +234,7 @@ void SceneGame::Render()
 	Graphics::Instance().SetInvProjection(Camera::Instance().CalcInvProjectionMatrix());
 
 	Graphics::SceneConstants sceneConstants = Graphics::Instance().GetSceneConstant();
-	Graphics::Instance().GetDeviceContext()->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
+	deviceContext->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
 	deviceContext->VSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
 	deviceContext->PSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
 
@@ -251,7 +252,7 @@ void SceneGame::Render()
 
 			D3D11_VIEWPORT viewport;
 			UINT numViewports{ 1 };
-			Graphics::Instance().GetDeviceContext()->RSGetViewports(&numViewports, &viewport);
+			deviceContext->RSGetViewports(&numViewports, &viewport);
 
 #if 1
 			Camera::Instance().SetPerspectiveFov();

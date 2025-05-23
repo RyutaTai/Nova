@@ -260,7 +260,7 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 		DirectX::XMLoadFloat3(&projectionMappingFocus),
 		DirectX::XMVector3Transform(
 			DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f),
-			DirectX::XMMatrixRotationRollPitchYaw(0, DirectX::XMConvertToRadians(projectionMappingRotation), 0))
+			DirectX::XMMatrixRotationRollPitchYaw(0, DirectX::XMConvertToRadians(projectionMapping_[projectionMappingIndex].rotation_), 0))
 	);
 
 	// プロジェクション行列

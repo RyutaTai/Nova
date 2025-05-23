@@ -55,18 +55,22 @@ public:
 		DirectX::XMFLOAT3	focus_		= { 0.0f, 0.0f,  0.0f };
 		float				rotation_	= 0.0f;
 		float				fovy_		= 10.0f;
+		
 		//	----- テクスチャ -----
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture_;	//	ピクセルシェーダーでここに書き出す
+		
 		//	----- 色の変更に使用 -----
 		DirectX::XMFLOAT4 defaultSpectrumColor_;	// デフォルトの色
 		DirectX::XMFLOAT4 currentSpectrumColor_;	// 現在の色
 		bool	isTemporaryColorActive_;			//	オーディオスペクトラムの一時的な色変更フラグ
 		float	colorTimer_;
 		float	colorDuration_;						//	何秒間色を変更するか
+		
 		// ----- スケール変更に使用 -----
 		bool	isTemporaryScaleActive_;
 		float	scaleTimer_;
 		float	scaleDuration_;
+	
 	};
 	ProjectionMapping projectionMapping_[static_cast<int>(AudioSpectrumType::Max)];
 

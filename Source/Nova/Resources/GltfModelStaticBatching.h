@@ -39,8 +39,8 @@ public:
 	struct Node
 	{
 		std::string name_;
-		int skin_ = -1;  // index_ of skin_ referenced by this Node
-		int mesh_ = -1;  // index_ of mesh_ referenced by this Node
+		int skin_ = -1;  // index of skin referenced by this Node
+		int mesh_ = -1;  // index of mesh referenced by this Node
 
 		std::vector<int> children_; // An array of indices of child nodes of this Node
 
@@ -270,10 +270,10 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShader_;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout>	inputLayout_;
 
-	std::string filename_ = {};
+	std::string resourceFilename_ = {};
 	Transform transform_ = {};
 
-	//	シャドウマップ
+	//	シャドウマップ用シェーダー
 	Microsoft::WRL::ComPtr<ID3D11VertexShader>		vertexShaderCsm_;
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader>	geometryShaderCsm_;
 
