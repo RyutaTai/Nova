@@ -240,7 +240,6 @@ bool Framework::Uninitialize()
 	//	エフェクトマネージャー終了化
 	EffectManager::Instance().Finalize();
 
-
 	return true;
 }
 

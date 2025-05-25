@@ -249,7 +249,6 @@
     <ClCompile Include="External\tinygltf-release\tiny_gltf.cc" />
     <ClCompile Include="Source\Game\UI\UI.cpp" />
     <ClCompile Include="Source\Nova\AI\BehaviorTree.cpp" />
-    <ClCompile Include="Source\Nova\AI\MetaAI.cpp" />
     <ClCompile Include="Source\Nova\Audio\Audio3DSystem.cpp" />
     <ClCompile Include="Source\Nova\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Nova\Audio\AudioSource3D.cpp" />
@@ -395,10 +394,8 @@
     <ClInclude Include="Source\Game\UI\UI.h" />
     <ClInclude Include="Source\Game\UI\UIManager.h" />
     <ClInclude Include="Source\Nova\AI\BehaviorTree.h" />
-    <ClInclude Include="Source\Nova\AI\MetaAI.h" />
     <ClInclude Include="Source\Nova\AI\State.h" />
     <ClInclude Include="Source\Nova\AI\StateMachine.h" />
-    <ClInclude Include="Source\Nova\AI\Telegram.h" />
     <ClInclude Include="Source\Nova\Audio\Audio3DSystem.h" />
     <ClInclude Include="Source\Nova\Audio\AudioSource.h" />
     <ClInclude Include="Source\Nova\Audio\AudioSource3D.h" />

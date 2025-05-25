@@ -147,7 +147,7 @@ void Input::UpdateKeyData(const float& elapsedTime)
 			inputKeys_[i].key_ = 0;
 		}
 	}
-#if 1
+#if 0
 	//	デバッグで入力キーをログ出力する
 	if (key & Key1)OutputDebugStringA("1");
 	if (key & Key2)OutputDebugStringA("2");

@@ -44,7 +44,7 @@ private:
 
 
 public:
-	StaticMesh(ID3D11Device* device,const wchar_t* objFileName,bool inverted);
+	StaticMesh(ID3D11Device* device,const wchar_t* objFilename,bool inverted);
 	virtual ~StaticMesh() = default;
 
 	void Render(ID3D11DeviceContext* deviceContext,

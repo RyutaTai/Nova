@@ -8,7 +8,7 @@
 #include "../Graphics/Shader.h"
 
 //	コンストラクタ
-StaticMesh::StaticMesh(ID3D11Device* device, const wchar_t* objFileName,bool inverted)
+StaticMesh::StaticMesh(ID3D11Device* device, const wchar_t* objFilename,bool inverted)
 {
 	std::vector<Vertex>   vertices;
 	std::vector<uint32_t> indices;
@@ -20,7 +20,7 @@ StaticMesh::StaticMesh(ID3D11Device* device, const wchar_t* objFileName,bool inv
 	std::vector<std::wstring>      mtlFilenames;
 
 	//	OBJファイルパーサー
-	std::wifstream fin(objFileName);
+	std::wifstream fin(objFilename);
 	_ASSERT_EXPR(fin, L"OBJ file not found.");
 	wchar_t command[256];
 	while (fin)
@@ -106,7 +106,7 @@ StaticMesh::StaticMesh(ID3D11Device* device, const wchar_t* objFileName,bool inv
 		iterator->indexCount_ = (iterator - 1)->indexStart_ - iterator->indexStart_;
 	}
 
-	std::filesystem::path mtlFilename(objFileName);
+	std::filesystem::path mtlFilename(objFilename);
 	mtlFilename.replace_filename(std::filesystem::path(mtlFilenames[0]).filename());
 
 	fin.open(mtlFilename);
@@ -122,7 +122,7 @@ StaticMesh::StaticMesh(ID3D11Device* device, const wchar_t* objFileName,bool inv
 			wchar_t mapKd[256];
 			fin >> mapKd;
 
-			std::filesystem::path path(objFileName);
+			std::filesystem::path path(objFilename);
 			path.replace_filename(std::filesystem::path(mapKd).filename());
 			materials_.rbegin()->textureFilenames_[0] = path;
 			fin.ignore(1024, L'\n');
@@ -133,7 +133,7 @@ StaticMesh::StaticMesh(ID3D11Device* device, const wchar_t* objFileName,bool inv
 			wchar_t mapBump[256];
 			fin >> mapBump;
 
-			std::filesystem::path path(objFileName);
+			std::filesystem::path path(objFilename);
 			path.replace_filename(std::filesystem::path(mapBump).filename());
 			materials_.rbegin()->textureFilenames_[1] = path;
 			fin.ignore(1024, L'\n');

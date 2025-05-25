@@ -17,8 +17,8 @@ class NodeBase
 {
 public:
 	//	コンストラクタ
-	NodeBase(std::string name, NodeBase* parent, NodeBase* sibling, const int& priority,
-		BehaviorTree::SelectRule selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution = false);
+	NodeBase(const std::string& name, NodeBase* parent, NodeBase* sibling, const int& priority,
+		const BehaviorTree::SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution = false);
 	//	デストラクタ
 	~NodeBase();
 	//	名前ゲッター
@@ -56,7 +56,7 @@ public:
 	//	シーケンス選択
 	NodeBase* SelectSequence(std::vector<NodeBase*>* list, BehaviorData* data);
 	//	ノード検索
-	NodeBase* SearchNode(std::string searchName);
+	NodeBase* SearchNode(const std::string& searchName);
 	//	ノード推論
 	NodeBase* Inference(Enemy* enemy, BehaviorData* data);
 	//	実行

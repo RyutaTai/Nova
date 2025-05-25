@@ -36,7 +36,7 @@ public:
 
 public:// Setter,Getter, etc...
     [[nodiscard]] DirectX::XMMATRIX CalcWorld();							//	ワールド行列算出
-	[[nodiscard]] DirectX::XMMATRIX CalcWorldMatrix(float scaleFactor);		//	座標系を掛けたワールド行列算出
+	[[nodiscard]] DirectX::XMMATRIX CalcWorldMatrix(const float& scaleFactor);		//	座標系を掛けたワールド行列算出
 	[[nodiscard]] DirectX::XMFLOAT3 CalcForward() const;					//	前方向ベクトル算出
 	[[nodiscard]] DirectX::XMFLOAT3 CalcUp() const;							//	上方向ベクトル算出
 	[[nodiscard]] DirectX::XMFLOAT3 CalcRight() const;						//	右方向ベクトル算出
@@ -65,11 +65,11 @@ public:// Setter,Getter, etc...
 	void AddPositionZ(const float posZ) { position_.z += posZ; }
 
 	//---------- 大きさ ( Scale ) ----------
-	void SetScale(const DirectX::XMFLOAT3& scl) { scale_ = scl; }
+	void SetScale(const DirectX::XMFLOAT3& scale) { scale_ = scale; }
 
 	// ScaleFactor
 	[[nodiscard]] float GetScaleFactor() const { return scaleFactor_; }
-	void SetScaleFactor(float f) { scaleFactor_ = f; }
+	void SetScaleFactor(const float& f) { scaleFactor_ = f; }
 
 	[[nodiscard]] DirectX::XMFLOAT3 GetScale() const { return scale_; }
 
@@ -80,20 +80,20 @@ public:// Setter,Getter, etc...
 	[[nodiscard]] const float GetRotationZ() const { return rotation_.z; }
 
 	void SetRotation(const DirectX::XMFLOAT4& rot) { rotation_ = rot; }
-	void SetRotationX(const float rotX) { rotation_.x = rotX; }
-	void SetRotationY(const float rotY) { rotation_.y = rotY; }
-	void SetRotationZ(const float rotZ) { rotation_.z = rotZ; }
+	void SetRotationX(const float& rotX) { rotation_.x = rotX; }
+	void SetRotationY(const float& rotY) { rotation_.y = rotY; }
+	void SetRotationZ(const float& rotZ) { rotation_.z = rotZ; }
 
-	void AddRotationX(const float rotX) { rotation_.x += rotX; }
-	void AddRotationY(const float rotY) { rotation_.y += rotY; }
-	void AddRotationZ(const float rotZ) { rotation_.z += rotZ; }
+	void AddRotationX(const float& rotX) { rotation_.x += rotX; }
+	void AddRotationY(const float& rotY) { rotation_.y += rotY; }
+	void AddRotationZ(const float& rotZ) { rotation_.z += rotZ; }
 
 	//---------- 色 ( Color ) ----------
 	void SetColor(const DirectX::XMFLOAT4& color) { color_ = color; }
-	void SetColorR(const float colorR) { color_.x = colorR; }
-	void SetColorG(const float colorG) { color_.y = colorG; }
-	void SetColorB(const float colorB) { color_.z = colorB; }
-	void SetColorA(const float colorA) { color_.w = colorA; }
+	void SetColorR(const float& colorR) { color_.x = colorR; }
+	void SetColorG(const float& colorG) { color_.y = colorG; }
+	void SetColorB(const float& colorB) { color_.z = colorB; }
+	void SetColorA(const float& colorA) { color_.w = colorA; }
 
 	[[nodiscard]] DirectX::XMFLOAT4 GetColor() const { return color_; }
 	[[nodiscard]] const float GetColorR() const { return color_.x; }
@@ -104,7 +104,7 @@ public:// Setter,Getter, etc...
 	//---------- CoordinateSystem ----------
 	void SetCoordinateSystem(const CoordinateSystem& coordinateSystem) { coordinateSystem_ = static_cast<int>(coordinateSystem); }
 
-	[[nodiscard]] const DirectX::XMFLOAT4X4 GetCoordinateSystemTransform(CoordinateSystem coordinateSystem)const
+	[[nodiscard]] const DirectX::XMFLOAT4X4 GetCoordinateSystemTransform(const CoordinateSystem& coordinateSystem)const
 	{
 		return CoordinateSystemTransforms_[static_cast<int>(coordinateSystem)];
 	}

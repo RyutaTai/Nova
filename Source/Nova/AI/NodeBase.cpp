@@ -6,8 +6,8 @@
 #include "../Others/MemoryUtilities.h"
 
 //	コンストラクタ
-NodeBase::NodeBase(std::string name, NodeBase* parent, NodeBase* sibling, const int& priority,
-	BehaviorTree::SelectRule selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution) :
+NodeBase::NodeBase(const std::string& name, NodeBase* parent, NodeBase* sibling, const int& priority,
+	const BehaviorTree::SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution) :
 	name_(name), parent_(parent), sibling_(sibling), priority_(priority),
 	selectRule_(selectRule), judgment_(judgment), action_(action), hierarchyNo_(hierarchyNo),
 	children_(NULL), isForceExecution_(isForceExecution)
@@ -61,7 +61,7 @@ NodeBase* NodeBase::GetTopChild()
 }
 
 //	ノード検索
-NodeBase* NodeBase::SearchNode(std::string searchName)
+NodeBase* NodeBase::SearchNode(const std::string& searchName)
 {
 	//	名前が一致
 	if (name_ == searchName)

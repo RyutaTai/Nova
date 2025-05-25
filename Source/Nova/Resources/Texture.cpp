@@ -6,7 +6,7 @@
 
 static std::map<std::pmr::wstring, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> resources;
 
-HRESULT MakeDummyTexture(ID3D11Device* device, ID3D11ShaderResourceView** shaderResourceView_,
+HRESULT MakeDummyTexture(ID3D11Device* device, ID3D11ShaderResourceView** shaderResourceView,
 	DWORD value/*0xAABBGGRR*/, UINT dimension)
 {
 	HRESULT hr{ S_OK };
@@ -39,7 +39,7 @@ HRESULT MakeDummyTexture(ID3D11Device* device, ID3D11ShaderResourceView** shader
 	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 	hr = device->CreateShaderResourceView(texture2d.Get(), &shaderResourceViewDesc,
-		shaderResourceView_);
+		shaderResourceView);
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
 	return hr;

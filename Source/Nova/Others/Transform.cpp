@@ -57,7 +57,7 @@ DirectX::XMMATRIX Transform::CalcWorld()
 }
 
 //  座標系をかけたワールド行列
-DirectX::XMMATRIX Transform::CalcWorldMatrix(float scaleFactor)
+DirectX::XMMATRIX Transform::CalcWorldMatrix(const float& scaleFactor)
 {
     const DirectX::XMMATRIX C{ DirectX::XMLoadFloat4x4(&CoordinateSystemTransforms_[coordinateSystem_])
     * DirectX::XMMatrixScaling(scaleFactor,scaleFactor,scaleFactor) };

@@ -46,7 +46,6 @@ public:
 	}
 	void DrawDebug();
 
-
 	void	AcquireHighPerformanceAdapter(IDXGIFactory6* dxgiFactory6, IDXGIAdapter3** dxgiAdapter3);
 	void	CreateSwapChain(IDXGIFactory6* dxgiFactory6);
 	void	OnSizeChanged(UINT64 width, UINT height);
@@ -72,12 +71,12 @@ public:
 
 	//	ÉQÉbÉ^Å[
 	CONST HWND					GetHwnd()					CONST	{ return hwnd_; }
-	ID3D11Device*				GetDevice()							{ return device_.Get(); }
-	ID3D11DeviceContext*		GetDeviceContext()					{ return deviceContext_.Get(); }
-	IDXGISwapChain1*			GetSwapChain()						{ return swapChain_.Get(); }
-	ID3D11RenderTargetView*		GetRenderTargetView()				{ return renderTargetView_.Get(); }
-	ID3D11DepthStencilView*		GetDepthStencilView()				{ return depthStencilView_.Get(); }
-	ID3D11Buffer*				GetConstantBuffer()					{ return constantBuffer_.Get(); }
+	ID3D11Device*				GetDevice()					const	{ return device_.Get(); }
+	ID3D11DeviceContext*		GetDeviceContext()			const 	{ return deviceContext_.Get(); }
+	IDXGISwapChain1*			GetSwapChain()				const	{ return swapChain_.Get(); }
+	ID3D11RenderTargetView*		GetRenderTargetView()		const	{ return renderTargetView_.Get(); }
+	ID3D11DepthStencilView*		GetDepthStencilView()		const	{ return depthStencilView_.Get(); }
+	ID3D11Buffer*				GetConstantBuffer()			const	{ return constantBuffer_.Get(); }
 	Shader*						GetShader()							{ return shader_.get(); }
 	const SceneConstants		GetSceneConstant()			const	{ return sceneConstant_; }
 	const DirectX::XMFLOAT4X4	GetViewProjection()			const	{ return sceneConstant_.viewProjection_; }

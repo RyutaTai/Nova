@@ -76,7 +76,8 @@ inline std::string ConvertIntegerToString(int num, bool back = false)
     std::string str;
     if (num == 0) return "0";
 
-    if (num < 0) {
+    if (num < 0)
+	{
         str += "-";
         num = -num;
     }
@@ -94,12 +95,12 @@ inline std::string ConvertIntegerToString(int num, bool back = false)
     return str;
 }
 
-inline bool BOOLTobool(BOOL value)
+inline bool BOOLTobool(const BOOL& value)
 {
     return (value != FALSE);
 }
 
-inline BOOL boolToBOOL(bool value)
+inline BOOL boolToBOOL(const bool& value)
 {
     return value ? TRUE : FALSE;
 }

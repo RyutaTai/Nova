@@ -26,19 +26,19 @@ public:
 	}
 
 	//	Fbxモデルリソース読み込み
-	std::shared_ptr <FbxModel>					LoadFbxModelResource(const char* fileName, bool triangulate = false, float samplingRate = 0);
+	std::shared_ptr <FbxModel>					LoadFbxModelResource(const char* filename, const bool& triangulate = false, const float& samplingRate = 0);
 
 	//	Gltfモデルリソース読み込み
-	std::shared_ptr <GltfModel>					LoadGltfModelResource(const std::string& fileName, const std::string& rootNodeName = "root");
+	std::shared_ptr <GltfModel>					LoadGltfModelResource(const std::string& filename, const std::string& rootNodeName = "root");
 
 	//	Gltfモデルリソース読み込み
-	std::shared_ptr <GltfModelStaticBatching>	LoadGltfModelStaticResource(const std::string& fileName, const bool& setColor = false, const DirectX::XMFLOAT4& color = { 0,0,0,1 });
+	std::shared_ptr <GltfModelStaticBatching>	LoadGltfModelStaticResource(const std::string& filename, const bool& setColor = false, const DirectX::XMFLOAT4& color = { 0,0,0,1 });
 
 	//	スプライトリソース読み込み
-	std::shared_ptr <Sprite>					LoadSpriteResource(const std::string& fileName);
+	std::shared_ptr <Sprite>					LoadSpriteResource(const std::string& filename);
 
 	//	エフェクトリソース読み込み
-	std::shared_ptr <Effect>					LoadEffectResource(const char* fileName);
+	std::shared_ptr <Effect>					LoadEffectResource(const char* filename);
 
 private:
 	//	Fbxモデルリソースマップ

@@ -235,9 +235,6 @@
     <ClCompile Include="Source\Nova\Resources\ResourceManager.cpp">
       <Filter>Nova\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Nova\AI\MetaAI.cpp">
-      <Filter>Nova\AI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Nova\AI\BehaviorTree.cpp">
       <Filter>Nova\AI</Filter>
     </ClCompile>
@@ -541,12 +538,6 @@
       <Filter>Nova\AI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\StateMachine.h">
-      <Filter>Nova\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\AI\MetaAI.h">
-      <Filter>Nova\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\AI\Telegram.h">
       <Filter>Nova\AI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\BehaviorTree.h">

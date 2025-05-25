@@ -4,7 +4,7 @@
 #include "../Others/Converter.h"
 
 //	FBXモデルリソース読み込み
-std::shared_ptr<FbxModel> ResourceManager::LoadFbxModelResource(const char* filename, bool triangulate, float samplingRate)
+std::shared_ptr<FbxModel> ResourceManager::LoadFbxModelResource(const char* filename, const bool& triangulate, const float& samplingRate)
 {
 	auto it = fbxModels_.find(filename);
 	if (it != fbxModels_.end())
