@@ -63,7 +63,7 @@ public:
 	float GetTriggerR() const { return triggerR_; }
 
 	//	コントローラー振動
-	void SetVibration(const float& leftMotor, const float& rightMotor, const float& time);
+	void SetVibration(const float& leftMotorSpeed, const float& rightMotorSpeed, const float& time);
 	void StopVibration();
 
 private:

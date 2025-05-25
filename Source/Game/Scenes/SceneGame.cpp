@@ -36,10 +36,10 @@ void SceneGame::Initialize()
 
 
 	/* ----- スプライト初期化 ----- */
-	//sprite_[static_cast<int>z(SPRITE_GAME::BACK)] = std::make_unique<Sprite>(Graphics::Instance().GetDevice(), L"./Resources/Image/Game.png");
+	//sprite_[static_cast<int>(SPRITE_GAME::BACK)] = std::make_unique<Sprite>(Graphics::Instance().GetDevice(), L"./Resources/Image/Game.png");
 
-	sprite_[static_cast<int>(SPRITE_GAME::Clear)]	 = std::make_unique<Sprite>(L"./Resources/Image/Clear.png");
-	sprite_[static_cast<int>(SPRITE_GAME::GameOver)] = std::make_unique<Sprite>(L"./Resources/Image/GameOver.png");
+	sprites_[static_cast<int>(SPRITE_GAME::Clear)]	 = std::make_unique<Sprite>(L"./Resources/Image/Clear.png");
+	sprites_[static_cast<int>(SPRITE_GAME::GameOver)] = std::make_unique<Sprite>(L"./Resources/Image/GameOver.png");
 
 	/* ----- UI初期化(生成したらUIクラスでマネージャーに登録される) ----- */
 	UIHealth*			uiHealth		= new UIHealth();
@@ -77,12 +77,7 @@ void SceneGame::Initialize()
 	/* ----- エネミー初期化 ----- */
 	dragonkin_ = std::make_unique<Dragonkin>();
 	dragonkin_->Initialize();
-
-	//drone_ = std::make_unique<Drone>("./Resources/Model/Drone/Drone.glb");
-
-
-	//drone_ = new Drone("./Resources/Model/Drone/Drone.glb");
-	//drone_->Initialize();
+	EnemyManager::Instance().Register(std::move(dragonkin_));
 
 	// ----- テクスチャ読み込み -----
 	D3D11_TEXTURE2D_DESC texture2dDesc = {};
@@ -213,7 +208,7 @@ void SceneGame::IsPose(bool isPose)
 //	ウェーブ画像読み込み
 void SceneGame::LoadWaveSprite(const wchar_t* filename)
 {
-	sprite_[SPRITE_GAME::WAVE] = std::make_unique<Sprite>(filename);
+	sprites_[SPRITE_GAME::WAVE] = std::make_unique<Sprite>(filename);
 }
 
 //	描画処理
@@ -306,7 +301,7 @@ void SceneGame::Render()
 
 		framebuffers_[0]->Deactivate(deviceContext);
 
-		//	BLOOM
+		//	ブルーム
 		if (bloomer_)
 		{
 			bloomer_->Make(deviceContext, framebuffers_[0]->shaderResourceViews_[0].Get());
@@ -382,7 +377,7 @@ void SceneGame::Render()
 		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
 
 		//	ウェーブ数描画
-		if (sprite_[SPRITE_GAME::WAVE] && waveStartTimer_ > 0)
+		if (sprites_[SPRITE_GAME::WAVE] && waveStartTimer_ > 0)
 		{
 			//sprite_[static_cast<int>(SPRITE_GAME::WAVE)]->Render();
 		}
@@ -396,15 +391,15 @@ void SceneGame::Render()
 		//	ゲームクリア
 		if (isGameClear_)
 		{
-			sprite_[static_cast<int>(SPRITE_GAME::Clear)]->GetTransform()->SetPosition(320, 180);
-			sprite_[static_cast<int>(SPRITE_GAME::Clear)]->Render();
+			sprites_[static_cast<int>(SPRITE_GAME::Clear)]->GetTransform()->SetPosition(320, 180);
+			sprites_[static_cast<int>(SPRITE_GAME::Clear)]->Render();
 		}
 
 		//	ゲームオーバー
 		if (isGameOver_)
 		{
-			sprite_[static_cast<int>(SPRITE_GAME::GameOver)]->GetTransform()->SetPosition(320, 180);
-			sprite_[static_cast<int>(SPRITE_GAME::GameOver)]->Render();
+			sprites_[static_cast<int>(SPRITE_GAME::GameOver)]->GetTransform()->SetPosition(320, 180);
+			sprites_[static_cast<int>(SPRITE_GAME::GameOver)]->Render();
 		}
 	}
 
@@ -453,9 +448,6 @@ void SceneGame::DrawShadow()
 //	終了化
 void SceneGame::Finalize()
 {
-	//	UI終了化
-	//UIManager::Instance().Finalize();
-
 	//	エネミーマネージャー終了化
 	EnemyManager::Instance().Clear();
 

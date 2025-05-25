@@ -7,6 +7,8 @@ class JudgmentBase
 {
 public:
 	JudgmentBase(Enemy* enemy) :owner_(enemy) {}
+	virtual ~JudgmentBase() = default;
+	
 	virtual bool Judgment() = 0;
 
 protected:

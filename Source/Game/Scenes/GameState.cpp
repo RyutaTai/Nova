@@ -15,7 +15,7 @@ namespace GameState
 		owner_->SetWaveStartTimer(2.0f);
 
 		//	オーディオ再生
-		AudioManager::Instance().GetAudioResource("GameBGM")->Play(true);
+		AudioManager::Instance().PlayAudioByName("GameBGM", true);
 	}
 
 	void Wave1State::Update(const float& elapsedTime)

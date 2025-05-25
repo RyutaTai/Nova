@@ -52,18 +52,14 @@ Framework::~Framework()
 	////	シーン終了化
 	//SceneManager::Instance().Clear();
 
-	////	エフェクトマネージャー終了化
-	//EffectManager::Instance().Finalize();
+	
 }
 
 //	初期化
 bool Framework::Initialize()
 {
-	// TODO:シーン初期化切り替え
+	//	シーン初期化
 	SceneManager::Instance().ChangeScene(new SceneTitle());
-	//SceneManager::Instance().ChangeScene(new SceneGame());
-	//SceneManager::Instance().ChangeScene(new SceneDemo());
-	//SceneManager::Instance().ChangeScene(new SceneModelCheck());
 
 	//	エフェクトマネージャー初期化
 	EffectManager::Instance().Initialize();

@@ -879,6 +879,9 @@
     <ClInclude Include="Source\Game\Character\Player\PlayerState.h">
       <Filter>Game\Character\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Nova\Others\MemoryUtilities.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">

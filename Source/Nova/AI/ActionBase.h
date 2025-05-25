@@ -7,6 +7,7 @@ class ActionBase
 {
 public:
 	ActionBase(Enemy* enemy):owner_(enemy){}
+	virtual ~ActionBase() = default;
 
 public:
 	//	Àsî•ñ

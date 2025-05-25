@@ -32,7 +32,7 @@ public:
 	std::shared_ptr <GltfModel>					LoadGltfModelResource(const std::string& fileName, const std::string& rootNodeName = "root");
 
 	//	Gltfモデルリソース読み込み
-	std::shared_ptr <GltfModelStaticBatching>	LoadGltfModelStaticResource(const std::string& fileName, const bool setColor = false, const DirectX::XMFLOAT4 color = { 0,0,0,1 });
+	std::shared_ptr <GltfModelStaticBatching>	LoadGltfModelStaticResource(const std::string& fileName, const bool& setColor = false, const DirectX::XMFLOAT4& color = { 0,0,0,1 });
 
 	//	スプライトリソース読み込み
 	std::shared_ptr <Sprite>					LoadSpriteResource(const std::string& fileName);
@@ -42,23 +42,23 @@ public:
 
 private:
 	//	Fbxモデルリソースマップ
-	using ModelMap = std::map<std::string, std::weak_ptr <FbxModel>>;
-	ModelMap models_;
+	using ModelMap = std::map<std::string, std::shared_ptr<FbxModel>>;
+	ModelMap fbxModels_;
 
 	//	Gltfモデルリソースマップ
-	using GltfModelMap = std::map<std::string, std::weak_ptr <GltfModel>>;
+	using GltfModelMap = std::map<std::string, std::shared_ptr<GltfModel>>;
 	GltfModelMap gltfModels_;
 
 	//	Gltfモデルリソースマップ
-	using GltfModelStaticMap = std::map<std::string, std::weak_ptr <GltfModelStaticBatching>>;
+	using GltfModelStaticMap = std::map<std::string, std::shared_ptr<GltfModelStaticBatching>>;
 	GltfModelStaticMap gltfStaticModels_;
 
 	//	スプライトリソースマップ
-	using SpriteMap = std::map<std::string, std::weak_ptr<Sprite>>;
+	using SpriteMap = std::map<std::string, std::shared_ptr<Sprite>>;
 	SpriteMap sprites_;
 
 	//	エフェクトリソースマップ
-	using EffectMap = std::map<std::string, std::weak_ptr <Effect>>;
+	using EffectMap = std::map<std::string, std::shared_ptr<Effect>>;
 	EffectMap effects_;
 
 };

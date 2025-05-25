@@ -9,9 +9,7 @@
 Enemy::Enemy(const std::string& filename, const std::string& rootNodeName)
 	:Character(filename, rootNodeName)
 {
-	//	エネミーマネージャーに登録
-	EnemyManager::Instance().Register(this);
-
+	
 }
 
 //	旋回処理

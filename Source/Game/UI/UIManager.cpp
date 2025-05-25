@@ -93,9 +93,6 @@ void UIManager::RemoveFromType(const UIType& type)
 		}
 	}
 
-	//	破棄リストに追加
-	//removes_.insert(userInterfaces_.at(static_cast<int>(type)));
-
 }
 
 void UIManager::Finalize()
@@ -105,6 +102,22 @@ void UIManager::Finalize()
 		delete ui;
 	}
 	userInterfaces_.clear();
+
+	for (UI* ui : generates_)
+	{
+		delete ui;
+	}
+	generates_.clear();
+
+	for (UI* ui : removes_)
+	{
+		delete ui;
+	}
+	removes_.clear();
+
+	uiTempo_ = nullptr;
+	uiRank_ = nullptr;
+
 }
 
 void UIManager::SetIsVisible(const bool& isVisible)
@@ -172,7 +185,7 @@ void UIManager::DrawDebug()
 {
 	int size = static_cast<int>(userInterfaces_.size());
 
-	//	UIManagerデバッグ
+	//	UIManager
 	if (ImGui::TreeNode("UIManager"))
 	{
 		ImGui::DragInt("UI Count", &size);
@@ -181,7 +194,7 @@ void UIManager::DrawDebug()
 			SetIsVisible(allIsVisible_);
 		}
 
-		//	UIデバッグ
+		//	各UI
 		for (UI*& ui : userInterfaces_)
 		{
 			ui->DrawDebug();

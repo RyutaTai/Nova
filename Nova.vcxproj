@@ -424,6 +424,7 @@
     <ClInclude Include="Source\Nova\Others\Converter.h" />
     <ClInclude Include="Source\Nova\Others\Easing.h" />
     <ClInclude Include="Source\Nova\Others\MathHelper.h" />
+    <ClInclude Include="Source\Nova\Others\MemoryUtilities.h" />
     <ClInclude Include="Source\Nova\Others\Misc.h" />
     <ClInclude Include="Source\Nova\Others\Transform.h" />
     <ClInclude Include="Source\Nova\PostProcess\Bloom.h" />

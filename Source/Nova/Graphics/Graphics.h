@@ -38,7 +38,7 @@ public:
 
 public:
 	Graphics(HWND hwnd, bool fullscreen);
-	~Graphics() {}
+	~Graphics() = default;
 
 	static Graphics& Instance()
 	{

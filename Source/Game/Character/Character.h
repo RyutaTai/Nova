@@ -9,7 +9,7 @@ class Character
 {
 public:
 	Character(const std::string& filename, const std::string& rootNodeName = "root");
-	virtual ~Character() {}
+	virtual ~Character() = default;
 
 	virtual void Initialize() = 0;
 	virtual void Update(const float& elapsedTime);

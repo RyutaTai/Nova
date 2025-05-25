@@ -28,7 +28,7 @@ void SceneManager::Update(const float& elapsedTime)
 		currentScene_ = nextScene_;
 		nextScene_ = nullptr;
 
-		if (!currentScene_->IsReady())
+		if (currentScene_->IsReady() == false)
 		{
 			currentScene_->Initialize();
 		}

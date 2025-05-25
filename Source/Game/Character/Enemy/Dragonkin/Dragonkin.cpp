@@ -6,6 +6,7 @@
 #include "../../../../Nova/AI/BehaviorData.h"
 #include "../../../../Nova/Graphics/Graphics.h"
 #include "../../../../Nova/Collision/Collision.h"
+#include "../../../../Nova/Others/MemoryUtilities.h"
 
 //	コンストラクタ
 Dragonkin::Dragonkin()
@@ -50,6 +51,14 @@ Dragonkin::Dragonkin()
 		behaviorTree_->AddNode("Root", "Idle", 4, BehaviorTree::SelectRule::Non, new DragonkinJudgment::IdleJudgment(this), new DragonkinAction::IdleAction(this));				//	待機ノード(末端)
 	}
 	
+}
+
+Dragonkin::~Dragonkin()
+{
+	activeNode_ = nullptr;		//	二重解放しないため
+	SafeDelete(activeNode_);
+	SafeDelete(behaviorTree_);
+	SafeDelete(behaviorData_);
 }
 
 //	初期化

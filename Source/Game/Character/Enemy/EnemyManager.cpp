@@ -8,28 +8,21 @@
 //	更新処理
 void EnemyManager::Update(const float& elapsedTime)
 {
-	for (Enemy* enemy : enemies_)
+	for (const auto& enemy : enemies_)
 	{
 		enemy->Update(elapsedTime);
 	}
 
-	//	破棄処理
-	for (Enemy* enemy : removes_)
-	{
-		std::vector<Enemy*>::iterator it =
-			std::find(enemies_.begin(), enemies_.end(), enemy);
-
-		if (it != enemies_.end())
-		{
-			enemies_.erase(it);
-		}
-
-		//	弾丸処理
-		//delete enemy;
-	}
-
-	//	破棄リストをクリア
-	removes_.clear();
+	// 削除対象のEnemyをリストから削除
+	// unique_ptrのリストから要素を削除する際は、remove_ifとeraseを組み合わせる
+	enemies_.erase(std::remove_if(enemies_.begin(), enemies_.end(),
+		[this](const std::unique_ptr<Enemy>& p) {
+			// removeEnemies_ に存在する生ポインタと一致する unique_ptr を探す
+			// p.get() で unique_ptr が保持する生ポインタを取得
+			return std::find(removes_.begin(), removes_.end(), p.get()) != removes_.end();
+		}),
+		enemies_.end());
+	removes_.clear(); // 削除リストをクリア
 
 	//	敵同士の衝突処理
 	CollisionEnemyVsEnemies();
@@ -55,7 +48,7 @@ void EnemyManager::CollisionEnemyVsEnemies()
 				enemy->GetTransform()->GetPosition() + positionOffset,
 				enemy->GetRadius(),
 				enemy->GetHeight(),
-				enemy2->GetTransform()->GetPosition() + positionOffset, 
+				enemy2->GetTransform()->GetPosition() + positionOffset,
 				enemy2->GetRadius(),
 				enemy2->GetHeight(),
 				outPosition
@@ -68,9 +61,10 @@ void EnemyManager::CollisionEnemyVsEnemies()
 }
 
 //	エネミー登録
-void EnemyManager::Register(Enemy* enemy)
+void EnemyManager::Register(std::unique_ptr<Enemy> enemy)
 {
-	enemies_.emplace_back(enemy);
+	//	所有権を移動してvectorに格納する
+	if (enemy)enemies_.emplace_back(std::move(enemy));
 }
 
 //	エネミー全削除
@@ -86,7 +80,8 @@ void EnemyManager::Clear()
 //	エネミー削除
 void EnemyManager::Remove(Enemy* enemy)
 {
-	//	破棄リストに追加
+	// 即座に削除するのではなく、次のUpdateでまとめて削除するためにリストに追加
+   // これにより、イテレータの無効化問題を回避できる
 	removes_.insert(enemy);
 }
 
@@ -99,7 +94,7 @@ void EnemyManager::DroneSpawn(const int& spawn)
 	constexpr float spaceWithP = 2.0f;		//	プレイヤーとの間隔
 	DirectX::XMFLOAT3 emitter = playerPos + playerForward * spaceWithP;
 	DirectX::XMFLOAT3 spawnOffset = { 5.0f,0.0f,5.0f };
-	
+
 	for (int spawnCount = 0; spawnCount < spawn; spawnCount++)
 	{
 		Drone* drone = new Drone();	//	生成時に登録される
@@ -119,7 +114,7 @@ void EnemyManager::DroneSpawn(const int& spawn)
 {
 	for (int spawnCount = 0; spawnCount < spawn; spawnCount++)
 	{
-		Drone* drone = new Drone();	//	生成時に登録される
+		std::unique_ptr<Drone> drone = std::make_unique<Drone>();	//	生成時に登録される
 		//	生成位置設定
 		DirectX::XMFLOAT3 pos =
 		{
@@ -127,6 +122,8 @@ void EnemyManager::DroneSpawn(const int& spawn)
 		};
 		drone->GetTransform()->SetPosition(pos);
 		drone->Initialize();	//	ドローン初期化
+
+		Register(std::move(drone));
 	}
 }
 #endif
@@ -134,7 +131,7 @@ void EnemyManager::DroneSpawn(const int& spawn)
 //	描画処理
 void EnemyManager::Render()
 {
-	for (Enemy* enemy : enemies_)
+	for (const auto& enemy : enemies_)
 	{
 		enemy->Render();
 	}
@@ -143,7 +140,7 @@ void EnemyManager::Render()
 //	シャドウマップ
 void EnemyManager::CastShadows()
 {
-	for (Enemy* enemy : enemies_)
+	for (const auto& enemy : enemies_)
 	{
 		enemy->CastShadows();
 	}
@@ -152,10 +149,34 @@ void EnemyManager::CastShadows()
 //	デバッグプリミティブ描画
 void EnemyManager::DrawDebugPrimitive()
 {
-	for (Enemy* enemy : enemies_)
+	for (const auto& enemy : enemies_)
 	{
 		enemy->DrawDebugPrimitive();
 	}
+}
+
+//	エネミーを要素番号を指定して取得
+Enemy* EnemyManager::GetEnemy(const int& index)
+{
+	if (index < 0 || index >= enemies_.size())
+	{
+
+		_ASSERT_EXPR(false, L"Enemy index is out of bounds."); // あなたのプロジェクトのAssertを使う
+		return nullptr; // あるいは例外を投げる
+	}
+	return enemies_.at(index).get(); // unique_ptrから生ポインタを取得
+}
+
+//	エネミーを取得
+std::vector<Enemy*> EnemyManager::GetEnemies()
+{
+	std::vector<Enemy*> rawPointers;
+	rawPointers.reserve(enemies_.size()); // メモリ再割り当てを避けるため
+	for (const auto& uptr : enemies_)
+	{
+		rawPointers.push_back(uptr.get()); // unique_ptrから生ポインタを取得
+	}
+	return rawPointers;
 }
 
 //	デバッグ描画
@@ -169,7 +190,7 @@ void EnemyManager::DrawDebug()
 		ImGui::DragInt("EnemyCount", &enemyCount);	//	エネミーの総数
 
 		//	Enemyのデバッグ描画
-		for (Enemy* enemy : enemies_)
+		for (const auto& enemy : enemies_)
 		{
 			enemy->DrawDebug();
 		}

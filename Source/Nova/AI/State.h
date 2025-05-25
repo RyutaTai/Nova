@@ -7,7 +7,7 @@ class State
 {
 public:
 	State(T* owner) :owner_(owner) {}
-	virtual ~State() {}
+	virtual ~State() = default;
 
 	virtual void Initialize() = 0;
 	virtual void Update(const float& elapsedTime) = 0;

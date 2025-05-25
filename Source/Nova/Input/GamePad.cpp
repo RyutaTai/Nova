@@ -200,14 +200,14 @@ void GamePad::Update(const float& elapsedTime)
 }
 
 //	コントローラー振動
-void GamePad::SetVibration(const float& leftMotor, const float& rightMotor, const float& time)
+void GamePad::SetVibration(const float& leftMotorSpeed, const float& rightMotorSpeed, const float& time)
 {
 	isVibration_ = true;
 	vibrationTime_ = time;
 
 	XINPUT_VIBRATION vibration = {};
-	vibration.wLeftMotorSpeed = static_cast<WORD>(leftMotor * 65535);
-	vibration.wRightMotorSpeed = static_cast<WORD>(rightMotor * 65535);
+	vibration.wLeftMotorSpeed = static_cast<WORD>(leftMotorSpeed * 65535);
+	vibration.wRightMotorSpeed = static_cast<WORD>(rightMotorSpeed * 65535);
 
 	XInputSetState(slot_, &vibration);
 }

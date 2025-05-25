@@ -17,7 +17,7 @@ public:
 
 public:
 	Enemy(const std::string& filename, const std::string& rootNodeName = "root");
-	~Enemy()override {}
+	virtual ~Enemy()override = default;
 
 	virtual void	Initialize()	override = 0;
 	virtual void	Update(const float& elapsedTime)override = 0;

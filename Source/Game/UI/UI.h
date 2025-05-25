@@ -7,7 +7,7 @@ class UI
 {
 public:
 	UI(const UIManager::UIType& type);
-	~UI(){}
+	virtual ~UI() = default;
 
 	virtual void Initialize();
 	virtual void Update(const float& elapsedTime);

@@ -2,14 +2,30 @@
 
 #include "JudgmentBase.h"
 #include "BehaviorData.h"
-#include "ActionBase.h"
 #include "../Others/MathHelper.h"
+#include "../Others/MemoryUtilities.h"
+
+//	コンストラクタ
+NodeBase::NodeBase(std::string name, NodeBase* parent, NodeBase* sibling, const int& priority,
+	BehaviorTree::SelectRule selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution) :
+	name_(name), parent_(parent), sibling_(sibling), priority_(priority),
+	selectRule_(selectRule), judgment_(judgment), action_(action), hierarchyNo_(hierarchyNo),
+	children_(NULL), isForceExecution_(isForceExecution)
+{
+
+}
 
 //	デストラクタ
 NodeBase::~NodeBase()
 {
-	delete judgment_;
-	delete action_;
+	SafeDelete(action_);
+	SafeDelete(judgment_);
+
+	for (NodeBase* child : children_)
+	{
+		SafeDelete(child);
+	}
+	children_.clear();
 }
 
 //	子ノードゲッター

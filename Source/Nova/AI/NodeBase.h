@@ -17,13 +17,8 @@ class NodeBase
 {
 public:
 	//	コンストラクタ
-	NodeBase(std::string name,NodeBase* parent,NodeBase* sibling,const int& priority,
-		BehaviorTree::SelectRule selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution = false) :
-		name_(name),parent_(parent),sibling_(sibling),priority_(priority),
-		selectRule_(selectRule),judgment_(judgment),action_(action),hierarchyNo_(hierarchyNo),
-		children_(NULL),isForceExecution_(isForceExecution)
-	{
-	}
+	NodeBase(std::string name, NodeBase* parent, NodeBase* sibling, const int& priority,
+		BehaviorTree::SelectRule selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution = false);
 	//	デストラクタ
 	~NodeBase();
 	//	名前ゲッター

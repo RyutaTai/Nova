@@ -39,8 +39,9 @@ Drone::~Drone()
 {
 	for (int index = 0; index < static_cast<int>(Audio3D::Max); ++index)
 	{
-		delete sources_[index];
+		//delete sources_[index];
 	}
+	delete debugSource_;
 }
 
 //	‰Šú‰»

@@ -105,7 +105,7 @@ private:
 		GameOver,		//	ゲームオーバー
 		Max,			//	スプライトの上限数
 	};
-	std::unique_ptr <Sprite>			  sprite_[static_cast<int>(SPRITE_GAME::Max)];
+	std::unique_ptr <Sprite>			  sprites_[static_cast<int>(SPRITE_GAME::Max)];
 
 	/* ----- ゲーム内で使う変数 ----- */
 	float	waveStartTimer_		= 0.0f;		//	ウェーブ開始のUIが表示されている間

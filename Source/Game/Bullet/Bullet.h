@@ -22,7 +22,7 @@ public:
 
 public:
 	Bullet(const std::string& filename);
-	virtual ~Bullet() {}
+	virtual ~Bullet() = default;
 
 	virtual void			Initialize();
 	virtual void			Update(const float& elapsedTime);

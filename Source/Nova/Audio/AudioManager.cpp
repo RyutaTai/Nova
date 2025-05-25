@@ -2,6 +2,7 @@
 
 #include "../Others/Misc.h"
 #include "../../imgui/imgui.h"
+#include "../Others/MemoryUtilities.h"
 
 void AudioManager::Initialize()
 {
@@ -20,10 +21,10 @@ void AudioManager::Initialize()
 	hr = XAudio2Create(&xaudio_, createFlags);
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
-	//	create masteringvoice
-#if 0 //	自動検出
+	//	マスターボイス作成
+#if 0	//	自動検出で作成
 	hr = xaudio->CreateMasteringVoice(&masteringVoice, XAUDIO2_DEFAULT_CHANNELS, 44100/*サンプリングレート*/, 0U, NULL, 0, AudioCategory_GameEffects);
-#else
+#else	//	手動で設定	
 	hr = xaudio_->CreateMasteringVoice(&masteringVoice_, 2, 44100/*サンプリングレート*/, 0U, NULL, 0, AudioCategory_GameEffects);
 #endif
 
@@ -72,32 +73,6 @@ AudioSource3D* AudioManager::LoadAudioSource3D(const char* filename, const Audio
 //	更新処理
 void AudioManager::Update(const float& elapsedTime)
 {
-#if 0
-	//	破棄処理
-	for (Audio* audio : audioRemoves_)
-	{
-		//	種類がSEかつオーディオ再生が終了していなかったら破棄しない。BGMは無条件に破棄
-		if (audio->IsSE() && audio->GetState().BuffersQueued != 0)continue;
-
-		std::vector<Audio*>::iterator it =
-			std::find(audioResources_.begin(), audioResources_.end(), audio);
-
-		if (it != audioResources_.end())
-		{
-			audioResources_.erase(it);
-		}
-
-		delete audio;
-	}
-
-	//	破棄リストをクリア
-	audioRemoves_.clear();
-
-	for (Audio* audio : audioResources_)
-	{
-		audio->Update(elapsedTime);
-	}
-#else
 	//	破棄処理
 	for (auto it = audioRemoves_.begin(); it != audioRemoves_.end();)
 	{
@@ -116,7 +91,7 @@ void AudioManager::Update(const float& elapsedTime)
 		if (audioIt != audioResources_.end())
 		{
 			audioResources_.erase(audioIt);
-			delete audio;
+			SafeDelete(audio);
 		}
 
 		//	破棄したオーディオをリストから削除
@@ -128,13 +103,27 @@ void AudioManager::Update(const float& elapsedTime)
 	{
 		audio->Update(elapsedTime);
 	}
-#endif
+
 }
 
 //	オーディオ登録
 void AudioManager::Register(Audio* audio)
-{	
+{
 	audioResources_.emplace_back(audio);
+}
+
+//	名前で指定して再生する
+void AudioManager::PlayAudioByName(const std::string& audioName, const bool& loop)
+{
+	for (int i = 0; i < audioResources_.size(); ++i)
+	{
+		if (strcmp(audioResources_.at(i)->GetAudioName().c_str(), audioName.c_str()) == 0)	//	入力文字列と等しいデータがあれば
+		{
+			audioResources_.at(i)->Play(loop);
+			return;
+		}
+	}
+	_ASSERT_EXPR(false, L"AudioResource is not found.");
 }
 
 //	オーディオを名前から取得(例: デフォルトならTitle.wavなど.wavまで含めた名前、SetAudioName()で設定した場合はその名前。)
@@ -172,6 +161,26 @@ void AudioManager::RemoveByScene(const std::string& sceneName)
 //	オーディオ全削除
 void AudioManager::Clear()
 {
+#if 0
+	//	破棄処理
+	for (auto it = audioRemoves_.begin(); it != audioRemoves_.end();)
+	{
+		Audio* audio = *it;
+
+		//	audioがaudioResources_内に存在するか確認
+		auto audioIt = std::find(audioResources_.begin(), audioResources_.end(), audio);
+		if (audioIt != audioResources_.end())
+		{
+			delete audio;
+			audioResources_.erase(audioIt);
+		}
+
+		//	破棄したオーディオをリストから削除
+		it = audioRemoves_.erase(it);
+	}
+	audioRemoves_.clear();
+#endif
+
 	for (Audio*& audio : audioResources_)
 	{
 		delete audio;

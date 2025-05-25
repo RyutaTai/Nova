@@ -5,6 +5,7 @@
 #include "JudgmentBase.h"
 #include "BehaviorData.h"
 #include "../../Game/Character/Enemy/Enemy.h"
+#include "../Others/MemoryUtilities.h"
 
 //	デストラクタ
 BehaviorTree::~BehaviorTree()
@@ -86,19 +87,7 @@ NodeBase* BehaviorTree::Run(NodeBase* actionNode, BehaviorData* data, const floa
 //	登録されたノードを全て削除する
 void BehaviorTree::NodeAllClear(NodeBase* delNode)
 {
-	size_t count = delNode->children_.size();
-	if (count > 0)
-	{
-		for (NodeBase* node :delNode->children_)
-		{
-			NodeAllClear(node);
-		}
-		delete delNode;
-	}
-	else
-	{
-		delete delNode;
-	}
+	SafeDelete(delNode);
 }
 
 void BehaviorTree::DrawDebug()

@@ -13,7 +13,7 @@ class Dragonkin : public Enemy
 {
 public:
 	Dragonkin();
-	~Dragonkin()override {}
+	~Dragonkin()override;
 
 public:
 	//	アニメーション情報(Boss)
