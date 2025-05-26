@@ -12,41 +12,40 @@ void UIManager::Initialize()
 	{
 		ui->Initialize();
 	}
+	generates_.clear();
 }
 
 void UIManager::Update(const float& elapsedTime)
 {
-	//	破棄処理
-	for (UI* ui : removes_)
-	{
-		std::vector<UI*>::iterator it =
-			std::find(userInterfaces_.begin(), userInterfaces_.end(), ui);
+	//	削除対象のUIを userInterfaces_ から削除 (遅延削除)
+	userInterfaces_.erase(std::remove_if(userInterfaces_.begin(), userInterfaces_.end(),
+		[this](const std::unique_ptr<UI>& p) {
+			return std::find(removes_.begin(), removes_.end(), p.get()) != removes_.end();
+		}),
+		userInterfaces_.end());
+	removes_.clear(); // 削除リストをクリア
 
-		if (it != userInterfaces_.end())
-		{
-			userInterfaces_.erase(it);
-		}
-	}
+	//	generates_ は Initialize で処理済みなので、Update での特別な処理は不要
+	//	(Initialize と Update のどちらで generates_ を処理するかは設計次第)
+	//	ここで generates_.clear(); は Initialize() 側で処理するため不要
 
-	//	破棄リストをクリア
-	removes_.clear();
-
-	for (UI* ui : generates_)
-	{
-		userInterfaces_.emplace_back(ui);
-	}
-	generates_.clear();
-
-	for (UI*& ui : userInterfaces_)
+	for (std::unique_ptr<UI>& ui : userInterfaces_)
 	{
 		ui->Update(elapsedTime);
 	}
 }
 
 //	UI登録
-void UIManager::Register(UI* ui)
+void UIManager::Register(std::unique_ptr<UI> ui)
 {
-	generates_.insert(ui);
+	if (ui == false)
+	{
+		_ASSERT_EXPR(false, L"Attempted to register a nullptr UI.");
+		return;
+	}
+	UI* rawPtr = ui.get();
+	userInterfaces_.emplace_back(std::move(ui));	//	所有権をムーブして登録
+	generates_.emplace_back(rawPtr);				//	新規追加リストにも登録
 }
 
 //	UITempo登録
@@ -78,46 +77,32 @@ UIRank* UIManager::GetUIRank()
 //	UI削除
 void UIManager::Remove(UI* ui)
 {
-	//	破棄リストに追加
-	removes_.insert(ui);
+	if (std::find(removes_.begin(), removes_.end(), ui) == removes_.end()) 
+	{
+		removes_.emplace_back(ui);
+	}
 }
 
 //	UI削除
 void UIManager::RemoveFromType(const UIType& type)
 {
-	for (auto& ui : userInterfaces_)
+	for (auto& uiPtr : userInterfaces_)
 	{
-		if (ui->GetUIType() == type)
+		if (uiPtr->GetUIType() == type)
 		{
-			removes_.insert(ui);
+			Remove(uiPtr.get());
 		}
 	}
-
 }
 
 void UIManager::Finalize()
 {
-	for (UI*& ui : userInterfaces_)
-	{
-		delete ui;
-	}
 	userInterfaces_.clear();
-
-	for (UI* ui : generates_)
-	{
-		delete ui;
-	}
 	generates_.clear();
-
-	for (UI* ui : removes_)
-	{
-		delete ui;
-	}
 	removes_.clear();
 
 	uiTempo_ = nullptr;
 	uiRank_ = nullptr;
-
 }
 
 void UIManager::SetIsVisible(const bool& isVisible)
@@ -131,18 +116,27 @@ void UIManager::SetIsVisible(const bool& isVisible)
 //	番号からUIを取得
 UI* UIManager::GetUIFromNum(const int& num)
 {
-	//	numがuserInterfaces_より大きかったらアサートで落とす
-	_ASSERT_EXPR(num < userInterfaces_.size(), L"UI num is too large.");
-
-	return userInterfaces_.at(num);
+	//	範囲外ならアサートで落とす
+	if (num < 0 || static_cast<size_t>(num) >= userInterfaces_.size())
+    {
+        _ASSERT_EXPR(false, L"UI index is out of bounds.");
+        return nullptr;
+    }
+	return userInterfaces_.at(num).get();
 }
 
 //	種類からUIを取得
 UI* UIManager::GetUIFromType(const UIType& type)
 {
-	_ASSERT_EXPR(static_cast<int>(type) < userInterfaces_.size(), L"UI num is too large.");
-
-	return userInterfaces_.at(static_cast<int>(type));
+	for (const auto& ui_ptr : userInterfaces_)
+	{
+		if (ui_ptr->GetUIType() == type)
+		{
+			return ui_ptr.get();
+		}
+	}
+	_ASSERT_EXPR(false, L"UI of specified type not found.");
+	return nullptr;
 }
 
 //	指定したUIが存在するか
@@ -175,7 +169,7 @@ void UIManager::Render()
 	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
 
 	//	描画
-	for (UI*& ui : userInterfaces_)
+	for (std::unique_ptr<UI>& ui : userInterfaces_)
 	{
 		if (ui->GetIsVisible()) ui->Render();
 	}
@@ -195,7 +189,7 @@ void UIManager::DrawDebug()
 		}
 
 		//	各UI
-		for (UI*& ui : userInterfaces_)
+		for (std::unique_ptr<UI>& ui : userInterfaces_)
 		{
 			ui->DrawDebug();
 		}

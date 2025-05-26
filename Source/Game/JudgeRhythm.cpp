@@ -41,7 +41,9 @@ bool JudgeRhythm::Judge()
 	{
 		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
-		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Perfect);
+		std::unique_ptr<UIRhythmJudgment> uiRhythmPtr = std::make_unique<UIRhythmJudgment>(JudgeRhythm::JudgmentType::Perfect);
+		UIRhythmJudgment* uiRhythm = uiRhythmPtr.get(); // 生ポインタを取得
+		UIManager::Instance().Register(std::move(uiRhythmPtr)); // 所有権を UIManager に渡す
 		uiRhythm->Initialize();
 		uiRhythm->SetIsVisible(true);
 
@@ -63,9 +65,12 @@ bool JudgeRhythm::Judge()
 	{
 		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
-		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Good);
+		std::unique_ptr<UIRhythmJudgment> uiRhythmPtr = std::make_unique<UIRhythmJudgment>(JudgeRhythm::JudgmentType::Good);
+		UIRhythmJudgment* uiRhythm = uiRhythmPtr.get();
+		UIManager::Instance().Register(std::move(uiRhythmPtr));
 		uiRhythm->Initialize();
 		uiRhythm->SetIsVisible(true);
+
 
 		//	----- 判定フラグをtrueにしてコンボ加算 -----
 		UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->SetIsJudged(true);
@@ -78,7 +83,9 @@ bool JudgeRhythm::Judge()
 	{
 		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
-		UIRhythmJudgment* uiRhythm = new UIRhythmJudgment(JudgmentType::Miss);
+		std::unique_ptr<UIRhythmJudgment> uiRhythmPtr = std::make_unique<UIRhythmJudgment>(JudgeRhythm::JudgmentType::Miss);
+		UIRhythmJudgment* uiRhythm = uiRhythmPtr.get();
+		UIManager::Instance().Register(std::move(uiRhythmPtr));
 		uiRhythm->Initialize();
 		uiRhythm->SetIsVisible(true);
 

@@ -42,12 +42,17 @@ void SceneGame::Initialize()
 	sprites_[static_cast<int>(SPRITE_GAME::GameOver)] = std::make_unique<Sprite>(L"./Resources/Image/GameOver.png");
 
 	/* ----- UI初期化(生成したらUIクラスでマネージャーに登録される) ----- */
-	UIHealth*			uiHealth		= new UIHealth();
+	std::unique_ptr<UIHealth> uiHealth = std::make_unique<UIHealth>();
+	UIManager::Instance().Register(std::move(uiHealth));
 	//UIInstructions* uiInstructions	= new UIInstructions();
-	UITempo*			uiTempo			= new UITempo();
-	UIRank*				uiRank			= new UIRank();
-	UIManager::Instance().RegisterUITempo(uiTempo);
-	UIManager::Instance().RegisterUIRank(uiRank);
+	
+	std::unique_ptr<UITempo> uiTempo = std::make_unique<UITempo>();
+	UIManager::Instance().RegisterUITempo(uiTempo.get());
+	UIManager::Instance().Register(std::move(uiTempo));
+	
+	std::unique_ptr<UIRank> uiRank = std::make_unique<UIRank>();
+	UIManager::Instance().RegisterUIRank(uiRank.get());
+	UIManager::Instance().Register(std::move(uiRank));
 	UIManager::Instance().Initialize();					//	登録し終わってから初期化処理をする
 
 	/* ----- Rhythmクラス初期化 ----- */
