@@ -99,7 +99,7 @@ namespace DragonkinAction
 			float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 			if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 			{
-				owner_->GetAttackDetectionData("Hand_R").SetIsActive(true);
+				owner_->GetAttackDetectionData("Hand_R")->SetIsActive(true);
 
 				//	攻撃中は押し出し判定しない
 				Player::Instance().SetIsActiveCollisionDetection(false);
@@ -107,7 +107,7 @@ namespace DragonkinAction
 			}
 			else
 			{
-				owner_->GetAttackDetectionData("Hand_R").SetIsActive(false);
+				owner_->GetAttackDetectionData("Hand_R")->SetIsActive(false);
 
 				//	押し出し判定をオンにする
 				Player::Instance().SetIsActiveCollisionDetection(true);
@@ -156,8 +156,8 @@ namespace DragonkinAction
 			float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 			if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 			{
-				owner_->GetAttackDetectionData("Foot_L").SetIsActive(true);
-				owner_->GetAttackDetectionData("calf_l").SetIsActive(true);
+				owner_->GetAttackDetectionData("Foot_L")->SetIsActive(true);
+				owner_->GetAttackDetectionData("calf_l")->SetIsActive(true);
 
 				//	攻撃中は押し出し判定しない
 				Player::Instance().SetIsActiveCollisionDetection(false);
@@ -165,8 +165,8 @@ namespace DragonkinAction
 			}
 			else
 			{
-				owner_->GetAttackDetectionData("Foot_L").SetIsActive(false);
-				owner_->GetAttackDetectionData("calf_l").SetIsActive(false);
+				owner_->GetAttackDetectionData("Foot_L")->SetIsActive(false);
+				owner_->GetAttackDetectionData("calf_l")->SetIsActive(false);
 
 				//	押し出し判定をオンにする
 				Player::Instance().SetIsActiveCollisionDetection(true);
@@ -216,13 +216,13 @@ namespace DragonkinAction
 			float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 			if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 			{
-				owner_->GetAttackDetectionData("Wing_L03").SetIsActive(true);
-				owner_->GetAttackDetectionData("Wing_L04").SetIsActive(true);
-				owner_->GetAttackDetectionData("Wing_L05").SetIsActive(true);
-				owner_->GetAttackDetectionData("Wing_L06").SetIsActive(true);
-				owner_->GetAttackDetectionData("Wing_L08").SetIsActive(true);
-				owner_->GetAttackDetectionData("Wing_L09").SetIsActive(true);
-				owner_->GetAttackDetectionData("Wing_L10").SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L03")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L04")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L05")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L06")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L08")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L09")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L10")->SetIsActive(true);
 
 				//	攻撃中は押し出し判定しない
 				Player::Instance().SetIsActiveCollisionDetection(false);
@@ -230,13 +230,13 @@ namespace DragonkinAction
 			}
 			else
 			{
-				owner_->GetAttackDetectionData("Wing_L03").SetIsActive(false);
-				owner_->GetAttackDetectionData("Wing_L04").SetIsActive(false);
-				owner_->GetAttackDetectionData("Wing_L05").SetIsActive(false);
-				owner_->GetAttackDetectionData("Wing_L06").SetIsActive(false);
-				owner_->GetAttackDetectionData("Wing_L08").SetIsActive(false);
-				owner_->GetAttackDetectionData("Wing_L09").SetIsActive(false);
-				owner_->GetAttackDetectionData("Wing_L10").SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L03")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L04")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L05")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L06")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L08")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L09")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L10")->SetIsActive(false);
 
 				//	押し出し判定をオンにする
 				Player::Instance().SetIsActiveCollisionDetection(true);

@@ -6,7 +6,7 @@ class UIHealth : public UI
 {
 public:
 	UIHealth();
-	~UIHealth(){}
+	~UIHealth()override = default;
 
 	void Initialize()override;
 	void Update(const float& elapsedTime)override;

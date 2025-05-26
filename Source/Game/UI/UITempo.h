@@ -37,7 +37,7 @@ private:
 
 public:
 	UITempo();
-	~UITempo() {}
+	~UITempo() override = default;
 
 	void Initialize()override;
 	void Update(const float& elapsedTime)override;

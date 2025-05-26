@@ -90,29 +90,29 @@ void CollisionManager::PlayerAttackVsEnemyDamage()
 
         for (int playerDataIndex = 0; playerDataIndex < maxPlayerData; ++playerDataIndex)
         {
-            const AttackDetectionData playerData = player.GetAttackDetectionData(playerDataIndex);
+            const AttackDetectionData* playerData = player.GetAttackDetectionData(playerDataIndex);
             //  プレイヤーの攻撃判定が無効なら処理しない
-            if (playerData.GetIsActive() == false)continue;
+            if (playerData->GetIsActive() == false)continue;
 
             for (int enemyDataIndex = 0; enemyDataIndex < maxEnemyData; ++enemyDataIndex)
             {
-                DamageDetectionData enemyData = enemy->GetDamageDetectionData(enemyDataIndex);
+                DamageDetectionData* enemyData = enemy->GetDamageDetectionData(enemyDataIndex);
 
                 //  このデータは、既にダメージをくらっている
-                if (enemyData.IsHit()) continue;
+                if (enemyData->IsHit()) continue;
 
                 //  当たったかチェック
                 if (IntersectSphereVsSphere(
-                    playerData.GetPosition(), playerData.GetRadius(),
-                    enemyData.GetPosition(), enemyData.GetRadius()))
+                    playerData->GetPosition(), playerData->GetRadius(),
+                    enemyData->GetPosition(), enemyData->GetRadius()))
                 {
                     const Player::StateType playerState = player.GetCurrentState();
 
                     // ============================================================
                     //  Hitフラグを立てる ( このデータの無敵時間設定 )
                     // ============================================================
-                    enemyData.SetIsHit(true);
-                    enemyData.SetHitTimer(0.01f);
+                    enemyData->SetIsHit(true);
+                    enemyData->SetHitTimer(0.01f);
 
                      // ============================================================
                     //  プレイヤーのコンボヒット数を増やす
@@ -135,7 +135,7 @@ void CollisionManager::PlayerAttackVsEnemyDamage()
                     // エフェクト再生
                     // ============================================================
                     player.SetPlayEffectFlag(true);
-                    player.SetEffectPos(playerData.GetPosition());
+                    player.SetEffectPos(playerData->GetPosition());
 
                     // ============================================================
                     // 敵が死んでいなかったらダメージ処理をする
@@ -143,7 +143,7 @@ void CollisionManager::PlayerAttackVsEnemyDamage()
                     if (enemy->IsDead() == false)
                     {
                         const float attackPower = player.GetAttackPower();
-                        const float damage      = attackPower * enemyData.GetDamage();
+                        const float damage      = attackPower * enemyData->GetDamage();
 
                         enemy->SetIsDamaged(true);
                         enemy->AddDamage(damage);
@@ -197,18 +197,18 @@ void CollisionManager::PlayerFlinchVsEnemyAttack()
 
         for (int playerDataIndex = 0; playerDataIndex < maxPlayerData; ++playerDataIndex)
         {
-            const DamageDetectionData playerData = player.GetDamageDetectionData(playerDataIndex);
+            const DamageDetectionData* playerData = player.GetDamageDetectionData(playerDataIndex);
 
             for (int enemyDataIndex = 0; enemyDataIndex < maxEnemyData; ++enemyDataIndex)
             {
-                const AttackDetectionData enemyData = enemy->GetAttackDetectionData(enemyDataIndex);
+                const AttackDetectionData* enemyData = enemy->GetAttackDetectionData(enemyDataIndex);
                 //  このデータは攻撃判定が有効ではない
-                if (enemyData.GetIsActive() == false) continue;
+                if (enemyData->GetIsActive() == false) continue;
 
                 //  当たったか判定
                 if (IntersectSphereVsSphere(
-                    playerData.GetPosition(), playerData.GetRadius(),
-                    enemyData.GetPosition(), enemyData.GetRadius()))
+                    playerData->GetPosition(), playerData->GetRadius(),
+                    enemyData->GetPosition(), enemyData->GetRadius()))
                 {
                     //  怯みステートに遷移
                     //player.ChangeState(Player::StateType::Flinch);
@@ -242,19 +242,19 @@ void CollisionManager::PlayerDamageVsEnemyAttack()
 
         for (int playerDataIndex = 0; playerDataIndex < maxPlayerData; ++playerDataIndex)
         {
-            const DamageDetectionData playerData = player.GetDamageDetectionData(playerDataIndex);
+            const DamageDetectionData* playerData = player.GetDamageDetectionData(playerDataIndex);
 
             for (int enemyDataIndex = 0; enemyDataIndex < maxEnemyData; ++enemyDataIndex)
             {
-                const AttackDetectionData enemyData = enemy->GetAttackDetectionData(enemyDataIndex);
+                const AttackDetectionData* enemyData = enemy->GetAttackDetectionData(enemyDataIndex);
 
                 //  このデータの攻撃判定が有効ではない
-                if (enemyData.GetIsActive() == false) continue;
+                if (enemyData->GetIsActive() == false) continue;
 
                 //  当たったかチェック
                 if (IntersectSphereVsSphere(
-                    playerData.GetPosition(), playerData.GetRadius(),
-                    enemyData.GetPosition(), enemyData.GetRadius()))
+                    playerData->GetPosition(), playerData->GetRadius(),
+                    enemyData->GetPosition(), enemyData->GetRadius()))
                 {
                     //  ==================================================
                     //  ダメージを与える
@@ -312,7 +312,7 @@ void CollisionManager::PlayerDamageVsBulletAttack()
 
     for (int playerDataIndex = 0; playerDataIndex < maxPlayerData; ++playerDataIndex)
     {
-        const DamageDetectionData playerData = player.GetDamageDetectionData(playerDataIndex);
+        const DamageDetectionData* playerData = player.GetDamageDetectionData(playerDataIndex);
 
         for (int bulletIndex = 0; bulletIndex < maxBulletData; ++bulletIndex)
         {
@@ -323,7 +323,7 @@ void CollisionManager::PlayerDamageVsBulletAttack()
 
             //  当たったかチェック
             if (IntersectSphereVsSphere(
-                playerData.GetPosition(), playerData.GetRadius(),
+                playerData->GetPosition(), playerData->GetRadius(),
                 bullet->GetTransform()->GetPosition(), bullet->GetRadius()))
             {
                 //bullet->OnHit({});
@@ -382,25 +382,25 @@ void CollisionManager::PlayerVsEnemy(const float& elapsedTime)
 
         for (int playerDataIndex = 0; playerDataIndex < maxPlayerData; ++playerDataIndex)
         {
-            const CollisionDetectionData playerData = player.GetCollisionDetectionData(playerDataIndex);
+            const CollisionDetectionData* playerData = player.GetCollisionDetectionData(playerDataIndex);
 
             for (int enemyDataIndex = 0; enemyDataIndex < maxEnemyData; ++enemyDataIndex)
             {
-                const CollisionDetectionData enemyData = enemy->GetCollisionDetectionData(enemyDataIndex);
+                const CollisionDetectionData* enemyData = enemy->GetCollisionDetectionData(enemyDataIndex);
 
                 //  このデータの判定が無効
-                if (enemyData.GetIsActive() == false) continue;
+                if (enemyData->GetIsActive() == false) continue;
 
                 //  押し出し後の位置
                 DirectX::XMFLOAT3 resultPosition = {};
 
                 //  Yの値が0.0fのデータとの判定
-                if (enemyData.GetFixedY())
+                if (enemyData->GetFixedY())
                 {
                     //  当たったかチェック
                     if (IntersectSphereVsSphere(
-                        enemyData.GetPosition(), enemyData.GetRadius(),
-                        player.GetTransform()->GetPosition(), playerData.GetRadius(),
+                        enemyData->GetPosition(), enemyData->GetRadius(),
+                        player.GetTransform()->GetPosition(), playerData->GetRadius(),
                         resultPosition))
                     {
                         resultPosition.y = 0.0f;
@@ -413,8 +413,8 @@ void CollisionManager::PlayerVsEnemy(const float& elapsedTime)
                 {
                     //  当たったかチェック
                     if (IntersectSphereVsSphereNotConsiderY(
-                        enemyData.GetPosition(), enemyData.GetRadius(),
-                        playerData.GetPosition(), playerData.GetRadius(),
+                        enemyData->GetPosition(), enemyData->GetRadius(),
+                        playerData->GetPosition(), playerData->GetRadius(),
                         resultPosition))
                     {
                         resultPosition = player.GetTransform()->GetPosition() - resultPosition;
@@ -464,10 +464,10 @@ void CollisionManager::EnemyDamageVsBulletAttack()
 
         for (int enemyDataIndex = 0; enemyDataIndex < maxEnemyData; ++enemyDataIndex)
         {
-            DamageDetectionData enemyData = enemy->GetDamageDetectionData(enemyDataIndex);
+            DamageDetectionData* enemyData = enemy->GetDamageDetectionData(enemyDataIndex);
 
             //  このデータは、既にダメージをくらっている
-            if (enemyData.IsHit()) continue;
+            if (enemyData->IsHit()) continue;
 
             for (int bulletIndex = 0; bulletIndex < maxBulletData; ++bulletIndex)
             {
@@ -479,16 +479,16 @@ void CollisionManager::EnemyDamageVsBulletAttack()
                 //  当たったかチェック
                 if (IntersectSphereVsSphere(
                     bullet->GetTransform()->GetPosition(), bullet->GetRadius(),
-                    enemyData.GetPosition(), enemyData.GetRadius()))
+                    enemyData->GetPosition(), enemyData->GetRadius()))
                 {
                     //  当たった位置を求める
-                    const DirectX::XMFLOAT3 hitPosition = bullet->GetTransform()->GetPosition() + Normalize(enemyData.GetPosition() - bullet->GetTransform()->GetPosition()) * bullet->GetRadius();
+                    const DirectX::XMFLOAT3 hitPosition = bullet->GetTransform()->GetPosition() + Normalize(enemyData->GetPosition() - bullet->GetTransform()->GetPosition()) * bullet->GetRadius();
 
                     // ============================================================
                     //  Hitフラグ & 関数呼び出し
                     // ============================================================
-                    enemyData.SetIsHit(true);
-                    enemyData.SetHitTimer(0.01f);
+                    enemyData->SetIsHit(true);
+                    enemyData->SetHitTimer(0.01f);
                     //bullet->OnHit(hitPosition);
 
                     // ============================================================
@@ -497,7 +497,7 @@ void CollisionManager::EnemyDamageVsBulletAttack()
                     if (enemy->IsDead() == false)
                     {
                         const float attackPower = bullet->GetAttackPower();
-                        const float damage = attackPower * enemyData.GetDamage();
+                        const float damage = attackPower * enemyData->GetDamage();
 
                         enemy->AddDamage(damage);
 

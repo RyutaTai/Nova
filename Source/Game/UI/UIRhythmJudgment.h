@@ -9,7 +9,7 @@ class UIRhythmJudgment :public UI
 {
 public:
 	UIRhythmJudgment(const JudgeRhythm::JudgmentType& judgmentType);
-	~UIRhythmJudgment() {}
+	~UIRhythmJudgment()override = default;
 
 	void Initialize()override;
 	void Update(const float& elapsedTime)override;

@@ -10,7 +10,7 @@ class Effect
 {
 public:
 	Effect(const char* filename);
-	~Effect() {};
+	virtual ~Effect() = default;
 
 	//	çƒê∂
 	Effekseer::Handle Play(const DirectX::XMFLOAT3& position, const float& scale = 1.0f);

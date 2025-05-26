@@ -7,7 +7,7 @@ class UIInstructions :public UI
 {
 public:
 	UIInstructions();
-	~UIInstructions() {}
+	~UIInstructions()override = default;
 
 	void Initialize()override;
 	void Update(const float& elapsedTime)override;

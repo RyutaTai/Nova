@@ -253,7 +253,7 @@ namespace PlayerState
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 		if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 		{
-			owner_->GetAttackDetectionData("RightPunch").SetIsActive(true);
+			owner_->GetAttackDetectionData("RightPunch")->SetIsActive(true);
 		}
 
 		//	----- 次のステートへ遷移 -----
@@ -407,7 +407,7 @@ namespace PlayerState
 		//	一撃目
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 		if (animJudgeTime_[0].IsWithinRange(currentAnimationSeconds))
-			owner_->GetAttackDetectionData("LeftPunch").SetIsActive(true);
+			owner_->GetAttackDetectionData("LeftPunch")->SetIsActive(true);
 
 		//	一撃目のアニメーションが終わったらヒットフラグをオフにする
 		if (animJudgeTime_[0].GetMaxTime() < currentAnimationSeconds && currentAnimationSeconds < animJudgeTime_[1].GetMinTime())
@@ -415,7 +415,7 @@ namespace PlayerState
 
 		//	二撃目
 		if (animJudgeTime_[1].IsWithinRange(currentAnimationSeconds))
-			owner_->GetAttackDetectionData("RightPunch").SetIsActive(true);
+			owner_->GetAttackDetectionData("RightPunch")->SetIsActive(true);
 
 		//	次のステートへ遷移
 		DetermineStateTransition(elapsedTime);
@@ -563,7 +563,7 @@ namespace PlayerState
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 		if (animJudgeTime_[0].IsWithinRange(currentAnimationSeconds))
 		{
-			owner_->GetAttackDetectionData("LeftPunch").SetIsActive(true);
+			owner_->GetAttackDetectionData("LeftPunch")->SetIsActive(true);
 		}
 		//	一撃目のアニメーションが終わったらヒットフラグをオフにする
 		if (animJudgeTime_[0].GetMaxTime() < currentAnimationSeconds && currentAnimationSeconds < animJudgeTime_[1].GetMinTime())
@@ -572,7 +572,7 @@ namespace PlayerState
 		//	二撃目の判定
 		if (animJudgeTime_[1].IsWithinRange(currentAnimationSeconds))
 		{
-			owner_->GetAttackDetectionData("RightPunch").SetIsActive(true);
+			owner_->GetAttackDetectionData("RightPunch")->SetIsActive(true);
 		}
 		//	二撃目のアニメーションが終わったらヒットフラグをオフにする
 		if (animJudgeTime_[1].GetMaxTime() < currentAnimationSeconds && currentAnimationSeconds < animJudgeTime_[2].GetMinTime())
@@ -581,7 +581,7 @@ namespace PlayerState
 		//	三撃目の判定
 		if (animJudgeTime_[2].IsWithinRange(currentAnimationSeconds))
 		{
-			owner_->GetAttackDetectionData("LeftKick").SetIsActive(true);
+			owner_->GetAttackDetectionData("LeftKick")->SetIsActive(true);
 		}
 
 		//	次のステートへ遷移
@@ -713,7 +713,7 @@ namespace PlayerState
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 		if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 		{
-			owner_->GetAttackDetectionData("RightPunch").SetIsActive(true);
+			owner_->GetAttackDetectionData("RightPunch")->SetIsActive(true);
 		}
 		
 		//	次のステートへ遷移

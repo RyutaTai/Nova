@@ -9,10 +9,9 @@ class EffectManager
 {
 private:
 	EffectManager(){}
-	~EffectManager(){}
+	~EffectManager() = default;
 
 public:
-	//	唯一のインスタンス取得
 	static EffectManager& Instance()
 	{
 		static EffectManager instance;

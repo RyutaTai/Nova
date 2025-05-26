@@ -272,25 +272,32 @@ void Character::RegisterAttackDetectionData(const AttackDetectionData& data)
 }
 
 //	名前からデータを取得
-AttackDetectionData& Character::GetAttackDetectionData(const std::string& name)
+AttackDetectionData* Character::GetAttackDetectionData(const std::string& name)
 {
 	//	名前でデータを探す
 	for (AttackDetectionData& data : attackDetectionData_)
 	{
 		if (data.GetName() != name) continue;
 
-		return data;
+		return &data;
 	}
 
 	//	見つからなかった
 	_ASSERT_EXPR(false, "not found AttackDetectionData");
-	return AttackDetectionData();
+	return nullptr;
 }
 
 //	登録番号からデータを取得
-AttackDetectionData& Character::GetAttackDetectionData(const int& index)
+AttackDetectionData* Character::GetAttackDetectionData(const int& index)
 {
-	return attackDetectionData_.at(index);
+	//	インデックスが有効範囲内かチェック
+	if (index < 0 || static_cast<size_t>(index) >= attackDetectionData_.size())
+	{
+		_ASSERT_EXPR(false, "Invalid index for AttackDetectionData");
+		return nullptr;
+	}
+
+	return &attackDetectionData_[index];
 }
 
 #pragma endregion ----- 攻撃判定 ----- 
@@ -302,25 +309,32 @@ void Character::RegisterDamageDetectionData(const DamageDetectionData& data)
 	damageDetectionData_.emplace_back(data);
 }
 //	名前からデータを取得
-DamageDetectionData& Character::GetDamageDetectionData(const std::string& name)
+DamageDetectionData* Character::GetDamageDetectionData(const std::string& name)
 {
 	//	名前でデータを探す
 	for (DamageDetectionData& data : damageDetectionData_)
 	{
 		if (data.GetName() != name) continue;
 
-		return data;
+		return &data;
 	}
 
 	//	見つからなかった
 	_ASSERT_EXPR(false, "not found DamageDetectionData");
-	return DamageDetectionData();
+	return nullptr;
 }
 
 //	登録番号からデータを取得
-DamageDetectionData& Character::GetDamageDetectionData(const int& index)
+DamageDetectionData* Character::GetDamageDetectionData(const int& index)
 {
-	return damageDetectionData_.at(index);
+	//	インデックスが有効範囲内かチェック
+	if (index < 0 || static_cast<size_t>(index) >= damageDetectionData_.size())
+	{
+		_ASSERT_EXPR(false, "Invalid index for DamageDetectionData");
+		return nullptr;
+	}
+
+	return &damageDetectionData_[index];
 }
 
 #pragma endregion ----- くらい判定 ----- 
@@ -333,25 +347,32 @@ void Character::RegisterCollisionDetectionData(const CollisionDetectionData& dat
 }
 
 //	名前からデータを取得
-CollisionDetectionData& Character::GetCollisionDetectionData(const std::string& name)
+CollisionDetectionData* Character::GetCollisionDetectionData(const std::string& name)
 {
 	//	名前でデータを探す
 	for (CollisionDetectionData& data : collisionDetectionData_)
 	{
 		if (data.GetName() != name) continue;
 
-		return data;
+		return &data;
 	}
 
 	//	見つからなかった
 	_ASSERT_EXPR(false, "not found CollisionDetectionData");
-	return CollisionDetectionData();
+	return nullptr;
 }
 
 //	登録番号からデータを取得
-CollisionDetectionData& Character::GetCollisionDetectionData(const int& index)
+CollisionDetectionData* Character::GetCollisionDetectionData(const int& index)
 {
-	return collisionDetectionData_.at(index);
+	//	インデックスが有効範囲内かチェック
+	if (index < 0 || static_cast<size_t>(index) >= collisionDetectionData_.size())
+	{
+		_ASSERT_EXPR(false, "Invalid index for CollisionDetectionData");
+		return nullptr;
+	}
+
+	return &collisionDetectionData_[index];
 }
 
 #pragma endregion ----- 押し出し判定 ----- 

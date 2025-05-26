@@ -22,7 +22,7 @@ private:
 
 public:
 	UIRank();
-	~UIRank() {}
+	~UIRank()override = default;
 
 	void Initialize()override;
 	void Update(const float& elapsedTime)override;
