@@ -106,7 +106,7 @@ void CALLBACK WaveInProc(HWAVEIN hwi, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR
         }
         rms = sqrt(rms / numSamples);
 
-        float decibels = 20.0 * log10(rms);
+        double decibels = 20.0 * log10(rms);
         if (decibels < 0)decibels = 0.0;
 
         Microphone::Param db;
@@ -179,5 +179,5 @@ auto sort_func = [](Microphone::Param& lhs, Microphone::Param& rhs)-> bool {
 float Microphone::Sort()
 {
     std::sort(_mic.begin(), _mic.end(), sort_func);
-    return _mic.back()._db;
+	return static_cast<float>(_mic.back()._db);
 }

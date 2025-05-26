@@ -161,7 +161,7 @@ Midi::MidiNote* Midi::FindClosestNoteInLoop(const double& inputTime)
         //if (note.judged_) continue;
 
         //  ƒ‹[ƒv‘Î‰
-        float noteTime = note.time_;
+        double noteTime = note.time_;
 
         double delta = std::abs(inputTime - noteTime);
         if (delta < minDelta)
@@ -197,7 +197,7 @@ const double Midi::GetNearMidiTime(const double& inputTime)
 {
     if (notes_.empty()) return -1.0f;
 
-    auto it = std::lower_bound(notes_.begin(), notes_.end(), inputTime, [](const MidiNote& note, float time) {
+    auto it = std::lower_bound(notes_.begin(), notes_.end(), inputTime, [](const MidiNote& note, double time) {
         return note.time_ < time;
         });
 

@@ -259,7 +259,7 @@ void CollisionManager::PlayerDamageVsEnemyAttack()
                     //  ==================================================
                     //  ƒ_ƒ[ƒW‚ð—^‚¦‚é
                     //  ==================================================
-                    int damage = enemy->GetAttackPower();
+                    float damage = enemy->GetAttackPower();
                     player.AddDamage(damage);
 
                     player.SetEnemyPos(enemy->GetTransform()->GetPosition());
@@ -308,7 +308,7 @@ void CollisionManager::PlayerDamageVsBulletAttack()
     std::vector<Bullet*> bullets = BulletManager::Instance().GetBullets();
 
     const int maxPlayerData = player.GetDamageDetectionDataCount();
-    const int maxBulletData = bullets.size();
+	const int maxBulletData = static_cast<int>(bullets.size());
 
     for (int playerDataIndex = 0; playerDataIndex < maxPlayerData; ++playerDataIndex)
     {
@@ -460,7 +460,7 @@ void CollisionManager::EnemyDamageVsBulletAttack()
         std::vector<Bullet*> bullets = BulletManager::Instance().GetBullets();
 
         const int maxEnemyData = enemy->GetDamageDetectionDataCount();
-        const int maxBulletData = bullets.size();
+		const int maxBulletData = static_cast<int>(bullets.size());
 
         for (int enemyDataIndex = 0; enemyDataIndex < maxEnemyData; ++enemyDataIndex)
         {

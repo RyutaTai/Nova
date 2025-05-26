@@ -210,7 +210,7 @@ DirectX::XMFLOAT3 Character::GetJointPosition(const size_t& nodeIndex, const Dir
 }
 
 //	HP減少
-void Character::SubtractHp(const int& hp)
+void Character::SubtractHp(const float& hp)
 {
 	//	無敵でなければHP減少
 	if (isInvincible_ == false)	
@@ -373,7 +373,7 @@ void Character::DrawDebug()
 
 	//	----- HP -----
 	ImGui::Checkbox("Invincible", &isInvincible_);				//	無敵フラグ設定
-	ImGui::DragInt("HP", &hp_, 1.0f, 0, INT_MAX);
+	ImGui::DragFloat("HP", &hp_, 1.0f, 0, FLT_MAX);
 	//	----- 移動 -----
 	ImGui::DragFloat3("Velocity", &velocity_.x, 0.01f, -FLT_MAX, FLT_MAX);			//	移動速度
 	ImGui::DragFloat3("Acceleration", &acceleration_.x, 0.01f, -FLT_MAX, FLT_MAX);	//	加速度

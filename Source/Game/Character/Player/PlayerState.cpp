@@ -647,6 +647,7 @@ namespace PlayerState
 		{
 			return true;
 		}
+		return false;
 	}
 
 	void ComboOne3::Finalize()

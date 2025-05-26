@@ -51,6 +51,7 @@ public:
 	{
 		//	----- 定数バッファの transform_ の計算に利用
 		DirectX::XMFLOAT3	eye_		= { 0.0f, 50.0f, 0.0f };
+		DirectX::XMFLOAT3   eyeOffset_	= { 0.0f,0.0f,0.0f };
 		DirectX::XMFLOAT3	defaultEye_ = { 0.0f,50.0f,0.0f };
 		DirectX::XMFLOAT3	focus_		= { 0.0f, 0.0f,  0.0f };
 		float				rotation_	= 0.0f;
@@ -62,14 +63,15 @@ public:
 		//	----- 色の変更に使用 -----
 		DirectX::XMFLOAT4 defaultSpectrumColor_;	// デフォルトの色
 		DirectX::XMFLOAT4 currentSpectrumColor_;	// 現在の色
-		bool	isTemporaryColorActive_;			//	オーディオスペクトラムの一時的な色変更フラグ
-		float	colorTimer_;
-		float	colorDuration_;						//	何秒間色を変更するか
+		bool	isTemporaryColorActive_ = false;	//	オーディオスペクトラムの一時的な色変更フラグ
+		float	colorTimer_ = 0.0f;
+		float	colorDuration_ = 0.8f;						//	何秒間色を変更するか
 		
-		// ----- スケール変更に使用 -----
-		bool	isTemporaryScaleActive_;
-		float	scaleTimer_;
-		float	scaleDuration_;
+		// ----- 視野角変更に使用(スケールが変わったように見せる) -----
+		bool	isFovyScaleActive_ = false;
+		float	defaultFovy_ = 10.0f;
+		float	fovyTimer_ = 0.0f;
+		float	fovyDuration_ = 0.8f;
 	
 	};
 	ProjectionMapping projectionMapping_[static_cast<int>(AudioSpectrumType::Max)];
@@ -90,7 +92,7 @@ public:
 	void UpdateFrequencyMax();
 
 	bool Collision(_In_ const DirectX::XMFLOAT3& rayPosition, _In_ const DirectX::XMFLOAT3& rayDirection, _In_ const DirectX::XMFLOAT4X4& stageTransform, _Out_ DirectX::XMFLOAT3& intersectionPosition, _Out_ DirectX::XMFLOAT3& intersectionNormal,
-		_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ float rayLengthLimit = 1.0e+7f, _In_ bool skipIf = false/*Once the first intersection is found, the process is interrupted.*/) const;
+		_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ const float& rayLengthLimit = 1.0e+7f, _In_ const bool& skipIf = false/*Once the first intersection is found, the process is interrupted.*/) const;
 
 	Transform* GetTransform() { return gltfStaticModelResource_->GetTransform(); }
 	Frequency* GetFrequency() { return frequency_.get(); }	//	音の周波数データ取得
@@ -104,9 +106,9 @@ public:
 	void UpdateSpectrumColor(const float& elapsedTime);
 	void SetSpectrumColor(const AudioSpectrumType& projectionMappingType, const DirectX::XMFLOAT4& color);
 
-	//	オーディオスペクトラムのスケール
-	void UpdateSpectrumScale(const float& elapsedTime);
-	void SetCircleSpectrumEyeOffsetY(const AudioSpectrumType& projectionMappingType, const float& eyeOffsetY, const float& lerpTime);
+	//	オーディオスペクトラムの
+	void UpdateSpectrumFovy(const float& elapsedTime);
+	void SetCircleSpectrumFovy(const AudioSpectrumType& projectionMappingType, const float& fovy, const float& lerpTime);
 
 	//	プロジェクションマッピング情報
 	void SetProjectionMappingEye(const DirectX::XMFLOAT3& eye, const int& index) { projectionMapping_[index].eye_ = eye; }
@@ -161,7 +163,5 @@ private:
 	float defaultEmissiveIntensity_ = 10.0f;
 
 	//	円形オーディオスペクトラムのfocusからeyeまでの高さ
-	float defaultEyeOffsetY_ = 30.0f;
-	float eyeOffsetY_ = 30.0f;
 
 };

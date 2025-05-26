@@ -77,14 +77,14 @@ public:
 	ID3D11RenderTargetView*		GetRenderTargetView()		const	{ return renderTargetView_.Get(); }
 	ID3D11DepthStencilView*		GetDepthStencilView()		const	{ return depthStencilView_.Get(); }
 	ID3D11Buffer*				GetConstantBuffer()			const	{ return constantBuffer_.Get(); }
-	Shader*						GetShader()							{ return shader_.get(); }
+	Shader*						GetShader()					const	{ return shader_.get(); }
 	const SceneConstants		GetSceneConstant()			const	{ return sceneConstant_; }
 	const DirectX::XMFLOAT4X4	GetViewProjection()			const	{ return sceneConstant_.viewProjection_; }
 	const DirectX::XMFLOAT4		GetLightDirection()			const	{ return sceneConstant_.lightDirection_; }
 	const DirectX::XMFLOAT4		GetCameraPosition()			const	{ return sceneConstant_.cameraPosition_; }
 	const DirectX::XMFLOAT4X4	GetLightViewProjection()	const	{ return sceneConstant_.lightViewProjection_; }
 	const DirectX::XMFLOAT4X4	GetInvViewProjection()		const	{ return sceneConstant_.invViewProjection_; }
-	DebugRenderer*				GetDebugRenderer()					{ return debugRenderer_.get(); }
+	DebugRenderer*				GetDebugRenderer()			const	{ return debugRenderer_.get(); }
 	std::mutex&					GetMutex()							{ return mutex_; }			//ミューテックス取得
 
 private:

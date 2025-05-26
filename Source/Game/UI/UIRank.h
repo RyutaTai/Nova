@@ -32,11 +32,11 @@ public:
 	void UpdateVisibleThreshold(const float& elapsedTime);
 
 	//	ランクポイント
-	void AddRankPoint(const float& addRankPoint);
-	void SetTotalRankPoint(const float& rankPoint) { totalRankPoint_ = rankPoint; }
-	void SetCurrentRankPoint(const float& rankPoint) { currentRankPoint_ = rankPoint; }
-	const float GetTotalRankPoint() { return totalRankPoint_; }
-	const float GetCurrentRankPoint() { return currentRankPoint_; }
+	void AddRankPoint(const int& addRankPoint);
+	void SetTotalRankPoint(const int& rankPoint) { totalRankPoint_ = rankPoint; }
+	void SetCurrentRankPoint(const int& rankPoint) { currentRankPoint_ = rankPoint; }
+	const int GetTotalRankPoint() { return totalRankPoint_; }
+	const int GetCurrentRankPoint() { return currentRankPoint_; }
 
 	void SetVisibleThreshold(const float& threshold) { visibleThreshold_ = threshold; }
 	float GetVisibleThreshold() { return visibleThreshold_; }
@@ -56,8 +56,8 @@ private:
 	//RankType			currentRank_ = RankType::C;					//	現在のランク
 	RankInfo			currentRankInfo_ = {};						//	現在のランク情報
 	float				pointsToNextRank_[RankTypeMax_ - 1] = {};	//	それぞれのランクへの閾値
-	float				totalRankPoint_ = 0.0f;						//	累計ランクポイント
-	float				currentRankPoint_ = 0.0f;					///	現在のランクでのランクポイント
+	int					totalRankPoint_ = 0;						//	累計ランクポイント
+	int					currentRankPoint_ = 0;					///	現在のランクでのランクポイント
 
 };
 

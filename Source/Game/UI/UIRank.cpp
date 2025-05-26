@@ -22,8 +22,8 @@ UIRank::UIRank()
 void UIRank::Initialize()
 {
 	//	ランクポイント
-	totalRankPoint_ = 0.0f;
-	currentRankPoint_ = 0.0f;
+	totalRankPoint_ = 0;
+	currentRankPoint_ = 0;
 
 	//	ランク文字
 	rankTextBack_->GetTransform()->SetTexSizeX(RankTextSize_);
@@ -81,13 +81,13 @@ void UIRank::UpdateVisibleThreshold(const float& elapsedTime)
 		currentRankInfo_.index_++;
 		if (currentRankInfo_.index_ < RankTypeMax_ - 2)
 			currentRankInfo_.pointToNextRank_ = pointsToNextRank_[currentRankInfo_.index_];
-		currentRankPoint_ = 0.0f;
+		currentRankPoint_ = 0;
 	}
 
 }
 
 //	ランクポイント加算
-void UIRank::AddRankPoint(const float& addRankPoint)
+void UIRank::AddRankPoint(const int& addRankPoint)
 {
 	totalRankPoint_ += addRankPoint;
 	currentRankPoint_ += addRankPoint;
@@ -105,8 +105,8 @@ void UIRank::DrawDebug()
 	if (ImGui::TreeNode("Rank"))
 	{
 		ImGui::Text("----- RankPoint -----");
-		ImGui::DragFloat("TotalRankPoint", &totalRankPoint_);
-		ImGui::DragFloat("CurrentRankPoint", &currentRankPoint_);
+		ImGui::DragInt("TotalRankPoint", &totalRankPoint_);
+		ImGui::DragInt("CurrentRankPoint", &currentRankPoint_);
 
 		ImGui::DragFloat("Threshold", &visibleThreshold_, 0.01f, 0.0f, 1.0f);
 		ImGui::DragInt("CurrrentRankIndex", &currentRankInfo_.index_);

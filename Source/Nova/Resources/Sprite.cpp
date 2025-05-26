@@ -66,9 +66,9 @@ Sprite::Sprite(const wchar_t* filename,const InitInfo& initInfo)
 	// テクスチャ読み込み
 	LoadTextureFromFile(device, filename, shaderResourceView_.GetAddressOf(), &texture2dDesc_);
 
-	GetTransform()->SetSize(texture2dDesc_.Width, texture2dDesc_.Height);
-	GetTransform()->SetTexSize(texture2dDesc_.Width, texture2dDesc_.Height);
-	GetTransform()->SetDefaultSize(texture2dDesc_.Width, texture2dDesc_.Height);
+	GetTransform()->SetSize(static_cast<float>(texture2dDesc_.Width), static_cast<float>(texture2dDesc_.Height));
+	GetTransform()->SetTexSize(static_cast<float>(texture2dDesc_.Width), static_cast<float>(texture2dDesc_.Height));
+	GetTransform()->SetDefaultSize(static_cast<float>(texture2dDesc_.Width), static_cast<float>(texture2dDesc_.Height));
 }
 
 //	デストラクタ

@@ -46,7 +46,7 @@ public:
     float Sort();
 
     //  デシベル取得
-    float GetDecibel() { return _mic.at(_timer-1)._db; }
+	float GetDecibel() { return static_cast<float>(_mic.at(static_cast<int>(_timer) - 1)._db); }
 
     //  タイマー取得
     float GetTimer() { return _timer; }

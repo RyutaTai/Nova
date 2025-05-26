@@ -14,7 +14,7 @@ public:
 		uint32_t startSlot, uint32_t numViews, ID3D11PixelShader* replacedPixelShader = nullptr);
 
 private:
-	Microsoft::WRL::ComPtr <ID3D11VertexShader>	embeddedVertexShader_;
-	Microsoft::WRL::ComPtr <ID3D11PixelShader>	embeddedPixelShader_;
+	Microsoft::WRL::ComPtr<ID3D11VertexShader>	embeddedVertexShader_;
+	Microsoft::WRL::ComPtr<ID3D11PixelShader>	embeddedPixelShader_;
 
 };

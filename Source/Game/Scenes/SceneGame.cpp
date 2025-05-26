@@ -185,8 +185,8 @@ void SceneGame::Update(const float& elapsedTime)
 
 	//	ゲームクリアへの遷移はWeve3 State内で行っている	
 	//	ゲームオーバー
-	int playerHp = player_->GetHp();
-	if (playerHp <= 0)
+	float playerHp = player_->GetHp();
+	if (playerHp <= 0.0f)
 	{
 		ChangeState(SceneGameState::GameOver);
 	}

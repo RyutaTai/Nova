@@ -35,29 +35,24 @@ float4 main(VS_OUT pin) : SV_TARGET
     uint t = texcoord.x * FFT_BLOCK_COUNT / 4;
     float4 amp = data[t];
     float offset = texcoord.x * FFT_BLOCK_COUNT;
-    float fft = amp[(int) offset % 4];
-    
+    float fft = amp[(uint) offset % 4];
     
     float3 fftColor = float3(color[MY_COLOR_INDEX].rgb);
-    //float3 fft_color = float3(0.8, 0.6, 0.3);
     if (pin.texcoord.y > 0.5)
     {
         float y = (pin.texcoord.y - 0.5) * 2.0;
-        //return float4(step(y, fft), 0, 0, 1);
         fftColor *= step(y, fft);
         
     }
     else if (pin.texcoord.y < 0.5)
     {
         float y = (0.5 - pin.texcoord.y) * 2.0;
-        //return float4(step(y, fft), 0, 0, 1);
         fftColor *= step(y, fft);
 
     }
     
-    return float4(fftColor, 1.0);
-    //return float4(fft_color, 0.5);
-    
+    //return float4(fftColor, 1.0); 
+   
     
     
     
@@ -76,13 +71,6 @@ float4 main(VS_OUT pin) : SV_TARGET
 
     // output final color
     return float4(ledColor, 1.0);
-    
-    //uint t = pin.texcoord.x * FFT_BLOCK_COUNT / 4;
-    //float4 amp = data[t];
-    //float offset = pin.texcoord.x * 2048;
-    //float v = amp[(int) offset % 4];
-    //return float4(v, 0, 0, 1);
-    ////float amp = data[pin.position.x / 4];
     
     
     if (pin.position.x % 4 == 0)        amp = data[t].x;

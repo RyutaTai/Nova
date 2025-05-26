@@ -70,9 +70,9 @@ public:
 	void CastShadows() { gltfModelResource_->CastShadows(); }
 
 	//	----- HP -----
-	void			SubtractHp(const int& hp);
-	void			SetHp(const int& hp){ hp_ = hp; }
-	const int		GetHp()const { return hp_; }
+	void			SubtractHp(const float& hp);
+	void			SetHp(const float& hp){ hp_ = hp; }
+	const float		GetHp()const { return hp_; }
 
 	//	----- €–Sƒtƒ‰ƒO -----
 	void			SetIsDead(const bool& isDead) { isDead_ = isDead; }
@@ -157,7 +157,7 @@ protected:
 	float	radius_ = 30.0f;	//	”¼Œa
 	float	height_ = 195.0f;	//	‚‚³
 
-	int		hp_ = 100;				//	Œ»İ‚ÌHP
+	float	hp_ = 100;				//	Œ»İ‚ÌHP
 	bool	isDead_ = false;		//	€–Sƒtƒ‰ƒO
 	float	attackPower_ = 5.0f;	//	UŒ‚—Í
 

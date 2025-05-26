@@ -190,9 +190,9 @@ void BulletManager::DrawDebug()
 	if (ImGui::TreeNode(u8"BulletManager"))
 	{
 		//	íeÇÃêî
-		int generatesCount = generates_.size();
+		int generatesCount = static_cast<int>(generates_.size());
 		int bulletCount = GetBulletCount();
-		int removesCount = removes_.size();
+		int removesCount = static_cast<int>(removes_.size());
 		ImGui::DragInt("GeneratesCount", &generatesCount);
 		ImGui::DragInt("BulletCount", &bulletCount);
 		ImGui::DragInt("RemovesCount", &removesCount);

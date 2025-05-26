@@ -10,7 +10,7 @@ void PitchShifter::ApplyPitchShift(const float& pitchShift, const std::vector<fl
 {
     std::vector<float> window = frequency_->HammingWindow(FRAME_SIZE);  //  ハミング窓生成
 
-    int numFrames = (input.size() - FRAME_SIZE) / OVERLAP + 1;
+	int numFrames = (static_cast<int>(input.size()) - FRAME_SIZE) / OVERLAP + 1;
     output.resize(input.size() + (numFrames - 1) * OVERLAP);
 
     for (int frame = 0; frame < numFrames; ++frame)
@@ -53,7 +53,7 @@ void PitchShifter::ApplyPitchShift(const float& pitchShift, const std::vector<fl
         //  ウィンドウを再適用してオーバーラップ加算
         for (int i = 0; i < FRAME_SIZE; ++i) 
         {
-            output[offset + i] += shiftedFreqDomain[i].real() * window[i];
+			output[offset + i] += static_cast<float>(shiftedFreqDomain[i].real()) * window[i];
         }
     }
 }

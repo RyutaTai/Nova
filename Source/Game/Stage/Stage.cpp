@@ -8,6 +8,7 @@
 #include "../../Nova/Resources/ResourceManager.h"
 #include "../../Nova/Others/Easing.h"
 #include "../Character/Player/Player.h"
+#include "../../Nova/Others/MathHelper.h"
 
 Stage* Stage::instance_ = nullptr;
 
@@ -54,6 +55,7 @@ Stage::Stage()
 		projectionMapping_[static_cast<int>(AudioSpectrumType::Waveform)].currentSpectrumColor_ = { 1.0f, 0.0f, 0.0f, 1.0f };
 
 		fftConstant_.color_[static_cast<int>(AudioSpectrumType::Circle)] = { 0.0f, 0.325f, 1.0f, 1.0f };
+		projectionMapping_[static_cast<int>(AudioSpectrumType::Circle)].eyeOffset_.y = 30.0f;
 		projectionMapping_[static_cast<int>(AudioSpectrumType::Circle)].defaultSpectrumColor_ = { 0.0f, 0.325f, 1.0f, 1.0f };
 		projectionMapping_[static_cast<int>(AudioSpectrumType::Circle)].currentSpectrumColor_ = { 0.0f, 0.325f, 1.0f, 1.0f };
 
@@ -63,9 +65,11 @@ Stage::Stage()
 			projectionMapping_[i].colorTimer_ = 0.0f;
 			projectionMapping_[i].colorDuration_ = 0.8f;
 
-			projectionMapping_[i].isTemporaryScaleActive_ = false;
-			projectionMapping_[i].scaleTimer_ = 0.0f;
-			projectionMapping_[i].scaleDuration_ = 0.8f;
+			projectionMapping_[i].isFovyScaleActive_ = false;
+			projectionMapping_[i].fovy_ = 10.0f;
+			projectionMapping_[i].defaultFovy_ = 10.0f;
+			projectionMapping_[i].fovyTimer_ = 0.0f;
+			projectionMapping_[i].fovyDuration_ = 0.8f;
 		}
 
 		//	フレームバッファ
@@ -80,7 +84,7 @@ Stage::Stage()
 		projectionMapping_[static_cast<int>(AudioSpectrumType::Waveform)].eye_ = { 72.0f,7.0f,8.8f };
 		projectionMapping_[static_cast<int>(AudioSpectrumType::Waveform)].defaultEye_ = { 72.0f,7.0f,8.8f };
 		projectionMapping_[static_cast<int>(AudioSpectrumType::Waveform)].focus_ = { 33.0f,10.0f,-1.0f };
-		projectionMapping_[static_cast<int>(AudioSpectrumType::Waveform)].rotation_ = -104.2f;
+		projectionMapping_[static_cast<int>(AudioSpectrumType::Waveform)].rotation_ = -104.12f;
 		projectionMapping_[static_cast<int>(AudioSpectrumType::Waveform)].fovy_ = 10.0f;
 		bufferDesc = {};
 		bufferDesc.ByteWidth = sizeof(ProjectionMappingConstant);
@@ -204,7 +208,7 @@ void Stage::UpdateEmissive(const float& elapsedTime)
 void Stage::UpdateAudioSpectrum(const float& elapsedTime)
 {
 	UpdateSpectrumColor(elapsedTime);		//	オーディオスペクトラムの色更新
-	UpdateSpectrumScale(elapsedTime);		//	オーディオスペクトラムのスケール更新
+	UpdateSpectrumFovy(elapsedTime);		//	オーディオスペクトラムのスケール更新
 	UpdateCircleAudioSpectrum(elapsedTime);	//	波形オーディオスペクトラム更新
 	UpdateWaveformAudioSpectrum();			//	円形オーディオスペクトラム更新
 }
@@ -215,6 +219,7 @@ void Stage::UpdateWaveformAudioSpectrum()
 	int projectionMappingIndex = static_cast<int>(AudioSpectrumType::Waveform);
 	float projectionMappingRotation				= projectionMapping_[projectionMappingIndex].rotation_;
 	DirectX::XMFLOAT3 projectionMappingEye		= projectionMapping_[projectionMappingIndex].eye_;
+	projectionMappingEye = projectionMappingEye + projectionMapping_[projectionMappingIndex].eyeOffset_;
 	DirectX::XMFLOAT3 projectionMappingFocus	= projectionMapping_[projectionMappingIndex].focus_;
 	float projectionMappingFovy					= projectionMapping_[projectionMappingIndex].fovy_;
 	DirectX::XMMATRIX ProjectionMappingTransform =
@@ -241,7 +246,7 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 	projectionMapping_[projectionMappingIndex].focus_	= projectionMappingFocus;
 
 	//	視点をプレイヤーの真上から投影するように設定
-	projectionMappingEye.y += eyeOffsetY_;								
+	projectionMappingEye = projectionMappingEye + projectionMapping_[projectionMappingIndex].eyeOffset_;
 	projectionMapping_[projectionMappingIndex].eye_ = projectionMappingEye;
 
 	float projectionMappingFovy = projectionMapping_[projectionMappingIndex].fovy_;
@@ -308,29 +313,28 @@ void Stage::SetSpectrumColor(const AudioSpectrumType& projectionMappingType, con
 
 //	オーディオスペクトラムのスケール変更に関する更新処理
 //	プロジェクションマッピングの視点を変化させることでスケールが変わったように見せる
-void Stage::UpdateSpectrumScale(const float& elapsedTime)
+void Stage::UpdateSpectrumFovy(const float& elapsedTime)
 {
 	for (int i = 0; i < static_cast<int>(AudioSpectrumType::Max); ++i)
 	{
-		if (projectionMapping_[i].isTemporaryScaleActive_)	//	色変更フラグが立っていたら
+		if (projectionMapping_[i].isFovyScaleActive_)	//	色変更フラグが立っていたら
 		{
-			projectionMapping_[i].scaleTimer_ += elapsedTime;
-			if (projectionMapping_[i].scaleTimer_ >= projectionMapping_[i].scaleDuration_)	//	一定時間経過したら視点をデフォルト位置にリセット
+			projectionMapping_[i].fovyTimer_ += elapsedTime;
+			if (projectionMapping_[i].fovyTimer_ >= projectionMapping_[i].fovyDuration_)	//	一定時間経過したら視点をデフォルト位置にリセット
 			{
-				projectionMapping_[i].isTemporaryScaleActive_ = false;
-				projectionMapping_[i].eye_ = projectionMapping_[i].defaultEye_;
-				eyeOffsetY_ = defaultEyeOffsetY_;		//	円形オーディオスペクトラムの大きさをリセット
+				projectionMapping_[i].isFovyScaleActive_ = false;
+				projectionMapping_[i].fovy_ = projectionMapping_[i].defaultFovy_;
 			}
 		}
 	}
 }
 
-//	オーディオスペクトラムのスケール変更
-void Stage::SetCircleSpectrumEyeOffsetY(const AudioSpectrumType& projectionMappingType, const float& eyeOffsetY,const float& lerpTime/*イージング用*/)
+//	オーディオスペクトラムの視野角
+void Stage::SetCircleSpectrumFovy(const AudioSpectrumType& projectionMappingType, const float& fovy,const float& lerpTime/*イージング用*/)
 {
-	projectionMapping_[static_cast<int>(projectionMappingType)].isTemporaryScaleActive_= true;
-	projectionMapping_[static_cast<int>(projectionMappingType)].scaleTimer_ = 0.0f;	//	タイマーをリセット
-	eyeOffsetY_ = eyeOffsetY;	//	円形オーディオスペクトラムの大きさを変化
+	projectionMapping_[static_cast<int>(projectionMappingType)].isFovyScaleActive_= true;
+	projectionMapping_[static_cast<int>(projectionMappingType)].fovyTimer_ = 0.0f;	//	タイマーをリセット
+	projectionMapping_[static_cast<int>(projectionMappingType)].fovy_ = fovy;	//	円形オーディオスペクトラムの大きさを変化
 	//eyeOffsetY_ += 2.5f;	//	円形オーディオスペクトラムの大きさを変化
 }
 
@@ -363,12 +367,12 @@ void Stage::UpdateFrequencyMax()
 
 //	コリジョンメッシュの当たり判定
 bool Stage::Collision(_In_ const DirectX::XMFLOAT3& rayStartPosition, _In_ const DirectX::XMFLOAT3& rayDirection, _In_ const DirectX::XMFLOAT4X4& stageTransform, _Out_ DirectX::XMFLOAT3& intersectionPosition, _Out_ DirectX::XMFLOAT3& intersectionNormal,
-	_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ float rayLengthLimit, _In_ bool skipIf) const
+	_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ const float& rayLengthLimit, _In_ const bool& skipIf) const
 {
 	//	空間分割レイキャスト
 	if (collisionMesh_->RaycastWithSpaceDivision(rayStartPosition, rayDirection, stageTransform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
 	{
-#if 0	//	結果を出力画面で確認する用
+#if 0	//	結果を出力画面で確認するため
 		OutputDebugStringA("Position:");
 		OutputDebugStringA("Intersected : ");
 		OutputDebugStringA(intersectionMesh.c_str());
@@ -380,7 +384,7 @@ bool Stage::Collision(_In_ const DirectX::XMFLOAT3& rayStartPosition, _In_ const
 	}
 	else
 	{
-		//	結果を出力画面で確認する用
+		//	結果を出力画面で確認するため
 #if 0
 		OutputDebugStringA("Unintersected...\n");
 #endif
@@ -495,9 +499,9 @@ void Stage::DrawDebug()
 			{
 				ImGui::PushID(projectionMappingIndex);
 				ImGui::ColorEdit4("Color", &fftConstant_.color_[projectionMappingIndex].x);
-				ImGui::DragFloat3("Eye", &projectionMapping_[projectionMappingIndex].eye_.x);
-				ImGui::DragFloat3("Focus", &projectionMapping_[projectionMappingIndex].focus_.x);
-				ImGui::DragFloat("Rotation", &projectionMapping_[projectionMappingIndex].rotation_);
+				ImGui::DragFloat3("Eye", &projectionMapping_[projectionMappingIndex].eye_.x, 0.01f);
+				ImGui::DragFloat3("Focus", &projectionMapping_[projectionMappingIndex].focus_.x, 0.01f);
+				ImGui::DragFloat("Rotation", &projectionMapping_[projectionMappingIndex].rotation_, 0.01f);
 				ImGui::SliderFloat("Fovy", &projectionMapping_[projectionMappingIndex].fovy_, 10.0f, 180.0f);
 				ImGui::PopID();
 				ImGui::TreePop();
@@ -509,11 +513,9 @@ void Stage::DrawDebug()
 				projectionMappingIndex = static_cast<int>(AudioSpectrumType::Circle);
 				ImGui::ColorEdit4("Color", &fftConstant_.color_[projectionMappingIndex].x);
 				ImGui::PushID(projectionMappingIndex);
-				ImGui::DragFloat3("Eye", &projectionMapping_[projectionMappingIndex].eye_.x);
-				ImGui::DragFloat("EyeOffsetY", &eyeOffsetY_, 0.01f);
-				ImGui::DragFloat("DefaultEyeOffsetY", &defaultEyeOffsetY_, 0.01f);
-				ImGui::DragFloat3("Focus", &projectionMapping_[projectionMappingIndex].focus_.x);
-				ImGui::DragFloat("Rotation", &projectionMapping_[projectionMappingIndex].rotation_);
+				ImGui::DragFloat3("Eye", &projectionMapping_[projectionMappingIndex].eye_.x, 0.01f);
+				ImGui::DragFloat3("Focus", &projectionMapping_[projectionMappingIndex].focus_.x, 0.01f);
+				ImGui::DragFloat("Rotation", &projectionMapping_[projectionMappingIndex].rotation_, 0.01f);
 				ImGui::SliderFloat("Fovy", &projectionMapping_[projectionMappingIndex].fovy_, 10.0f, 180.0f);
 				ImGui::PopID();
 				ImGui::TreePop();
@@ -536,7 +538,6 @@ void Stage::DrawDebug()
 			ImGui::DragFloat("EmissiveFactor", &emissiveFactor_, 1.0f, 0.0f);
 			ImGui::DragFloat("EmissiveIntencityMin", &emissiveIntencityMin_, 1.0f, 0.0f);
 			ImGui::DragFloat("EmissiveIntencityMax", &emissiveIntencityMax_, 1.0f, 0.0f);
-			ImGui::DragFloat("EyeHeight", &eyeOffsetY_, 1.0f, 0.0f);
 
 			ImGui::TreePop();
 		}

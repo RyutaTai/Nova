@@ -1352,8 +1352,8 @@ void GltfModel::DrawDebug()
     {
         ImGui::InputInt("CurrentAnimationIndex", &currentAnimationIndex_);      //  現在のアニメーション番号
         ImGui::SliderFloat("TransitionTime", &transitionTime_, 0.0f, 5.0f);
-        ImGui::DragInt("AnimationClip", &animationClip_, 0.0f, 5.0f);
-        ImGui::DragInt("TransitionState", &transitionState_, 0.0f, 5.0f);
+		ImGui::DragInt("AnimationClip", &animationClip_);
+		ImGui::DragInt("TransitionState", &transitionState_);
         ImGui::DragFloat("Factor", &factor_, 0.0f, 5.0f);
         ImGui::DragFloat("Time", &currentAnimationSeconds_, 0.0f, 5.0f);
         ImGui::TreePop();

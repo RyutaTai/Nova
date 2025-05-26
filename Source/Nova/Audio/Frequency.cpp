@@ -21,7 +21,7 @@ void Frequency::Update(const float& elapsedTime, Audio* audioSource)
     const BYTE*     SPdata      = audioSource->GetAudioData();
     //std::vector<uint8_t> audioVector = ConvertToVector(SPdata, SPsize);
     const uint8_t*  audioVector = audioSource->GetAudioData();
-    int             SPNowData   = audioSource->GetCurrentSample();  //  現在のサンプル
+	int             SPNowData   = static_cast<int>(audioSource->GetCurrentSample());  //  現在のサンプル
     int             SPNowBlock  = SPNowData / BlockCount;           //  現在のブロック計算
 
     //  FFT変換
@@ -46,7 +46,7 @@ void Frequency::Update(const float& elapsedTime, Audio* audioSource)
     amplitudeSpectrum_.clear();
     for (auto& w : windowedData)
     {
-        amplitudeSpectrum_.emplace_back(sqrtf(w.real() * w.real() + w.imag() * w.imag()));
+		amplitudeSpectrum_.emplace_back(sqrtf(static_cast<float>(w.real() * w.real() + w.imag() * w.imag())));
     }
 
     //  平滑化
@@ -171,8 +171,8 @@ float Frequency::BlackmanWindow(const int& index, const int& count)
 //  フーリエ変換
 void Frequency::FFT(std::vector<Complex>& x)
 {
-    unsigned int N = x.size(), k = N, n;
-    float thetaT = AUDIO_PI_LONG / N;
+	unsigned int N = static_cast<int>(x.size()), k = N, n;
+	float thetaT = static_cast<float>(AUDIO_PI_LONG / N);
 
     //  DFT
     Complex phiT = Complex(cos(thetaT), -sin(thetaT)), T;

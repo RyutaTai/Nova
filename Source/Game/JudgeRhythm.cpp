@@ -53,7 +53,7 @@ bool JudgeRhythm::Judge()
 		//	色を変化させる
 		Stage::Instance().SetSpectrumColor(Stage::AudioSpectrumType::Circle, { 1.0f,1.0f,0.0f,1.0f });
 		//	スケールを変化させる
-		Stage::Instance().SetCircleSpectrumEyeOffsetY(Stage::AudioSpectrumType::Circle, 40.0f, 0.5f);
+		Stage::Instance().SetCircleSpectrumFovy(Stage::AudioSpectrumType::Circle, 14.0f, 0.5f);
 
 		return true;
 
@@ -115,14 +115,14 @@ void JudgeRhythm::DrawDebug()
 		//	----- midi -----
 		ImGui::Text("----- midi -----");
 		float currentMidiTimer = static_cast<float>(midi_->GetCurrentTimer());
-		float maxMidiTimer = debugMaxMidiTimer_;
+		float maxMidiTimer = static_cast<float>(debugMaxMidiTimer_);
 		debugMaxMidiTimer_ = std::max(debugMaxMidiTimer_, midi_->GetCurrentTimer());
 
 		ImGui::DragFloat("CurrentMidiTimer", &currentMidiTimer);
 		ImGui::DragFloat("MaxMidiTimer", &maxMidiTimer);
 		//ImGui::DragFloat("ClosestNoteTime", &midi_->FindClosestNoteInLoop(currentMidiTimer)->time_);
 
-		float midiDuration = midi_->GetMidiFileDurationSeconds();
+		float midiDuration = static_cast<float>(midi_->GetMidiFileDurationSeconds());
 		ImGui::DragFloat("MidiDuration", &midiDuration);   //   midiファイルの長さ[s]
 
 		ImGui::DragFloat("Delta", &debugDelta_, 0.01f);                         //  入力時間と一番近いノートの差

@@ -113,7 +113,7 @@ public:
 	const bool IsPlayEffect()const { return playEffectFlag_; }
 
 	//	----- HP -----
-	const int	GetMaxHp()		const { return MaxHp_; }
+	const float	GetMaxHp()		const { return MaxHp_; }
 	//	----- ダメージ処理 -----
 	void AddDamage(const float& damage) { hp_ -= damage; }
 
@@ -185,7 +185,7 @@ private:
 	//AnimationType				currentAnimNum_;								//	現在のアニメーション番号
 	
 	//	----- プレイヤーのパラメータ -----
-	static constexpr int MaxHp_ = 100;											//	最大HP
+	static constexpr float MaxHp_ = 100.0f;											//	最大HP
 	float				 turnSpeed_ = DirectX::XMConvertToRadians(720);			//	旋回速度
 
 	//	----- Collision -----

@@ -60,7 +60,7 @@ float4 main(VS_OUT pin):SV_TARGET
     uint t = texcoord.x * FFT_BLOCK_COUNT / 4;
     float4 amp = data[t];
     float offset = texcoord.x * FFT_BLOCK_COUNT;
-    float fft = amp[(int) offset % 4];
+    float fft = amp[(uint) offset % 4];
     
     float4 spectrumColor = float4(fftColor[MY_COLOR_INDEX]); //  オーディオスペクトラムの色
     //float4 spectrumColor = float4(0.1, 0.2, 0.3, 1.0);  //  オーディオスペクトラムの色

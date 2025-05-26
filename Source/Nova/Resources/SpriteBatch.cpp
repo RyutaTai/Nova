@@ -11,7 +11,7 @@ SpriteBatch::SpriteBatch(ID3D11Device* device, const wchar_t* fileName, size_t m
 	std::unique_ptr<Vertex[]>vertices{ std::make_unique<Vertex[]>(maxVertices_) };
 
 	D3D11_BUFFER_DESC bufferDesc{};
-	bufferDesc.ByteWidth = sizeof(Vertex) * maxVertices_;
+	bufferDesc.ByteWidth = sizeof(Vertex) * static_cast<int>(maxVertices_);
 	bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -39,7 +39,6 @@ SpriteBatch::SpriteBatch(ID3D11Device* device, const wchar_t* fileName, size_t m
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/SpritePs.cso", pixelShader_.GetAddressOf());
 
 	//	テクスチャ読み込み
-	// テクスチャ読み込み
 	LoadTextureFromFile(device, fileName, shaderResourceView_.GetAddressOf(), &texture2dDesc_);
 
 }
