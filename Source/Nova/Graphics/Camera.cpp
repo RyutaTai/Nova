@@ -28,7 +28,7 @@ void Camera::Initialize()
 	angle_ = { 0.29f,  0.797f,   0.0f };	//	回転値
 	eyeOffset_ = { 1.0f,2.0f,0.0f };
 	fov_ = 60.0f;							//	視野角
-	range_ = 5.0f;							//	ターゲットとカメラとの距離
+	currentRange_ = 5.0f;							//	ターゲットとカメラとの距離
 	nearZ_ = 0.01f;
 	farZ_ = 1000.0f;
 }
@@ -213,7 +213,7 @@ void Camera::NormalCamera(const float& elapsedTime)
 
 		//	range_を線形補間
 		float t = (angle_.x - MinAngleX_) / (MaxAngleX_ - MinAngleX_);		//	補間係数tを計算
-		range_ = minRange_ + (maxRange_ - minRange_) * t;					//	rangeを補完
+		currentRange_ = minRange_ + (maxRange_ - minRange_) * t;					//	rangeを補完
 
 	}
 
@@ -229,9 +229,9 @@ void Camera::NormalCamera(const float& elapsedTime)
 	// TODO:SetLoolAt()を呼び出してもfocusの値が変わらない。focusを変えられるようにする
 	//		 eyeも変えないとおかしくなるかも
 	// TODO:ここの式がおかしい気がする(　front　を　this->front_　に変えても違う気がする)　2024/03/10
-	this->eye_.x = this->focus_.x - (front.x * this->range_);
-	this->eye_.y = this->focus_.y - (front.y * this->range_);
-	this->eye_.z = this->focus_.z - (front.z * this->range_);
+	this->eye_.x = this->focus_.x - (front.x * this->currentRange_);
+	this->eye_.y = this->focus_.y - (front.y * this->currentRange_);
+	this->eye_.z = this->focus_.z - (front.z * this->currentRange_);
 
 	//	カメラの視点と注視点を設定
 	Camera::Instance().SetLookAt(eye_, focus_, DirectX::XMFLOAT3(0, 1, 0));
@@ -370,9 +370,9 @@ void Camera::DebugCamera(const float& elapsedTime)
 
 	// TODO:SetLoolAt()を呼び出してもfocusの値が変わらない。focusを変えられるようにする
 	//		 eyeも変えないとおかしくなるかも
-	focus_.x = eye_.x - (front.x * range_);
-	focus_.y = eye_.y - (front.y * range_);
-	focus_.z = eye_.z - (front.z * range_);
+	focus_.x = eye_.x - (front.x * currentRange_);
+	focus_.y = eye_.y - (front.y * currentRange_);
+	focus_.z = eye_.z - (front.z * currentRange_);
 
 	eye_ = eye_ + eyeOffset_;	//	カメラ視点の更新
 
@@ -439,7 +439,7 @@ void Camera::DrawDebug()
 		ImGui::Text("----- Range -----");
 		ImGui::DragFloat	("MinRange",	&minRange_, 0.01f);
 		ImGui::DragFloat	("MaxRange",	&maxRange_, 0.01f);
-		ImGui::DragFloat	("Range",		&range_,		0.1f,	FLT_MIN,	FLT_MAX);	//	間隔
+		ImGui::DragFloat	("Range",		&currentRange_,		0.1f,	FLT_MIN,	FLT_MAX);	//	間隔
 		if (ImGui::Button	("Reset"))
 		{
 			Reset();

@@ -65,6 +65,7 @@ private:
 	float	debugDelta_ = 0.0f;
 	float	debugClosestNoteTime_ = 0.0f;
 	float	debugInputTime_ = 0.0f;
+	float	debugJudgeRange_ = 0.0f;		//	”»’è‚ğæ‚Á‚½‚ÌA’†S‰~‚©‚ç‚Ì‹——£
 
 };
 

@@ -38,7 +38,7 @@ public:
 	void SetEyeY(const float& eyeY)					{ this->eye_.y = eyeY; }
 	void SetEyeZ(const float& eyeZ)					{ this->eye_.z = eyeZ; }
 	void SetTargetPos(const DirectX::XMFLOAT3& target) { this->focus_ = target; }				//	ターゲット位置設定
-	void SetRange(const float& range)				{ this->range_ = range; }				//	カメラ距離設定
+	void SetRange(const float& range)				{ this->currentRange_ = range; }				//	カメラ距離設定
 	void SetIsPose(const bool& isPose)				{ this->isPose_ = isPose; }
 
 	Transform*					GetTransform()		{ return &transform_; }
@@ -82,7 +82,7 @@ private:
 	DirectX::XMFLOAT3 eyeOffset_	= { 0,0,0 };				//	カメラの視点eye_を動かすときの移動値
 
 	float fov_				= 60.0f;							//	視野角
-	float range_			= 250.0f;							//	カメラとターゲットの距離を決めるのに使う
+	float currentRange_			= 250.0f;							//	カメラとターゲットの距離を決めるのに使う
 	float rollSpeed_		= DirectX::XMConvertToRadians(80);	//	カメラの回転速度
 	float maxAngleX_		= DirectX::XMConvertToRadians(45);	//	カメラの回転値制限
 	float minAngleX_		= DirectX::XMConvertToRadians(-45);	//	カメラの回転値制限

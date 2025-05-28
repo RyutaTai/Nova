@@ -10,20 +10,27 @@ private:
 	//	”¼‰~‚Ì\‘¢‘Ì(¶‰E‚ÌƒyƒA‚ÅŠÇ—)
 	struct Semicircle
 	{
-		std::unique_ptr<Sprite> left_;		//	¶‘¤‚Ì”¼‰~
-		std::unique_ptr<Sprite> right_;		//	‰E‘¤‚Ì”¼‰~
-		float	range_ = 0.0f;				//	’†S‰~‚©‚ç‚Ì‹——£
-		bool	isJudged_ = false;			//	”»’èÏ‚İ‚©‚Ç‚¤‚©
+		std::unique_ptr<Sprite> left_;				//	¶‘¤‚Ì”¼‰~
+		std::unique_ptr<Sprite> right_;				//	‰E‘¤‚Ì”¼‰~
+		float				initRange_ = 0.0f;		//	‰Šú‚Ì’†S‰~‚©‚ç‚Ì‹——£
+		float				currentRange_ = 0.0f;	//	Œ»İ‚Ì’†S‰~‚©‚ç‚Ì‹——£
+		bool				isJudged_ = false;		//	”»’èÏ‚İ‚©‚Ç‚¤‚©
 
 	public:
 		Sprite* GetLeft()	{ return left_.get(); }			//	¶‘¤‚Ì”¼‰~æ“¾
 		Sprite* GetRight()	{ return right_.get(); }		//	‰E‘¤‚Ì”¼‰~æ“¾
 		
-		void SetRage(const float& range) { range_ = range; }
-		const float GetRange()const { return range_; }		//	’†S‰~‚©‚ç‚Ì‹——£æ“¾
+		//	‰Šú‚Ì’†S‰~‚©‚ç‚Ì‹——£
+		void SetInitRange(const float& range) { initRange_ = range; }
+		const float GetInitRange()const { return initRange_; }
+
+		//	Œ»İ‚Ì’†S‰~‚©‚ç‚Ì‹——£
+		void SetCurrentRange(const float& range) { currentRange_ = range; }
+		const float GetCurrentRange()const { return currentRange_; }	
 		
+		//	”»’èÏ‚İƒtƒ‰ƒO
 		void SetIsJudged(const bool& isJudged) { isJudged_ = isJudged; }
-		const bool	IsJudged()const { return isJudged_; }	//	”»’èÏ‚İƒtƒ‰ƒOæ“¾
+		const bool	IsJudged()const { return isJudged_; }
 
 	};
 

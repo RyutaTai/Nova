@@ -32,12 +32,22 @@ void JudgeRhythm::Update()
 //	読んだタイミングがリズムに合っているかをテンポUIを利用して判定する
 bool JudgeRhythm::Judge()
 {
+	//	----- SEを鳴らす -----
+	AudioSource* rhythmSE = nullptr;
+	rhythmSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/RhythmSE.wav", Audio::AudioType::SENormal, "GameScene");
+	rhythmSE->SetVolume(0.3f, false);
+	rhythmSE->SetAudioName("RhythmSE");
+	AudioManager::Instance().Register(rhythmSE);
+	rhythmSE->Play(false);
+	//delete rhythmSE;
+
 	//	----- 中心円に一番近い半円の番号を取得 -----
 	int nearSemicircleIndex = UIManager::Instance().GetUITempo()->FindNearSemicircleIndex();
 
 	//	----- 入力タイミングの評価(PerfectやGood)ごとの処理 -----
+	debugJudgeRange_ = UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetCurrentRange();
 	//	Perfectのとき
-	if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetRange() < perfectRange_)		//	Perfect
+	if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetCurrentRange() < perfectRange_)		//	Perfect
 	{
 		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
@@ -61,7 +71,7 @@ bool JudgeRhythm::Judge()
 
 	}
 	//	Goodのとき
-	else if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetRange() < goodRange_)	//	Good
+	else if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetCurrentRange() < goodRange_)	//	Good
 	{
 		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
@@ -144,6 +154,10 @@ void JudgeRhythm::DrawDebug()
 		//	----- コンボ -----
 		ImGui::Text(u8"----- コンボ -----");
 		ImGui::DragInt("ComboCount", &comboCount_);
+
+		//	判定を取った時の中心円からの距離
+		ImGui::Text(u8"----- 判定を取った時の中心円からの距離 -----");
+		ImGui::DragFloat("JudgeSmicircleRange", &debugJudgeRange_);
 
 		ImGui::TreePop();
 	}

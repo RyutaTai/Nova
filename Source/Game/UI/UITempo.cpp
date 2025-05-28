@@ -16,7 +16,8 @@ UITempo::UITempo()
 	center_->GetTransform()->SetPivot(0.5f, 0.5f);
 	center_->GetTransform()->SetPosition(962, 905);
 
-	//	中心円のY座標
+	//	中心円の座標
+	float centerPosX = center_->GetTransform()->GetPositionX();
 	float centerPosY = center_->GetTransform()->GetPositionY();
 
 	//	両サイドの半円
@@ -29,12 +30,14 @@ UITempo::UITempo()
 		//	中心円からの最大距離を半円の個数で割って1つ分の距離を算出し、等間隔に配置する
 		rangePerOne_ = semicircleRangeMax_ / SemicircleMax_;
 		float range = rangePerOne_ * index;
-		semicircles_[index]->range_ = range;
+		semicircles_[index]->SetInitRange(range);
+		semicircles_[index]->currentRange_ = range;
 
 		//	左
 		semicircles_[index]->left_ = std::make_unique<Sprite>(L"./Resources/Image/TempoUI.png");
 		semicircles_[index]->left_->GetTransform()->SetPositionY(centerPosY);
-		semicircles_[index]->left_->GetTransform()->SetPositionX(942 - range);
+		//semicircles_[index]->left_->GetTransform()->SetPositionX(942 - range);
+		semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - range);
 		semicircles_[index]->left_->GetTransform()->SetPivot(0.5f, 0.5f);
 		semicircles_[index]->left_->GetTransform()->SetTexPosX(200.0f);
 		semicircles_[index]->left_->GetTransform()->SetTexSizeX(100.0f);
@@ -43,7 +46,8 @@ UITempo::UITempo()
 		//	右
 		semicircles_[index]->right_ = std::make_unique<Sprite>(L"./Resources/Image/TempoUI.png");
 		semicircles_[index]->right_->GetTransform()->SetPositionY(centerPosY);
-		semicircles_[index]->right_->GetTransform()->SetPositionX(982 + range);
+		//semicircles_[index]->right_->GetTransform()->SetPositionX(982 + range);
+		semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + range);
 		semicircles_[index]->right_->GetTransform()->SetPivot(0.5f, 0.5f);
 		semicircles_[index]->right_->GetTransform()->SetTexPosX(300.0f);
 		semicircles_[index]->right_->GetTransform()->SetTexSizeX(100.0f);
@@ -95,26 +99,32 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	range更新
-		semicircles_[index]->range_ -= (rangePerOne_ / quarterNoteDuration_) * elapsedTime;
+		semicircles_[index]->currentRange_ -= (rangePerOne_ / quarterNoteDuration_) * elapsedTime;
 		//semicircles_[index]->range_ -= moveSpeed_ * moveFactor_ * elapsedTime;
 
 		//	中心円と重なったら最大距離にリセット
-		if (semicircles_[index]->range_ <= semicircleRangeMin_)
+		if (semicircles_[index]->currentRange_ <= semicircleRangeMin_)
 		{
-			semicircles_[index]->range_ = semicircleRangeMax_;
-			centerCircleAnimFlag_ = true;
+			semicircles_[index]->currentRange_ = semicircleRangeMax_;
+
+			//float initRange = semicircles_[index]->GetInitRange();
+			//semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + initRange);
+			//semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - initRange);
+			
+			//	アニメーションフラグ
+			//centerCircleAnimFlag_ = true;
 
 			//	判定済みフラグをリセット
 			if (semicircles_[index]->isJudged_)semicircles_[index]->isJudged_ = false;
 		}
 
 		//	rangeを元に位置を更新
-		float range = semicircles_[index]->range_;
+		float range = semicircles_[index]->currentRange_;
 		semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - range);
 		semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + range);
 
 		//	合計距離更新
-		totalRange += semicircles_[index]->range_;
+		totalRange += semicircles_[index]->currentRange_;
 
 	}
 	totalRange_ = totalRange;
@@ -126,7 +136,7 @@ void UITempo::UpdateScale(const float& elapsedTime)
 	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	半円更新
-		float range = semicircles_[index]->range_;
+		float range = semicircles_[index]->currentRange_;
 		float normalizeRange = (range - semicircleRangeMin_) / (semicircleRangeMax_ - semicircleRangeMin_);										//	rangeを正規化
 		float scaleFactor = semicircleScaleMin_ + normalizeRange * (semicircleScaleMax_ - semicircleScaleMin_);	//	スケール算出
 		semicircles_[index]->left_->GetTransform()->SetScaleFactor(scaleFactor);
@@ -160,10 +170,10 @@ int UITempo::FindNearSemicircleIndex()
 	for (int i = 0; i < SemicircleMax_; ++i)
 	{
 		//	前回より中心円に近い半円があれば、最短距離と番号を更新する
-		if (nearRange > semicircles_[i]->range_)
+		if (nearRange > semicircles_[i]->currentRange_)
 		{
 			nearSemicircleIndex = i;
-			nearRange = semicircles_[i]->range_;
+			nearRange = semicircles_[i]->currentRange_;
 		}
 	}
 	return nearSemicircleIndex;
@@ -175,7 +185,7 @@ void UITempo::Render()
 	center_->Render();
 	for (int index = 0; index < SemicircleMax_; ++index)
 	{
-		//	判定済みなら描画しない
+		//	判定済みなら描画しない(消えたように見せる)
 		if (semicircles_[index]->isJudged_)continue;
 
 		semicircles_[index]->left_->Render();
@@ -235,7 +245,7 @@ void UITempo::DrawDebug()
 					ImGui::TreePop();
 				}
 				
-				ImGui::DragFloat("Range", &semicircles_[i]->range_);
+				ImGui::DragFloat("Range", &semicircles_[i]->currentRange_);
 
 				//	スケール確認用
 				static float scaleFactor = 1.0f;
