@@ -1,8 +1,8 @@
 #include "AudioManager.h"
 
 #include "../Others/Misc.h"
-#include "../../imgui/imgui.h"
 #include "../Others/MemoryUtilities.h"
+#include "../../imgui/imgui.h"
 
 void AudioManager::Initialize()
 {
@@ -22,13 +22,13 @@ void AudioManager::Initialize()
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
 	//	マスターボイス作成
-#if 0	//	自動検出で作成
+#if 0	//	自動検出で設定
 	hr = xaudio->CreateMasteringVoice(&masteringVoice, XAUDIO2_DEFAULT_CHANNELS, 44100/*サンプリングレート*/, 0U, NULL, 0, AudioCategory_GameEffects);
 #else	//	手動で設定	
 	hr = xaudio_->CreateMasteringVoice(&masteringVoice_, 2, 44100/*サンプリングレート*/, 0U, NULL, 0, AudioCategory_GameEffects);
 #endif
-
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+
 	masteringVoice_->GetChannelMask(&channelMask_);
 
 }
@@ -46,7 +46,7 @@ AudioManager::~AudioManager()
 		masteringVoice_ = nullptr;
 	}
 
-	//	XAudio終了化
+	//	XAudio終了化(マスターボイスより後)
 	if (xaudio_ != nullptr)
 	{
 		xaudio_->Release();
@@ -115,7 +115,7 @@ void AudioManager::Register(Audio* audio)
 //	名前で指定して再生する
 void AudioManager::PlayAudioByName(const std::string& audioName, const bool& loop)
 {
-	for (int i = 0; i < audioResources_.size(); ++i)
+	for (int i = 0; i < static_cast<int>(audioResources_.size()); ++i)
 	{
 		if (strcmp(audioResources_.at(i)->GetAudioName().c_str(), audioName.c_str()) == 0)	//	入力文字列と等しいデータがあれば
 		{
@@ -129,7 +129,7 @@ void AudioManager::PlayAudioByName(const std::string& audioName, const bool& loo
 //	オーディオを名前から取得(例: デフォルトならTitle.wavなど.wavまで含めた名前、SetAudioName()で設定した場合はその名前。)
 Audio* AudioManager::GetAudioResource(const std::string& name)
 {
-	for (int i = 0; i < audioResources_.size(); ++i)
+	for (int i = 0; i < static_cast<int>(audioResources_.size()); ++i)
 	{
 		if (strcmp(audioResources_.at(i)->GetAudioName().c_str(), name.c_str()) == 0)	//	入力文字列と等しいデータがあれば
 		{
@@ -147,7 +147,7 @@ void AudioManager::Remove(Audio* audio)
 }
 
 //	シーンを指定してオーディオ削除
-void AudioManager::RemoveByScene(const std::string& sceneName)
+void AudioManager::RemoveBySceneName(const std::string& sceneName)
 {
 	for (Audio* audio : audioResources_)
 	{

@@ -56,7 +56,7 @@ void SceneTitle::Finalize()
 	UIManager::Instance().Finalize();
 
 	//	オーディオ終了化
-	AudioManager::Instance().RemoveByScene("TitleScene");
+	AudioManager::Instance().RemoveBySceneName("TitleScene");
 
 }
 

@@ -29,8 +29,8 @@ Audio::Audio(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType,
 	//buffer.PlayLength = resource->GetWaveFormat().nSamplesPerSec * resource->GetPlayLength();
 	//buffer.PlayBegin = resource->GetWaveFormat().nSamplesPerSec * 30; // 再生開始位置の指定 サンプル単位(サンプリングレート * 秒数)で指定
 
-	SFXSend_ = { 0, sourceVoice_ };
-	SFXSendList_ = { 1, &SFXSend_ };
+	sfxSend_ = { 0, sourceVoice_ };
+	sfxSendList_ = { 1, &sfxSend_ };
 
 	audioName_ = resource->GetName();
 	audioType_ = audioType;

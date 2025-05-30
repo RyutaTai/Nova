@@ -26,7 +26,7 @@ Bullet::Bullet(const std::string& filename)
 	opponentType_ = OpponentType::Player;
 
 	//	----- 生存時間 -----
-	float lifeTimer_ = 2.5f;
+	lifeTimer_ = 2.5f;
 
 	//	----- オーディオ -----
 	emitter_.position_ = GetTransform()->GetPosition();
@@ -85,7 +85,7 @@ void Bullet::UpdateEmitter()
 	//emitter_.position_ = GetTransform()->GetPosition();
 	//se_[static_cast<int>(Audio3D::Move)]->SetPosition(emitter_.position_);	//	AudioSource3Dのemitter_のpositionに渡す
 	////emitter_.velocity_ = velocity_;
-	 
+	
 	se_[static_cast<int>(Audio3D::Move)]->SetPosition(GetTransform()->GetPosition());	//	AudioSource3Dのemitter_のpositionに渡す
 	//emitter_.velocity_ = velocity_;
 }

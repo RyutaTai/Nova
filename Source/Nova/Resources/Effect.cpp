@@ -17,10 +17,10 @@ Effect::Effect(const char* filename)
 	Effekseer::ConvertUtf8ToUtf16(utf16filename, 256, filename);
 
 	//	Effekseer::Managerを取得
-	Effekseer::ManagerRef effekseerManager_ = EffectManager::Instance().GetEffecseerManager();
+	Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffecseerManager();
 
 	//	Effekseerエフェクトを読み込み
-	effekseerEffect_ = Effekseer::Effect::Create(effekseerManager_, (EFK_CHAR*)utf16filename);
+	effekseerEffect_ = Effekseer::Effect::Create(effekseerManager, (EFK_CHAR*)utf16filename);
 
 	_ASSERT_EXPR(effekseerEffect_.Get(), L"Failed to load effect.");
 
@@ -29,25 +29,25 @@ Effect::Effect(const char* filename)
 //	停止
 void Effect::Stop(Effekseer::Handle handle)
 {
-	Effekseer::ManagerRef effekseerManager_ = EffectManager::Instance().GetEffecseerManager();
+	Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffecseerManager();
 
-	effekseerManager_->StopEffect(handle);
+	effekseerManager->StopEffect(handle);
 }
 
 //	座標設定
 void Effect::SetPosition(Effekseer::Handle handle, const DirectX::XMFLOAT3& position)
 {
-	Effekseer::ManagerRef effekseerManager_ = EffectManager::Instance().GetEffecseerManager();
+	Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffecseerManager();
 
-	effekseerManager_->SetLocation(handle, position.x, position.y, position.z);
+	effekseerManager->SetLocation(handle, position.x, position.y, position.z);
 }
 
 //	スケール設定
 void Effect::SetScale(Effekseer::Handle handle, const DirectX::XMFLOAT3& scale)
 {
-	Effekseer::ManagerRef effekseerManager_ = EffectManager::Instance().GetEffecseerManager();
+	Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffecseerManager();
 
-	effekseerManager_->SetScale(handle, scale.x, scale.y, scale.z);
+	effekseerManager->SetScale(handle, scale.x, scale.y, scale.z);
 }
 
 //	再生
@@ -55,10 +55,10 @@ Effekseer::Handle Effect::Play(const DirectX::XMFLOAT3& position, const float& s
 {
 	_ASSERT_EXPR(effekseerEffect_.Get(), L"Failed to load effect.");
 
-	Effekseer::ManagerRef effekseerManager_ = EffectManager::Instance().GetEffecseerManager();
+	Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffecseerManager();
 
-	Effekseer::Handle handle = effekseerManager_->Play(effekseerEffect_, position.x, position.y, position.z);
-	effekseerManager_->SetScale(handle, scale, scale, scale);
+	Effekseer::Handle handle = effekseerManager->Play(effekseerEffect_, position.x, position.y, position.z);
+	effekseerManager->SetScale(handle, scale, scale, scale);
 	return handle;
 }
 
@@ -70,9 +70,9 @@ void Effect::PlayAsync(const DirectX::XMFLOAT3& position, const float& scale)
 	//	ロックしてプレイを実行
 	std::lock_guard<std::mutex> lock(playMutex_);
 
-	Effekseer::ManagerRef effekseerManager_ = EffectManager::Instance().GetEffecseerManager();
-	Effekseer::Handle handle = effekseerManager_->Play(effekseerEffect_, position.x, position.y, position.z);
-	effekseerManager_->SetScale(handle, scale, scale, scale);
+	Effekseer::ManagerRef effekseerManager = EffectManager::Instance().GetEffecseerManager();
+	Effekseer::Handle handle = effekseerManager->Play(effekseerEffect_, position.x, position.y, position.z);
+	effekseerManager->SetScale(handle, scale, scale, scale);
 }
 
 

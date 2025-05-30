@@ -53,7 +53,7 @@ void SceneLoading::Finalize()
 	}
 
 	//	オーディオ終了化
-	AudioManager::Instance().RemoveByScene("LoadingScene");
+	AudioManager::Instance().RemoveBySceneName("LoadingScene");
 
 }
 

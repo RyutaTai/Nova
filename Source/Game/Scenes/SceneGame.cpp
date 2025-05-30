@@ -460,7 +460,7 @@ void SceneGame::Finalize()
 	UIManager::Instance().Finalize();
 
 	//	オーディオ終了化
-	AudioManager::Instance().RemoveByScene("GameScene");
+	AudioManager::Instance().RemoveBySceneName("GameScene");
 
 }
 

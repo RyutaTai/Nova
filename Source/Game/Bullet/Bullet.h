@@ -113,7 +113,7 @@ protected:
 	DirectX::XMFLOAT3							ownerPosition_ = {};			//	弾丸所有者の位置
 
 	//	----- 攻撃する相手 -----
-	OpponentType		opponentType_;		//	攻撃相手の種類
+	OpponentType		opponentType_ = OpponentType::Player;		//	攻撃相手の種類
 	DirectX::XMFLOAT3	targetPos_ = {};	//	ターゲット位置
 
 	//	----- 無敵処理 -----
@@ -125,7 +125,6 @@ protected:
 	//	----- オーディオ -----
 	SoundEmitter emitter_ = {};											//	エミッターを自分の位置で持つ
 	AudioSource3D* se_[static_cast<int>(Audio3D::Max)] = { nullptr };	//	弾丸のSE(3Dで鳴らす)
-	AudioSource* debugSE_ = nullptr;
 
 	//	----- 更新フラグ -----
 	bool updateFlag_ = true;

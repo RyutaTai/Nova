@@ -39,7 +39,7 @@ public:
 	void AddTotalPlayTimer(const float& elapsedTime) { totalPlayTimer_ += elapsedTime; }
 
 	IXAudio2SourceVoice*	GetSourceVoice()			{ return sourceVoice_; }
-	XAUDIO2_VOICE_SENDS*	GetSfxSendList()			{ return &SFXSendList_; }
+	XAUDIO2_VOICE_SENDS*	GetSfxSendList()			{ return &sfxSendList_; }
 	XAUDIO2_VOICE_STATE		GetState()			const	{ return state_; }
 	const WAVEFORMATEX&		GetWaveFormat()		const	{ return wfx_; }				//	WAVEフォーマット取得
 	const BYTE*				GetAudioData()		const	{ return buffer_.pAudioData; }
@@ -79,8 +79,8 @@ protected:
 	IXAudio2SourceVoice*		sourceVoice_ = nullptr;	//	ソースボイス
 	XAUDIO2_BUFFER				buffer_ = {};			//	バッファー
 	WAVEFORMATEX				wfx_ = {};				//	WAVEフォーマット情報
-	XAUDIO2_SEND_DESCRIPTOR		SFXSend_;				//	
-	XAUDIO2_VOICE_SENDS			SFXSendList_ = {};		//	
+	XAUDIO2_SEND_DESCRIPTOR		sfxSend_;				//	
+	XAUDIO2_VOICE_SENDS			sfxSendList_ = {};		//	
 	XAUDIO2_VOICE_STATE			state_ = {};			//	ボイスの状態
 	XAUDIO2_FILTER_PARAMETERS	filterParameters_ = {};	//	フィルターのパラメータ
 

@@ -36,20 +36,20 @@ public:
 
 	IXAudio2* GetXAudio() { return xaudio_; }
 	IXAudio2MasteringVoice* GetMasteringVoice() { return masteringVoice_; }
-	DWORD								GetCannelmask() const { return channelMask_; }
-	Audio* GetAudioResource(const int& index) { return audioResources_.at(index); }
-	Audio* GetAudioResource(const std::string& name);
-	std::vector<Audio*>					GetAudioResources() { return audioResources_; }
+	DWORD					GetCannelmask() const { return channelMask_; }
+	Audio*				GetAudioResource(const int& index) { return audioResources_.at(index); }
+	Audio*				GetAudioResource(const std::string& name);
+	std::vector<Audio*>	GetAudioResources() { return audioResources_; }
 
-	//	削除、終了化
+	//	----- 削除、終了化 -----
 	void Finalize();						//	オーディオ終了化
 	void Clear();							//	全削除
-	void Remove(Audio* audio);			//	オーディオ削除
-	void RemoveByScene(const std::string& sceneName);	//	オーディオをシーンごとに削除
+	void Remove(Audio* audio);				//	オーディオ削除
+	void RemoveBySceneName(const std::string& sceneName);	//	オーディオをシーンごとに削除
 
 private:
-	DWORD					channelMask_ = {};
-	IXAudio2* xaudio_ = nullptr;
+	DWORD		channelMask_ = {};
+	IXAudio2*	xaudio_ = nullptr;
 	IXAudio2MasteringVoice* masteringVoice_ = nullptr;
 
 	std::vector<Audio*>		audioResources_ = {};
