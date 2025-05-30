@@ -121,11 +121,10 @@ public:
 	void		SetIsPose(const bool& isPose) { isPose_ = isPose; }
 	const bool	GetPose()const { return isPose_; }
 
-	//	----- コンボ -----
-	//	オートコンボフラグ
+	//	----- オートコンボ -----
 	void		SetAutoCombo(const bool& isAutoCombo)	{ isAutoCombo_ = isAutoCombo; }
 	const bool	IsAutoCombo()const						{ return isAutoCombo_; }
-	//	コンボ数
+	//	----- コンボ数 -----
 	void		SetComboCount(const int& comboCount)	{ comboCount_ = comboCount; }
 	void		AddComboCount()							{ comboCount_++; }
 	void		ResetComboCount()						{ comboCount_ = 0; }

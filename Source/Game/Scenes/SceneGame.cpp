@@ -205,7 +205,7 @@ void SceneGame::Update(const float& elapsedTime)
 }
 
 //	ƒ|[ƒY‚É‚·‚é
-void SceneGame::IsPose(bool isPose)
+void SceneGame::IsPose(const bool& isPose)
 {
 	player_->SetIsPose(isPose);
 }

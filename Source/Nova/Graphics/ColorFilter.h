@@ -8,6 +8,7 @@
 class ColorFilter
 {
 public:
+	//	カラーフィルター用定数バッファ
 	struct ColorFilterConstants
 	{
 		float	hueShift_	= 0.1f;		//	色相調整

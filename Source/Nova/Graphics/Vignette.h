@@ -8,18 +8,23 @@
 class Vignette
 {
 public:
+	//	ヴィネット用パラメータ(CPU側でのみ使用するパラメータも含む)
 	struct VignetteData
 	{
-		DirectX::XMFLOAT4	vignetteColor_		= { 0.2f, 0.2f, 0.2f, 1.0f };
-		DirectX::XMFLOAT2	vignetteCenter_		= { 0.5f, 0.5f };
-		float				vignetteIntensity_	= 0.5f;
-		float				vignetteSmoothness_ = 0.2f;
+		DirectX::XMFLOAT4	vignetteColor_		= { 0.2f, 0.2f, 0.2f, 1.0f };	//	カラー
+		DirectX::XMFLOAT2	vignetteCenter_		= { 0.5f, 0.5f };				//	注視点(どこを中心にするか)
 
-		bool				vignetteRounded_	= false;
-		float				vignetteRoundness_	= 0.2f;
+		float				vignetteCurrentIntensity_ = 0.5f;					//	現在の範囲(大きさ)
+		float				vignetteIntensityMax_ = 0.5f;						//	範囲最大値
+		float				vignetteIntensityMin_ = 0.4f;						//	範囲最小値
+
+		float				vignetteSmoothness_ = 0.4f;							//	どのくらいぼかすか
+		bool				vignetteRounded_	= false;						//	縦横比を等しくするかどうか(trueなら縦横比が同じになる)
+		float				vignetteRoundness_	= 0.63f;						//	形の調整(0に近づくほど四角く、1に近づくほど丸くなる)
 	};
 	VignetteData vignetteData_;
 
+	//	ヴィネット用定数バッファ
 	struct VignetteConstants
 	{
 		DirectX::XMFLOAT4	vignetteColor_;
@@ -34,11 +39,15 @@ public:
 
 public:
 	Vignette();
-	virtual ~Vignette() = default;
+	~Vignette() = default;
+
+
+
 	void Make();
 	void DrawDebug();
 
-	ID3D11PixelShader* GetVignettePixelShader() { return vignettePixelShader_.Get(); }
+	//	ヴィネットの範囲設定
+	void SetVignetteIntensity(const float& intensity) { vignetteData_.vignetteCurrentIntensity_ = intensity; }
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer>		vignetteConstantBuffer_;

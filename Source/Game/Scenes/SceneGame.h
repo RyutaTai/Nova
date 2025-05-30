@@ -44,15 +44,15 @@ public:
 
 	void LoadWaveSprite(const wchar_t* filename);
 	StateMachine<State<SceneGame>>* GetStateMachine() { return stateMachine_.get(); }	//	ステートマシン取得
-	void IsPose(bool isPose);
+	void IsPose(const bool& isPose);
 	void Reset();
 
 	void SetChangeTitleTimer(const float& changeTitleTimer) { changeTitleTimer_ = changeTitleTimer; }
-	void ChangeToTitle(bool changeTitle)	{ changeTitle_ = changeTitle; }
-	void SetWaveStartTimer(float timer)		{ waveStartTimer_ = timer; }
-	void SetGameOver(bool gameOver)			{ isGameOver_ = gameOver; }
-	void SetGameClear(bool gameClear)		{ isGameClear_ = gameClear; }
-	void SetIsResult(bool isResult)			{ isResult_ = isResult; }
+	void ChangeToTitle(const bool& changeTitle) { changeTitle_ = changeTitle; }
+	void SetWaveStartTimer(const float& timer)		{ waveStartTimer_ = timer; }
+	void SetGameOver(const bool& gameOver)			{ isGameOver_ = gameOver; }
+	void SetGameClear(const bool& gameClear)		{ isGameClear_ = gameClear; }
+	void SetIsResult(const bool& isResult)			{ isResult_ = isResult; }
 
 	float	GetWaveStartTimer()		{ return waveStartTimer_; }
 	float	GetChangeTitleTimer()	{ return changeTitleTimer_; }
@@ -65,21 +65,23 @@ private:
 
 private:
 	/* ----- オブジェクト ----- */
-	std::unique_ptr	<Stage>		stage_;
-	std::unique_ptr	<Player>	player_;
-	std::unique_ptr	<Dragonkin>	dragonkin_;
-	std::unique_ptr<StateMachine<State<SceneGame>>>		stateMachine_ = nullptr;		//	ステートマシン
+	std::unique_ptr	<Stage>		stage_;								//	ステージ
+	std::unique_ptr	<Player>	player_;							//	プレイヤー
+	std::unique_ptr	<Dragonkin>	dragonkin_;							//	竜人
+	std::unique_ptr<StateMachine<State<SceneGame>>>	stateMachine_;	//	ステートマシン
 
 	/* ----- 描画関係 ----- */
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	shaderResourceViews_[8];
-	std::unique_ptr<Bloom>						bloomer_ = nullptr;		//	BLOOM
 	std::unique_ptr<FrameBuffer>				framebuffers_[8];
 	std::unique_ptr<FullScreenQuad>				fullScreenQuad_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShaders_[8];
 	float										nearZ_ = 50.0f;
 	float										farZ_ = 400000.0f;
-	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;
-	DirectX::XMFLOAT4							lightDirection_ = { +0.63f, -0.67f, 0.12f, 0.0f };
+	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;	//	シーン定数バッファ
+	DirectX::XMFLOAT4							lightDirection_ = { +0.63f, -0.67f, 0.12f, 0.0f };	//	ディレクショナルライトの方向
+
+	//	ブルーム
+	std::unique_ptr<Bloom> bloomer_;
 
 	//	シャドウマップ
 	std::unique_ptr<CascadedShadowMaps> cascadedShadowMaps_;
