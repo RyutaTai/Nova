@@ -41,13 +41,20 @@ public:
 	Vignette();
 	~Vignette() = default;
 
-
+	static Vignette& Instance()
+	{
+		static Vignette instance;
+		return instance;
+	}
 
 	void Make();
 	void DrawDebug();
 
-	//	ヴィネットの範囲設定
+	//	ヴィネットの範囲
 	void SetVignetteIntensity(const float& intensity) { vignetteData_.vignetteCurrentIntensity_ = intensity; }
+	const float GetVignetteCurrentIntensity()	const { return vignetteData_.vignetteCurrentIntensity_; }
+	const float GetVignetteIntensityMax()		const { return vignetteData_.vignetteIntensityMax_; }
+	const float GetVignetteIntensityMin()		const { return vignetteData_.vignetteIntensityMin_; }
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer>		vignetteConstantBuffer_;

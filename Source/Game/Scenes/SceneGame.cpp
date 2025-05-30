@@ -122,9 +122,6 @@ void SceneGame::Initialize()
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/CascadedShadowPs.cso", pixelShaders_[2].GetAddressOf());
 	cascadedShadowMaps_ = std::make_unique<decltype(cascadedShadowMaps_)::element_type>(device, 1024 * 4, 1024 * 4);
 
-	//	----- ヴィネット -----
-	vignette_ = std::make_unique<Vignette>();
-
 	//	----- カラーフィルター -----
 	colorFilter_ = std::make_unique<ColorFilter>();
 
@@ -333,7 +330,7 @@ void SceneGame::Render()
 		framebuffers_[0]->Deactivate(deviceContext);
 #endif		
 
-		vignette_->Make();
+		Vignette::Instance().Make();
 
 		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
 		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
@@ -493,7 +490,7 @@ void SceneGame::DrawDebug()
 	}
 
 	//	----- ヴィネット -----
-	vignette_->DrawDebug();
+	Vignette::Instance().DrawDebug();
 
 	//	----- カラーフィルター -----
 	colorFilter_->DrawDebug();

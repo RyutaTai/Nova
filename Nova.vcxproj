@@ -217,6 +217,7 @@
     <ClCompile Include="Source\Game\Scenes\SceneTitle.cpp" />
     <ClCompile Include="Source\Game\Scenes\TitleState.cpp" />
     <ClCompile Include="Source\Game\Stage\Stage.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\Bloom.cpp" />
     <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp" />
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
     <ClCompile Include="Source\Game\JudgeRhythm.cpp" />
@@ -271,7 +272,6 @@
     <ClCompile Include="Source\Nova\Input\Microphone.cpp" />
     <ClCompile Include="Source\Nova\Input\Mouse.cpp" />
     <ClCompile Include="Source\Nova\Others\Transform.cpp" />
-    <ClCompile Include="Source\Nova\PostProcess\Bloom.cpp" />
     <ClCompile Include="Source\Nova\Resources\Effect.cpp" />
     <ClCompile Include="Source\Nova\Resources\EffectManager.cpp" />
     <ClCompile Include="Source\Nova\Resources\GeometricPrimitive.cpp" />
@@ -313,6 +313,7 @@
     <ClInclude Include="Source\Game\Scenes\SceneTitle.h" />
     <ClInclude Include="Source\Game\Scenes\TitleState.h" />
     <ClInclude Include="Source\Game\Stage\Stage.h" />
+    <ClInclude Include="Source\Nova\Graphics\Bloom.h" />
     <ClInclude Include="Source\Nova\Graphics\ColorFilter.h" />
     <ClInclude Include="External\nlohmann\adl_serializer.hpp" />
     <ClInclude Include="External\nlohmann\byte_container_with_subtype.hpp" />
@@ -424,7 +425,6 @@
     <ClInclude Include="Source\Nova\Others\MemoryUtilities.h" />
     <ClInclude Include="Source\Nova\Others\Misc.h" />
     <ClInclude Include="Source\Nova\Others\Transform.h" />
-    <ClInclude Include="Source\Nova\PostProcess\Bloom.h" />
     <ClInclude Include="Source\Nova\Resources\Effect.h" />
     <ClInclude Include="Source\Nova\Resources\EffectManager.h" />
     <ClInclude Include="Source\Nova\Resources\GeometricPrimitive.h" />

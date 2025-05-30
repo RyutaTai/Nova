@@ -1,10 +1,12 @@
 #include "UITempo.h"
 
-#include "../../Nova/Input/Input.h"
+#include "../../../External/imgui/imgui.h"
 #include "../JudgeRhythm.h"
 #include "../UI/UIRhythmJudgment.h"
-#include "../../../External/imgui/imgui.h"
 #include "../Stage/Stage.h"
+#include "../../Nova/Graphics/Vignette.h"
+#include "../../Nova/Input/Input.h"
+#include "../../Nova/Others/MathHelper.h"
 
 UITempo::UITempo()
 	:UI(UIManager::UIType::Tempo)
@@ -100,7 +102,6 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 	{
 		//	range更新
 		semicircles_[index]->currentRange_ -= (rangePerOne_ / quarterNoteDuration_) * elapsedTime;
-		//semicircles_[index]->range_ -= moveSpeed_ * moveFactor_ * elapsedTime;
 
 		//	中心円と重なったら最大距離にリセット
 		if (semicircles_[index]->currentRange_ <= semicircleRangeMin_)
@@ -112,10 +113,14 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 			//semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - initRange);
 			
 			//	アニメーションフラグ
-			//centerCircleAnimFlag_ = true;
+			centerCircleAnimFlag_ = true;
 
 			//	判定済みフラグをリセット
 			if (semicircles_[index]->isJudged_)semicircles_[index]->isJudged_ = false;
+
+			//	ヴィネット範囲を最大値に変更
+			Vignette::Instance().SetVignetteIntensity(Vignette::Instance().GetVignetteIntensityMax());
+
 		}
 
 		//	rangeを元に位置を更新
@@ -124,7 +129,7 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 		semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + range);
 
 		//	合計距離更新
-		totalRange += semicircles_[index]->currentRange_;
+		totalRange += range;
 
 	}
 	totalRange_ = totalRange;
@@ -151,11 +156,19 @@ void UITempo::UpdateCenterCircleAnimation()
 	if (centerCircleAnimFlag_ == false)return;
 
 	center_->GetTransform()->SetTexPosX(100.0f);
+
+	/*float intensity = Mathf::Lerp(Vignette::Instance().GetVignetteCurrentIntensity(), Vignette::Instance().GetVignetteIntensityMin(), 1.0f);
+	Vignette::Instance().SetVignetteIntensity(intensity);*/
+
 	if (centerAnimTime_ > animChangeThreshold_)
 	{
 		centerCircleAnimFlag_ = false;
 		center_->GetTransform()->SetTexPosX(0.0f);
 		centerAnimTime_ = 0;
+
+		//	ヴィネットの範囲リセット
+		Vignette::Instance().SetVignetteIntensity(Vignette::Instance().GetVignetteIntensityMin());
+
 	}
 	centerAnimTime_++;
 

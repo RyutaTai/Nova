@@ -271,9 +271,6 @@
     <ClCompile Include="Source\Nova\Graphics\Decal.cpp">
       <Filter>Nova\Graphics\Decal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Nova\PostProcess\Bloom.cpp">
-      <Filter>Nova\Graphics\Bloom</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp">
       <Filter>Nova\Graphics\CascadedShadowMaps</Filter>
     </ClCompile>
@@ -420,6 +417,9 @@
     </ClCompile>
     <ClCompile Include="Source\Game\Character\Player\PlayerState.cpp">
       <Filter>Game\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\Bloom.cpp">
+      <Filter>Nova\Graphics\Bloom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -578,9 +578,6 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\Decal.h">
       <Filter>Nova\Graphics\Decal</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\PostProcess\Bloom.h">
-      <Filter>Nova\Graphics\Bloom</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h">
       <Filter>Nova\Graphics\CascadedShadowMaps</Filter>
@@ -872,6 +869,9 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\Others\MemoryUtilities.h">
       <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\Bloom.h">
+      <Filter>Nova\Graphics\Bloom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

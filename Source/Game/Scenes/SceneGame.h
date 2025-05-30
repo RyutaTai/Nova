@@ -8,8 +8,8 @@
 #include "../../Game/Character/Player/Player.h"
 #include "../../Game/Character/Enemy/Dragonkin/Dragonkin.h"
 #include "../../Game/Character/Enemy/Drone/Drone.h"
-#include "../../Nova/PostProcess/Bloom.h"
 #include "../../Game/UI/UI.h"
+#include "../../Nova/Graphics/Bloom.h"
 #include "../../Nova/Graphics/CascadedShadowMaps.h"
 #include "../../Nova/Graphics/Vignette.h"
 #include "../../Nova/Graphics/ColorFilter.h"
@@ -86,9 +86,6 @@ private:
 	//	シャドウマップ
 	std::unique_ptr<CascadedShadowMaps> cascadedShadowMaps_;
 	float criticalDepthValue_ = 115.0f; // If this value is 0, the camera's far panel distance is used.
-
-	//	ヴィネット(周辺減光)
-	std::unique_ptr<Vignette> vignette_;
 
 	//	カラーフィルター
 	std::unique_ptr<ColorFilter> colorFilter_;
