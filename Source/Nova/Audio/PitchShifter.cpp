@@ -2,7 +2,7 @@
 
 PitchShifter::PitchShifter()
 {
-
+    frequency_ = std::make_unique<Frequency>();
 }
 
 //	ピッチシフトを適応

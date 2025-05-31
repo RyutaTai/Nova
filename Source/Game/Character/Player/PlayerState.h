@@ -291,10 +291,6 @@ namespace PlayerState
 		float rootMotionSpeed_ = 1.0f;
 
 		//	----- アニメーション -----
-		static const int	AnimSpeedSectionCount_ = 2;									//	アニメーション速度変化区間の数
-		TimeRangeJudge			animSpeedChangeInterval_[AnimSpeedSectionCount_] = {};		//	再生速度を変更するアニメーション区間
-		float				animationSpeed_[AnimSpeedSectionCount_] = { 1.0f,1.5f };	//	各区間のアニメーション速度
-
 		float				startFrame_ = 0.19f;	//	アニメーションの再生開始位置
 		float				endFrame_ = 0.96f;		//	回避アニメーションの長さで初期化
 
@@ -331,8 +327,8 @@ namespace PlayerState
 		float endFrame_ = 1.0f;
 		
 		//	----- アニメーション速度 -----
-		static const int	AnimSpeedSectionCount_								= 2;					//	アニメーション速度変化区間の数
-		TimeRangeJudge			animSpeedChangeInterval_[AnimSpeedSectionCount_]	= {};					//	再生速度を変更するアニメーション区間
+		static const int	AnimSpeedSectionCount_ = 2;					//	アニメーション速度変化区間の数
+		TimeRangeJudge		animSpeedChangeInterval_[AnimSpeedSectionCount_]	= {};					//	再生速度を変更するアニメーション区間
 		float				animationSpeed_[AnimSpeedSectionCount_]				= { 1.2f,2.8f};	//	各区間のアニメーション速度
 
 		//	----- 吹っ飛ばし -----

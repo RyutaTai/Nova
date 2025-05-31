@@ -11,13 +11,13 @@ class PitchShifter
 {
 public:
 	PitchShifter();
-	~PitchShifter() {}
+	~PitchShifter() = default;
 
 	//	----- ピッチシフトを適応 -----
 	void ApplyPitchShift(const float& pitchShift, const std::vector<float>& input, std::vector<float>& output);	//	ピッチシフト適応
 
 private:
-	Frequency* frequency_ = nullptr;
+	std::unique_ptr<Frequency> frequency_;
 
 };
 

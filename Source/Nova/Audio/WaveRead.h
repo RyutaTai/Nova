@@ -9,7 +9,7 @@ class WaveReader
 {
 public:
     WaveReader(const char* filename);
-    ~WaveReader() {}
+    ~WaveReader() = default;
 
     void SetName(const char* filename); //  âπåπñºê›íË
     

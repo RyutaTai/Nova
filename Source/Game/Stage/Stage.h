@@ -61,11 +61,11 @@ public:
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture_;	//	ピクセルシェーダーでここに書き出す
 		
 		//	----- 色の変更に使用 -----
-		DirectX::XMFLOAT4 defaultSpectrumColor_;	// デフォルトの色
-		DirectX::XMFLOAT4 currentSpectrumColor_;	// 現在の色
+		DirectX::XMFLOAT4 defaultSpectrumColor_;	//	デフォルトの色
+		DirectX::XMFLOAT4 currentSpectrumColor_;	//	現在の色
 		bool	isTemporaryColorActive_ = false;	//	オーディオスペクトラムの一時的な色変更フラグ
-		float	colorTimer_ = 0.0f;
-		float	colorDuration_ = 0.8f;						//	何秒間色を変更するか
+		float	colorTimer_ = 0.0f;					//	変化して何秒経過したか
+		float	colorDuration_ = 0.8f;				//	何秒間色を変更するか
 		
 		// ----- 視野角変更に使用(スケールが変わったように見せる) -----
 		bool	isFovyScaleActive_ = false;
@@ -78,7 +78,7 @@ public:
 
 public:
 	Stage();
-	~Stage() {}
+	~Stage() = default;
 
 	static Stage& Instance();
 
@@ -119,8 +119,8 @@ public:
 	void SetProjectionMappingTransform(const DirectX::XMFLOAT4X4& projectionMappingTransform, const int& index) { projectionMappingConstants_[index].transform_, projectionMappingTransform; }
 	const DirectX::XMFLOAT3		GetProjectionMappingEye(const int& index)	const { return projectionMapping_[index].eye_; }
 	const DirectX::XMFLOAT3		GetProjectionMappingFocus(const int& index) const { return projectionMapping_[index].focus_; }
-	const float					GetProjectionMappingRotation(const int& index) { return projectionMapping_[index].rotation_; }
-	const float					GetProjectionMappingFovy(const int& index)	const { return projectionMapping_[index].fovy_; }
+	const float					GetProjectionMappingRotation(const int& index) const { return projectionMapping_[index].rotation_; }
+	const float					GetProjectionMappingFovy(const int& index)		const { return projectionMapping_[index].fovy_; }
 	const DirectX::XMFLOAT4X4	GetProjectionMappingTransform(const int& index)	const { return projectionMappingConstants_[index].transform_; }
 
 	//	シャドウマップ
@@ -139,15 +139,13 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	spectrumCirclePS_;
 	std::unique_ptr<FrameBuffer>				spectrumFramebuffer_[static_cast<int>(AudioSpectrumType::Max)];
 
-	const int SPECTRUM_WIDTH = 256;
-	const int SPECTRUM_HEIGHT = 256;
+	const int SPECTRUM_WIDTH = 512;
+	const int SPECTRUM_HEIGHT = 512;
 
 	bool				useFrequency_ = true;
 	static const int	FrequencyDataMax = 120;
 	float				frequencyData_[FrequencyDataMax];
 	int					frequencyIndex_ = 25;
-	//int					frequencyIndex_ = 265;
-	//int					frequencyIndex_			= 509;
 	float				currentFrequencyValue_ = 0.0f;
 	float				frequencyMinValue_ = 0.0f;
 	float				frequencyMaxValue_ = 0.0f;
@@ -157,11 +155,9 @@ private:
 	float				emissiveIntencityMin_ = 0.1f;
 	float				emissiveIntencityMax_ = 15.0f;
 
-	std::unique_ptr<Frequency> frequency_ = nullptr;	//	音の周波数データ(emissiveIntencityの計算に使う)
+	std::unique_ptr<Frequency> frequency_;	//	音の周波数データ(emissiveIntencityの計算に使う)
 
 	float threshold_ = 2100.0f;
 	float defaultEmissiveIntensity_ = 10.0f;
-
-	//	円形オーディオスペクトラムのfocusからeyeまでの高さ
 
 };

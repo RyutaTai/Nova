@@ -157,6 +157,7 @@ void UITempo::UpdateCenterCircleAnimation()
 
 	center_->GetTransform()->SetTexPosX(100.0f);
 
+	//	ヴィネットの範囲補完
 	/*float intensity = Mathf::Lerp(Vignette::Instance().GetVignetteCurrentIntensity(), Vignette::Instance().GetVignetteIntensityMin(), 1.0f);
 	Vignette::Instance().SetVignetteIntensity(intensity);*/
 

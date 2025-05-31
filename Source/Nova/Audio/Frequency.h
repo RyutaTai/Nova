@@ -15,7 +15,7 @@ class Frequency
 {
 public:
 	Frequency() {}
-	~Frequency() {}
+	~Frequency() = default;
 
 	void Initialize();
 	void Update(const float& elapsedTime, Audio* audioSource);

@@ -910,13 +910,10 @@ namespace PlayerState
 	void DodgeState::Initialize()
 	{
 		//	----- アニメーション再生設定 -----
-		owner_->PlayAnimation(Player::AnimationType::DodgeBack, false, 0.0f, 1.0f, startFrame_, endFrame_);
+		owner_->PlayAnimation(Player::AnimationType::DodgeBack, false, 0.0f, 1.0f, startFrame_);
+		//owner_->PlayAnimation(Player::AnimationType::DodgeBack, false, 0.0f, 1.0f, startFrame_, endFrame_);
 		owner_->SetAnimationSpeed(1.0f);
-		animSpeedChangeInterval_[0].SetRange(0.0f, 0.59f);
-		animSpeedChangeInterval_[0].SetName("AnimSpeedInterval0");
-		animSpeedChangeInterval_[1].SetRange(0.60f, 1.333f);
-		animSpeedChangeInterval_[1].SetName("AnimSpeedInterval1");
-
+		
 		//	----- ルートモーション -----
 		owner_->SetUseRootMotion(true);
 	}
@@ -937,23 +934,6 @@ namespace PlayerState
 
 	}
 
-	//	アニメーション再生速度を調整
-	void DodgeState::UpdateAnimationSpeed()
-	{
-		//	現在のアニメーション再生時間
-		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();
-
-		//	アニメーション速度更新
-		for (int i = 0; i < AnimSpeedSectionCount_; ++i)
-		{
-			if (animSpeedChangeInterval_[i].IsWithinRange(currentAnimationSeconds))
-			{
-				owner_->SetAnimationSpeed(animationSpeed_[i]);
-				break;
-			}
-		}
-	}
-
 	//	回避移動
 	void DodgeState::MoveForward(const float& elapsedTime)
 	{
@@ -966,7 +946,7 @@ namespace PlayerState
 
 	}
 
-	//	ステートの遷移を判断	
+	//	ステートの遷移を判断
 	void DodgeState::DetermineStateTransition(const float& elapsedTime)
 	{
 		//	アニメーション再生中なら遷移しない
@@ -1001,17 +981,6 @@ namespace PlayerState
 				//	アニメーション再生フレーム
 				ImGui::DragFloat("StartFrame", &startFrame_,0.01f);
 				ImGui::DragFloat("EndFrame", &endFrame_, 0.01f);
-
-				//	アニメーション速度を変化させる区間	
-				for (int i = 0; i < AnimSpeedSectionCount_; ++i)
-				{
-					animSpeedChangeInterval_[i].DrawDebug();
-				}
-
-				//	設定した区間のアニメーション速度
-				ImGui::DragFloat("AnimSpeed0", &animationSpeed_[0]);
-				ImGui::DragFloat("AnimSpeed1", &animationSpeed_[1]);
-				ImGui::DragFloat("AnimSpeed2", &animationSpeed_[2]);
 
 				ImGui::TreePop();
 			}

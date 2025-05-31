@@ -1,5 +1,7 @@
 #include "JudgeRhythm.h"
 
+#include <algorithm>
+
 #include "Stage/Stage.h"
 #include "UI/UIManager.h"
 #include "UI/UITempo.h"
@@ -7,8 +9,6 @@
 #include "UI/UIRhythmJudgment.h"
 #include "../Nova/Core/Framework.h"
 #include "../../imgui/imgui.h"
-
-#include <algorithm>
 
 void JudgeRhythm::Initialize()
 {
@@ -52,7 +52,7 @@ bool JudgeRhythm::Judge()
 		//  ----- 判定文字UIを生成 -----
 		UIManager::Instance().RemoveFromType(UIManager::UIType::Rhythm);
 		std::unique_ptr<UIRhythmJudgment> uiRhythmPtr = std::make_unique<UIRhythmJudgment>(JudgeRhythm::JudgmentType::Perfect);
-		UIRhythmJudgment* uiRhythm = uiRhythmPtr.get(); // 生ポインタを取得
+		UIRhythmJudgment* uiRhythm = uiRhythmPtr.get();			// 生ポインタを取得
 		UIManager::Instance().Register(std::move(uiRhythmPtr)); // 所有権を UIManager に渡す
 		uiRhythm->Initialize();
 		uiRhythm->SetIsVisible(true);
@@ -80,7 +80,6 @@ bool JudgeRhythm::Judge()
 		UIManager::Instance().Register(std::move(uiRhythmPtr));
 		uiRhythm->Initialize();
 		uiRhythm->SetIsVisible(true);
-
 
 		//	----- 判定フラグをtrueにしてコンボ加算 -----
 		UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->SetIsJudged(true);
@@ -155,7 +154,7 @@ void JudgeRhythm::DrawDebug()
 		ImGui::Text(u8"----- コンボ -----");
 		ImGui::DragInt("ComboCount", &comboCount_);
 
-		//	判定を取った時の中心円からの距離
+		//	----- 判定を取った時の中心円からの距離 -----
 		ImGui::Text(u8"----- 判定を取った時の中心円からの距離 -----");
 		ImGui::DragFloat("JudgeSmicircleRange", &debugJudgeRange_);
 

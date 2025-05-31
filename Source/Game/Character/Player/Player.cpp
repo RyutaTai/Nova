@@ -25,7 +25,7 @@ Player& Player::Instance()
 
 //	コンストラクタ
 Player::Player()
-	:Character("./Resources/Model/Player/SKM_Manny_Anim.gltf", "")
+	:Character("./Resources/Model/Player/Player.gltf", "")
 {
 	//	インスタンス設定
 	_ASSERT_EXPR(instance_ == instance_, L"already instance");
@@ -161,7 +161,6 @@ void Player::UpdateListener()
 	DirectX::XMFLOAT3 position = GetTransform()->GetPosition();
 	DirectX::XMFLOAT3 scale = GetTransform()->GetScale();
 
-	//listener_.position = { position.x, position.y + (scale.y / 2.0f), position.z };
 	listener_.position_ = { position.x, position.y + height_ / 2.0f, position.z };
 	listener_.frontVec_ = Camera::Instance().GetFront();
 	listener_.velocity_ = GetMoveVec();
@@ -438,42 +437,6 @@ void Player::PlayEffect()
 
 }
 
-bool Player::DummyRay(const float& elapsedTime)
-{
-	//	右手のワールド座標取得
-	DirectX::XMFLOAT3 leftHandPos = GetJointPosition("mixamorig:RightHandMiddle1");
-
-	//	当たり判定用の半径セット
-	constexpr float leftHandRadius = 50.0f;
-
-	//	衝突判定用のデバッグ球を描画
-	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-	debugRenderer->DrawSphere(leftHandPos, leftHandRadius, DirectX::XMFLOAT4(1, 1, 1, 1));
-
-	DirectX::XMFLOAT3	rayPos = leftHandPos;					//	レイの始点
-	DirectX::XMFLOAT3	rayDirection = { 0,-1,0 };              //	レイの方向(真下)
-	DirectX::XMFLOAT4X4 transform = {};							//	ステージのワールド変換行列
-	DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
-	float	rayLimit = dummyRayLimit_;							//	レイの長さ(そのときのvelocity)
-	bool	skipIf = true;										//	
-
-	DirectX::XMFLOAT3 rayEndPos = {};
-	DirectX::XMVECTOR RayEndPos = DirectX::XMVectorAdd(DirectX::XMLoadFloat3(&rayPos), DirectX::XMVectorScale(DirectX::XMLoadFloat3(&rayDirection), rayLimit));
-	DirectX::XMStoreFloat3(&rayEndPos, RayEndPos);
-	isDummyHit_ = Stage::Instance().Collision(rayPos, rayDirection, transform, hitPosition_, hitNormal_, hitMaterial_, hitMesh_, rayLimit, skipIf);
-	
-	//	レイが当たっていなかったらヒット情報リセット
-	if (isDummyReset_)
-	{
-		hitPosition_	= {};
-		hitNormal_		= {};
-		hitMesh_		= {};
-		hitMaterial_	= {};
-	}
-
-	return isDummyHit_;
-}
-
 //	アニメーション
 void Player::PlayAnimation(const AnimationType& animType, const bool& loop, const float& blendTime, const float& animSpeed, const float& startFrame, const float& endFrame)
 {
@@ -588,12 +551,6 @@ void Player::ChangeDodgeState()
 	}
 }
 
-//	他のステートからでも強制で遷移するステートを確認
-void Player::ChangeForceExecutionState()
-{
-		
-}
-
 //	現在のステート表示
 void Player::DrawStateStr()
 {
@@ -629,7 +586,6 @@ void Player::DrawDebug()
 		ImGui::DragFloat("RayPosRadius", &rayPosRadius_);	//	レイキャストの始点終点を表す球の半径
 		ImGui::Checkbox(u8"StageCollision", &isCollisionStage_);										//	ステージとの当たり判定オン/オフ
 		ImGui::Text(u8"HitStage %s", hitStage.c_str());													//	ステージと当たっているか
-		DrawDummyRay();
 		
 		//	----- 重力 -----
 		ImGui::DragFloat("Gravity", &gravity_, 0.01f, -FLT_MAX, FLT_MAX);								//	重力
@@ -705,24 +661,6 @@ void Player::DrawDebugPrimitive()
 
 			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
 		}
-	}
-
-}
-
-void Player::DrawDummyRay()
-{
-	if (ImGui::TreeNode(u8"RayHit"))
-	{
-		ImGui::Checkbox("DummyHitReset", &isDummyReset_);
-		ImGui::Checkbox("DummyHit", &isDummyHit_);
-		ImGui::DragFloat("RayLimit", &dummyRayLimit_, 0.1f, -FLT_MAX, FLT_MAX);
-		ImGui::DragFloat("RayDebugOffset", &debugOffset_, 0.1f, -FLT_MAX, FLT_MAX);
-		ImGui::DragFloat3("HitPos", &hitPosition_.x, 0.01f, -FLT_MAX, FLT_MAX);				//	当たった位置
-		ImGui::DragFloat3("HitNormal", &hitNormal_.x, 0.01f, -FLT_MAX, FLT_MAX);			//	当たった面の法線
-		ImGui::Text("Mesh", &hitMesh_);														//	メッシュ名
-		ImGui::Text("Material", &hitMaterial_);												//	マテリアル名
-
-		ImGui::TreePop();
 	}
 
 }

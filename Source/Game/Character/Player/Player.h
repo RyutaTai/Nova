@@ -81,7 +81,7 @@ private:
 
 public:
 	Player();
-	~Player()override {}
+	~Player()override = default;
 
 	static Player& Instance();
 
@@ -92,7 +92,6 @@ public:
 	//	デバッグ
 	void DrawDebug()override;	//	ImGui描画
 	void DrawDebugPrimitive();	//	デバッグプリミティブ描画
-	void DrawDummyRay();
 
 	//	----- 移動入力処理 -----
 	bool InputMove(const float& elapsedTime);
@@ -103,8 +102,6 @@ public:
 	//	----- 判定処理 -----
 	bool RayVsVertical(const float& elapsedTime)override;		//	ステージとの当たり判定(垂直方向)
 	bool RayVsHorizontal(const float& elapsedTime)override;		//	ステージとの当たり判定(水平方向)	
-
-	bool DummyRay(const float& elapsedTime);	//	レイキャストでちゃんと情報が取れているか
 
 	//	----- エフェクト -----
 	void SetEffectScale(const float& scale) { effectScale_ = scale; }
@@ -156,7 +153,6 @@ public:
 	void								ChangeDodgeState();											//	回避ステートへ遷移
 	StateType							GetCurrentState()	const { return currentState_; }			//	現在のステート取得
 	StateType							GetLastState()		const { return lastState_; }			//	ひとつ前のステート取得
-	void								ChangeForceExecutionState();								//	強制実行するステートを遷移
 	void								DrawStateStr();												//	現在のステート描画
 
 	//	----- オーディオ -----
@@ -224,15 +220,5 @@ private://	----- デバッグ用 -----
 	float				gravity_			= -5.0f;
 	float				rayPosRadius_		= 0.01f;
 	bool				isAddGravity_		= false;		//	重力加算フラグ
-
-	//	DummyRay
-	float				debugOffset_		= height_ / 2.0f;
-	bool				isDummyReset_		= false;
-	bool				isDummyHit_			= false;		//	当てっているかどうか
-	float				dummyRayLimit_		= 100.0f;		//	レイの長さ
-	DirectX::XMFLOAT3	hitPosition_		= {};			//	当たった位置
-	DirectX::XMFLOAT3	hitNormal_			= {};			//	法線の方向
-	std::string			hitMesh_			= {};			//	メッシュ名
-	std::string			hitMaterial_		= {};			//	マテリアル名
 
 };

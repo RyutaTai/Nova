@@ -5,7 +5,7 @@
 
 #include "../../../External/MidiFile/include/MidiFile.h"
 
-//  MIDIトラッククラス
+//  MIDIクラス
 class Midi 
 {
 public:
@@ -25,7 +25,7 @@ public:
 
 public:
 	Midi(const std::string& midiFilename, const double& midiFileDurationSeconds = 0.0f/*midiファイルの長さ[s]*/);
-    ~Midi() {}
+    ~Midi() = default;
 
     void	Initialize();								    //	初期化処理
     void	Update(const double& elapsedTime);				//	更新処理

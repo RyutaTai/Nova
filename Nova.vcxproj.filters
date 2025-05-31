@@ -35,9 +35,6 @@
     <Filter Include="Nova\Debug">
       <UniqueIdentifier>{0a9d13ea-36c0-466d-a481-91d9024d2e76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Shaders">
-      <UniqueIdentifier>{813cc3ec-ea22-48fc-8008-99cb95ebcccf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Nova\AI">
       <UniqueIdentifier>{1c31d348-952a-4ff8-b203-504c9b5f0684}</UniqueIdentifier>
     </Filter>
@@ -917,18 +914,6 @@
     <FxCompile Include="Source\Nova\Shaders\StaticMeshVs.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Source\Game\Shaders\DronePS.hlsl">
-      <Filter>Game\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\Game\Shaders\CityPS.hlsl">
-      <Filter>Game\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\Game\Shaders\MonotonePS.hlsl">
-      <Filter>Game\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\Game\Shaders\BulletCoverPS.hlsl">
-      <Filter>Nova\Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\GltfModelVS.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
@@ -959,22 +944,10 @@
     <FxCompile Include="Source\Nova\Shaders\SkymapPs.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Source\Game\Shaders\PlayerPS.hlsl">
-      <Filter>Nova\Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\DecalPs.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\DecalVs.hlsl">
-      <Filter>Nova\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\Game\Shaders\SpectrumPS.hlsl">
-      <Filter>Nova\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\Game\Shaders\SpectrumCirclePS.hlsl">
-      <Filter>Nova\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\Game\Shaders\UIRankPs.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\CascadedShadowPs.hlsl">
@@ -990,6 +963,30 @@
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\GltfModelStaticBatchingCsmVS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\CityPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\DronePS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\MonotonePS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\SpectrumCirclePS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\SpectrumPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\BulletCoverPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\PlayerPS.hlsl">
+      <Filter>Nova\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Nova\Shaders\UIRankPs.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
   </ItemGroup>

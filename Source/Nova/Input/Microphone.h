@@ -18,7 +18,8 @@
 class Microphone
 {
 public: //  構造体
-    struct Param {
+    struct Param 
+    {
         double _db;
     };
 
@@ -28,9 +29,10 @@ public:
 
 public:
     //  インスタンス取得
-    static Microphone& Instance() {
-        static Microphone instance_;
-        return instance_;
+    static Microphone& Instance() 
+    {
+        static Microphone instance;
+        return instance;
     }
 
     // 音声入力 (second)
