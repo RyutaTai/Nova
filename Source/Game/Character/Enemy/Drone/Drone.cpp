@@ -106,18 +106,7 @@ void Drone::Initialize()
 	sources_[static_cast<int>(Audio3D::Shot)]->SetAudioName("LaunchBullet");
 	sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Player::Instance().GetListener());
 	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Shot)]);
-	
-#if 1	//	3dで生成
-	/*sources_[static_cast<int>(Audio3D::Move)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", &emitter_);
-	sources_[static_cast<int>(Audio3D::Move)]->SetVolume(0.3f, false);
-	sources_[static_cast<int>(Audio3D::Move)]->SetAudioName("BulletMove");
-	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Move)]);*/
-#else
-	debugSource_ = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/bulletMove.wav", Audio::AudioType::SE3D, "GameScene");
-	debugSource_->SetVolume(0.3f, false);
-	debugSource_->SetAudioName("BulletMove");
-	AudioManager::Instance().Register(debugSource_);
-#endif
+
 	//	破壊音
 	sources_[static_cast<int>(Audio3D::Destroy)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", &emitter_);
 	sources_[static_cast<int>(Audio3D::Destroy)]->SetVolume(0.3f, false);
@@ -126,7 +115,7 @@ void Drone::Initialize()
 
 #endif
 
-	//	テスト用
+	//	3Dオーディオテスト用
 #if 0
 	sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/452_BPM140_2.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
 	//sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
@@ -137,15 +126,6 @@ void Drone::Initialize()
 	sources_[static_cast<int>(Audio3D::Bgm)]->Play(true);
 	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Bgm)]);
 #endif
-
-	//	発射音再生
-#if 0
-	if (sources_[static_cast<int>(Audio3D::Shot)])
-	{
-		sources_[static_cast<int>(Audio3D::Shot)]->Play(true);
-	}
-#endif
-
 
 }
 

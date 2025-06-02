@@ -4,17 +4,18 @@
 
 inline FLOAT32 VECTOR3Length(const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b)
 {
-    return sqrtf((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
+    return sqrtf((a.x - b.x) * (a.x - b.x) /*+ (a.y - b.y) * (a.y - b.y) */+ (a.z - b.z) * (a.z - b.z));
 }
 
 inline FLOAT32 Dot(const DirectX::XMFLOAT3& a)
 {
-    return sqrtf((a.x * a.x) + (a.y * a.y) + (a.z * a.z));
+    return sqrtf((a.x * a.x) /*+ (a.y * a.y) */+ (a.z * a.z));
 }
 
 #if 1
 FLOAT32 Angle(DirectX::XMFLOAT3 point1, DirectX::XMFLOAT3 point2, DirectX::XMFLOAT3 vector)
 {
+    //  リスナーからエミッターまでのベクトル
     DirectX::XMFLOAT3 vectorListnerToEmitter =
     {
         point1.x - point2.x,
@@ -29,7 +30,7 @@ FLOAT32 Angle(DirectX::XMFLOAT3 point1, DirectX::XMFLOAT3 point2, DirectX::XMFLO
     FLOAT32 pointDot = Dot(vectorListnerToEmitter);
     DirectX::XMFLOAT3 pointNoramlize = { vectorListnerToEmitter.x / pointDot, vectorListnerToEmitter.y / pointDot, vectorListnerToEmitter.z / pointDot };
 
-    return acosf(frontNormalize.x * pointNoramlize.x + frontNormalize.y * pointNoramlize.y + frontNormalize.z * pointNoramlize.z);
+    return acosf(frontNormalize.x * pointNoramlize.x /*+ frontNormalize.y * pointNoramlize.y */+ frontNormalize.z * pointNoramlize.z);
 }
 #else
 FLOAT32 Angle(DirectX::XMFLOAT3 point_1, DirectX::XMFLOAT3 point_2, DirectX::XMFLOAT3 vector)
