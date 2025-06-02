@@ -116,9 +116,9 @@ void Drone::Initialize()
 #endif
 
 	//	3Dオーディオテスト用
-#if 0
-	sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/452_BPM140_2.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
-	//sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
+#if 1
+	//sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/452_BPM140_2.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
+	sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetVolume(0.2f, false);
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetAudioName("TestBGM");
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Player::Instance().GetListener());
@@ -198,11 +198,14 @@ void Drone::UpdateAudioSource()
 	//	発射音
 	if (sources_[static_cast<int>(Audio3D::Shot)])
 	{
+		sources_[static_cast<int>(Audio3D::Shot)]->SetEmitterPosition(emitter_.position_);
 		sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Player::Instance().GetListener());
+		
 	}
 	//	BGM(デバッグ用)
 	if (sources_[static_cast<int>(Audio3D::Bgm)])
 	{
+		sources_[static_cast<int>(Audio3D::Bgm)]->SetEmitterPosition(emitter_.position_);
 		sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Player::Instance().GetListener());
 	}
 }

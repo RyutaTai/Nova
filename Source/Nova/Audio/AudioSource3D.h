@@ -22,7 +22,7 @@ public:
 
 	void SetEmitter(SoundEmitter emitter) { this->emitter_ = &emitter; }
 
-	void SetPosition(const DirectX::XMFLOAT3& position) { emitter_->position_ = position; }
+	void SetEmitterPosition(const DirectX::XMFLOAT3& position) { emitter_->position_ = position; }
 
 	void SetVelocity(const DirectX::XMFLOAT3& velocity) { emitter_->velocity_ = velocity; }
 

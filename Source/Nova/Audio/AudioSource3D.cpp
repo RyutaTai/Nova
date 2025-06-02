@@ -185,7 +185,7 @@ void AudioSource3D::DrawDebug()
 
 	if (ImGui::TreeNode("DSPSetting"))
 	{
-		ImGui::DragFloat("angle", &dspSetting_.radianListenerToEmitter_);
+		ImGui::DragFloat("Angle", &dspSetting_.radianListenerToEmitter_,0.01f);
 		ImGui::DragFloat("DopplerFactor", &dspSetting_.dopplerScale_);
 		ImGui::DragFloat("Distance", &dspSetting_.distanceListnerToEmitter_);
 		ImGui::DragFloat("FilterParam", &dspSetting_.filterParam_);

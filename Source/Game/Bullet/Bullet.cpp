@@ -86,7 +86,7 @@ void Bullet::UpdateEmitter()
 	//se_[static_cast<int>(Audio3D::Move)]->SetPosition(emitter_.position_);	//	AudioSource3D‚Ìemitter_‚Ìposition‚É“n‚·
 	////emitter_.velocity_ = velocity_;
 	
-	se_[static_cast<int>(Audio3D::Move)]->SetPosition(GetTransform()->GetPosition());	//	AudioSource3D‚Ìemitter_‚Ìposition‚É“n‚·
+	se_[static_cast<int>(Audio3D::Move)]->SetEmitterPosition(GetTransform()->GetPosition());	//	AudioSource3D‚Ìemitter_‚Ìposition‚É“n‚·
 	//emitter_.velocity_ = velocity_;
 }
 

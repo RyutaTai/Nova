@@ -39,7 +39,7 @@ public:
 	const UINT cascadeCount_;
 	float splitSchemeWeight_ = 0.205f;
 	bool fitToCascade_ = true;
-	float zMult_ = 1.5f;
+	float zMult_ = 15.3f;
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer_;

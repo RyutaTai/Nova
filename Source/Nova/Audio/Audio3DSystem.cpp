@@ -1,33 +1,48 @@
 #include "Audio3DSystem.h"
 
 #include <corecrt_math_defines.h>
+#include <algorithm>
 
-inline FLOAT32 VECTOR3Length(const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b)
+inline FLOAT32 Vecotr3SubtractLength(const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b)
 {
     return sqrtf((a.x - b.x) * (a.x - b.x) /*+ (a.y - b.y) * (a.y - b.y) */+ (a.z - b.z) * (a.z - b.z));
 }
 
-inline FLOAT32 Dot(const DirectX::XMFLOAT3& a)
+inline FLOAT32 Length(const DirectX::XMFLOAT3& a)
 {
     return sqrtf((a.x * a.x) /*+ (a.y * a.y) */+ (a.z * a.z));
 }
 
 #if 1
-FLOAT32 Angle(DirectX::XMFLOAT3 point1, DirectX::XMFLOAT3 point2, DirectX::XMFLOAT3 vector)
+FLOAT32 Angle(const DirectX::XMFLOAT3& emitterPos, const DirectX::XMFLOAT3& listenerPos, const DirectX::XMFLOAT3& vector)
 {
     //  リスナーからエミッターまでのベクトル
     DirectX::XMFLOAT3 vectorListnerToEmitter =
     {
-        point1.x - point2.x,
-        point1.y - point2.y,
-        point1.z - point2.z,
+        emitterPos.x - listenerPos.x,
+        /*point1.y - point2.y*/0.0f,
+        emitterPos.z - listenerPos.z,
     };
 
+    double vec[2] = { emitterPos.x - listenerPos.x,emitterPos.z - listenerPos.z };
+    double front[2] = { vector.x,vector.z };
 
-    FLOAT32 frontDot = Dot(vector);
+    double len = sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
+    vec[0] = vec[0] / len;
+    vec[1] = vec[1] / len;
+
+    len = sqrt(front[0] * front[0] + front[1] * front[1]);
+    front[0] = front[0] / len;
+    front[1] = front[1] / len;
+
+    return acos(vec[0] * front[0] + vec[1] * front[1]);
+
+
+    
+    FLOAT32 frontDot = Length(vector);
     DirectX::XMFLOAT3 frontNormalize = { vector.x / frontDot, vector.y / frontDot, vector.z / frontDot };
 
-    FLOAT32 pointDot = Dot(vectorListnerToEmitter);
+    FLOAT32 pointDot = Length(vectorListnerToEmitter);
     DirectX::XMFLOAT3 pointNoramlize = { vectorListnerToEmitter.x / pointDot, vectorListnerToEmitter.y / pointDot, vectorListnerToEmitter.z / pointDot };
 
     return acosf(frontNormalize.x * pointNoramlize.x /*+ frontNormalize.y * pointNoramlize.y */+ frontNormalize.z * pointNoramlize.z);
@@ -76,64 +91,83 @@ FLOAT32 Angle(DirectX::XMFLOAT3 point_1, DirectX::XMFLOAT3 point_2, DirectX::XMF
 
 void DSP(SoundDSPSetting& dspSetting, const SoundListener& listener, const SoundEmitter& emitter)
 {
-    //  距離
-    dspSetting.distanceListnerToEmitter_ = VECTOR3Length(emitter.position_, listener.position_);
+    //  リスナーからエミッターまでの距離
+    dspSetting.distanceListnerToEmitter_ = Vecotr3SubtractLength(emitter.position_, listener.position_);
 
     // ドップラー効果
     dspSetting.dopplerScale_ = (SPEED_OF_SOUND - (listener.velocity_.x + listener.velocity_.y + listener.velocity_.z)) /
                                     (SPEED_OF_SOUND - (emitter.velocity_.x + emitter.velocity_.y + emitter.velocity_.z));
 
-    //  角度
+    //  リスナーからエミッターまでの角度
+    float debugAngle = Angle(emitter.position_, listener.position_, listener.rightVec_);
+	if (debugAngle < M_PI * 0.5f)
+    {
+        debugAngle = Angle(emitter.position_, listener.position_, listener.frontVec_);
+    }
+    else
+    {
+        debugAngle = -Angle(emitter.position_, listener.position_, listener.frontVec_);
+    }
+
     dspSetting.radianListenerToEmitter_ = (Angle(emitter.position_, listener.position_,  listener.rightVec_) < M_PI * 0.5f) ?
                                                 Angle(emitter.position_, listener.position_, listener.frontVec_) : -Angle(emitter.position_, listener.position_, listener.frontVec_);
 
-    // 音の減衰率
-    FLOAT32 scaler = max(0.0f, min(1.0f, 1.0f - dspSetting.distanceListnerToEmitter_ / emitter.maxDistance_));
+    //  音の減衰率
+    FLOAT32 scaler = std::clamp(1.0f - dspSetting.distanceListnerToEmitter_ / emitter.maxDistance_, 0.0f, 1.0f);
 
+    //  チャンネル数によって音声行列の値を設定
     switch (dspSetting.srcChannelCount_ * dspSetting.dstChannelCount_)
     {
-    case 1:
+    case 1: //  音源:モノラル、出力:モノラル
         dspSetting.outputMatrix_[0] = scaler;
         break;
 
-    case 4:
-        FLOAT32 angle = (Angle(emitter.position_, listener.position_, listener.rightVec_) < M_PI * 0.5f) ?
-            dspSetting.radianListenerToEmitter_ : -Angle(emitter.position_, listener.position_, listener.frontVec_);
-#if 1
-        angle = (dspSetting.radianListenerToEmitter_ + 90) * 0.5f;
-#else
-        angle = (dspSetting.radianListenerToEmitter_ + M_PI_2) * 0.5f;
-#endif
-
-        FLOAT32 L = cosf(angle);
-        FLOAT32 R = sinf(angle);
-        if (dspSetting.distanceListnerToEmitter_ > emitter.minDistance_)
+    case 2: //  音源:モノラル、出力:ステレオ
         {
-            L *= scaler;
-            R *= scaler;
+            FLOAT32 angle = (Angle(emitter.position_, listener.position_, listener.rightVec_) < M_PI * 0.5f) ?
+                dspSetting.radianListenerToEmitter_ : -Angle(emitter.position_, listener.position_, listener.frontVec_);
+#if 1
+            angle = (dspSetting.radianListenerToEmitter_ + M_PI*0.5f) * 0.5f;
+#else       
+            angle = (dspSetting.radianListenerToEmitter_ + M_PI_2) * 0.5f;
+#endif      
+            FLOAT32 L = cosf(angle);
+            FLOAT32 R = sinf(angle);
+            if (dspSetting.distanceListnerToEmitter_ > emitter.minDistance_)
+            {
+                L *= scaler;
+                R *= scaler;
+            }
+
+            dspSetting.outputMatrix_[0] = L;
+            dspSetting.outputMatrix_[1] = R;
+
         }
+        break;
 
-#if 0    //  元のコード
-        dspSetting.outputMatrix_[0] = dspSetting.outputMatrix_[1] = L;   
-        dspSetting.outputMatrix_[2] = dspSetting.outputMatrix_[3] = R;
-#else
-        //  変更したら直った。
-        dspSetting.outputMatrix_[0] = dspSetting.outputMatrix_[2] = L;    //  左を0、2に変更
-        dspSetting.outputMatrix_[1] = dspSetting.outputMatrix_[3] = R;    //  右を1、3に変更
-#endif
+    case 4: //  音源：ステレオ、出力：ステレオ
+        {
+            FLOAT32 angle = (Angle(emitter.position_, listener.position_, listener.rightVec_) < M_PI * 0.5f) ?
+                dspSetting.radianListenerToEmitter_ : -Angle(emitter.position_, listener.position_, listener.frontVec_);
+#if 1       
+            angle = (dspSetting.radianListenerToEmitter_ + 90) * 0.5f;
+#else       
+            angle = (dspSetting.radianListenerToEmitter_ + M_PI_2) * 0.5f;
+#endif      
+            FLOAT32 L = cosf(angle);
+            FLOAT32 R = sinf(angle);
+            if (dspSetting.distanceListnerToEmitter_ > emitter.minDistance_)
+            {
+                L *= scaler;
+                R *= scaler;
+            }
 
-#if 0   //  dsp_setting.output_matrixの値が生きているか確認
-        float pan = -90.0f;	//	真左
-        float rad = ((-90.0f + 90.0f) / 2.0f) * (M_PI / 180.0f);	//  ラジアンに変換
-        dspSetting.output_matrix[0] = cosf(rad);				    //  左ボリューム
-        dspSetting.output_matrix[2] = cosf(rad);				    //  左ボリューム
-        dspSetting.output_matrix[1] = sinf(rad);				    //  右ボリューム
-        dspSetting.output_matrix[3] = sinf(rad);				    //  右ボリューム
+            dspSetting.outputMatrix_[0] = dspSetting.outputMatrix_[2] = L;    //  左を0、2に変更
+            dspSetting.outputMatrix_[1] = dspSetting.outputMatrix_[3] = R;    //  右を1、3に変更
 
-#endif
+        }
         break;
     }
-
 
     //  リスナーと音源の角度からローパスに適用する値を計算
     dspSetting.filterParam_ = (std::abs(dspSetting.radianListenerToEmitter_) > listener.innerRadius_) ?

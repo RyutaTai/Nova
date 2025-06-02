@@ -30,7 +30,6 @@ struct SoundEmitter
 	float				volume_ = 1.0f;		//	ボリューム
 };
 
-//	
 struct SoundDSPSetting
 {
 	UINT32   srcChannelCount_ = 0;				//	音源のチャンネル数
@@ -38,7 +37,7 @@ struct SoundDSPSetting
 	FLOAT32  distanceListnerToEmitter_ = {};	//	リスナーとエミッターの距離
 	FLOAT32  dopplerScale_ = {};				//	ドップラー効果
 	FLOAT32  radianListenerToEmitter_ = {};		//	リスナーからエミッターまでの角度
-	FLOAT32* outputMatrix_ = nullptr;				//	SetOutputMatrix()に渡す
+	FLOAT32* outputMatrix_ = nullptr;			//	SetOutputMatrix()に渡す音声行列
 	FLOAT32  filterParam_ = {};					//	ローパスに適用する値
 };
 

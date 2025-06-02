@@ -85,7 +85,7 @@ private:
 
 	//	シャドウマップ
 	std::unique_ptr<CascadedShadowMaps> cascadedShadowMaps_;
-	float criticalDepthValue_ = 115.0f; // If this value is 0, the camera's far panel distance is used.
+	float criticalDepthValue_ = 100.0f; // If this value is 0, the camera's far panel distance is used.
 
 	//	カラーフィルター
 	std::unique_ptr<ColorFilter> colorFilter_;
