@@ -6,7 +6,7 @@
 #include "../../Nova/Audio/AudioManager.h"
 #include "../../Nova/Resources/ResourceManager.h"
 #include "../Character/Player/Player.h"
-#include "../../Nova/Graphics/Camera.h"
+#include "../../Nova/Camera/Camera.h"
 
 //	コンストラクタ
 Bullet::Bullet()

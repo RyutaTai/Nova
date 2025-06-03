@@ -2,7 +2,7 @@
 
 #include "../../Nova/Core/Framework.h"
 #include "../../Nova/Graphics/Graphics.h"
-#include "../../Nova/Graphics/Camera.h"
+#include "../../Nova/Camera/Camera.h"
 #include "../Scenes/SceneManager.h"
 #include "../Scenes/SceneTitle.h"
 #include "../Scenes/SceneLoading.h"

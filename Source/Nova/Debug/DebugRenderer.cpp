@@ -5,7 +5,7 @@
 
 #include "../Others/Misc.h"
 #include "../Graphics/Graphics.h"
-#include "../Graphics/Camera.h"
+#include "../Camera/Camera.h"
 
 DebugRenderer::DebugRenderer(ID3D11Device* device)
 {

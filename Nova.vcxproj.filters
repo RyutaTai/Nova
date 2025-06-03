@@ -65,9 +65,6 @@
     <Filter Include="Game\Stage">
       <UniqueIdentifier>{5c6eda4d-b4bb-4319-8d64-4c4cbea2a63c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Nova\Graphics\Camera">
-      <UniqueIdentifier>{b600e7e4-d06a-4a53-a19c-82c211786a91}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Nova\Graphics\ColorFilter">
       <UniqueIdentifier>{4609035c-fb95-4cfc-8ea0-7741d583b817}</UniqueIdentifier>
     </Filter>
@@ -136,6 +133,9 @@
     </Filter>
     <Filter Include="Game\Scenes">
       <UniqueIdentifier>{1b7dee42-5917-4c77-bd8d-44eb8134133a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Camera">
+      <UniqueIdentifier>{b600e7e4-d06a-4a53-a19c-82c211786a91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -258,9 +258,6 @@
     </ClCompile>
     <ClCompile Include="Source\Nova\Collision\CollisionMesh.cpp">
       <Filter>Nova\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Graphics\Camera.cpp">
-      <Filter>Nova\Graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp">
       <Filter>Nova\Graphics\ColorFilter</Filter>
@@ -418,6 +415,9 @@
     <ClCompile Include="Source\Nova\Graphics\Bloom.cpp">
       <Filter>Nova\Graphics\Bloom</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Nova\Camera\Camera.cpp">
+      <Filter>Nova\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h">
@@ -566,9 +566,6 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\Collision\CollisionMesh.h">
       <Filter>Nova\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Graphics\Camera.h">
-      <Filter>Nova\Graphics\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\ColorFilter.h">
       <Filter>Nova\Graphics\ColorFilter</Filter>
@@ -869,6 +866,9 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\Bloom.h">
       <Filter>Nova\Graphics\Bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Camera\Camera.h">
+      <Filter>Nova\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

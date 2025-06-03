@@ -1,7 +1,7 @@
 #include "Player.h"
 
 #include "../../../Nova/Graphics/Graphics.h"
-#include "../../../Nova/Graphics/Camera.h"
+#include "../../../Nova/Camera/Camera.h"
 #include "../../../Nova/Core/Framework.h"
 #include "../../../Nova/Others/MathHelper.h"
 #include "../../../Nova/Collision/Collision.h"

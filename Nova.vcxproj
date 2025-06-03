@@ -217,6 +217,7 @@
     <ClCompile Include="Source\Game\Scenes\SceneTitle.cpp" />
     <ClCompile Include="Source\Game\Scenes\TitleState.cpp" />
     <ClCompile Include="Source\Game\Stage\Stage.cpp" />
+    <ClCompile Include="Source\Nova\Camera\Camera.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Bloom.cpp" />
     <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp" />
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
@@ -262,7 +263,6 @@
     <ClCompile Include="Source\Nova\Core\Framework.cpp" />
     <ClCompile Include="Source\Nova\Core\Main.cpp" />
     <ClCompile Include="Source\Nova\Debug\DebugRenderer.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Nova\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="Source\Nova\Graphics\FullScreenQuad.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Graphics.cpp" />
@@ -313,6 +313,7 @@
     <ClInclude Include="Source\Game\Scenes\SceneTitle.h" />
     <ClInclude Include="Source\Game\Scenes\TitleState.h" />
     <ClInclude Include="Source\Game\Stage\Stage.h" />
+    <ClInclude Include="Source\Nova\Camera\Camera.h" />
     <ClInclude Include="Source\Nova\Graphics\Bloom.h" />
     <ClInclude Include="Source\Nova\Graphics\ColorFilter.h" />
     <ClInclude Include="External\nlohmann\adl_serializer.hpp" />
@@ -410,7 +411,6 @@
     <ClInclude Include="Source\Nova\Core\Framework.h" />
     <ClInclude Include="Source\Nova\Core\HighResolutionTimer.h" />
     <ClInclude Include="Source\Nova\Debug\DebugRenderer.h" />
-    <ClInclude Include="Source\Nova\Graphics\Camera.h" />
     <ClInclude Include="Source\Nova\Graphics\FrameBuffer.h" />
     <ClInclude Include="Source\Nova\Graphics\FullScreenQuad.h" />
     <ClInclude Include="Source\Nova\Graphics\Graphics.h" />

@@ -1,7 +1,7 @@
 #include "Graphics.h"
 
 #include "../Core/Framework.h"
-#include "../Graphics/Camera.h"
+#include "../Camera/Camera.h"
 
 Graphics* Graphics::instance_ = nullptr;
 

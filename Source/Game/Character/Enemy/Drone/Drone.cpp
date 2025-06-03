@@ -10,7 +10,7 @@
 #include "../../../Bullet/BulletStraight.h"
 #include "../../../Bullet/BulletHorming.h"
 #include "../../Player/Player.h"
-#include "../../../../Nova/Graphics/Camera.h"
+#include "../../../../Nova/Camera/Camera.h"
 
 //	コンストラクタ
 Drone::Drone()
