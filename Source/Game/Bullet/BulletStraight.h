@@ -8,15 +8,14 @@ class BulletManager;
 class BulletStraight :public Bullet
 {
 public:
-	BulletStraight(const std::string& filename);
-	~BulletStraight()override;
+	BulletStraight();
+	~BulletStraight()override = default;
 
 	void Initialize()override;
 	void Update(const float& elapsedTime)override;
 
 	//	----- ï`âÊèàóù -----
 	void Render()override;
-	void RnederCoverModel()override {}
 
 	//	----- î≠éÀ -----
 	void Launch(const DirectX::XMFLOAT3& direction, const DirectX::XMFLOAT3& position)override;

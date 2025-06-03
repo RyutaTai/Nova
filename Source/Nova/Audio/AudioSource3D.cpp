@@ -130,7 +130,8 @@ void AudioSource3D::Set3DPan()
 //	フィルター処理
 void AudioSource3D::Filter(const XAUDIO2_FILTER_TYPE& type, const float& overq)
 {
-	filterParameters_.Type = type; //使うフィルターの種類
+	//	使うフィルターの種類
+	filterParameters_.Type = type;
 
 	filterParameters_.Frequency													//	カットする周波数の基準(0Hz(0.0f) ~ 7350Hz(1.0f))
 		= 2.0f * sinf(X3DAUDIO_PI / 6.0f * (1.0f - dspSetting_.filterParam_));	//	リスナーと音源の位置関係からとったフィルター係数を適用
@@ -143,9 +144,10 @@ void AudioSource3D::Filter(const XAUDIO2_FILTER_TYPE& type, const float& overq)
 //	ハイパスフィルター適応
 void AudioSource3D::ApplyHighPassFilter(const float& overq)
 {
-	filterParameters_.Type = HighPassOnePoleFilter; //使うフィルターの種類
+	//	使うフィルターの種類(ハイパスを設定)
+	filterParameters_.Type = HighPassOnePoleFilter;
 
-	filterParameters_.Frequency											//	カットする周波数の基準(0Hz(0.0f) ~ 7350Hz(1.0f))
+	filterParameters_.Frequency											//	カットする周波数の基準(0Hz(0.0f) ～ 7350Hz(1.0f))
 		= 2.0f * sinf(X3DAUDIO_PI / 6.0f * dspSetting_.filterParam_);	//	リスナーと音源の位置関係からとったフィルター係数を適用
 
 	filterParameters_.OneOverQ = overq; //実際にどのくらいの音量がカットされているかを指定する
@@ -185,9 +187,9 @@ void AudioSource3D::DrawDebug()
 
 	if (ImGui::TreeNode("DSPSetting"))
 	{
-		ImGui::DragFloat("Angle", &dspSetting_.radianListenerToEmitter_,0.01f);
+		ImGui::DragFloat("RadianListenerToEmitter", &dspSetting_.radianListenerToEmitter_,0.01f);
 		ImGui::DragFloat("DopplerFactor", &dspSetting_.dopplerScale_);
-		ImGui::DragFloat("Distance", &dspSetting_.distanceListnerToEmitter_);
+		ImGui::DragFloat("DistanceListnerToEmitter", &dspSetting_.distanceListnerToEmitter_);
 		ImGui::DragFloat("FilterParam", &dspSetting_.filterParam_);
 
 		ImGui::TreePop();

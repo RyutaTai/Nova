@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../Others/Transform.h"
+#include "../Audio/Audio3DSystem.h"
+#include "../Audio/AudioSource.h"
 
 class Camera
 {
@@ -33,13 +35,13 @@ public:
 
 	void SetPerspectiveFov();		//	パースペクティブ設定
 	void SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& focus, const DirectX::XMFLOAT3& up);	//	指定方向を向く
-	void SetEye(const DirectX::XMFLOAT3& eye)		{ this->eye_ = eye; }					//	視点設定
-	void SetEyeX(const float& eyeX)					{ this->eye_.x = eyeX; }	
-	void SetEyeY(const float& eyeY)					{ this->eye_.y = eyeY; }
-	void SetEyeZ(const float& eyeZ)					{ this->eye_.z = eyeZ; }
-	void SetTargetPos(const DirectX::XMFLOAT3& target) { this->focus_ = target; }				//	ターゲット位置設定
-	void SetRange(const float& range)				{ this->currentRange_ = range; }				//	カメラ距離設定
-	void SetIsPose(const bool& isPose)				{ this->isPose_ = isPose; }
+	void SetEye(const DirectX::XMFLOAT3& eye)		{ eye_ = eye; }					//	視点設定
+	void SetEyeX(const float& eyeX)					{ eye_.x = eyeX; }	
+	void SetEyeY(const float& eyeY)					{ eye_.y = eyeY; }
+	void SetEyeZ(const float& eyeZ)					{ eye_.z = eyeZ; }
+	void SetTargetPos(const DirectX::XMFLOAT3& target) { focus_ = target; }				//	ターゲット位置設定
+	void SetRange(const float& range)				{ currentRange_ = range; }				//	カメラ距離設定
+	void SetIsPose(const bool& isPose)				{ isPose_ = isPose; }
 
 	Transform*					GetTransform()		{ return &transform_; }
 	const DirectX::XMMATRIX		GetViewMatrix()const{ return viewMatrix_; }					//	ビュー行列取得
@@ -57,10 +59,14 @@ public:
 	bool						GetIsPose()			{ return isPose_; }
 
 	//	----- カメラ移動 -----
-	bool						IsCameraMove()		{ return cameraMove_; }					//	カメラ演出中かどうか
-	bool						CameraMove(const float& elapsedTime);
+	bool	IsCameraMove()		{ return cameraMove_; }		//	カメラ演出中かどうか
+	bool	CameraMove(const float& elapsedTime);			//	
+	bool	RayVsHorizontal(const float& elapsedTime);		//	ステージとの当たり判定(水平方向)	
 
-	bool						RayCastVsStage(DirectX::XMFLOAT3& intersectionPos, DirectX::XMFLOAT3& intersectionNormal, std::string& intersectionMesh, std::string& intersectionMaterial);
+
+	//	----- オーディオ -----
+	void			UpdateListener();							//	リスナー情報更新
+	SoundListener	GetListener()const { return listener_; }	//	リスナー取得
 
 private:
 	Transform transform_ = {};
@@ -82,7 +88,7 @@ private:
 	DirectX::XMFLOAT3 eyeOffset_	= { 0,0,0 };				//	カメラの視点eye_を動かすときの移動値
 
 	float fov_				= 60.0f;							//	視野角
-	float currentRange_			= 250.0f;							//	カメラとターゲットの距離を決めるのに使う
+	float currentRange_		= 250.0f;							//	カメラとターゲットの距離を決めるのに使う
 	float rollSpeed_		= DirectX::XMConvertToRadians(80);	//	カメラの回転速度
 	float maxAngleX_		= DirectX::XMConvertToRadians(45);	//	カメラの回転値制限
 	float minAngleX_		= DirectX::XMConvertToRadians(-45);	//	カメラの回転値制限
@@ -92,12 +98,15 @@ private:
 	float nearZ_			= 50.0f;
 	float farZ_				= 400000.0f;
 
-	DirectX::XMFLOAT3 up_ = {};										//	カメラの上方向
-	DirectX::XMFLOAT3 front_ = {};									//	カメラの前方向
-	DirectX::XMFLOAT3 right_ = {};									//	カメラの右方向
+	DirectX::XMFLOAT3 up_		= {};									//	カメラの上方向
+	DirectX::XMFLOAT3 front_	= {};									//	カメラの前方向
+	DirectX::XMFLOAT3 right_	= {};									//	カメラの右方向
+
+	DirectX::XMFLOAT3 velocity_ = {};
 
 	bool isPose_ = false;
 
+	//	CameraMove用変数
 	bool cameraMove_ = false;
 	float moveTime_ = 0.0f;
 	float moveTimer_ = 0.0f;
@@ -105,6 +114,12 @@ private:
 	DirectX::XMFLOAT3 moveTargetAngle_ = {};
 	DirectX::XMFLOAT3 cashPos_ = {};
 	DirectX::XMFLOAT3 cashAngle_ = {};
+
+	//	----- オーディオ -----
+	SoundListener listener_ = {};	//	リスナー
+
+	//	----- 当たり判定 -----
+	float radius_ = 3.0f;
 
 	//	デバッグ用
 	bool isDebugCamera_ = false;

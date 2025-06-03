@@ -6,27 +6,10 @@
 #include "../Character/Player/Player.h"
 
 //	コンストラクタ
-BulletHorming::BulletHorming(const std::string& filename)
-	:Bullet(filename)
+BulletHorming::BulletHorming()
+	:Bullet()
 {
-	//	カバーモデル読み込み
-	DirectX::XMFLOAT4 coverModelColor = { 1.0f,0.0f,0.0f,1.0f };
-	coverModel_ = std::make_unique<GltfModelStaticBatching>("./Resources/Model/Cube/Cube.gltf", true, coverModelColor);
-	//	スケール設定
-	coverModel_->GetTransform()->SetScaleFactor(0.4f);
-
-	//	移動速度設定
-	moveSpeed_ = 6.0f;
-
-	//	ピクセルシェーダーセット
-	coverModel_->SetPixelShader("./Resources/Shader/BulletCoverPS.cso");
-
-}
-
-//	デストラクタ
-BulletHorming::~BulletHorming()
-{
-
+	
 }
 
 //	初期化処理
@@ -85,20 +68,6 @@ void BulletHorming::Render()
 	//	弾丸モデル描画
 	gltfStaticModelResource_->Render();
 
-}
-
-//	カバーモデル描画
-void BulletHorming::RnederCoverModel()
-{
-	float coverScale = BulletManager::Instance().GetCoverScale();
-	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ADD);
-	//Graphics::Instance().GetShader()->CreatePsFromCso(Graphics::Instance().GetDevice(), "./Resources/Shader/BulletCoverPS.cso", pixelShader_.ReleaseAndGetAddressOf());
-	//coverModel_->SetPixelShader(coverPixelShader_.Get());
-	
-	//coverModel_->SetPixelShader("./Resources/Shader/GltfModelPS.cso");
-	
-	coverModel_->GetTransform()->SetScaleFactor(coverScale);
-	coverModel_->Render();
 }
 
 //	デバッグ描画

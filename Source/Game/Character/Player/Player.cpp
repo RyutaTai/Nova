@@ -59,11 +59,7 @@ Player::Player()
 	RegisterCollisionData();
 
 	//	----- オーディオ初期設定 -----
-	//	リスナー情報セット
-	listener_.innerRadius_ = 0.7f;
-	listener_.outerRadius_ = 1.67f;
-	listener_.filterParam_ = 0.8f;
-
+	
 	//	----- 足音SE -----
 	sources_[static_cast<int>(AudioStereo::Footsteps)] = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/FootstepsOne2.wav", Audio::AudioType::SENormal, "GameScene");
 	sources_[static_cast<int>(AudioStereo::Footsteps)]->SetVolume(0.3f, false);
@@ -150,23 +146,9 @@ void Player::Update(const float& elapsedTime)
 	//	----- アニメーション更新処理 -----
 	UpdateAnimation(elapsedTime);
 	
-	//	----- オーディオリスナー更新 -----
-	UpdateListener();
-
+	
 }
 
-//	リスナー情報更新
-void Player::UpdateListener()
-{
-	DirectX::XMFLOAT3 position = GetTransform()->GetPosition();
-	DirectX::XMFLOAT3 scale = GetTransform()->GetScale();
-
-	listener_.position_ = { position.x, position.y + height_ / 2.0f, position.z };
-	listener_.frontVec_ = Camera::Instance().GetFront();
-	listener_.velocity_ = GetMoveVec();
-	listener_.rightVec_ = Camera::Instance().GetRight();
-
-}
 
 //	当たり判定登録
 void Player::RegisterCollisionData()
@@ -609,19 +591,7 @@ void Player::DrawDebug()
 		ImGui::Checkbox("DrawEffect", &drawEffectFlag_);	//	エフェクト描画フラグ
 		ImGui::Checkbox("AddGravity", &isAddGravity_);		//	重力フラグ
 
-		//	3Dオーディオのリスナー情報
-		if (ImGui::TreeNode("3DAudio_Listener"))
-		{
-			ImGui::DragFloat3("Position", &listener_.position_.x);
-			ImGui::DragFloat("InnerRadius", &listener_.innerRadius_);
-			ImGui::DragFloat("OuterRadius", &listener_.outerRadius_);
-			ImGui::DragFloat("FilterParam", &listener_.filterParam_);
-			ImGui::DragFloat3("FrontVec", &listener_.frontVec_.x);
-			ImGui::DragFloat3("RightVec", &listener_.rightVec_.x);
-			ImGui::DragFloat3("Velocity", &listener_.velocity_.x);
-
-			ImGui::TreePop();
-		}
+		
 		ImGui::TreePop();
 	}
 }

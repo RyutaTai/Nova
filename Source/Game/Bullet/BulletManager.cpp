@@ -143,7 +143,7 @@ void BulletManager::Render()
 	{
 		for (Bullet* bullet : bullets_)	//	“§–¾ˆ—‚ÍÅŒã‚ÉŒÄ‚Ô(‚±‚ÌŒã‚Éƒ‚ƒfƒ‹‚ð•`‰æ‚µ‚Ä‚àA“§–¾‚ª—Dæ‚³‚ê‚Ä‚µ‚Ü‚¤)
 		{
-			bullet->RnederCoverModel();
+			bullet->DrawCoverModel();
 		}
 	}
 }

@@ -5,9 +5,8 @@
 #include "../Character.h"
 #include "../../../Nova/Resources/Effect.h"
 #include "../../../Nova/AI/StateMachine.h"
-#include "../../../Nova/Audio/Audio3DSystem.h"
-#include "../../../Nova/Audio/AudioSource.h"
 #include "../../../Nova/Input/Input.h"
+#include "../../../Nova/Audio/AudioSource.h"
 
 //	プレイヤークラス
 class Player :public Character
@@ -155,10 +154,7 @@ public:
 	StateType							GetLastState()		const { return lastState_; }			//	ひとつ前のステート取得
 	void								DrawStateStr();												//	現在のステート描画
 
-	//	----- オーディオ -----
-	void UpdateListener();	//	リスナー情報更新
-	SoundListener						GetListener()const	{ return listener_; }			//	リスナー取得
-
+	
 	//	----- 攻撃してきた敵の位置 -----
 	void SetEnemyPos(const DirectX::XMFLOAT3& enemyPos) { enemyPos_ = enemyPos; }
 	const DirectX::XMFLOAT3 GetEnemyPos()const { return enemyPos_; }
@@ -200,7 +196,6 @@ private:
 	DirectX::XMFLOAT3	enemyPos_	= {};		//	攻撃してきた敵の位置
 
 	//	----- オーディオ -----
-	SoundListener listener_ = {};	//	リスナー
 	AudioSource* sources_[static_cast<int>(AudioStereo::Max)] = { nullptr };
 
 

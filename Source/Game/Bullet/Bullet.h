@@ -21,14 +21,13 @@ public:
 	};
 
 public:
-	Bullet(const std::string& filename);
+	Bullet();
 	virtual ~Bullet() = default;
 
 	virtual void			Initialize();
 	virtual void			Update(const float& elapsedTime);
 	virtual void			Launch(const DirectX::XMFLOAT3& direction = {}, const DirectX::XMFLOAT3& position = {});
 	virtual void			Render()			= 0;
-	virtual void			RnederCoverModel()	= 0;
 	
 	Transform* GetTransform()const { return gltfStaticModelResource_->GetTransform(); }
 	
@@ -47,7 +46,8 @@ public:
 	const DirectX::XMFLOAT3 GetOwnerPosition()								{ return ownerPosition_; }	//	弾丸所有者の位置取得
 	
 	//	----- カバーモデル -----
-	virtual void			CoverModelUpdate(const float& elapsedTime);									//	カバーモデル更新処理
+	void CoverModelUpdate(const float& elapsedTime);									//	カバーモデル更新処理
+	void DrawCoverModel();
 	Transform*				GetCoverTransform()const { return coverModel_->GetTransform(); }
 	
 	//	----- オーディオ -----

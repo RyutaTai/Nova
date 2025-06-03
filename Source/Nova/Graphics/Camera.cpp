@@ -12,6 +12,11 @@
 //	コンストラクタ
 Camera::Camera()
 {
+	//	リスナー情報セット
+	listener_.innerRadius_ = 0.7f;
+	listener_.outerRadius_ = 1.67f;
+	listener_.filterParam_ = 0.8f;
+
 }
 
 //	デストラクタ
@@ -89,7 +94,6 @@ void Camera::SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& fo
 	DirectX::XMStoreFloat4x4(&world, World);
 
 	//	カメラの方向を取り出す
-
 	this->right_.x = world.m[0][0];
 	this->right_.y = world.m[0][1];
 	this->right_.z = world.m[0][2];
@@ -155,8 +159,24 @@ void Camera::Update(const float& elapsedTime)
 {
 	if (isDebugCamera_)DebugCamera(elapsedTime);
 	else NormalCamera(elapsedTime);
+
+	//	----- オーディオリスナー更新 -----
+	UpdateListener();
+
+	//	----- 当たり判定 -----
+	RayVsHorizontal(elapsedTime);
+
 }
 
+//	リスナー情報更新
+void Camera::UpdateListener()
+{
+	listener_.position_ = { eye_.x, eye_.y , eye_.z };
+	listener_.frontVec_ = GetFront();
+	listener_.velocity_ = {0,0,0};
+	listener_.rightVec_ = GetRight();
+
+}
 //	通常カメラ
 void Camera::NormalCamera(const float& elapsedTime)
 {
@@ -213,7 +233,11 @@ void Camera::NormalCamera(const float& elapsedTime)
 
 		//	range_を線形補間
 		float t = (angle_.x - MinAngleX_) / (MaxAngleX_ - MinAngleX_);		//	補間係数tを計算
-		currentRange_ = minRange_ + (maxRange_ - minRange_) * t;					//	rangeを補完
+		currentRange_ = minRange_ + (maxRange_ - minRange_) * t;			//	rangeを補完
+
+		//	ベロシティ追加
+		velocity_.x = ay * speed;
+		velocity_.y = ax * speed;
 
 	}
 
@@ -381,15 +405,65 @@ void Camera::DebugCamera(const float& elapsedTime)
 }
 
 //	カメラからステージへレイキャスト
-bool Camera::RayCastVsStage(DirectX::XMFLOAT3& intersectionPos, DirectX::XMFLOAT3& intersectionNormal, std::string& intersectionMesh, std::string& intersectionMaterial)
+bool Camera::RayVsHorizontal(const float& elapsedTime)
 {
-	//	レイキャストに必要なパラメータ
-	DirectX::XMFLOAT3 pos = GetEye();
-	DirectX::XMFLOAT3 dir = GetFront();
+	DirectX::XMFLOAT3 rayStartPos;							//	レイの始点
+	DirectX::XMFLOAT3 rayDirection;							//	レイの方向
+	float liftup = 0.01f;									//	レイの始点を持ち上げる
+	DirectX::XMVECTOR RayPos = DirectX::XMLoadFloat3(&eye_);							//	レイの始点
+	DirectX::XMVECTOR Direction = DirectX::XMVector3Normalize(DirectX::XMVectorSet(velocity_.x, 0.0f, velocity_.z, 0.0f));	//	レイの方向
+	DirectX::XMVECTOR Liftup = DirectX::XMVector3Normalize(DirectX::XMVectorSet(0.0f, liftup, 0.0f, 1.0f));		//	LIFTUP
+#if 1
+	DirectX::XMStoreFloat3(&rayStartPos, DirectX::XMVectorAdd(RayPos, Liftup));
+#else
+	float stepBack = 1.0f;
+	DirectX::XMStoreFloat3(&rayStartPos, DirectX::XMVectorSubtract(RayPos, DirectX::XMVectorScale(Direction, stepBack)));
+#endif
+	DirectX::XMStoreFloat3(&rayDirection, Direction);
+
+	DirectX::XMFLOAT3 cameraPos = GetTransform()->GetPosition();	//	プレイヤーの位置(足元が基準点)
+
 	DirectX::XMFLOAT4X4 transform = {};								//	ステージのワールド変換行列
 	DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
 
-	return Stage::Instance().Collision(pos, dir, transform, intersectionPos, intersectionNormal, intersectionMesh, intersectionMaterial);
+	//	当たり判定結果格納用
+	DirectX::XMFLOAT3	intersectionPosition	= {};			//	当たった位置
+	DirectX::XMFLOAT3	intersectionNormal		= {};			//	法線の方向
+	std::string			intersectionMesh		= {};			//	メッシュ名
+	std::string			intersectionMaterial	= {};			//	マテリアル名
+
+	//	当たり判定処理
+	bool isHit = false;
+	//	レイと地面が当たっていたら
+	if (Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial))
+	{
+		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&cameraPos) - DirectX::XMLoadFloat3(&rayStartPos)));
+		float d1 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&intersectionPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
+
+		float rayOffset = 0.5f;	//	レイの長さを少し増やす
+
+		//	プレイヤーと地面が当たっていたら
+		if (d0 + radius_ + rayOffset > d1)
+		{
+			//	プレイヤーの位置を補正
+			float d = d0 - d1;
+			cameraPos.x -= d * rayDirection.x;
+			cameraPos.y -= d * rayDirection.y;
+			cameraPos.z -= d * rayDirection.z;
+
+			eye_ = cameraPos;
+
+			// Reflection
+			//DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
+
+			//	当たり判定フラグを立てる
+			isHit = true;
+
+		}
+
+	}
+
+	return isHit;
 }
 
 //	リセット
@@ -405,10 +479,7 @@ void Camera::Reset()
 
 //	デバッグ描画
 void Camera::DrawDebug()
-{
-	DirectX::XMFLOAT3 right = this->GetTransform()->CalcRight();
-	DirectX::XMFLOAT3 forward = this->GetTransform()->CalcForward();
-	
+{	
 	if (ImGui::TreeNode(u8"Cameraカメラ"))
 	{
 		ImGui::Checkbox("DebugCamera", &isDebugCamera_);	//	デバッグカメラ切り替え
@@ -425,9 +496,10 @@ void Camera::DrawDebug()
 		ImGui::DragFloat3	("Eye",			&eye_.x,		0.01f,	-FLT_MAX,	FLT_MAX);	//	カメラ視点
 		ImGui::DragFloat3	("EyeOffset",	&eyeOffset_.x,	0.001f,	-FLT_MAX,	FLT_MAX);	//	カメラ視点補正値
 		ImGui::DragFloat3	("Focus",		&focus_.x,		0.01f,	-FLT_MAX,	FLT_MAX);	//	注視点
-		ImGui::DragFloat3	("Right",		&right.x,		0.01f,	-FLT_MAX,	FLT_MAX);	//	右方向
+		ImGui::DragFloat3	("Right",		&right_.x,		0.01f,	-FLT_MAX,	FLT_MAX);	//	右方向
 		ImGui::DragFloat3	("Up",			&up_.x,			0.01f,	-FLT_MAX,	FLT_MAX);	//	上方向
-		ImGui::DragFloat3	("Forward",		&forward.x,		0.01f,	-FLT_MAX,	FLT_MAX);	//	前方向
+		ImGui::DragFloat3	("Front",		&front_.x,		0.01f,	-FLT_MAX,	FLT_MAX);	//	前方向
+
 
 		ImGui::Text("----- Angle -----");
 		float maxAngleX = MaxAngleX_;
@@ -440,6 +512,29 @@ void Camera::DrawDebug()
 		ImGui::DragFloat	("MinRange",	&minRange_, 0.01f);
 		ImGui::DragFloat	("MaxRange",	&maxRange_, 0.01f);
 		ImGui::DragFloat	("Range",		&currentRange_,		0.1f,	FLT_MIN,	FLT_MAX);	//	間隔
+		
+		//	3Dオーディオのリスナー情報
+		if (ImGui::TreeNode("3DAudio_Listener"))
+		{
+			ImGui::DragFloat3("Position", &listener_.position_.x);
+			ImGui::DragFloat("InnerRadius", &listener_.innerRadius_);
+			ImGui::DragFloat("OuterRadius", &listener_.outerRadius_);
+			ImGui::DragFloat("FilterParam", &listener_.filterParam_);
+			ImGui::DragFloat3("FrontVec", &listener_.frontVec_.x);
+			ImGui::DragFloat3("RightVec", &listener_.rightVec_.x);
+			ImGui::DragFloat3("Velocity", &listener_.velocity_.x);
+
+			ImGui::TreePop();
+		}
+
+		//	当たり判定
+		if (ImGui::TreeNode("Collision"))
+		{
+			ImGui::DragFloat("Radius", &radius_, 0.01f);
+			ImGui::DragFloat3("Velocity", &velocity_.x, 0.01f);	//	ベロシティ
+			ImGui::TreePop();
+		}
+
 		if (ImGui::Button	("Reset"))
 		{
 			Reset();

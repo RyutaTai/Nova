@@ -20,7 +20,7 @@ public:
 		DSP(dspSetting_, listner, *emitter_);
 	}
 
-	void SetEmitter(SoundEmitter emitter) { this->emitter_ = &emitter; }
+	void SetEmitter(SoundEmitter emitter) { emitter_ = &emitter; }
 
 	void SetEmitterPosition(const DirectX::XMFLOAT3& position) { emitter_->position_ = position; }
 

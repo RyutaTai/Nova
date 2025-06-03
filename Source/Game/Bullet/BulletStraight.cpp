@@ -1,15 +1,8 @@
 #include "BulletStraight.h"
 
 //	コンストラクタ
-BulletStraight::BulletStraight(const std::string& filename)
-	:Bullet(filename)
-{
-	//	スケール設定
-	GetTransform()->SetScaleFactor(30.0f);
-}
-
-//	デストラクタ
-BulletStraight::~BulletStraight()
+BulletStraight::BulletStraight()
+	:Bullet()
 {
 	
 }

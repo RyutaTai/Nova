@@ -10,6 +10,7 @@
 #include "../../../Bullet/BulletStraight.h"
 #include "../../../Bullet/BulletHorming.h"
 #include "../../Player/Player.h"
+#include "../../../../Nova/Graphics/Camera.h"
 
 //	コンストラクタ
 Drone::Drone()
@@ -97,20 +98,21 @@ void Drone::Initialize()
 	//emitter_[static_cast<int>(Audio3D::Shot)].position.y = playerPos.y + playerHeight / 2.0f + posOffsetY;
 	emitter_.velocity_ = { 1.0f, 2.0f, 1.0f };
 	emitter_.minDistance_ = 7.0f;
-	emitter_.maxDistance_ = 12.0f;
+	emitter_.maxDistance_ = 22.0f;
 	emitter_.volume_ = 1.0f;
 	
 	//	発射音
 	sources_[static_cast<int>(Audio3D::Shot)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Drone/launchSE.wav", Audio::AudioType::SE3D, "GameScene", &emitter_);
 	sources_[static_cast<int>(Audio3D::Shot)]->SetVolume(0.3f, false);
 	sources_[static_cast<int>(Audio3D::Shot)]->SetAudioName("LaunchBullet");
-	sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Player::Instance().GetListener());
+	sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
 	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Shot)]);
 
 	//	破壊音
 	sources_[static_cast<int>(Audio3D::Destroy)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", &emitter_);
 	sources_[static_cast<int>(Audio3D::Destroy)]->SetVolume(0.3f, false);
 	sources_[static_cast<int>(Audio3D::Destroy)]->SetAudioName("BulletDestroy");
+	sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
 	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Destroy)]);
 
 #endif
@@ -121,7 +123,7 @@ void Drone::Initialize()
 	sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetVolume(0.2f, false);
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetAudioName("TestBGM");
-	sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Player::Instance().GetListener());
+	sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Camera::Instance().GetListener());
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetPlayable(true);	//	再生するかのフラグ
 	sources_[static_cast<int>(Audio3D::Bgm)]->Play(true);
 	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Bgm)]);
@@ -199,14 +201,14 @@ void Drone::UpdateAudioSource()
 	if (sources_[static_cast<int>(Audio3D::Shot)])
 	{
 		sources_[static_cast<int>(Audio3D::Shot)]->SetEmitterPosition(emitter_.position_);
-		sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Player::Instance().GetListener());
+		sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
 		
 	}
 	//	BGM(デバッグ用)
 	if (sources_[static_cast<int>(Audio3D::Bgm)])
 	{
 		sources_[static_cast<int>(Audio3D::Bgm)]->SetEmitterPosition(emitter_.position_);
-		sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Player::Instance().GetListener());
+		sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Camera::Instance().GetListener());
 	}
 }
 
@@ -236,21 +238,20 @@ void Drone::LaunchBullet(const float& elapsedTime)
 		dir.z = cosf(angleY);
 
 		//	発射位置
-		DirectX::XMFLOAT3 pos = this->GetTransform()->GetPosition();
+		DirectX::XMFLOAT3 pos = GetTransform()->GetPosition();
 		pos = pos + dir * 2.0f;
 
 		//	弾丸モデルのファイル名
-		const char* bulletName = "./Resources/Model/Bullet/Sphere.gltf";
-#if  0	//	直進する弾丸生成
-		BulletStraight* bullet = new BulletStraight(bulletName);
+#if  1	//	直進する弾丸生成
+		BulletStraight* bullet = new BulletStraight();
 		bullet->Launch(dir, pos);
 
 #else	//	追従する弾丸生成
-		BulletHorming* bullet = new BulletHorming(bulletName);
+		BulletHorming* bullet = new BulletHorming();
 		bullet->Launch(dir, pos);
 #endif	
 		//	所有者の位置設定
-		bullet->SetOwnerPosition(this->GetTransform()->GetPosition());
+		bullet->SetOwnerPosition(GetTransform()->GetPosition());
 
 		//	発射タイマーリセット
 		ResetLaunchTimer();
@@ -349,7 +350,6 @@ void Drone::UpdateCollisions(const float& elapsedTime)
 			pos.y = 0.0f;
 
 		data.SetPosition(pos);
-		//data.SetJointPosition(pos);
 	}
 }
 
@@ -357,8 +357,6 @@ void Drone::UpdateCollisions(const float& elapsedTime)
 void Drone::Render()
 {
 	//	ドローン描画
-	//	ピクセルシェーダーセット
-	//SetPixelShader("./Resources/Shader/DronePS.cso");
 	Character::Render();
 
 	//	弾丸描画
@@ -372,12 +370,12 @@ void Drone::DrawDebugPrimitive()
 	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 
 	//	衝突判定用のデバッグ球を描画
-	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), radius_, height_, DirectX::XMFLOAT4(0, 0, 0, 1));
+	debugRenderer->DrawCylinder(GetTransform()->GetPosition(), radius_, height_, DirectX::XMFLOAT4(0, 0, 0, 1));
 
 	//	索敵範囲描画(円柱)
-	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), searchRange_, 1.0f, { 0.0f,1.0f,0.1f,1.0f });
+	debugRenderer->DrawCylinder(GetTransform()->GetPosition(), searchRange_, 1.0f, { 0.0f,1.0f,0.1f,1.0f });
 	//	射程範囲描画(円柱)
-	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), launchRange_, 1.0f, { 1.0f,0.1f,0.1f,1.0f });
+	debugRenderer->DrawCylinder(GetTransform()->GetPosition(), launchRange_, 1.0f, { 1.0f,0.1f,0.1f,1.0f });
 	
 	//	弾丸のデバッグ球描画
 	BulletManager::Instance().DrawDebugPrimitive();

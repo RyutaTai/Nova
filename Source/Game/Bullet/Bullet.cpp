@@ -6,12 +6,13 @@
 #include "../../Nova/Audio/AudioManager.h"
 #include "../../Nova/Resources/ResourceManager.h"
 #include "../Character/Player/Player.h"
+#include "../../Nova/Graphics/Camera.h"
 
 //	コンストラクタ
-Bullet::Bullet(const std::string& filename)
+Bullet::Bullet()
 {
 	//	----- モデル生成 -----
-	gltfStaticModelResource_= ResourceManager::Instance().LoadGltfModelStaticResource(filename);
+	gltfStaticModelResource_ = ResourceManager::Instance().LoadGltfModelStaticResource("./Resources/Model/Bullet/Sphere.gltf");
 
 	//	----- 生成時にマネージャーに登録する -----
 	BulletManager::Instance().Register(this);
@@ -33,19 +34,31 @@ Bullet::Bullet(const std::string& filename)
 	//emitter_.velocity_ = velocity_;
 	emitter_.velocity_ = { 1,2,1 };
 	emitter_.minDistance_ = 7.0f;
-	emitter_.maxDistance_ = 12.0f;
+	emitter_.maxDistance_ = 22.0f;
 	emitter_.volume_ = 1.0f;
 	//se_[static_cast<int>(AudioSE3D::Explosion)] = std::unique_ptr<AudioSource3D>(Audio::Instance().LoadAudioSource3D("./Resources/Audio/SE/GameStart_015.wav", emitter_.get()));
 	se_[static_cast<int>(Audio3D::Move)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", &emitter_);
 	se_[static_cast<int>(Audio3D::Move)]->SetVolume(0.5f, false);
 	se_[static_cast<int>(Audio3D::Move)]->SetAudioName("BulletMove");
 	//se_[static_cast<int>(Audio3D::Move)]->SetSceneName("Game");
-	se_[static_cast<int>(Audio3D::Move)]->SetDSPSetting(Player::Instance().GetListener());
+	se_[static_cast<int>(Audio3D::Move)]->SetDSPSetting(Camera::Instance().GetListener());
 	AudioManager::Instance().Register(se_[static_cast<int>(Audio3D::Move)]);
 
 	//	----- エフェクト -----
 	effectResource_[static_cast<int>(EffectType::Explosion)] = ResourceManager::Instance().LoadEffectResource("./Resources/Effect/Blow11_2.efk");
 	effectScale_[static_cast<int>(EffectType::Explosion)] = 0.3f;
+
+	//	----- カバーモデル読み込み -----
+	DirectX::XMFLOAT4 coverModelColor = { 1.0f,0.0f,0.0f,1.0f };
+	coverModel_ = std::make_unique<GltfModelStaticBatching>("./Resources/Model/Cube/Cube.gltf", true, coverModelColor);
+	//	----- スケール設定 -----
+	coverModel_->GetTransform()->SetScaleFactor(0.4f);
+
+	//	----- ピクセルシェーダーセット -----
+	coverModel_->SetPixelShader("./Resources/Shader/BulletCoverPS.cso");
+
+	//	----- 移動速度設定 -----
+	moveSpeed_ = 6.0f;
 
 }
 
@@ -95,7 +108,7 @@ void Bullet::UpdateAudioSource()
 {
 	if (se_[static_cast<int>(Audio3D::Move)])
 	{
-		se_[static_cast<int>(Audio3D::Move)]->SetDSPSetting(Player::Instance().GetListener());
+		se_[static_cast<int>(Audio3D::Move)]->SetDSPSetting(Camera::Instance().GetListener());
 	}
 }
 
@@ -146,6 +159,15 @@ void Bullet::CastShadows()
 {
 	gltfStaticModelResource_->CastShadows();
 	coverModel_->CastShadows();
+}
+
+//	カバーモデル描画
+void Bullet::DrawCoverModel()
+{
+	float coverScale = BulletManager::Instance().GetCoverScale();
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ADD);
+	coverModel_->GetTransform()->SetScaleFactor(coverScale);
+	coverModel_->Render();
 }
 
 //	デバッグプリミティブ描画
