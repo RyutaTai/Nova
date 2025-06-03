@@ -3,22 +3,7 @@
 #include "../Graphics/Graphics.h"
 #include "../Others/Converter.h"
 
-//	FBXモデルリソース読み込み
-std::shared_ptr<FbxModel> ResourceManager::LoadFbxModelResource(const char* filename, const bool& triangulate, const float& samplingRate)
-{
-	auto it = fbxModels_.find(filename);
-	if (it != fbxModels_.end())
-	{
-		return it->second;
-	}
-
-	auto model = std::make_shared<FbxModel>(filename,triangulate,samplingRate);
-
-	fbxModels_[filename] = model;
-
-	return model;
-}
-
+//	GlTFモデル読み込み
 std::shared_ptr<GltfModel> ResourceManager::LoadGltfModelResource(const std::string& filename, const std::string& rootNodeName)
 {
 	auto it = gltfModels_.find(filename);

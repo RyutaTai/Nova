@@ -39,8 +39,6 @@ Player::Player()
 	stateMachine_->RegisterState(new PlayerState::ComboOne2(this));		//	コンボ1_2
 	stateMachine_->RegisterState(new PlayerState::ComboOne3(this));		//	コンボ1_3
 	stateMachine_->RegisterState(new PlayerState::ComboOne4(this));		//	コンボ1_4
-	stateMachine_->RegisterState(new PlayerState::ComboTwo1(this));		//	コンボ2_1
-	stateMachine_->RegisterState(new PlayerState::ComboTwo2(this));		//	コンボ2_2
 	stateMachine_->RegisterState(new PlayerState::DodgeState(this));	//	回避
 	stateMachine_->RegisterState(new PlayerState::GetUpState(this));	//	起き上がり
 	stateMachine_->RegisterState(new PlayerState::DamageState(this));	//	ダメージ
@@ -541,7 +539,6 @@ void Player::DrawStateStr()
 	{
 		"Idle","Move",
 		"ComboOne1","ComboOne2","ComboOne3","ComboOne4",
-		"ComboTwo1","ComboTwo2",
 		"Dodge","GetUp","Damage","Flinch","Death"
 	};
 
