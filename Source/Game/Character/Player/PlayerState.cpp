@@ -56,14 +56,6 @@ namespace PlayerState
 
 			return;
 		}
-		else if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_X/*Cキー*/)
-		{
-			owner_->ChangeState(Player::StateType::ComboTwo1);
-
-			//	リズム判定処理
-			JudgeRhythm::Instance().Judge();
-			return;
-		}
 
 		//	----- 回避ステートへ遷移 -----
 		owner_->ChangeDodgeState();
@@ -128,14 +120,6 @@ namespace PlayerState
 		if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_A/*Zキー*/)
 		{
 			owner_->ChangeState(Player::StateType::ComboOne1);
-
-			//	リズム判定処理
-			JudgeRhythm::Instance().Judge();
-			return;
-		}
-		else if(Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_X/*Cキー*/)
-		{
-			owner_->ChangeState(Player::StateType::ComboTwo1);
 
 			//	リズム判定処理
 			JudgeRhythm::Instance().Judge();
@@ -797,108 +781,6 @@ namespace PlayerState
 			ImGui::DragFloat("CancelTimeMin", &cancellationTimeMax);
 			cancellationTime_.SetRange(cancellationTimeMin, cancellationTimeMax);
 
-			ImGui::TreePop();
-		}
-	}
-}
-
-//	コンボ2_1
-namespace PlayerState
-{
-	void ComboTwo1::Initialize()
-	{
-		//	アニメーションセット
-		owner_->PlayAnimation(Player::AnimationType::Execution01, false, 0.0f);
-		owner_->SetAnimationSpeed(1.0f);
-
-		animJudgeTime_ = {};
-		cancellationTime_ = {};
-		acceptInputFrame_ = 0.0f;
-
-		inputSucessFlag_ = false;
-
-	}
-
-	void ComboTwo1::Update(const float& elapsedTime)
-	{
-		//	ステート遷移を判断
-		DetermineStateTransition(elapsedTime);
-	}
-
-	//	ステートの遷移を判断
-	void ComboTwo1::DetermineStateTransition(const float& elapsedTime)
-	{
-		//	1撃目が終わっていなければステート遷移しない
-		if (owner_->GetCurrentAnimationSeconds() < playAnimDuration_)return;
-
-		//	入力に成功していたら2撃目へ遷移
-		if (inputSucessFlag_)owner_->ChangeState(Player::StateType::ComboTwo2);
-		//	待機ステートへ遷移
-		else owner_->ChangeState(Player::StateType::Idle);
-
-	}
-
-	void ComboTwo1::Finalize()
-	{
-
-	}
-
-	void ComboTwo1::DrawDebug()
-	{
-		if (ImGui::TreeNode("ComboTwo1 State"))
-		{
-			ImGui::Checkbox("InputSuccessFlag", &inputSucessFlag_);
-			ImGui::DragFloat("PlayAnimDuration", &playAnimDuration_, 0.01f);
-
-			ImGui::TreePop();
-		}
-	}
-
-}
-
-//	コンボ2_2
-namespace PlayerState
-{
-	void ComboTwo2::Initialize()
-	{
-		//	アニメーションセット
-		owner_->SetAnimationSpeed(1.0f);
-
-		animJudgeTime_ = {};
-		cancellationTime_ = {};
-		acceptInputFrame_ = 0.0f;
-	}
-
-	void ComboTwo2::Update(const float& elapsedTime)
-	{
-		//	ステート遷移を判断
-		DetermineStateTransition(elapsedTime);
-	}
-
-	//	ステートの遷移を判断
-	void ComboTwo2::DetermineStateTransition(const float& elapsedTime)
-	{
-		//	アニメーションが終了したら待機ステートへ遷移
-		if (owner_->IsPlayAnimation() == false)
-		{
-			owner_->ChangeState(Player::StateType::Idle);
-
-			return;
-		}
-
-		//	回避ステートへも遷移できるようにする
-		owner_->ChangeDodgeState();
-	}
-
-	void ComboTwo2::Finalize()
-	{
-
-	}
-
-	void ComboTwo2::DrawDebug()
-	{
-		if (ImGui::TreeNode("ComboTwo2 State"))
-		{
 			ImGui::TreePop();
 		}
 	}

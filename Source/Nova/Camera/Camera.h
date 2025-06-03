@@ -29,7 +29,7 @@ public:
 	bool LaunchCameraMove(const DirectX::XMFLOAT3& targetEye, const DirectX::XMFLOAT3& targetAngle, const float& moveTime);
 
 	//	デバッグ用
-	void DebugCamera(const float& elapsedTime);	//	デバッグ用カメラ更新処理
+	void DebugCamera(const float& elapsedTime) {}	//	デバッグ用カメラ更新処理
 	void DrawDebug();						//	デバッグ描画
 	void Reset();							//	リセット
 
@@ -64,6 +64,9 @@ public:
 	bool	RayVsHorizontal(const float& elapsedTime);		//	ステージとの当たり判定(水平方向)	
 
 
+	//	----- ベロシティ -----
+	void UpdateVelocity(const float& elapsedTime);
+
 	//	----- オーディオ -----
 	void			UpdateListener();							//	リスナー情報更新
 	SoundListener	GetListener()const { return listener_; }	//	リスナー取得
@@ -73,7 +76,7 @@ private:
 
 	static constexpr float MaxAngleX_ = DirectX::XMConvertToRadians(45);
 	static constexpr float MinAngleX_ = DirectX::XMConvertToRadians(-45);
-	float minRange_ = 2.0f;
+	float minRange_ = 1.83f;
 	float maxRange_ = 9.0f;
 	//float maxRange_ = 5.0f;
 
@@ -102,7 +105,6 @@ private:
 	DirectX::XMFLOAT3 front_	= {};									//	カメラの前方向
 	DirectX::XMFLOAT3 right_	= {};									//	カメラの右方向
 
-	DirectX::XMFLOAT3 velocity_ = {};
 
 	bool isPose_ = false;
 
@@ -119,7 +121,10 @@ private:
 	SoundListener listener_ = {};	//	リスナー
 
 	//	----- 当たり判定 -----
-	float radius_ = 3.0f;
+	float radius_ = 0.1f;
+	DirectX::XMFLOAT3 lastEye_		= {};	//	前のフレームのeye_を保存
+	DirectX::XMFLOAT3 correctedEye_ = {};	//	補正後のeye_
+	DirectX::XMFLOAT3 velocity_		= {};	//	移動量
 
 	//	デバッグ用
 	bool isDebugCamera_ = false;

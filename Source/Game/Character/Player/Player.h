@@ -59,8 +59,6 @@ public:
 		ComboOne2,		//	コンボ1_2
 		ComboOne3,		//	コンボ1_3
 		ComboOne4,		//	コンボ1_4
-		ComboTwo1,		//	コンボ2_1
-		ComboTwo2,		//	コンボ2_2
 		Dodge,			//	回避
 		GetUp,			//	起き上がり
 		Damage,			//	ダメージを受けた

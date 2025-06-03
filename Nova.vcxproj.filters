@@ -169,19 +169,7 @@
     <ClCompile Include="Source\Nova\Resources\EffectManager.cpp">
       <Filter>Nova\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Nova\Resources\GeometricPrimitive.cpp">
-      <Filter>Nova\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Resources\FbxModel.cpp">
-      <Filter>Nova\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Nova\Resources\Sprite.cpp">
-      <Filter>Nova\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Resources\SpriteBatch.cpp">
-      <Filter>Nova\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Resources\StaticMesh.cpp">
       <Filter>Nova\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Resources\Texture.cpp">
@@ -197,9 +185,6 @@
       <Filter>Nova\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Input\Input.cpp">
-      <Filter>Nova\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Input\Microphone.cpp">
       <Filter>Nova\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Input\Mouse.cpp">
@@ -453,19 +438,7 @@
     <ClInclude Include="Source\Nova\Resources\EffectManager.h">
       <Filter>Nova\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\Resources\GeometricPrimitive.h">
-      <Filter>Nova\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Resources\FbxModel.h">
-      <Filter>Nova\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Nova\Resources\Sprite.h">
-      <Filter>Nova\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Resources\SpriteBatch.h">
-      <Filter>Nova\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Resources\StaticMesh.h">
       <Filter>Nova\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Resources\Texture.h">
@@ -493,9 +466,6 @@
       <Filter>Nova\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Input\Input.h">
-      <Filter>Nova\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Input\Microphone.h">
       <Filter>Nova\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Input\Mouse.h">

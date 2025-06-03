@@ -113,6 +113,7 @@ void Camera::SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& fo
 
 }
 
+//	カメラ演出に使うパラメータの設定
 bool Camera::LaunchCameraMove(const DirectX::XMFLOAT3& targetEye, const DirectX::XMFLOAT3& targetAngle, const float& moveTime)
 {
 	if (cameraMove_)return false;
@@ -130,6 +131,7 @@ bool Camera::LaunchCameraMove(const DirectX::XMFLOAT3& targetEye, const DirectX:
 	return true;
 }
 
+//	LaunchCameraMoveで設定したパラメータをもとにカメラを移動させる
 bool Camera::CameraMove(const float& elapsedTime)
 {
 	if (cameraMove_ == false)return false;
@@ -164,7 +166,7 @@ void Camera::Update(const float& elapsedTime)
 	UpdateListener();
 
 	//	----- 当たり判定 -----
-	RayVsHorizontal(elapsedTime);
+	//RayVsHorizontal(elapsedTime);
 
 }
 
@@ -180,24 +182,6 @@ void Camera::UpdateListener()
 //	通常カメラ
 void Camera::NormalCamera(const float& elapsedTime)
 {
-	//#ifdef _DEBUG
-//	// カメラを演出で移動中は動かない
-//	if (!CameraMove(elapsedTime))
-//	{
-//		GamePad& gamePad = Input::Instance().GetGamePad();
-//		float ax = gamePad.GetAxisRX();
-//		float ay = gamePad.GetAxisRY();
-//		//カメラの回転速度
-//		float speed = rollSpeed_ * elapsedTime;
-//
-//		//スティックの入力値に合わせてX軸とY軸を回転
-//		angle_.x -= ay * speed;
-//		angle_.y += ax * speed;
-//	}
-//#else	//	RELEASE
-//	CameraMove(elapsedTime);
-//#endif // DEBUG
-
 	//	右スティックでカメラ回転
 	if (isPose_ == false)
 	{
@@ -250,9 +234,6 @@ void Camera::NormalCamera(const float& elapsedTime)
 	DirectX::XMFLOAT3 front;
 	DirectX::XMStoreFloat3(&front, Front);
 
-	// TODO:SetLoolAt()を呼び出してもfocusの値が変わらない。focusを変えられるようにする
-	//		 eyeも変えないとおかしくなるかも
-	// TODO:ここの式がおかしい気がする(　front　を　this->front_　に変えても違う気がする)　2024/03/10
 	this->eye_.x = this->focus_.x - (front.x * this->currentRange_);
 	this->eye_.y = this->focus_.y - (front.y * this->currentRange_);
 	this->eye_.z = this->focus_.z - (front.z * this->currentRange_);
@@ -260,148 +241,6 @@ void Camera::NormalCamera(const float& elapsedTime)
 	//	カメラの視点と注視点を設定
 	Camera::Instance().SetLookAt(eye_, focus_, DirectX::XMFLOAT3(0, 1, 0));
 
-}
-
-//	デバッグ用カメラ(まだ呼び出してない)
-//	元Update()にあった処理をDebugCamera()に移した
-void Camera::DebugCamera(const float& elapsedTime)
-{
-#ifdef _DEBUG
-	// カメラを演出で移動中は動かない
-	if (!CameraMove(elapsedTime))
-	{
-		GamePad& gamePad = Input::Instance().GetGamePad();
-		float RX = gamePad.GetAxisRX();
-		float RY = gamePad.GetAxisRY();
-		float LY = gamePad.GetAxisLY();
-
-		//	カメラの回転速度
-		float aSpeed = rollSpeed_ * elapsedTime;
-		float moveSpeed = moveSpeed_ * elapsedTime;
-
-		//	カメラ移動(X軸、Y軸)
-		//	左のShiftキーと右スティック(IJKLキー)いずれかを押しているとき、
-		//	カメラの視点をスティックの入力値に合わせてX,Y軸方向に移動
-		//if ((gamePad.GetButtonDown()&GamePad::BTN_LEFT_TRIGGER) && (RX != 0 || RY != 0))
-		if ((GetAsyncKeyState(VK_LSHIFT)) && (RX != 0 || RY != 0))
-		{
-			eyeOffset_.x -= RX * moveSpeed;
-			eyeOffset_.y += RY * moveSpeed;
-		}
-		else	//	カメラ回転　右スティックの入力値に合わせてX軸とY軸を回転(注視点を回転させる)
-		{
-			angle_.x += RY * aSpeed;
-			angle_.y += RX * aSpeed;
-			eyeOffset_.x = 0;	//	X,Y軸のカメラ移動値をリセット
-			eyeOffset_.y = 0;
-		}
-
-		//	カメラ移動(Z軸)　左スティック(W,Aキー)の入力値に合わせてZ軸方向に移動
-		//	入力がなかったらリセット
-		if (gamePad.GetAxisLY() != 0)//	左スティック
-		{
-			eyeOffset_.z -= LY * moveSpeed;
-		}
-		else	eyeOffset_.z = 0;
-
-#if 1 //	これを外すと向いてる方向に行かなくなる
-		//////////////////////////////////////////////////////////////////////////////////////////////////
-		DirectX::XMFLOAT3 cameraRight = this->GetRight();
-		DirectX::XMFLOAT3 cameraFront = this->GetFront();
-		DirectX::XMFLOAT3 cameraUp = this->GetUp();
-
-		//	カメラ右方向ベクトルを単位ベクトルに変換
-		float Rlength;
-		DirectX::XMStoreFloat(&Rlength, DirectX::XMVector3Length(DirectX::XMLoadFloat3(&cameraRight)));
-		float cameraRightLength = DirectX::XMVectorGetX(DirectX::XMVectorSqrt(DirectX::XMLoadFloat3(&cameraRight)));
-		if (cameraRightLength > 0.0f)
-		{
-			//	単位ベクトル化
-			DirectX::XMVECTOR cameraRightVec = DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&cameraRight));
-			DirectX::XMStoreFloat3(&cameraRight, cameraRightVec);
-		}
-
-		//	カメラ前方向ベクトルを単位ベクトルに変換
-		float Zlength;
-		DirectX::XMStoreFloat(&Zlength, DirectX::XMVector3Length(DirectX::XMLoadFloat3(&cameraFront)));
-		float cameraFrontLength = DirectX::XMVectorGetX(DirectX::XMVectorSqrt(DirectX::XMLoadFloat3(&cameraFront)));
-		if (cameraFrontLength > 0.0f)
-		{
-			//	単位ベクトル化
-			DirectX::XMVECTOR cameraFrontVec = DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&cameraFront));
-			DirectX::XMStoreFloat3(&cameraFront, cameraFrontVec);
-		}
-
-		//	カメラ上方向ベクトルを単位ベクトルに変換
-		float Ulength;
-		DirectX::XMStoreFloat(&Ulength, DirectX::XMVector3Length(DirectX::XMLoadFloat3(&cameraUp)));
-		float cameraUpLength = DirectX::XMVectorGetX(DirectX::XMVectorSqrt(DirectX::XMLoadFloat3(&cameraUp)));
-		if (cameraUpLength > 0.0f)
-		{
-			//	単位ベクトル化
-			DirectX::XMVECTOR cameraUpVec = DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&cameraUp));
-			DirectX::XMStoreFloat3(&cameraUp, cameraUpVec);
-		}
-
-		//	スティックの水平入力値をカメラ右方向に反映し、
-		//	スティック垂直入力値をカメラ前方向に反映し、
-		//	進行ベクトルを計算する
-		eyeOffset_.x = cameraFront.x * LY * moveSpeed_ + cameraRight.x * RX * moveSpeed_ + cameraUp.x * RY * moveSpeed_;
-		eyeOffset_.y = cameraFront.y * LY * moveSpeed_ + cameraRight.y * RX * moveSpeed_ + cameraUp.y * RY * moveSpeed_;
-		eyeOffset_.z = cameraFront.z * LY * moveSpeed_ + cameraRight.z * RX * moveSpeed_ + cameraUp.z * RY * moveSpeed_;
-		////////////////////////////////////////////////////////////////////////////////////////////
-#endif
-
-	//	カメラ移動(X軸、Y軸)
-	//	左のShiftキーと右スティック(IJKLキー)いずれかを押しているとき、
-	//	カメラの視点をスティックの入力値に合わせてX,Y軸方向に移動
-		//if ((gamePad.GetButtonDown()&GamePad::BTN_LEFT_TRIGGER) && (RX != 0 || RY != 0))
-		if ((GetAsyncKeyState(VK_LSHIFT)) && (RX != 0 || RY != 0))
-		{
-			eyeOffset_.x -= RX * moveSpeed;
-			eyeOffset_.y += RY * moveSpeed;
-		}
-		else	//	カメラ回転　右スティックの入力値に合わせてX軸とY軸を回転(注視点を回転させる)
-		{
-			angle_.x += RY * aSpeed;
-			angle_.y += RX * aSpeed;
-			eyeOffset_.x = 0;	//	X,Y軸のカメラ移動値をリセット
-			eyeOffset_.y = 0;
-		}
-
-		//	カメラ移動(Z軸)　左スティック(W,Aキー)の入力値に合わせてZ軸方向に移動
-		//	入力がなかったらリセット
-		if (gamePad.GetAxisLY() != 0)//	左スティック
-		{
-			eyeOffset_.z -= LY * moveSpeed;
-		}
-		else	eyeOffset_.z = 0;
-
-	}
-#else	//	RELEASE
-	CameraMove(elapsedTime);
-
-#endif // DEBUG
-
-	//	カメラ回転値を回転行列に変換
-	DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle_.x, angle_.y, angle_.z);
-
-	//	回転行列から前方向ベクトルを取り出す
-	//	Transform.r[2]で行列の３行目のデータを取り出している
-	DirectX::XMVECTOR Front = Transform.r[2];
-	DirectX::XMFLOAT3 front;
-	DirectX::XMStoreFloat3(&front, Front);
-
-	// TODO:SetLoolAt()を呼び出してもfocusの値が変わらない。focusを変えられるようにする
-	//		 eyeも変えないとおかしくなるかも
-	focus_.x = eye_.x - (front.x * currentRange_);
-	focus_.y = eye_.y - (front.y * currentRange_);
-	focus_.z = eye_.z - (front.z * currentRange_);
-
-	eye_ = eye_ + eyeOffset_;	//	カメラ視点の更新
-
-	//	カメラの視点と注視点を設定
-	Camera::Instance().SetLookAt(eye_, focus_, DirectX::XMFLOAT3(0, 1, 0));
 }
 
 //	カメラからステージへレイキャスト
