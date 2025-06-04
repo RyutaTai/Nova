@@ -4,6 +4,7 @@
 #include "../../imgui/imgui.h"
 #include "Graphics.h"
 #include "Shader.h"
+#include "../../Nova/Others/MathHelper.h"
 
 Vignette::Vignette()
 {
@@ -42,6 +43,34 @@ void Vignette::Make()
 
 }
 
+void Vignette::LerpVignetteIntensity(const float& elapsedTime)
+{
+	//	補完フラグが経っていなければ更新しない
+	if (isLerp_ == false)return;
+
+	//	補完タイマー更新
+	lerpTimer_ += elapsedTime;
+	//	補完しきったらリセット
+	if (lerpTimer_ >= lerpTimerMax_)
+	{
+		isFadeIn_ = !isFadeIn_;
+		if (isFadeIn_ == false)isLerp_ = false;
+		lerpTimer_ = 0.0f;
+	}
+
+	//	ヴィネットの強度を強めるか弱めるかで補完する最大値、最小値を切り替える
+	if (isFadeIn_)
+	{
+		vignetteData_.vignetteCurrentIntensity_ = 
+			Mathf::Lerp(vignetteData_.vignetteIntensityMin_, vignetteData_.vignetteIntensityMax_, lerpTimer_ / lerpTimerMax_);
+	}
+	else
+	{
+		vignetteData_.vignetteCurrentIntensity_ =
+			Mathf::Lerp(vignetteData_.vignetteIntensityMax_, vignetteData_.vignetteIntensityMin_, lerpTimer_ / lerpTimerMax_);
+	}
+}
+
 void Vignette::DrawDebug()
 {
 	if (ImGui::TreeNode("Vignette"))
@@ -54,6 +83,12 @@ void Vignette::DrawDebug()
 		ImGui::SliderFloat("Smoothness", &vignetteData_.vignetteSmoothness_, 0.0f, +1.0f);
 		ImGui::Checkbox("Rounded", &vignetteData_.vignetteRounded_);
 		ImGui::SliderFloat("Roundness", &vignetteData_.vignetteRoundness_, 0.0f, +1.0f);
+
+		//	補完に使用する変数
+		ImGui::DragFloat("LerpTimer", &lerpTimer_, 0.01f);
+		ImGui::DragFloat("LerpTimerMax", &lerpTimerMax_, 0.01f);
+		ImGui::Checkbox("IsLerp", &isLerp_);
+		ImGui::Checkbox("IsFadeIn", &isFadeIn_);
 
 		ImGui::TreePop();
 	}

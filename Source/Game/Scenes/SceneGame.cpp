@@ -182,6 +182,9 @@ void SceneGame::Update(const float& elapsedTime)
 	// ----- Collision更新処理 -----
 	CollisionManager::Instance().Update(elapsedTime);
 
+	//	----- ヴィネット更新処理 -----
+	Vignette::Instance().LerpVignetteIntensity(elapsedTime);
+
 	//	----- カラーフィルター更新処理 -----
 	colorFilter_->Update();
 

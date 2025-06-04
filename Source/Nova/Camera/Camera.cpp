@@ -19,11 +19,6 @@ Camera::Camera()
 
 }
 
-//	デストラクタ
-Camera::~Camera()
-{
-}
-
 //	初期化
 void Camera::Initialize()
 {
@@ -94,22 +89,22 @@ void Camera::SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& fo
 	DirectX::XMStoreFloat4x4(&world, World);
 
 	//	カメラの方向を取り出す
-	this->right_.x = world.m[0][0];
-	this->right_.y = world.m[0][1];
-	this->right_.z = world.m[0][2];
+	right_.x = world.m[0][0];
+	right_.y = world.m[0][1];
+	right_.z = world.m[0][2];
 
-	this->up_.x = world.m[1][0];
-	this->up_.y = world.m[1][1];
-	this->up_.z = world.m[1][2];
+	up_.x = world.m[1][0];
+	up_.y = world.m[1][1];
+	up_.z = world.m[1][2];
 
-	this->front_.x = world.m[2][0];
-	this->front_.y = world.m[2][1];
-	this->front_.z = world.m[2][2];
-	this->GetTransform()->SetWorld(World);
+	front_.x = world.m[2][0];
+	front_.y = world.m[2][1];
+	front_.z = world.m[2][2];
+	GetTransform()->SetWorld(World);
 
 	//	視点、注視点を保存
-	this->eye_ = eye;
-	this->focus_ = focus;
+	eye_ = eye;
+	focus_ = focus;
 
 }
 
@@ -234,9 +229,9 @@ void Camera::NormalCamera(const float& elapsedTime)
 	DirectX::XMFLOAT3 front;
 	DirectX::XMStoreFloat3(&front, Front);
 
-	this->eye_.x = this->focus_.x - (front.x * this->currentRange_);
-	this->eye_.y = this->focus_.y - (front.y * this->currentRange_);
-	this->eye_.z = this->focus_.z - (front.z * this->currentRange_);
+	eye_.x = focus_.x - (front.x * currentRange_);
+	eye_.y = focus_.y - (front.y * currentRange_);
+	eye_.z = focus_.z - (front.z * currentRange_);
 
 	//	カメラの視点と注視点を設定
 	Camera::Instance().SetLookAt(eye_, focus_, DirectX::XMFLOAT3(0, 1, 0));

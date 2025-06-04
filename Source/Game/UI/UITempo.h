@@ -13,8 +13,9 @@ private:
 		std::unique_ptr<Sprite> left_;				//	左側の半円
 		std::unique_ptr<Sprite> right_;				//	右側の半円
 		float				initRange_ = 0.0f;		//	初期の中心円からの距離
-		float				currentRange_ = 0.0f;	//	現在の中心円からの距離
+		double				currentRange_ = 0.0;	//	現在の中心円からの距離
 		bool				isJudged_ = false;		//	判定済みかどうか
+		float				timer_ = 0.0f;			//	タイマー
 
 	public:
 		Sprite* GetLeft()	{ return left_.get(); }			//	左側の半円取得
@@ -25,12 +26,16 @@ private:
 		const float GetInitRange()const { return initRange_; }
 
 		//	現在の中心円からの距離
-		void SetCurrentRange(const float& range) { currentRange_ = range; }
-		const float GetCurrentRange()const { return currentRange_; }	
+		void SetCurrentRange(const double& range) { currentRange_ = range; }
+		const double GetCurrentRange()const { return currentRange_; }	
 		
 		//	判定済みフラグ
 		void SetIsJudged(const bool& isJudged) { isJudged_ = isJudged; }
 		const bool	IsJudged()const { return isJudged_; }
+
+		//	タイマー
+		void SetTimer(const float& timer) { timer_ = timer; }
+		const float GetTimer()const { return timer_; }
 
 	};
 
@@ -70,13 +75,14 @@ private:
 	std::unique_ptr<Sprite>		center_;						//	テンポガイドの中心
 	std::unique_ptr<Semicircle> semicircles_[SemicircleMax_];	//	半円の組
 	
-	float quarterNoteDuration_ = 0.429f;		//	BPM140のときの、4分音符1つ分の長さ
+	float quarterNoteDuration_ = 0.4285714285714286f;		//	BPM140のときの、4分音符1つ分の長さ
+	float semicircleOffset_ = 0.1f;
 
 	//	中心円からの距離
-	float	rangePerOne_ = 1.0f;				//	半円1つ当たりの距離 ( 最大距離/個数 に設定し、等間隔に配置する)
+	double	rangePerOne_ = 1.0;				//	半円1つ当たりの距離 ( 最大距離/個数 に設定し、等間隔に配置する)
 	float	totalRange_ = 0.0f;					//	それぞれの距離の合計
-	float	semicircleRangeMax_ = 576.0f;		//	rangeの最大値
-	float	semicircleRangeMin_ = -0.5f;		//	rangeの最小値。これを下回ったら位置リセット
+	double	semicircleRangeMax_ = 576.0;		//	rangeの最大値
+	double	semicircleRangeMin_ = -0.5;		//	rangeの最小値。これを下回ったら位置リセット
 	
 	//	スケール
 	float	centerScaleMax_ = 1.0f;				//	中心円のスケール最大値

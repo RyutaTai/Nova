@@ -65,10 +65,16 @@ Player::Player()
 	AudioManager::Instance().Register(sources_[static_cast<int>(AudioStereo::Footsteps)]);
 
 	//	----- çUåÇÉqÉbÉgSE -----
-	sources_[static_cast<int>(AudioStereo::HitAttack)] = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/HitAttack2.wav", Audio::AudioType::SENormal, "GameScene");
-	sources_[static_cast<int>(AudioStereo::HitAttack)]->SetVolume(1.0f, false);
+	sources_[static_cast<int>(AudioStereo::HitAttack)] = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/HitAttack3.wav", Audio::AudioType::SENormal, "GameScene");
+	sources_[static_cast<int>(AudioStereo::HitAttack)]->SetVolume(0.5f, false);
 	sources_[static_cast<int>(AudioStereo::HitAttack)]->SetAudioName("PlayerHitAttack");
 	AudioManager::Instance().Register(sources_[static_cast<int>(AudioStereo::HitAttack)]);
+
+	AudioSource* comboPerfectSE = nullptr;
+	comboPerfectSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/Hey.wav", Audio::AudioType::SENormal, "GameScene");
+	comboPerfectSE->SetVolume(0.18f, false);
+	comboPerfectSE->SetAudioName("ComboPerfectSE");
+	AudioManager::Instance().Register(comboPerfectSE);
 
 }
 

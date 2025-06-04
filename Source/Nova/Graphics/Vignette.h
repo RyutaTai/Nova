@@ -15,7 +15,7 @@ public:
 		DirectX::XMFLOAT2	vignetteCenter_		= { 0.5f, 0.5f };				//	注視点(どこを中心にするか)
 
 		float				vignetteCurrentIntensity_ = 0.5f;					//	現在の範囲(大きさ)
-		float				vignetteIntensityMax_ = 0.5f;						//	範囲最大値
+		float				vignetteIntensityMax_ = 0.552f;						//	範囲最大値
 		float				vignetteIntensityMin_ = 0.4f;						//	範囲最小値
 
 		float				vignetteSmoothness_ = 0.4f;							//	どのくらいぼかすか
@@ -27,14 +27,14 @@ public:
 	//	ヴィネット用定数バッファ
 	struct VignetteConstants
 	{
-		DirectX::XMFLOAT4	vignetteColor_;
-		DirectX::XMFLOAT2	vignetteCenter_;
-		float				vignetteIntensity_;
-		float				vignetteSmoothness_;
+		DirectX::XMFLOAT4	vignetteColor_ = {};
+		DirectX::XMFLOAT2	vignetteCenter_ = {};
+		float				vignetteIntensity_ = 0.0f;
+		float				vignetteSmoothness_ = 0.0f;
 
-		float				vignetteRounded_;
-		float				vignetteRoundness_;
-		DirectX::XMFLOAT2	vignetteDummy_;
+		float				vignetteRounded_ = 0.0f;
+		float				vignetteRoundness_ = 0.0f;
+		DirectX::XMFLOAT2	vignetteDummy_ = {};
 	};
 
 public:
@@ -56,9 +56,18 @@ public:
 	const float GetVignetteIntensityMax()		const { return vignetteData_.vignetteIntensityMax_; }
 	const float GetVignetteIntensityMin()		const { return vignetteData_.vignetteIntensityMin_; }
 
+	void LerpVignetteIntensity(const float& elapsedTime);
+	void SetIsFadeIn(const bool& isFadeIn) { isFadeIn_ = isFadeIn; }
+	void SetLerpFlag(const bool& isLerp) { isLerp_ = isLerp; }
+
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer>		vignetteConstantBuffer_;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	vignettePixelShader_;
+
+	float lerpTimerMax_ = 0.17f;
+	float lerpTimer_ = 0.0f;
+	bool isFadeIn_ = false;
+	bool isLerp_ = false;
 
 };
 

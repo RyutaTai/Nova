@@ -51,17 +51,12 @@ void Drone::Initialize()
 	//	----- 自身の種類を設定 -----
 	myType_ = EnemyType::Drone;
 
-	//	----- 位置設定 -----
-	/*DirectX::XMFLOAT3 position = { 190,700,1620 };
-	GetTransform()->SetPosition(position);*/
-
 	//	----- 角度設定 -----
 	float angleY = ConvertToRadian(220.0f);
 	GetTransform()->SetRotationY(angleY);
 
 	//	----- スケール -----
 	float scale = 0.6f;
-	//float scale = 10.0f;
 	GetTransform()->SetScaleFactor(scale);
 
 	//	----- Collision -----
@@ -108,17 +103,10 @@ void Drone::Initialize()
 	sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
 	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Shot)]);
 
-	//	破壊音
-	sources_[static_cast<int>(Audio3D::Destroy)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", &emitter_);
-	sources_[static_cast<int>(Audio3D::Destroy)]->SetVolume(0.3f, false);
-	sources_[static_cast<int>(Audio3D::Destroy)]->SetAudioName("BulletDestroy");
-	sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
-	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Destroy)]);
-
 #endif
 
 	//	3Dオーディオテスト用
-#if 1
+#if 0
 	//sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/452_BPM140_2.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
 	sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetVolume(0.2f, false);
@@ -215,7 +203,7 @@ void Drone::UpdateAudioSource()
 //	弾丸処理
 void Drone::LaunchBullet(const float& elapsedTime)
 {
-	//	弾丸発射フラグが立っていなければreturn(デバッグ用)
+	//	弾丸発射フラグが立っていなければreturn
 	if (isBulletLaunch_ == false)return;
 
 #if 1

@@ -20,6 +20,25 @@ void JudgeRhythm::Initialize()
 	//	コンボ数初期化
 	comboCount_ = 0;
 
+	//	オーディオ初期化
+	AudioSource* rhythmMissSE = nullptr;
+	rhythmMissSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/Clap.wav", Audio::AudioType::SENormal, "GameScene");
+	rhythmMissSE->SetVolume(0.2f, false);
+	rhythmMissSE->SetAudioName("RhythmMissSE");
+	AudioManager::Instance().Register(rhythmMissSE);
+
+	AudioSource* rhythmGoodSE = nullptr;
+	rhythmGoodSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/RhythmMissSE2.wav", Audio::AudioType::SENormal, "GameScene");
+	rhythmGoodSE->SetVolume(0.08f, false);
+	rhythmGoodSE->SetAudioName("RhythmGoodSE");
+	AudioManager::Instance().Register(rhythmGoodSE);
+
+	AudioSource* rhythmPerfectSE = nullptr;
+	rhythmPerfectSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/RhythmSE.wav", Audio::AudioType::SENormal, "GameScene");
+	rhythmPerfectSE->SetVolume(0.2f, false);
+	rhythmPerfectSE->SetAudioName("RhythmPerfectSE");
+	AudioManager::Instance().Register(rhythmPerfectSE);
+
 }
 
 void JudgeRhythm::Update()
@@ -32,20 +51,12 @@ void JudgeRhythm::Update()
 //	読んだタイミングがリズムに合っているかをテンポUIを利用して判定する
 bool JudgeRhythm::Judge()
 {
-	//	----- SEを鳴らす -----
-	AudioSource* rhythmSE = nullptr;
-	rhythmSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/RhythmSE.wav", Audio::AudioType::SENormal, "GameScene");
-	rhythmSE->SetVolume(0.3f, false);
-	rhythmSE->SetAudioName("RhythmSE");
-	AudioManager::Instance().Register(rhythmSE);
-	rhythmSE->Play(false);
-	//delete rhythmSE;
-
 	//	----- 中心円に一番近い半円の番号を取得 -----
 	int nearSemicircleIndex = UIManager::Instance().GetUITempo()->FindNearSemicircleIndex();
 
 	//	----- 入力タイミングの評価(PerfectやGood)ごとの処理 -----
 	debugJudgeRange_ = UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetCurrentRange();
+	
 	//	Perfectのとき
 	if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetCurrentRange() < perfectRange_)		//	Perfect
 	{
@@ -67,6 +78,14 @@ bool JudgeRhythm::Judge()
 		//	スケールを変化させる
 		Stage::Instance().SetCircleSpectrumFovy(Stage::AudioSpectrumType::Circle, 14.0f, 0.5f);
 
+		//	----- SEを鳴らす -----
+		AudioManager::Instance().PlayAudioByName("RhythmPerfectSE", false);
+		AudioManager::Instance().PlayAudioByName("RhythmMissSE", false);
+
+		//	----- コントローラー振動 -----
+		GamePad& gamePad = Input::Instance().GetGamePad();
+		gamePad.SetVibration(0.4f, 0.3f, 0.25f);
+
 		return true;
 
 	}
@@ -85,6 +104,14 @@ bool JudgeRhythm::Judge()
 		UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->SetIsJudged(true);
 		JudgeRhythm::Instance().AddComboCount(1);
 
+		//	----- SEを鳴らす -----
+		AudioManager::Instance().PlayAudioByName("RhythmGoodSE", false);
+		AudioManager::Instance().PlayAudioByName("RhythmMissSE", false);
+
+		//	----- コントローラー振動 -----
+		GamePad& gamePad = Input::Instance().GetGamePad();
+		gamePad.SetVibration(0.3f, 0.1f, 0.1f);
+
 		return true;
 	}
 	//	Perfect、Good以外
@@ -100,6 +127,9 @@ bool JudgeRhythm::Judge()
 
 		//	----- コンボ数リセット -----
 		JudgeRhythm::Instance().SetComboCount(0);
+
+		//	----- SEを鳴らす -----
+		AudioManager::Instance().PlayAudioByName("RhythmMissSE", false);
 
 		return false;
 	}

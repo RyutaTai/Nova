@@ -8,9 +8,9 @@ class Mathf
 {
 public:
 	//	線形補完
-	static float Lerp(float a, float b, float t)
+	static float Lerp(const float& start, const float& end, const float& timer)
 	{
-		return a * (1.0f - t) + (b * t);
+		return start * (1.0f - timer) + (end * timer);
 	}
 	//	指定範囲のランダム値を計算する
 	static float RandomRange(const float& min, const float& max)
@@ -42,7 +42,7 @@ public:
 
 };
 
-inline const float XMFloatLerp(const float& start, const float& end, const float& timer)
+inline const float FloatLerp(const float& start, const float& end, const float& timer)
 {
 	return start + timer * (end - start);	
 }

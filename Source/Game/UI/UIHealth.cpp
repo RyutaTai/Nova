@@ -47,7 +47,7 @@ void UIHealth::UpdateHpGaugeBack(const float& elapsedTime)
 	gaugeLerpTimer_ += gaugeLerpSpeed_ * elapsedTime;
 	gaugeLerpTimer_ = min(gaugeLerpTimer_, 1.0f);
 
-	const float sizeX = XMFloatLerp(startValue_, endValue_, gaugeLerpTimer_);
+	const float sizeX = FloatLerp(startValue_, endValue_, gaugeLerpTimer_);
 	hpGaugeBack_->GetTransform()->SetTexSizeX(sizeX);
 
 	if (gaugeLerpTimer_ == 1.0f)isUpdateHpGaugeBack_ = false;

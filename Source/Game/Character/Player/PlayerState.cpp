@@ -674,6 +674,7 @@ namespace PlayerState
 
 		//	判定時間セット
 		animJudgeTime_.SetRange(0.4f, 1.185f);
+		sePlayTime_.SetRange(0.8f, 1.0f);
 		acceptInputFrame_ = 10.0f;
 
 		//	ステート経過時間初期化
@@ -684,6 +685,7 @@ namespace PlayerState
 		owner_->SetAttackHit(false);
 		//	攻撃中は押し出し判定しない
 		owner_->SetIsActiveCollisionDetection(false);
+
 	}
 
 	void ComboOne4::Update(const float& elapsedTime)
@@ -694,10 +696,20 @@ namespace PlayerState
 			JudgeRhythm::Instance().Judge();
 		}
 
+		//	攻撃判定をオンにする
 		float currentAnimationSeconds = owner_->GetCurrentAnimationSeconds();	//	アニメーション再生時間
 		if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 		{
 			owner_->GetAttackDetectionData("RightPunch")->SetIsActive(true);
+		}
+
+		//	コンボが成功したSEを鳴らす
+		if (sePlayTime_.IsWithinRange(currentAnimationSeconds))
+		{
+			//	再生中でなければ再生する
+			bool isPlaying = AudioManager::Instance().GetAudioResource("ComboPerfectSE")->GetIsPlayingFlag();
+			if (isPlaying == false)
+				AudioManager::Instance().PlayAudioByName("ComboPerfectSE", false);
 		}
 		
 		//	次のステートへ遷移

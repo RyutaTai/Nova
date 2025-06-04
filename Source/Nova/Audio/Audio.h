@@ -61,6 +61,7 @@ public:
 	AudioType		GetAudioType() { return audioType_; }
 	
 	bool			IsPlaying();	//	手動で切り替えているisPlaying_フラグより精度がいいが、毎フレームGetStateを呼びたくないため分けている
+	const bool		GetIsPlayingFlag()const { return isPlaying_; }
 	bool			IsBGM();		//	BGMかどうか
 	bool			IsSE();			//	SEかどうか
 

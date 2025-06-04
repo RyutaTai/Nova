@@ -189,8 +189,9 @@ namespace PlayerState
 		void DetermineStateTransition(const float& elapsedTime);
 
 	private:
-		TimeRangeJudge	animJudgeTime_	= {};		//	判定を取るアニメーション区間
-		TimeRangeJudge	cancellationTime_ = {};		//	キャンセル可能時間
+		TimeRangeJudge	animJudgeTime_	= {};	//	判定を取るアニメーション区間
+		TimeRangeJudge	sePlayTime_	= {};		//	コンボが成功したSEを鳴らす区間
+		TimeRangeJudge	cancellationTime_ = {};	//	キャンセル可能時間
 		float		acceptInputFrame_ = {};		//	入力時間を受け付ける範囲
 
 	};

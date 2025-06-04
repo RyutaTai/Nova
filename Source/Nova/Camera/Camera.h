@@ -8,13 +8,13 @@ class Camera
 {
 private:
 	Camera();
-	~Camera();
+	~Camera() = default;
 
 public:
 	static Camera& Instance()
 	{
-		static Camera instance_;
-		return instance_;
+		static Camera instance;
+		return instance;
 	}
 
 	void Initialize();

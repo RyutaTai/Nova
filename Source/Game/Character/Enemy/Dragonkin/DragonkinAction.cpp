@@ -435,6 +435,7 @@ namespace DragonkinAction
 			{
 				step_ = 0;
 				owner_->SetIsDead(true);
+				owner_->Destroy();
 				return ActionBase::State::Complete;
 			}
 			break;

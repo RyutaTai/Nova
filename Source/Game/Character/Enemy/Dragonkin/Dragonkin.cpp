@@ -50,6 +50,8 @@ Dragonkin::Dragonkin()
 		}
 		behaviorTree_->AddNode("Root", "Idle", 4, BehaviorTree::SelectRule::Non, new DragonkinJudgment::IdleJudgment(this), new DragonkinAction::IdleAction(this));				//	待機ノード(末端)
 	}
+
+	PlayAnimation(Dragonkin::AnimationType::Idle01, true);
 	
 }
 
@@ -73,8 +75,10 @@ void Dragonkin::Initialize()
 	//	スケール設定
 	GetTransform()->SetScaleFactor(0.015f);
 
-	//	初期アニメーション再生速度設定
+	//	初期アニメーション設定
+	PlayAnimation(Dragonkin::AnimationType::Idle01, true);
 	SetAnimationSpeed(1.0f);
+	
 }
 
 //	当たり判定登録
@@ -219,9 +223,6 @@ void Dragonkin::Update(const float& elapsedTime)
 	//	----- 旋回処理 -----
 	Turn(elapsedTime);
 
-	//	----- 破棄判定 -----
-	JudgeDestroy();
-
 }
 
 //	ビヘイビアツリー更新処理
@@ -315,12 +316,6 @@ void Dragonkin::UpdateCollisions(const float& elapsedTime)
 		//data.SetJointPosition(pos);
 	}
 
-}
-
-//	破棄判定
-void Dragonkin::JudgeDestroy()
-{
-	if (isDead_)Destroy();
 }
 
 //	破棄処理

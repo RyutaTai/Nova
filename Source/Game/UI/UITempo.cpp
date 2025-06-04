@@ -30,8 +30,8 @@ UITempo::UITempo()
 
 		//	中心円からの距離設定して位置を決める
 		//	中心円からの最大距離を半円の個数で割って1つ分の距離を算出し、等間隔に配置する
-		rangePerOne_ = semicircleRangeMax_ / SemicircleMax_;
-		float range = rangePerOne_ * index;
+		rangePerOne_ = (semicircleRangeMax_ / SemicircleMax_) + semicircleOffset_;
+		double range = rangePerOne_ * (index + 1);
 		semicircles_[index]->SetInitRange(range);
 		semicircles_[index]->currentRange_ = range;
 
@@ -95,7 +95,7 @@ void UITempo::UpdateDrawFlag()
 //	UIの位置更新処理
 void UITempo::UpdatePosition(const float& elapsedTime)
 {
-	float centerPosX = center_->GetTransform()->GetPositionX();	//	中心円のX座標
+	double centerPosX = center_->GetTransform()->GetPositionX();	//	中心円のX座標
 	
 	float totalRange = 0.0f;
 	for (int index = 0; index < SemicircleMax_; ++index)
@@ -108,10 +108,6 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 		{
 			semicircles_[index]->currentRange_ = semicircleRangeMax_;
 
-			//float initRange = semicircles_[index]->GetInitRange();
-			//semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + initRange);
-			//semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - initRange);
-			
 			//	アニメーションフラグ
 			centerCircleAnimFlag_ = true;
 
@@ -119,12 +115,12 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 			if (semicircles_[index]->isJudged_)semicircles_[index]->isJudged_ = false;
 
 			//	ヴィネット範囲を最大値に変更
-			Vignette::Instance().SetVignetteIntensity(Vignette::Instance().GetVignetteIntensityMax());
+			Vignette::Instance().SetLerpFlag(true);
 
 		}
 
 		//	rangeを元に位置を更新
-		float range = semicircles_[index]->currentRange_;
+		double range = semicircles_[index]->currentRange_;
 		semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - range);
 		semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + range);
 
@@ -157,18 +153,11 @@ void UITempo::UpdateCenterCircleAnimation()
 
 	center_->GetTransform()->SetTexPosX(100.0f);
 
-	//	ヴィネットの範囲補完
-	/*float intensity = Mathf::Lerp(Vignette::Instance().GetVignetteCurrentIntensity(), Vignette::Instance().GetVignetteIntensityMin(), 1.0f);
-	Vignette::Instance().SetVignetteIntensity(intensity);*/
-
 	if (centerAnimTime_ > animChangeThreshold_)
 	{
 		centerCircleAnimFlag_ = false;
 		center_->GetTransform()->SetTexPosX(0.0f);
 		centerAnimTime_ = 0;
-
-		//	ヴィネットの範囲リセット
-		Vignette::Instance().SetVignetteIntensity(Vignette::Instance().GetVignetteIntensityMin());
 
 	}
 	centerAnimTime_++;
@@ -224,10 +213,13 @@ void UITempo::DrawDebug()
 		center_->DrawDebug();
 
 		ImGui::Text("----- Range -----");
-		ImGui::DragFloat("RangePerOne", &rangePerOne_);
+		float rangePerOne = static_cast<float>(rangePerOne_);
+		ImGui::DragFloat("RangePerOne", &rangePerOne);
 		ImGui::DragFloat("TotalRange", &totalRange_);
-		ImGui::DragFloat("RangeMax", &semicircleRangeMax_);
-		ImGui::DragFloat("RangeMin", &semicircleRangeMin_);
+		float semicircleRangeMax = static_cast<float>(semicircleRangeMax_);
+		float semicircleRangeMin = static_cast<float>(semicircleRangeMin_);
+		ImGui::DragFloat("RangeMax", &semicircleRangeMax);
+		ImGui::DragFloat("RangeMin", &semicircleRangeMin);
 
 		ImGui::Text("----- Semicircle -----");
 		for (int i = 0; i < UITempo::SemicircleMax_; ++i)
@@ -259,7 +251,8 @@ void UITempo::DrawDebug()
 					ImGui::TreePop();
 				}
 				
-				ImGui::DragFloat("Range", &semicircles_[i]->currentRange_);
+				float currentRange = static_cast<float>(semicircles_[i]->currentRange_);
+				ImGui::DragFloat("Range", &currentRange);
 
 				//	スケール確認用
 				static float scaleFactor = 1.0f;
