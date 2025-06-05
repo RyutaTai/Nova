@@ -1,9 +1,8 @@
 #include "ColorFilter.h"
 
 #include "../../Nova/Others/Misc.h"
-#include "../../imgui/imgui.h"
-
 #include "../../Nova/Graphics/Graphics.h"
+#include "../../imgui/imgui.h"
 
 ColorFilter::ColorFilter()
 {

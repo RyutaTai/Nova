@@ -66,7 +66,7 @@ void DSP(SoundDSPSetting& dspSetting, const SoundListener& listener, const Sound
                 dspSetting.radianListenerToEmitter_ : -Angle(emitter.position_, listener.position_, listener.frontVec_);
 #if 1
 			//angle = (dspSetting.radianListenerToEmitter_ + M_PI * 0.5f) * 0.5f;
-            angle = ((dspSetting.radianListenerToEmitter_ + 90.0f) / 2.0f) * (M_PI / 180.0f);
+            angle = static_cast<float>(((dspSetting.radianListenerToEmitter_ + 90.0f) / 2.0f) * (M_PI / 180.0f));
 #else       
             angle = (dspSetting.radianListenerToEmitter_ + M_PI_2) * 0.5f;
 #endif      

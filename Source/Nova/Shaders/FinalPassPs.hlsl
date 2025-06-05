@@ -1,6 +1,7 @@
 #include "FullScreenQuad.hlsli"
 
 #include "ColorFilter.hlsli"
+#include "ChromaticAberration.hlsli"
 
 #define POINT 0
 #define LINEAR 1
@@ -36,10 +37,21 @@ cbuffer VignetteConstantBuffer : register(b2)
 
 float4 main(VS_OUT pin) : SV_TARGET
 {	
-	float4 color = textureMaps[0].Sample(samplerStates[POINT], pin.texcoord);
-	float4 bloom = textureMaps[1].Sample(samplerStates[POINT], pin.texcoord);
+    float2 baseTexcoord = pin.texcoord;
 
+    // 各色チャンネルを異なるUV座標でサンプリング
+    // 強度 (chromaticAberrationStrength)とオフセットの方向を調整
+    // 例えば、赤は左上、青は右下へ少しずらす
+    float4 colorR = textureMaps[0].Sample(samplerStates[POINT], baseTexcoord - chromaticAberrationStrength);
+    float4 colorG = textureMaps[0].Sample(samplerStates[POINT], baseTexcoord); // 緑はそのまま
+    float4 colorB = textureMaps[0].Sample(samplerStates[POINT], baseTexcoord + chromaticAberrationStrength);
+
+    // 各チャンネルを合成して最終的な色を構築
+    float4 color = float4(colorR.r, colorG.g, colorB.b, colorR.a); // アルファはどれか一つから取得
+
+    
     //  ブルーム
+	float4 bloom = textureMaps[1].Sample(samplerStates[POINT], pin.texcoord);
 	float3 fragmentColor = color.rgb + bloom.rgb;
 	float alpha = color.a;
 

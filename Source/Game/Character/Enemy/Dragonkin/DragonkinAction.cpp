@@ -8,6 +8,20 @@ namespace DragonkinAction
 {
 	ActionBase::State IdleAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -26,6 +40,9 @@ namespace DragonkinAction
 				step_ = 0;
 				return ActionBase::State::Complete;
 			}
+
+			//	----- 旋回処理 -----
+			owner_->Turn(elapsedTime);
 
 			break;
 		}
@@ -48,6 +65,20 @@ namespace DragonkinAction
 {
 	ActionBase::State SearchAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -62,7 +93,6 @@ namespace DragonkinAction
 				return ActionBase::State::Complete;
 			}
 
-			return ActionBase::State::Complete;
 			break;
 		}
 		return ActionBase::State::Run;
@@ -79,11 +109,101 @@ namespace DragonkinAction
 
 }
 
+#pragma region ===== 攻撃 =====
+//	攻撃待機
+namespace DragonkinAction
+{
+	ActionBase::State AttackWaitAction::Run(const float& elapsedTime)
+	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			currentWaitTime_ = 0.0f;
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
+		switch (step_)
+		{
+		case 0:
+			owner_->ResetRunTimer();
+			currentWaitTime_ = 0.0f;
+			step_++;
+			break;
+		case 1:
+			// プレイヤーの位置と自分の位置から目標方向を計算
+			DirectX::XMFLOAT3 playerPos = Player::Instance().GetTransform()->GetPosition();
+			DirectX::XMFLOAT3 myPos = owner_->GetTransform()->GetPosition();
+			DirectX::XMFLOAT3 toPlayer = { playerPos.x - myPos.x, 0.0f, playerPos.z - myPos.z };
+
+			//	旋回を許可する
+			owner_->SetIsTurnAction(true);
+
+			//	旋回処理を実行
+			owner_->Turn(elapsedTime);
+
+			//	旋回が完了したかどうかの判定
+			DirectX::XMVECTOR currentForward = DirectX::XMLoadFloat3(&owner_->GetTransform()->CalcForward());
+			DirectX::XMVECTOR targetDir = DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&toPlayer));
+
+			float dot = DirectX::XMVectorGetX(DirectX::XMVector3Dot(currentForward, targetDir));
+
+			//	旋回が完了した、または十分に近づいた場合
+			if (dot >= cosf(angleThreshold_))
+			{
+				//	旋回後に少し待機時間を入れる
+				currentWaitTime_ += elapsedTime;
+				if (currentWaitTime_ >= waitTimer_)
+				{
+					currentWaitTime_ = 0.0f;			//	リセット
+					step_ = 0;
+					return ActionBase::State::Complete; //	アクション完了
+				}
+			}
+			
+			break;
+		}
+		return ActionBase::State::Run; //	旋回中または待機中
+	}
+
+	void AttackWaitAction::DrawDebug()
+	{
+		if (ImGui::TreeNode("AttackWaitAction"))
+		{
+			ImGui::DragFloat("Angle Threshold (Degrees)", &angleThreshold_, 0.01f, 0.0f, 180.0f);
+			ImGui::DragFloat("Wait Timer", &waitTimer_, 0.01f, 0.0f, 5.0f);
+			ImGui::TreePop();
+		}
+	}
+}
+
+#pragma region ----- 通常攻撃 -----
 //	通常殴打
 namespace DragonkinAction
 {
 	ActionBase::State AttackPunchAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -91,6 +211,9 @@ namespace DragonkinAction
 			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::AttackPunch), false);
 			//	判定を取る区間を設定
 			animJudgeTime_.SetRange(0.42f, 0.5f);
+
+			//	攻撃中は旋回しない
+			owner_->SetIsTurnAction(false);
 
 			step_++;
 			break;
@@ -141,6 +264,20 @@ namespace DragonkinAction
 {
 	ActionBase::State AttackKickAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -148,6 +285,9 @@ namespace DragonkinAction
 			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::AttackKick), false);
 			//	判定を取る区間を設定
 			animJudgeTime_.SetRange(0.52f, 0.6f);
+
+			//	攻撃中は旋回しない
+			owner_->SetIsTurnAction(false);
 			
 			step_++;
 			break;
@@ -201,6 +341,20 @@ namespace DragonkinAction
 {
 	ActionBase::State AttackWingAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -208,6 +362,9 @@ namespace DragonkinAction
 			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::AttackWing), false);
 			//	判定を取る区間を設定
 			animJudgeTime_.SetRange(0.34f, 0.41f);
+
+			//	攻撃中は旋回しない
+			owner_->SetIsTurnAction(false);
 			
 			step_++;
 			break;
@@ -265,12 +422,28 @@ namespace DragonkinAction
 	}
 
 }
+#pragma endregion ----- 攻撃 -----
 
+#pragma region ----- スキル攻撃 -----
 //	スキル攻撃行動
 namespace DragonkinAction
 {
 	ActionBase::State SkillAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -293,12 +466,28 @@ namespace DragonkinAction
 		}
 	}
 }
+#pragma endregion ----- スキル攻撃 -----
+#pragma endregion ===== 攻撃 =====
 
 //	追跡行動
 namespace DragonkinAction
 {
 	ActionBase::State PursuitAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -328,6 +517,20 @@ namespace DragonkinAction
 {
 	ActionBase::State LeaveAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -357,6 +560,20 @@ namespace DragonkinAction
 {
 	ActionBase::State RecoverAction::Run(const float& elapsedTime)
 	{
+		//	ダメージフラグ判定
+		if (owner_->IsDamaged())
+		{
+			step_ = 0;
+			return ActionBase::State::Failed;
+		}
+
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -385,6 +602,13 @@ namespace DragonkinAction
 {
 	ActionBase::State DamageAction::Run(const float& elapsedTime)
 	{
+		//	死亡判定
+		if (owner_->IsDead())
+		{
+			step_ = 0;
+			return ActionBase::State::Complete;
+		}
+
 		switch (step_)
 		{
 		case 0:
@@ -426,7 +650,7 @@ namespace DragonkinAction
 		{
 		case 0:
 			owner_->ResetRunTimer();
-			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::DmageDieDown), false);
+			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::DmageDieDown), false, 0.2f);
 			step_++;
 			break;
 		case 1:

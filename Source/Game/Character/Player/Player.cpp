@@ -129,7 +129,7 @@ void Player::Update(const float& elapsedTime)
 	//	----- “–‚½‚è”»’èXV -----
 	UpdateCollisionDetectionData(elapsedTime);
 
-	//	‹ó’†‚É‚¢‚ê‚Î
+	//	‹ó’†‚É‚¢‚½‚ç
 	if (isHitStage_ == false && isAddGravity_)
 	{
 		//	d—Íˆ—

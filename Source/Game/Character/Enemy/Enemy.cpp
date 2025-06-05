@@ -19,9 +19,9 @@ void Enemy::Turn(const float& elapsedTime)
 	if (isTurnAction_ == false)return;
 
 	//	ターゲット方向への進行ベクトルを算出(単位ベクトル化はTurn関数内で行っている)
-	DirectX::XMFLOAT3 dronePos = this->GetTransform()->GetPosition();
-	float vx = targetPosition_.x - dronePos.x;
-	float vz = targetPosition_.z - dronePos.z;
+	DirectX::XMFLOAT3 myPosition = this->GetTransform()->GetPosition();
+	float vx = targetPosition_.x - myPosition.x;
+	float vz = targetPosition_.z - myPosition.z;
 
 	//	旋回処理
 	Character::Turn(elapsedTime, vx, vz, turnSpeed_);
@@ -109,7 +109,7 @@ void Enemy::AddDamage(const float& damage)
 	hp_ -= damage;
 	if (hp_ <= 0.0f)
 	{
-		isDead_ = true;
+		SetIsDead(true);
 		OnDead();
 	}
 }

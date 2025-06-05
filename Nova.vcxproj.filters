@@ -137,6 +137,9 @@
     <Filter Include="Nova\Camera">
       <UniqueIdentifier>{b600e7e4-d06a-4a53-a19c-82c211786a91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nova\Graphics\ChromaticAberration">
+      <UniqueIdentifier>{338f0a76-3b48-4fc6-aa2d-39b6e8b42e22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -243,9 +246,6 @@
     </ClCompile>
     <ClCompile Include="Source\Nova\Collision\CollisionMesh.cpp">
       <Filter>Nova\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp">
-      <Filter>Nova\Graphics\ColorFilter</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\Decal.cpp">
       <Filter>Nova\Graphics\Decal</Filter>
@@ -403,6 +403,12 @@
     <ClCompile Include="Source\Nova\Camera\Camera.cpp">
       <Filter>Nova\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp">
+      <Filter>Nova\Graphics\ColorFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\ChromaticAberration.cpp">
+      <Filter>Nova\Graphics\ChromaticAberration</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h">
@@ -536,9 +542,6 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\Collision\CollisionMesh.h">
       <Filter>Nova\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Nova\Graphics\ColorFilter.h">
-      <Filter>Nova\Graphics\ColorFilter</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\Decal.h">
       <Filter>Nova\Graphics\Decal</Filter>
@@ -840,6 +843,12 @@
     <ClInclude Include="Source\Nova\Camera\Camera.h">
       <Filter>Nova\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\ColorFilter.h">
+      <Filter>Nova\Graphics\ColorFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\ChromaticAberration.h">
+      <Filter>Nova\Graphics\ChromaticAberration</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
@@ -1004,6 +1013,9 @@
       <Filter>Nova\Shaders</Filter>
     </None>
     <None Include="Source\Nova\Shaders\FilterFunctions.hlsli">
+      <Filter>Nova\Shaders</Filter>
+    </None>
+    <None Include="Source\Nova\Shaders\ChromaticAberration.hlsli">
       <Filter>Nova\Shaders</Filter>
     </None>
   </ItemGroup>

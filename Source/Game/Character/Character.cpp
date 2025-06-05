@@ -216,9 +216,9 @@ void Character::SubtractHp(const float& hp)
 	if (isInvincible_ == false)	
 	{
 		hp_ -= hp;
-		if (hp_ <= 0)
+		if (hp_ <= 0.0f)
 		{
-			hp_ = 0;
+			hp_ = 0.0f;
 		}
 	}
 }

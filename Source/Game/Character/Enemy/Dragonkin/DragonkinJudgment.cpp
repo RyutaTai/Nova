@@ -5,7 +5,6 @@ namespace DragonkinJudgment
 {
 	bool IdleJudgment::Judgment()
 	{
-
 		return true;
 	}
 }
@@ -27,7 +26,8 @@ namespace DragonkinJudgment
 	bool BattleJudgment::Judgment()
 	{
 		//	ƒvƒŒƒCƒ„[‚ğŒ©‚Â‚¯‚Ä‚¢‚½‚çtrue
-		if (owner_->SearchPlayer())return true;
+		if (owner_->SearchPlayer())
+			return true;
 		return false;
 	}
 }

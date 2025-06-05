@@ -25,6 +25,8 @@ public:
 	void SetMoveVec(const DirectX::XMFLOAT3& vec) { moveVec_ = vec; }
 	//	----- ê˘âÒèàóù -----
 	virtual void Turn(const float& elapsedTime, float vx, float vz, float speed);
+	void SetIsTurnAction(const bool& isTurnAction) { isTurnAction_ = isTurnAction; }
+	const bool IsTurnAction()const { return isTurnAction_; }
 	//	----- ë¨Ç≥ -----
 	void AddMoveSpeed(const float& addMoveSpeed, const float& elapsedTime);
 	void SetMoveSpeed(const float& moveSpeed){ moveSpeed_ = moveSpeed; }

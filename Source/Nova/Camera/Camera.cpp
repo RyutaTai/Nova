@@ -22,15 +22,15 @@ Camera::Camera()
 //	初期化
 void Camera::Initialize()
 {
-	eye_ = { 10.5f, 8.6f, -23.3f };			//	視点
-	focus_ = { 14.0f, 7.2f,  -20.0f };		//	注視点
-	up_ = { 0.2f,  0.9f,   0.2f };			//	上方向
-	angle_ = { 0.29f,  0.797f,   0.0f };	//	回転値
+	eye_	= { 10.5f, 8.6f, -23.3f };		//	視点
+	focus_	= { 14.0f, 7.2f,  -20.0f };		//	注視点
+	up_		= { 0.2f,  0.9f,   0.2f };		//	上方向
+	angle_	= { 0.29f,  0.797f,   0.0f };	//	回転値
 	eyeOffset_ = { 1.0f,2.0f,0.0f };
 	fov_ = 60.0f;							//	視野角
-	currentRange_ = 5.0f;							//	ターゲットとカメラとの距離
-	nearZ_ = 0.01f;
-	farZ_ = 1000.0f;
+	currentRange_ = 5.0f;					//	ターゲットとカメラとの距離
+	nearZ_	= 0.01f;
+	farZ_	= 1000.0f;
 }
 
 //	パースペクティブ設定

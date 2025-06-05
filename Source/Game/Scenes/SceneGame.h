@@ -13,6 +13,7 @@
 #include "../../Nova/Graphics/CascadedShadowMaps.h"
 #include "../../Nova/Graphics/Vignette.h"
 #include "../../Nova/Graphics/ColorFilter.h"
+#include "../../Nova/Graphics/ChromaticAberration.h"
 
 class SceneGame : public Scene
 {
@@ -89,6 +90,9 @@ private:
 
 	//	カラーフィルター
 	std::unique_ptr<ColorFilter> colorFilter_;
+
+	//	色収差
+	std::unique_ptr<ChromaticAberration> chromaticAberration_;
 
 	/* ----- スプライト ----- */
 	enum SPRITE_GAME

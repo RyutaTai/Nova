@@ -34,6 +34,24 @@ namespace DragonkinAction
 }
 
 #pragma region ===== UŒ‚ =====
+
+//	UŒ‚‘Ò‹@s“®
+namespace DragonkinAction
+{
+	class AttackWaitAction : public ActionBase
+	{
+	public:
+		AttackWaitAction(Dragonkin* owner) : ActionBase(owner) {}
+		ActionBase::State Run(const float& elapsedTime) override;
+		void DrawDebug() override;
+
+	private:
+		float angleThreshold_ = DirectX::XMConvertToRadians(5.0f);	//	ù‰ñŠ®—¹‚Æ”»’f‚·‚éŠp“x‚Ì‚µ‚«‚¢’l (5“x)
+		float waitTimer_ = 0.5f;									//	ù‰ñŠ®—¹Œã‚Ì’Ç‰Á‘Ò‹@ŠÔ
+		float currentWaitTime_ = 0.0f;
+	};
+}
+
 #pragma region ----- ’ÊíUŒ‚ -----
 //	’Êí‰£‘Å
 namespace DragonkinAction

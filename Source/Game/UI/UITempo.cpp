@@ -30,16 +30,16 @@ UITempo::UITempo()
 
 		//	’†S‰~‚©‚ç‚Ì‹——£İ’è‚µ‚ÄˆÊ’u‚ğŒˆ‚ß‚é
 		//	’†S‰~‚©‚ç‚ÌÅ‘å‹——£‚ğ”¼‰~‚ÌŒÂ”‚ÅŠ„‚Á‚Ä1‚Â•ª‚Ì‹——£‚ğZo‚µA“™ŠÔŠu‚É”z’u‚·‚é
-		rangePerOne_ = (semicircleRangeMax_ / SemicircleMax_) + semicircleOffset_;
+		rangePerOne_ = (semicircleRangeMax_ / SemicircleMax_) /*+ semicircleOffset_*/;
 		double range = rangePerOne_ * (index + 1);
-		semicircles_[index]->SetInitRange(range);
+		semicircles_[index]->SetInitRange(static_cast<float>(range));
 		semicircles_[index]->currentRange_ = range;
 
 		//	¶
 		semicircles_[index]->left_ = std::make_unique<Sprite>(L"./Resources/Image/TempoUI.png");
 		semicircles_[index]->left_->GetTransform()->SetPositionY(centerPosY);
 		//semicircles_[index]->left_->GetTransform()->SetPositionX(942 - range);
-		semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - range);
+		semicircles_[index]->left_->GetTransform()->SetPositionX(static_cast<float>(centerPosX - range));
 		semicircles_[index]->left_->GetTransform()->SetPivot(0.5f, 0.5f);
 		semicircles_[index]->left_->GetTransform()->SetTexPosX(200.0f);
 		semicircles_[index]->left_->GetTransform()->SetTexSizeX(100.0f);
@@ -49,7 +49,7 @@ UITempo::UITempo()
 		semicircles_[index]->right_ = std::make_unique<Sprite>(L"./Resources/Image/TempoUI.png");
 		semicircles_[index]->right_->GetTransform()->SetPositionY(centerPosY);
 		//semicircles_[index]->right_->GetTransform()->SetPositionX(982 + range);
-		semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + range);
+		semicircles_[index]->right_->GetTransform()->SetPositionX(static_cast<float>(centerPosX + range));
 		semicircles_[index]->right_->GetTransform()->SetPivot(0.5f, 0.5f);
 		semicircles_[index]->right_->GetTransform()->SetTexPosX(300.0f);
 		semicircles_[index]->right_->GetTransform()->SetTexSizeX(100.0f);
@@ -97,7 +97,7 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 {
 	double centerPosX = center_->GetTransform()->GetPositionX();	//	’†S‰~‚ÌXÀ•W
 	
-	float totalRange = 0.0f;
+	double totalRange = 0.0f;
 	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	rangeXV
@@ -121,8 +121,8 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 
 		//	range‚ğŒ³‚ÉˆÊ’u‚ğXV
 		double range = semicircles_[index]->currentRange_;
-		semicircles_[index]->left_->GetTransform()->SetPositionX(centerPosX - range);
-		semicircles_[index]->right_->GetTransform()->SetPositionX(centerPosX + range);
+		semicircles_[index]->left_->GetTransform()->SetPositionX(static_cast<float>(centerPosX - range));
+		semicircles_[index]->right_->GetTransform()->SetPositionX(static_cast<float>(centerPosX + range));
 
 		//	‡Œv‹——£XV
 		totalRange += range;
@@ -137,8 +137,8 @@ void UITempo::UpdateScale(const float& elapsedTime)
 	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	”¼‰~XV
-		float range = semicircles_[index]->currentRange_;
-		float normalizeRange = (range - semicircleRangeMin_) / (semicircleRangeMax_ - semicircleRangeMin_);										//	range‚ğ³‹K‰»
+		float range = static_cast<float>(semicircles_[index]->currentRange_);
+		float normalizeRange = static_cast<float>((range - semicircleRangeMin_) / (semicircleRangeMax_ - semicircleRangeMin_));										//	range‚ğ³‹K‰»
 		float scaleFactor = semicircleScaleMin_ + normalizeRange * (semicircleScaleMax_ - semicircleScaleMin_);	//	ƒXƒP[ƒ‹Zo
 		semicircles_[index]->left_->GetTransform()->SetScaleFactor(scaleFactor);
 		semicircles_[index]->right_->GetTransform()->SetScaleFactor(scaleFactor);
@@ -167,7 +167,7 @@ void UITempo::UpdateCenterCircleAnimation()
 //	’†S‰~‚Éˆê”Ô‹ß‚¢”¼‰~‚Ì”Ô†‚ğŒ©‚Â‚¯‚é
 int UITempo::FindNearSemicircleIndex()
 {
-	float nearRange = FLT_MAX;			//	’†S‰~‚Éˆê”Ô‹ß‚¢”¼‰~‚ÌÅ’Z‹——£
+	double nearRange = DBL_MAX;			//	’†S‰~‚Éˆê”Ô‹ß‚¢”¼‰~‚ÌÅ’Z‹——£
 	int nearSemicircleIndex = INT_MAX;	//	’†S‰~‚Éˆê”Ô‹ß‚¢”¼‰~‚Ì”Ô†
 
 	for (int i = 0; i < SemicircleMax_; ++i)

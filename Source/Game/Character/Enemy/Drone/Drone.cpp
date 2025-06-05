@@ -38,10 +38,6 @@ Drone::Drone()
 //	デストラクタ
 Drone::~Drone()
 {
-	for (int index = 0; index < static_cast<int>(Audio3D::Max); ++index)
-	{
-		//delete sources_[index];
-	}
 	delete debugSource_;
 }
 
@@ -59,7 +55,7 @@ void Drone::Initialize()
 	float scale = 0.6f;
 	GetTransform()->SetScaleFactor(scale);
 
-	//	----- Collision -----
+	//	----- 当たり判定データ登録 -----
 	RegisterCollisionData();
 
 	//	----- 半径、高さ設定 -----

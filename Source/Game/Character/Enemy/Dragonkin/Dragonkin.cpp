@@ -19,7 +19,7 @@ Dragonkin::Dragonkin()
 	int rootNodeIndex = GetNodeIndex("root");
 	SetRootJointIndex(rootNodeIndex);
 
-	//	----- Collision -----
+	//	----- 当たり判定データ登録 -----
 	RegisterCollisionData();
 
 	//	----- 索敵範囲設定 -----
@@ -37,6 +37,14 @@ Dragonkin::Dragonkin()
 	behaviorTree_ = new BehaviorTree(this);
 
 	//	ノード追加
+	//	(優先度0) Death  : 死亡したら選ばれる
+	//	(優先度1) Damage : ダメージを受けたら選ばれる
+	//	(優先度2) Search : プレイヤーを見つけていなければ選ばれる
+	//	(優先度3) Battle : プレイヤーを見つけていたら選ばれる
+	//			(ランダム1) AttackPunch : ランダム
+	//			(ランダム2) AttackKick  : ランダム
+	//			(ランダム3)	AttackWing  : ランダム
+	//	(優先度4) Idle   : 上記のどれでもなければ選ばれる
 	behaviorTree_->AddNode("", "Root", 0, BehaviorTree::SelectRule::Priority, nullptr, nullptr);
 	{
 		behaviorTree_->AddNode("Root", "Death", 0, BehaviorTree::SelectRule::Non, new DragonkinJudgment::DeathJudgment(this), new DragonkinAction::DeathAction(this), true);	//	死亡ノード(末端)
@@ -44,15 +52,30 @@ Dragonkin::Dragonkin()
 		behaviorTree_->AddNode("Root", "Search", 2, BehaviorTree::SelectRule::Non, new DragonkinJudgment::SearchJudgment(this), new DragonkinAction::SearchAction(this));		//	索敵ノード(末端)
 		behaviorTree_->AddNode("Root", "Battle", 3, BehaviorTree::SelectRule::Random, new DragonkinJudgment::BattleJudgment(this), nullptr);									//	戦闘ノード(中間)
 		{
-			behaviorTree_->AddNode("Battle", "AttackPunch", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackPunchAction(this));							//	通常パンチ攻撃(末端)
-			behaviorTree_->AddNode("Battle", "AttackKick", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackKickAction(this));								//	通常キック攻撃(末端)
-			behaviorTree_->AddNode("Battle", "AttackWing", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackWingAction(this));								//	通常キック攻撃(末端)
+			// AttackPunchSequence
+			behaviorTree_->AddNode("Battle", "AttackPunchSequence", 0, BehaviorTree::SelectRule::Sequence, nullptr, nullptr); // Sequenceノード
+			{
+				behaviorTree_->AddNode("AttackPunchSequence", "AttackPunch", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackPunchAction(this)); // 実際の攻撃アクション
+				behaviorTree_->AddNode("AttackPunchSequence", "AttackWait", 1, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackWaitAction(this));   // 攻撃後待機＆旋回
+			}
+
+			// AttackKickSequence
+			behaviorTree_->AddNode("Battle", "AttackKickSequence", 0, BehaviorTree::SelectRule::Sequence, nullptr, nullptr); // Sequenceノード
+			{
+				behaviorTree_->AddNode("AttackKickSequence", "AttackKick", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackKickAction(this));     // 実際の攻撃アクション
+				behaviorTree_->AddNode("AttackKickSequence", "AttackWait", 1, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackWaitAction(this));     // 攻撃後待機＆旋回
+			}
+
+			// AttackWingSequence
+			behaviorTree_->AddNode("Battle", "AttackWingSequence", 0, BehaviorTree::SelectRule::Sequence, nullptr, nullptr); // Sequenceノード
+			{
+				behaviorTree_->AddNode("AttackWingSequence", "AttackWing", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackWingAction(this));     // 実際の攻撃アクション
+				behaviorTree_->AddNode("AttackWingSequence", "AttackWait", 1, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackWaitAction(this));     // 攻撃後待機＆旋回
+			}
 		}
 		behaviorTree_->AddNode("Root", "Idle", 4, BehaviorTree::SelectRule::Non, new DragonkinJudgment::IdleJudgment(this), new DragonkinAction::IdleAction(this));				//	待機ノード(末端)
 	}
 
-	PlayAnimation(Dragonkin::AnimationType::Idle01, true);
-	
 }
 
 Dragonkin::~Dragonkin()
@@ -220,9 +243,6 @@ void Dragonkin::Update(const float& elapsedTime)
 	//	----- 当たり判定更新 -----
 	UpdateCollisions(elapsedTime);
 
-	//	----- 旋回処理 -----
-	Turn(elapsedTime);
-
 }
 
 //	ビヘイビアツリー更新処理
@@ -231,18 +251,18 @@ void Dragonkin::UpdateBehaviorTree(const float& elapsedTime)
 	//	ビヘイビアツリー更新フラグがfalseなら更新しない
 	if (behaviorTreeUpdateFlag_ == false)return;
 
-#if 0
-	//	現在実行されているノードが無ければ
-	if (activeNode_ == nullptr)
-	{
-		//	次に実行するノードを推論する
-		activeNode_ = behaviorTree_->ActiveNodeInference(behaviorData_);
-	}
+#if 1
 	//	現在実行するノードがあれば
 	if (activeNode_ != nullptr)
 	{
 		//	ビヘイビアツリーからノードを実行
 		activeNode_ = behaviorTree_->Run(activeNode_, behaviorData_, elapsedTime);
+	}
+	//	現在実行されているノードが無ければ
+	if (activeNode_ == nullptr)
+	{
+		//	次に実行するノードを推論する
+		activeNode_ = behaviorTree_->ActiveNodeInference(behaviorData_);
 	}
 #else
 	//	次に実行するノードを推論する
@@ -251,7 +271,7 @@ void Dragonkin::UpdateBehaviorTree(const float& elapsedTime)
 	{
 		activeNode_ = inferenceNode;
 	}
-	else if (activeNode_ == nullptr)
+	if (activeNode_ == nullptr)
 	{
 		activeNode_ = inferenceNode;
 	}

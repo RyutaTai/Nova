@@ -528,7 +528,7 @@ void Stage::DrawDebug()
 		{
 			frequency_->DrawDebug();
 			ImGui::Checkbox("UseFrequency", &useFrequency_);
-			ImGui::DragInt("FrequencyIndex", &frequencyIndex_, 1.0f, 0);
+			ImGui::DragInt("FrequencyIndex", &frequencyIndex_, 1.0f, 0, (Frequency::BlockCount - 1));
 			ImGui::DragFloat("CurrentFrequency", &currentFrequencyValue_, 1.0f, 0.0f);
 			ImGui::DragFloat("FrequencyMin", &frequencyMinValue_, 1.0f, 0.0f);
 			ImGui::DragFloat("FrequencyMax", &frequencyMaxValue_, 1.0f, 0.0f);

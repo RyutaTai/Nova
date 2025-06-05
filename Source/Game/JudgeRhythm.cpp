@@ -55,7 +55,7 @@ bool JudgeRhythm::Judge()
 	int nearSemicircleIndex = UIManager::Instance().GetUITempo()->FindNearSemicircleIndex();
 
 	//	----- 入力タイミングの評価(PerfectやGood)ごとの処理 -----
-	debugJudgeRange_ = UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetCurrentRange();
+	debugJudgeRange_ = static_cast<float>(UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetCurrentRange());
 	
 	//	Perfectのとき
 	if (UIManager::Instance().GetUITempo()->GetSemicircle(nearSemicircleIndex)->GetCurrentRange() < perfectRange_)		//	Perfect

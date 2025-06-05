@@ -219,7 +219,6 @@
     <ClCompile Include="Source\Game\Stage\Stage.cpp" />
     <ClCompile Include="Source\Nova\Camera\Camera.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Bloom.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp" />
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
     <ClCompile Include="Source\Game\JudgeRhythm.cpp" />
     <ClCompile Include="Source\Game\UI\UIInstructions.cpp" />
@@ -230,6 +229,8 @@
     <ClCompile Include="Source\Nova\Collision\CollisionData.cpp" />
     <ClCompile Include="Source\Nova\Collision\CollisionManager.cpp" />
     <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\ChromaticAberration.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Decal.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Vignette.cpp" />
     <ClCompile Include="Source\Game\UI\UIHealth.cpp" />
@@ -310,7 +311,6 @@
     <ClInclude Include="Source\Game\Stage\Stage.h" />
     <ClInclude Include="Source\Nova\Camera\Camera.h" />
     <ClInclude Include="Source\Nova\Graphics\Bloom.h" />
-    <ClInclude Include="Source\Nova\Graphics\ColorFilter.h" />
     <ClInclude Include="External\nlohmann\adl_serializer.hpp" />
     <ClInclude Include="External\nlohmann\byte_container_with_subtype.hpp" />
     <ClInclude Include="External\nlohmann\detail\abi_macros.hpp" />
@@ -368,6 +368,8 @@
     <ClInclude Include="Source\Nova\Collision\CollisionData.h" />
     <ClInclude Include="Source\Nova\Collision\CollisionManager.h" />
     <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h" />
+    <ClInclude Include="Source\Nova\Graphics\ChromaticAberration.h" />
+    <ClInclude Include="Source\Nova\Graphics\ColorFilter.h" />
     <ClInclude Include="Source\Nova\Graphics\Decal.h" />
     <ClInclude Include="Source\Nova\Graphics\Vignette.h" />
     <ClInclude Include="Source\Game\UI\UIHealth.h" />
@@ -609,6 +611,7 @@
   <ItemGroup>
     <None Include="Source\Nova\Shaders\BidirectionalReflectanceDistributionFunction.hlsli" />
     <None Include="Source\Nova\Shaders\Bloom.hlsli" />
+    <None Include="Source\Nova\Shaders\ChromaticAberration.hlsli" />
     <None Include="Source\Nova\Shaders\ColorFilter.hlsli" />
     <None Include="Source\Nova\Shaders\Debug.hlsli" />
     <None Include="Source\Nova\Shaders\Decal.hlsli" />
