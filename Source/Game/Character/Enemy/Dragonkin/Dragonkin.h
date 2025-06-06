@@ -66,7 +66,7 @@ public:
 
 	bool RayVsVertical(const float& elapsedTime)override;
 	bool RayVsHorizontal(const float& elapsedTime)override;
-	void Move(const float& elapsedTime)override {}
+	void UpdatePosition(const float& elapsedTime)override {}
 
 	void DrawDebug()override;
 	void DrawDebugPrimitive()override;

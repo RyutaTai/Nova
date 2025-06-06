@@ -21,7 +21,7 @@ public:
 	Transform* GetTransform() { return gltfModelResource_->GetTransform(); }
 
 	//	----- ˆÚ“® -----
-	virtual void Move(const float& elpasedTime);
+	virtual void UpdatePosition(const float& elpasedTime);
 	void SetMoveVec(const DirectX::XMFLOAT3& vec) { moveVec_ = vec; }
 	//	----- ù‰ñˆ— -----
 	virtual void Turn(const float& elapsedTime, float vx, float vz, float speed);

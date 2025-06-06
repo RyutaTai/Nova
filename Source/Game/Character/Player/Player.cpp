@@ -249,7 +249,7 @@ bool Player::InputMove(const float& elapsedTime)
 {
 	//	----- 移動処理 -----
 	UpdateVelocity(elapsedTime);
-	Move(elapsedTime);
+	UpdatePosition(elapsedTime);
 
 	//	----- 進行方向更新 -----
 	moveVec_ = GetMoveVec();

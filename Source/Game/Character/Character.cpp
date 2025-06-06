@@ -115,9 +115,9 @@ void Character::AddForce(const DirectX::XMFLOAT3& direction, const float& power,
 }
 
 //	ˆÚ“®ˆ—
-void Character::Move(const float& elapsedTime)
+void Character::UpdatePosition(const float& elapsedTime)
 {
-	this->GetTransform()->AddPosition(velocity_);
+	GetTransform()->AddPosition(velocity_);
 }
 
 //	ù‰ñˆ—

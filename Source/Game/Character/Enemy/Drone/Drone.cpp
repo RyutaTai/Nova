@@ -11,6 +11,7 @@
 #include "../../../Bullet/BulletHorming.h"
 #include "../../Player/Player.h"
 #include "../../../../Nova/Camera/Camera.h"
+#include "../../../Stage/Stage.h"
 
 //	コンストラクタ
 Drone::Drone()
@@ -59,7 +60,7 @@ void Drone::Initialize()
 	RegisterCollisionData();
 
 	//	----- 半径、高さ設定 -----
-	height_ = 4.4f;
+	height_ = 1.0f;
 	radius_ = 2.5f;
 
 	//	----- 索敵範囲設定 -----
@@ -128,10 +129,14 @@ void Drone::Update(const float& elapsedTime)
 
 	//	----- 移動更新 -----
 	UpdateVelocity(elapsedTime);
-	Move(elapsedTime);
 
 	//	----- 当たり判定更新 -----
 	UpdateCollisions(elapsedTime);
+	//	----- ステージとの当たり判定 -----
+	RayVsHorizontal(elapsedTime);
+	//	----- 位置更新 -----
+	UpdatePosition(elapsedTime);
+
 
 	//	----- 旋回処理 -----
 	Turn(elapsedTime);
@@ -256,8 +261,63 @@ bool Drone::RayVsVertical(const float& elapsedTime)
 
 bool Drone::RayVsHorizontal(const float& elapsedTime)
 {
+	DirectX::XMFLOAT3 rayStartPos;									//	レイの始点
+	DirectX::XMFLOAT3 rayDirection;									//	レイの方向
+	float liftup = height_ / 2.0f;									//	レイの始点をドローンの中心へ持ち上げる
+	DirectX::XMVECTOR RayPos = DirectX::XMLoadFloat3(&GetTransform()->GetPosition());							//	レイの始点
+	DirectX::XMVECTOR Direction = DirectX::XMVector3Normalize(DirectX::XMVectorSet(velocity_.x, 0.0f, velocity_.z, 0.0f));	//	レイの方向
+	DirectX::XMVECTOR Liftup = DirectX::XMVector3Normalize(DirectX::XMVectorSet(0.0f, liftup, 0.0f, 1.0f));		//	LIFTUP
+#if 1
+	DirectX::XMStoreFloat3(&rayStartPos, DirectX::XMVectorAdd(Liftup, RayPos));
+#else
+	float stepBack = 1.0f;
+	DirectX::XMStoreFloat3(&rayStartPos, DirectX::XMVectorSubtract(RayPos, DirectX::XMVectorScale(Direction, stepBack)));
+#endif
+	DirectX::XMStoreFloat3(&rayDirection, Direction);
 
-	return false;
+	DirectX::XMFLOAT3 playerPos = GetTransform()->GetPosition();	//	ドローンの位置
+
+	DirectX::XMFLOAT4X4 transform = {};								//	ステージのワールド変換行列
+	DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
+
+	//	当たり判定結果格納用
+	DirectX::XMFLOAT3	intersectionPosition = {};			//	当たった位置
+	DirectX::XMFLOAT3	intersectionNormal = {};			//	法線の方向
+	std::string			intersectionMesh = {};				//	メッシュ名
+	std::string			intersectionMaterial = {};			//	マテリアル名
+
+	//	当たり判定処理
+	bool isHit = false;
+	//	レイが当たっていたら
+	if (Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial))
+	{
+		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&playerPos) - DirectX::XMLoadFloat3(&rayStartPos)));
+		float d1 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&intersectionPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
+
+		float rayOffset = 0.5f;	//	レイの長さを少し増やす
+
+		//	ドローンとステージが当たっていたら
+		if (d0 + radius_ + rayOffset > d1)
+		{
+			//	ドローンの位置を補正
+			float d = d0 - d1;
+			playerPos.x -= d * rayDirection.x;
+			playerPos.y -= d * rayDirection.y;
+			playerPos.z -= d * rayDirection.z;
+
+			GetTransform()->SetPosition(playerPos);
+			velocity_ = {};
+
+			// Reflection
+			//DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
+
+			//	当たり判定フラグを立てる
+			isHit = true;
+
+		}
+	}
+
+	return isHit;
 }
 
 //	破棄処理
