@@ -34,7 +34,6 @@ void SceneGame::Initialize()
 	gameBGM->SetAudioName("GameBGM");
 	AudioManager::Instance().Register(gameBGM);
 
-
 	/* ----- スプライト初期化 ----- */
 	//sprite_[static_cast<int>(SPRITE_GAME::BACK)] = std::make_unique<Sprite>(Graphics::Instance().GetDevice(), L"./Resources/Image/Game.png");
 
@@ -197,8 +196,9 @@ void SceneGame::Update(const float& elapsedTime)
 	//	ゲームクリアへの遷移はWeve3 State内で行っている	
 	//	ゲームオーバー
 	float playerHp = player_->GetHp();
-	if (playerHp <= 0.0f)
+	if (playerHp <= 0.0f && stateMachine_->GetStateIndex() != static_cast<int>(SceneGameState::GameOver))
 	{
+		AudioManager::Instance().GetAudioResource("GameBGM")->SetVolume(0.1f, false);
 		ChangeState(SceneGameState::GameOver);
 	}
 
@@ -324,21 +324,8 @@ void SceneGame::Render()
 		framebuffers_[1]->Activate(deviceContext); 
 		DrawShadow();
 		framebuffers_[1]->Deactivate(deviceContext);
-#if 0
 
 		//	ヴィネット
-		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);//	各ステート毎のスプライト描画
-		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
-		//Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
-		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-
-		framebuffers_[0]->Clear(deviceContext);
-		framebuffers_[0]->Activate(deviceContext);
-		vignette_->Make();
-		fullScreenQuad_->Blit(deviceContext, framebuffers_[1]->shaderResourceViews_[0].GetAddressOf(), 0, 1, vignette_->GetVignettePixelShader());
-		framebuffers_[0]->Deactivate(deviceContext);
-#endif		
-
 		Vignette::Instance().Make();
 
 		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);

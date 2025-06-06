@@ -14,7 +14,7 @@ public:
 
 private:
 	CollisionManager(){}
-	~CollisionManager() {}
+	~CollisionManager() = default;
 
 public:
 	static CollisionManager& Instance()

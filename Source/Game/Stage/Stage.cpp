@@ -464,7 +464,7 @@ void Stage::UpdateFFTConstantBuffer()
 //	デバッグ描画
 void Stage::DrawDebug()
 {
-	if (ImGui::TreeNodeEx(u8"Stageステージ", ImGuiTreeNodeFlags_Framed))
+	if (ImGui::TreeNode(u8"Stageステージ"))
 	{
 		GetTransform()->DrawDebug();
 

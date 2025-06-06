@@ -16,10 +16,10 @@ void BulletStraight::Initialize()
 //	XVˆ—
 void BulletStraight::Update(const float& elapsedTime)
 {
-	Bullet::Update(elapsedTime);
-
 	//	ˆÚ“®ˆ—
 	Move(elapsedTime);
+
+	Bullet::Update(elapsedTime);
 	
 }
 
@@ -37,11 +37,9 @@ void BulletStraight::Move(const float& elapsedTime)
 {
 	//	ˆÚ“®
 	float speed = moveSpeed_ * elapsedTime;
-	DirectX::XMFLOAT3 position = GetTransform()->GetPosition();
-	position.x += direction_.x * speed;
-	position.y += direction_.y * speed;
-	position.z += direction_.z * speed;
-	GetTransform()->SetPosition(position);
+	velocity_.x += direction_.x * speed;
+	velocity_.y += direction_.y * speed;
+	velocity_.z += direction_.z * speed;
 
 }
 

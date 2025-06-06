@@ -9,7 +9,7 @@ class SceneLoading :public Scene
 {
 public:
 	SceneLoading(Scene* nextScene) :nextScene_(nextScene) {}
-	~SceneLoading()override {}
+	~SceneLoading()override = default;
 
 	void Initialize()						override;
 	void Finalize()							override;

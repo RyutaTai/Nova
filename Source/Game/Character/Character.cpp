@@ -413,40 +413,28 @@ void Character::DrawDebug()
 	//	----- Collision -----
 	if (ImGui::TreeNode("Collision"))
 	{
-		if (ImGui::TreeNode("DamageDetection"))
+		if (ImGui::TreeNode(u8"DamageDetection Ç≠ÇÁÇ¢îªíË"))
 		{
 			for (DamageDetectionData& data : damageDetectionData_)
 			{
 				data.DrawDebug();
 			}
-			if (ImGui::Button("Add"))
-			{
-				RegisterDamageDetectionData({});
-			}
 			ImGui::TreePop();
 		}
-		if (ImGui::TreeNode("AttackDetection"))
+		if (ImGui::TreeNode(u8"AttackDetection çUåÇîªíË"))
 		{
 			for (AttackDetectionData& data : attackDetectionData_)
 			{
 				//if (data.GetIsActive() == false) continue;
 				data.DrawDebug();
 			}
-			if (ImGui::Button("Add"))
-			{
-				RegisterAttackDetectionData({});
-			}
 			ImGui::TreePop();
 		}
-		if (ImGui::TreeNode("CollisionDetection"))
+		if (ImGui::TreeNode(u8"CollisionDetection ìñÇΩÇËîªíË"))
 		{
 			for (CollisionDetectionData& data : collisionDetectionData_)
 			{
 				data.DrawDebug();
-			}
-			if (ImGui::Button("Add"))
-			{
-				RegisterCollisionDetectionData({});
 			}
 			ImGui::TreePop();
 		}

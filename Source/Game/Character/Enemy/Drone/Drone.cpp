@@ -126,12 +126,12 @@ void Drone::Update(const float& elapsedTime)
 	//	----- ステート更新処理 -----
 	stateMachine_->Update(elapsedTime);
 
-	//	----- 当たり判定更新 -----
-	UpdateCollisions(elapsedTime);
-
 	//	----- 移動更新 -----
 	UpdateVelocity(elapsedTime);
 	Move(elapsedTime);
+
+	//	----- 当たり判定更新 -----
+	UpdateCollisions(elapsedTime);
 
 	//	----- 旋回処理 -----
 	Turn(elapsedTime);

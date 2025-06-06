@@ -41,6 +41,9 @@ public:
 	//	----- シャドウマップ -----
 	void CastShadows();
 
+	//	----- 位置更新 -----
+	void UpdatePosition();
+
 	//	----- 弾丸の所有者 -----
 	void					SetOwnerPosition(const DirectX::XMFLOAT3& pos)	{ ownerPosition_ = pos; }	//	弾丸所有者の位置設定
 	const DirectX::XMFLOAT3 GetOwnerPosition()								{ return ownerPosition_; }	//	弾丸所有者の位置取得
@@ -77,6 +80,9 @@ public:
 	//	----- ターゲット位置 -----
 	void SetTargetPos(const DirectX::XMFLOAT3& target) { targetPos_ = target; }
 	const DirectX::XMFLOAT3 GetTargetPos()const { return targetPos_; }
+
+	//	----- ステージとの当たり判定 -----
+	bool RayVsHorizontal(const float& elapsedTime);
 
 private:
 	enum class Audio3D	//	3Dで鳴らすSEの種類

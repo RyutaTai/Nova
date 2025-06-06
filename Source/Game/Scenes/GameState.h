@@ -87,6 +87,7 @@ namespace GameState
 
 	private:
 		float changeTitleTimer_ = 4.0f;
+		float volume_ = 0.25f;
 
 	};
 }
@@ -107,7 +108,7 @@ namespace GameState
 
 	private:
 		float changeTitleTimer_ = 4.0f;
-
+		float volume_ = 0.25f;
 	};
 }
 

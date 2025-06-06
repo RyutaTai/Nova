@@ -32,7 +32,7 @@ public:
 
 public:
 	SceneGame(){}
-	~SceneGame()override{}
+	~SceneGame()override = default;
 
 	void Initialize()						override;
 	void Finalize()							override;

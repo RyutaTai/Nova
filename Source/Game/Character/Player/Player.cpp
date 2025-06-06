@@ -161,18 +161,18 @@ void Player::RegisterCollisionData()
 	//	{名前、半径、  Y軸を固定するか、オフセット位置、更新名、	デフォルトカラー、	ヒットカラー}
 	//	{name, radius, fixedY,			offsetPosition,	updateName,	defaultColor,		hitColor}
 	
-	RegisterCollisionDetectionData({ "head",						0.2f,false ,{},"" });	//	頭
-	RegisterCollisionDetectionData({ "spine_04",					0.2f,false ,{},"" });	//	胸部
-	RegisterCollisionDetectionData({ "upperarm_correctiveRoot_l",	0.2f,false ,{},"" });	//	左肩
-	RegisterCollisionDetectionData({ "upperarm_correctiveRoot_r",	0.2f,false ,{},"" });	//	右肩
-	RegisterCollisionDetectionData({ "lowerarm_l",					0.2f,false ,{},"" });	//	左肘
-	RegisterCollisionDetectionData({ "lowerarm_r",					0.2f,false ,{},"" });	//	右肘
-	RegisterCollisionDetectionData({ "ik_hand_l",					0.2f,false ,{},"" });	//	左手首
-	RegisterCollisionDetectionData({ "ik_hand_r",					0.2f,false ,{},"" });	//	右手首
-	RegisterCollisionDetectionData({ "calf_l",						0.2f,false ,{},"" });	//	左膝
-	RegisterCollisionDetectionData({ "calf_r",						0.2f,false ,{},"" });	//	右膝
-	RegisterCollisionDetectionData({ "ik_foot_l",					0.2f,false ,{},"" });	//	左足首
-	RegisterCollisionDetectionData({ "ik_foot_r",					0.2f,false ,{},"" });	//	右足首
+	RegisterCollisionDetectionData({ "head",						0.4f,false ,{},"" });	//	頭
+	RegisterCollisionDetectionData({ "spine_04",					0.4f,false ,{},"" });	//	胸部
+	RegisterCollisionDetectionData({ "upperarm_correctiveRoot_l",	0.4f,false ,{},"" });	//	左肩
+	RegisterCollisionDetectionData({ "upperarm_correctiveRoot_r",	0.4f,false ,{},"" });	//	右肩
+	RegisterCollisionDetectionData({ "lowerarm_l",					0.4f,false ,{},"" });	//	左肘
+	RegisterCollisionDetectionData({ "lowerarm_r",					0.4f,false ,{},"" });	//	右肘
+	RegisterCollisionDetectionData({ "ik_hand_l",					0.4f,false ,{},"" });	//	左手首
+	RegisterCollisionDetectionData({ "ik_hand_r",					0.4f,false ,{},"" });	//	右手首
+	RegisterCollisionDetectionData({ "calf_l",						0.4f,false ,{},"" });	//	左膝
+	RegisterCollisionDetectionData({ "calf_r",						0.4f,false ,{},"" });	//	右膝
+	RegisterCollisionDetectionData({ "ik_foot_l",					0.4f,false ,{},"" });	//	左足首
+	RegisterCollisionDetectionData({ "ik_foot_r",					0.4f,false ,{},"" });	//	右足首
 
 #pragma endregion ----- 押し出し判定登録 -----
 
@@ -180,18 +180,18 @@ void Player::RegisterCollisionData()
 	//	{名前、半径、	オフセット位置、ダメージ倍率、	更新名、	デフォルトカラー、	ヒットカラー}
 	//	{name, radius,	offsetPos,		damage,			updateName,	defaultColor,		hitColor}
 	
-	RegisterDamageDetectionData({ "head",						0.2f,{0.08f,0.0f,0.0f},0.3f,"" });	//	頭
-	RegisterDamageDetectionData({ "spine_04",					0.2f,{},1.0f,"" });	//	胸部
-	RegisterDamageDetectionData({ "upperarm_correctiveRoot_l",	0.2f,{},1.0f,"" });	//	左肩
-	RegisterDamageDetectionData({ "upperarm_correctiveRoot_r",	0.2f,{},1.0f,"" });	//	右肩
-	RegisterDamageDetectionData({ "lowerarm_l",					0.2f,{},1.0f,"" });	//	左肘
-	RegisterDamageDetectionData({ "lowerarm_r",					0.2f,{},1.0f,"" });	//	右肘
-	RegisterDamageDetectionData({ "ik_hand_l",					0.2f,{},1.0f,"" });	//	左手首
-	RegisterDamageDetectionData({ "ik_hand_r",					0.2f,{},1.0f,"" });	//	右手首
-	RegisterDamageDetectionData({ "calf_l",						0.2f,{},1.0f,"" });	//	左膝
-	RegisterDamageDetectionData({ "calf_r",						0.2f,{},1.0f,"" });	//	右膝
-	RegisterDamageDetectionData({ "ik_foot_l",					0.2f,{},1.0f,"" });	//	左足首
-	RegisterDamageDetectionData({ "ik_foot_r",					0.2f,{},1.0f,"" });	//	右足首
+	RegisterDamageDetectionData({ "head",						0.4f,{0.08f,0.0f,0.0f},0.3f,"" });	//	頭
+	RegisterDamageDetectionData({ "spine_04",					0.4f,{},1.0f,"" });	//	胸部
+	RegisterDamageDetectionData({ "upperarm_correctiveRoot_l",	0.4f,{},1.0f,"" });	//	左肩
+	RegisterDamageDetectionData({ "upperarm_correctiveRoot_r",	0.4f,{},1.0f,"" });	//	右肩
+	RegisterDamageDetectionData({ "lowerarm_l",					0.4f,{},1.0f,"" });	//	左肘
+	RegisterDamageDetectionData({ "lowerarm_r",					0.4f,{},1.0f,"" });	//	右肘
+	RegisterDamageDetectionData({ "ik_hand_l",					0.4f,{},1.0f,"" });	//	左手首
+	RegisterDamageDetectionData({ "ik_hand_r",					0.4f,{},1.0f,"" });	//	右手首
+	RegisterDamageDetectionData({ "calf_l",						0.4f,{},1.0f,"" });	//	左膝
+	RegisterDamageDetectionData({ "calf_r",						0.4f,{},1.0f,"" });	//	右膝
+	RegisterDamageDetectionData({ "ik_foot_l",					0.4f,{},1.0f,"" });	//	左足首
+	RegisterDamageDetectionData({ "ik_foot_r",					0.4f,{},1.0f,"" });	//	右足首
 
 #pragma endregion ----- くらい判定登録 -----
 
@@ -199,9 +199,9 @@ void Player::RegisterCollisionData()
 	//	{名前、半径、	オフセット位置、更新名、	デフォルトカラー、	ヒットカラー}
 	//	{name, radius,	offsetPos,		updateName, defaultColor,		hitColor}
 	
-	RegisterAttackDetectionData({ "RightPunch",	0.4f ,{},"ik_hand_r" });	//	右手のパンチ
-	RegisterAttackDetectionData({ "LeftPunch",	0.4f ,{},"ik_hand_l" });	//	左手のパンチ
-	RegisterAttackDetectionData({ "LeftKick",	0.4f ,{},"ik_foot_l" });	//	右のキック
+	RegisterAttackDetectionData({ "RightPunch",	0.6f ,{},"ik_hand_r" });	//	右手のパンチ
+	RegisterAttackDetectionData({ "LeftPunch",	0.6f ,{},"ik_hand_l" });	//	左手のパンチ
+	RegisterAttackDetectionData({ "LeftKick",	0.6f ,{},"ik_foot_l" });	//	右のキック
 
 	SetAllAttackDetectionActiveFlag(false);
 
@@ -367,7 +367,7 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 
 	//	当たり判定処理
 	bool isHit = false;
-	//	レイと地面が当たっていたら
+	//	レイが当たっていたら
 	if (Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial))
 	{
 		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&playerPos) - DirectX::XMLoadFloat3(&rayStartPos)));
@@ -375,7 +375,7 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 
 		float rayOffset = 0.5f;	//	レイの長さを少し増やす
 
-		//	プレイヤーと地面が当たっていたら
+		//	プレイヤーとステージが当たっていたら
 		if (d0 + radius_ + rayOffset > d1)
 		{
 			//	プレイヤーの位置を補正

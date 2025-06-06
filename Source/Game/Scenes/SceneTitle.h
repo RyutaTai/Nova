@@ -23,7 +23,7 @@ public:
 
 public:
 	SceneTitle(){}
-	~SceneTitle()override{}
+	~SceneTitle()override = default;
 
 	void Initialize()	override;
 	void Finalize()		override;

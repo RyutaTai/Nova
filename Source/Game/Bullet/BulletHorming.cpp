@@ -21,13 +21,13 @@ void BulletHorming::Initialize()
 //	更新処理
 void BulletHorming::Update(const float& elapsedTime)
 {
-	Bullet::Update(elapsedTime);
-
 	//	移動処理
 	Move(elapsedTime);
 
 	//	カバーモデル更新処理
 	CoverModelUpdate(elapsedTime);
+
+	Bullet::Update(elapsedTime);
 
 }
 

@@ -7,6 +7,7 @@
 #include "../../Nova/Resources/ResourceManager.h"
 #include "../Character/Player/Player.h"
 #include "../../Nova/Camera/Camera.h"
+#include "../Stage/Stage.h"
 
 //	コンストラクタ
 Bullet::Bullet()
@@ -36,7 +37,7 @@ Bullet::Bullet()
 	emitter_.minDistance_ = 7.0f;
 	emitter_.maxDistance_ = 22.0f;
 	emitter_.volume_ = 1.0f;
-	//se_[static_cast<int>(AudioSE3D::Explosion)] = std::unique_ptr<AudioSource3D>(Audio::Instance().LoadAudioSource3D("./Resources/Audio/SE/GameStart_015.wav", emitter_.get()));
+	//	移動SE
 	se_[static_cast<int>(Audio3D::Move)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", &emitter_);
 	se_[static_cast<int>(Audio3D::Move)]->SetVolume(0.5f, false);
 	se_[static_cast<int>(Audio3D::Move)]->SetAudioName("BulletMove");
@@ -74,6 +75,12 @@ void Bullet::Update(const float& elapsedTime)
 	//	更新フラグがfalseなら処理しない
 	if (updateFlag_ == false)return;
 
+	//	----- ステージとの当たり判定 -----
+	RayVsHorizontal(elapsedTime);
+
+	//	----- 位置更新 -----
+	UpdatePosition();
+
 	//	----- 生存時間更新 -----
 	UpdateLifeTimer(elapsedTime);
 
@@ -81,6 +88,13 @@ void Bullet::Update(const float& elapsedTime)
 	UpdateEmitter();
 	UpdateAudioSource();
 
+}
+
+//	位置更新
+void Bullet::UpdatePosition()
+{
+	GetTransform()->AddPosition(velocity_);
+	velocity_ = {};
 }
 
 //	発射
@@ -118,6 +132,62 @@ void Bullet::CoverModelUpdate(const float& elpasedTime)
 	//	位置更新
 	DirectX::XMFLOAT3 bulletPos = this->GetTransform()->GetPosition();
 	coverModel_->GetTransform()->SetPosition(bulletPos);
+}
+
+//	ステージとの当たり判定(水平方向)
+bool Bullet::RayVsHorizontal(const float& elapsedTime)
+{
+	DirectX::XMFLOAT3 rayStartPos;									//	レイの始点
+	DirectX::XMFLOAT3 rayDirection;									//	レイの方向
+	DirectX::XMVECTOR RayPos = DirectX::XMLoadFloat3(&GetTransform()->GetPosition());							//	レイの始点
+	DirectX::XMVECTOR Direction = DirectX::XMVector3Normalize(DirectX::XMVectorSet(velocity_.x, 0.0f, velocity_.z, 0.0f));	//	レイの方向
+
+	DirectX::XMStoreFloat3(&rayDirection, Direction);
+
+	DirectX::XMFLOAT3 myPosition = GetTransform()->GetPosition();	//	弾丸の位置
+
+	DirectX::XMFLOAT4X4 transform = {};								//	ステージのワールド変換行列
+	DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
+
+	//	当たり判定結果格納用
+	DirectX::XMFLOAT3	intersectionPosition = {};			//	当たった位置
+	DirectX::XMFLOAT3	intersectionNormal = {};			//	法線の方向
+	std::string			intersectionMesh = {};				//	メッシュ名
+	std::string			intersectionMaterial = {};			//	マテリアル名
+
+	//	当たり判定処理
+	bool isHit = false;
+	//	レイと地面が当たっていたら
+	DirectX::XMStoreFloat3(&rayStartPos, RayPos);
+	if (Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial))
+	{
+		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&myPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
+		float d1 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&intersectionPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
+
+		float rayOffset = 0.5f;	//	レイの長さを少し増やす
+
+		//	プレイヤーと地面が当たっていたら
+		if (d0 + radius_ + rayOffset > d1)
+		{
+			//	プレイヤーの位置を補正
+			float d = d0 - d1;
+			myPosition.x -= d * rayDirection.x;
+			myPosition.y -= d * rayDirection.y;
+			myPosition.z -= d * rayDirection.z;
+
+			Destroy();
+
+			// Reflection
+			//DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
+
+			//	当たり判定フラグを立てる
+			isHit = true;
+
+		}
+
+	}
+
+	return isHit;
 }
 
 //	破棄

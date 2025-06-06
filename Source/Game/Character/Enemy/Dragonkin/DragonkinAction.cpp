@@ -210,7 +210,7 @@ namespace DragonkinAction
 			owner_->ResetRunTimer();
 			owner_->PlayAnimation(static_cast<int>(Dragonkin::AnimationType::AttackPunch), false);
 			//	判定を取る区間を設定
-			animJudgeTime_.SetRange(0.42f, 0.5f);
+			animJudgeTime_.SetRange(0.42f, 0.438f);
 
 			//	攻撃中は旋回しない
 			owner_->SetIsTurnAction(false);
@@ -223,6 +223,7 @@ namespace DragonkinAction
 			if (animJudgeTime_.IsWithinRange(currentAnimationSeconds))
 			{
 				owner_->GetAttackDetectionData("Hand_R")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Hand_R_1")->SetIsActive(true);
 
 				//	攻撃中は押し出し判定しない
 				Player::Instance().SetIsActiveCollisionDetection(false);
@@ -231,6 +232,7 @@ namespace DragonkinAction
 			else
 			{
 				owner_->GetAttackDetectionData("Hand_R")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Hand_R_1")->SetIsActive(false);
 
 				//	押し出し判定をオンにする
 				Player::Instance().SetIsActiveCollisionDetection(true);
@@ -376,10 +378,25 @@ namespace DragonkinAction
 				owner_->GetAttackDetectionData("Wing_L03")->SetIsActive(true);
 				owner_->GetAttackDetectionData("Wing_L04")->SetIsActive(true);
 				owner_->GetAttackDetectionData("Wing_L05")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L05_1")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L05_2")->SetIsActive(true);
 				owner_->GetAttackDetectionData("Wing_L06")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L06_1")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L06_2")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L06_3")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L06_4")->SetIsActive(true);
 				owner_->GetAttackDetectionData("Wing_L08")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L08_1")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L08_2")->SetIsActive(true);
 				owner_->GetAttackDetectionData("Wing_L09")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L09_1")->SetIsActive(true);
 				owner_->GetAttackDetectionData("Wing_L10")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L10_1")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L10_2")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L10_3")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L10_4")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L10_5")->SetIsActive(true);
+				owner_->GetAttackDetectionData("Wing_L10_6")->SetIsActive(true);
 
 				//	攻撃中は押し出し判定しない
 				Player::Instance().SetIsActiveCollisionDetection(false);
@@ -390,10 +407,25 @@ namespace DragonkinAction
 				owner_->GetAttackDetectionData("Wing_L03")->SetIsActive(false);
 				owner_->GetAttackDetectionData("Wing_L04")->SetIsActive(false);
 				owner_->GetAttackDetectionData("Wing_L05")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L05_1")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L05_2")->SetIsActive(false);
 				owner_->GetAttackDetectionData("Wing_L06")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L06_1")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L06_2")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L06_3")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L06_4")->SetIsActive(false);
 				owner_->GetAttackDetectionData("Wing_L08")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L08_1")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L08_2")->SetIsActive(false);
 				owner_->GetAttackDetectionData("Wing_L09")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L09_1")->SetIsActive(false);
 				owner_->GetAttackDetectionData("Wing_L10")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L10_1")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L10_2")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L10_3")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L10_4")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L10_5")->SetIsActive(false);
+				owner_->GetAttackDetectionData("Wing_L10_6")->SetIsActive(false);
 
 				//	押し出し判定をオンにする
 				Player::Instance().SetIsActiveCollisionDetection(true);

@@ -117,7 +117,8 @@ void AudioManager::PlayAudioByName(const std::string& audioName, const bool& loo
 {
 	for (int i = 0; i < static_cast<int>(audioResources_.size()); ++i)
 	{
-		if (strcmp(audioResources_.at(i)->GetAudioName().c_str(), audioName.c_str()) == 0)	//	入力文字列と等しいデータがあれば
+		//	入力文字列と等しいデータがあれば
+		if (strcmp(audioResources_.at(i)->GetAudioName().c_str(), audioName.c_str()) == 0)
 		{
 			audioResources_.at(i)->Play(loop);
 			return;
@@ -131,13 +132,28 @@ Audio* AudioManager::GetAudioResource(const std::string& name)
 {
 	for (int i = 0; i < static_cast<int>(audioResources_.size()); ++i)
 	{
-		if (strcmp(audioResources_.at(i)->GetAudioName().c_str(), name.c_str()) == 0)	//	入力文字列と等しいデータがあれば
+		//	入力文字列と等しいデータがあれば
+		if (strcmp(audioResources_.at(i)->GetAudioName().c_str(), name.c_str()) == 0)
 		{
 			return audioResources_.at(i);
 		}
 	}
 	_ASSERT_EXPR(false, L"AudioResource is not found.");
 	return nullptr;
+}
+
+//	指定したオーディオが存在するか
+const bool AudioManager::AudioSourceIsExist(const std::string& name)const
+{
+	for (int i = 0; i < static_cast<int>(audioResources_.size()); ++i)
+	{
+		//	入力文字列と等しいデータがあれば
+		if (strcmp(audioResources_.at(i)->GetAudioName().c_str(), name.c_str()) == 0)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 //	オーディオ削除

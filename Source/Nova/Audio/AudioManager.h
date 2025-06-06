@@ -37,9 +37,14 @@ public:
 	IXAudio2* GetXAudio() { return xaudio_; }
 	IXAudio2MasteringVoice* GetMasteringVoice() { return masteringVoice_; }
 	DWORD					GetCannelmask() const { return channelMask_; }
+
+	//	オーディオソース取得
 	Audio*				GetAudioResource(const int& index) { return audioResources_.at(index); }
 	Audio*				GetAudioResource(const std::string& name);
 	std::vector<Audio*>	GetAudioResources() { return audioResources_; }
+
+	//	指定したオーディオソースが存在するか
+	const bool AudioSourceIsExist(const std::string& name)const;
 
 	//	----- 削除、終了化 -----
 	void Finalize();						//	オーディオ終了化

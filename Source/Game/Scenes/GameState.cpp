@@ -159,10 +159,26 @@ namespace GameState
 	{
 		owner_->SetGameClear(true);
 		owner_->SetIsResult(true);
+
+		//	BGMの音量下げる
+		AudioManager::Instance().GetAudioResource("GameBGM")->SetVolume(0.1f, false);
+
+		//	クリアSE再生
+		AudioSource* clearSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Clear.wav", Audio::AudioType::SENormal, "GameScene");
+		volume_ = 0.25f;
+		clearSE->SetVolume(volume_, false);
+		clearSE->SetAudioName("ClearSE");
+		AudioManager::Instance().Register(clearSE);
+		clearSE->Play(false);
 	}
 
 	void GameClearState::Update(const float& elapsedTime)
 	{
+		//	bgmの音量をだんだん下げる
+		volume_ -= 0.1f * elapsedTime;
+		AudioManager::Instance().GetAudioResource("GameBGM")->SetVolume(volume_, false);
+
+		//	一定時間経過後にタイトルへ遷移
 		changeTitleTimer_ -= elapsedTime;
 		if (changeTitleTimer_ <= 0.0f)
 		{
@@ -200,10 +216,23 @@ namespace GameState
 	{
 		owner_->SetGameOver(true);
 		owner_->SetIsResult(true);
+
+		//	クリアSE再生
+		AudioSource* gameOverSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/GameOver.wav", Audio::AudioType::SENormal, "GameScene");
+		volume_ = 0.25f;
+		gameOverSE->SetVolume(volume_, false);
+		gameOverSE->SetAudioName("GameOverSE");
+		AudioManager::Instance().Register(gameOverSE);
+		gameOverSE->Play(false);
 	}
 
 	void GameOverState::Update(const float& elapsedTime)
 	{
+		//	bgmの音量をだんだん下げる
+		volume_ -= 0.1f * elapsedTime;
+		AudioManager::Instance().GetAudioResource("GameBGM")->SetVolume(volume_, false);
+
+		//	一定時間経過後にタイトルへ遷移
 		changeTitleTimer_ -= elapsedTime;
 		if (changeTitleTimer_ <= 0.0f)
 		{
