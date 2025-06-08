@@ -36,14 +36,6 @@ cbuffer VignetteConstantBuffer : register(b2)
     float vignetteDummy;
 };
 
-//  グレインノイズ用定数バッファ
-cbuffer GrainNoiseConstantBuffer : register(b8) // 新しいレジスタを割り当てる (b3は例)
-{
-    float grainStrength;    //  グレインの強さ
-    float2 dummyGrainNoise; //  パディング
-    float time;             //  時間（アニメーションのために必要）
-};
-
 //  シャープネスフィルター用定数バッファ
 cbuffer SharpenConstantBuffer : register(b9) // 新しいレジスタを割り当てる (b4は例)
 {
@@ -135,13 +127,6 @@ float4 main(VS_OUT pin) : SV_TARGET
         d = pow(saturate(d), vignetteRoundness);
         half vignetteFactor = pow(saturate(1.0f - dot(d, d)), vignetteSmoothness);
         fragmentColor.rgb *= lerp(vignetteColor.rgb, (float3)1.0f, vignetteFactor);
-    }
-    
-    //  グレインノイズフィルター
-    {
-        //  時間をシードに含めることで、ノイズがアニメーションする（ちらつき）
-        float noise = Rand(pin.texcoord, time) * 2.0 - 1.0; //  -1.0から1.0の範囲
-        fragmentColor.rgb += noise * grainStrength;
     }
     
 	// Gamma correction

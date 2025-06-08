@@ -127,9 +127,6 @@ void SceneGame::Initialize()
 	//	----- 色収差 -----
 	chromaticAberration_ = std::make_unique<ChromaticAberration>();
 
-	//	----- グレインノイズフィルター -----
-	grainNoiseFilter_ = std::make_unique<GrainNoiseFilter>();
-
 	//	----- シャープネスフィルター -----
 	sharpenFilter_ = std::make_unique<SharpenFilter>();
 
@@ -198,9 +195,6 @@ void SceneGame::Update(const float& elapsedTime)
 
 	//	----- 色収差更新処理 -----
 	chromaticAberration_->Update();
-
-	//	----- グレインノイズフィルター更新処理 -----
-	grainNoiseFilter_->Update(elapsedTime);
 
 	//	----- シャープネスフィルター更新処理 -----
 	sharpenFilter_->Update();
@@ -506,9 +500,6 @@ void SceneGame::DrawDebug()
 	//	----- 色収差 -----
 	chromaticAberration_->DrawDebug();
  
-	//	----- グレインノイズフィルター -----
-	grainNoiseFilter_->DrawDebug();
-
 	//	----- シャープネスフィルター -----
 	sharpenFilter_->DrawDebug();
 

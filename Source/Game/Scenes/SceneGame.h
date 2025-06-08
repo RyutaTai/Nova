@@ -96,9 +96,6 @@ private:
 	//	色収差
 	std::unique_ptr<ChromaticAberration> chromaticAberration_;
 
-	//	グレインノイズフィルター
-	std::unique_ptr<GrainNoiseFilter> grainNoiseFilter_;
-
 	//	シャープネスフィルター
 	std::unique_ptr<SharpenFilter> sharpenFilter_;
 
