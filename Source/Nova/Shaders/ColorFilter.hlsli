@@ -4,7 +4,7 @@ cbuffer ColorFilter : register(b7)
     float hueShift;     //  F‘Š’²®
     float saturation;   //  Ê“x’²®
     float brightness;   //  –¾“x’²®
-    float dummy;
+    float dummyColorFilter;
 };
 
 #include "FilterFunctions.hlsli"

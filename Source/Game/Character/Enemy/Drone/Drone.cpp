@@ -133,7 +133,7 @@ void Drone::Update(const float& elapsedTime)
 	//	----- 当たり判定更新 -----
 	UpdateCollisions(elapsedTime);
 	//	----- ステージとの当たり判定 -----
-	RayVsHorizontal(elapsedTime);
+	isHitStage_ = RayVsHorizontal(elapsedTime);
 	//	----- 位置更新 -----
 	UpdatePosition(elapsedTime);
 
@@ -275,7 +275,7 @@ bool Drone::RayVsHorizontal(const float& elapsedTime)
 #endif
 	DirectX::XMStoreFloat3(&rayDirection, Direction);
 
-	DirectX::XMFLOAT3 playerPos = GetTransform()->GetPosition();	//	ドローンの位置
+	DirectX::XMFLOAT3 myPosition = GetTransform()->GetPosition();	//	ドローンの位置
 
 	DirectX::XMFLOAT4X4 transform = {};								//	ステージのワールド変換行列
 	DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
@@ -291,7 +291,7 @@ bool Drone::RayVsHorizontal(const float& elapsedTime)
 	//	レイが当たっていたら
 	if (Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial))
 	{
-		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&playerPos) - DirectX::XMLoadFloat3(&rayStartPos)));
+		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&myPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
 		float d1 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&intersectionPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
 
 		float rayOffset = 0.5f;	//	レイの長さを少し増やす
@@ -301,11 +301,11 @@ bool Drone::RayVsHorizontal(const float& elapsedTime)
 		{
 			//	ドローンの位置を補正
 			float d = d0 - d1;
-			playerPos.x -= d * rayDirection.x;
-			playerPos.y -= d * rayDirection.y;
-			playerPos.z -= d * rayDirection.z;
+			myPosition.x -= d * rayDirection.x;
+			myPosition.y -= d * rayDirection.y;
+			myPosition.z -= d * rayDirection.z;
 
-			GetTransform()->SetPosition(playerPos);
+			GetTransform()->SetPosition(myPosition);
 			velocity_ = {};
 
 			// Reflection
@@ -484,6 +484,9 @@ void Drone::DrawDebug()
 		ImGui::Checkbox("IsCollisionSphere", &isCollisionSphere_);	//	押し出し判定
 		ImGui::Checkbox("IsAttackSphere", &isAttackSphere_);		//	攻撃判定
 		ImGui::Checkbox("IsDamageSphere", &isDamageSphere_);		//	くらい判定
+		
+		//	----- ステージに当たっているか -----
+		ImGui::Checkbox("IsHitStage", &isHitStage_);
 
 		//	----- ターゲット -----
 		ImGui::Text("----- Target -----");

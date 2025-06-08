@@ -111,5 +111,7 @@ private://	デバッグ用の変数
 	//static const int MaxHp_ = 60;		//	最大HP
 	//static const int MaxHp_ = 3;		//	最大HP
 
+	bool isHitStage_ = false;
+
 };
 

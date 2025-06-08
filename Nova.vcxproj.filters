@@ -140,6 +140,12 @@
     <Filter Include="Nova\Graphics\ChromaticAberration">
       <UniqueIdentifier>{338f0a76-3b48-4fc6-aa2d-39b6e8b42e22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nova\Graphics\GrainNoiseFilter">
+      <UniqueIdentifier>{eedf37f4-311f-45cf-b2dd-fa685215673e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics\SharpnenFilter">
+      <UniqueIdentifier>{e5c51e48-4ae6-4f81-8bbc-7e77a9a01c55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -408,6 +414,12 @@
     </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\ChromaticAberration.cpp">
       <Filter>Nova\Graphics\ChromaticAberration</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\GrainNoiseFilter.cpp">
+      <Filter>Nova\Graphics\GrainNoiseFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\SharpenFilter.cpp">
+      <Filter>Nova\Graphics\SharpnenFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -848,6 +860,12 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\ChromaticAberration.h">
       <Filter>Nova\Graphics\ChromaticAberration</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\GrainNoiseFilter.h">
+      <Filter>Nova\Graphics\GrainNoiseFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\SharpenFilter.h">
+      <Filter>Nova\Graphics\SharpnenFilter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

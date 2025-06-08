@@ -127,6 +127,12 @@ void SceneGame::Initialize()
 	//	----- 色収差 -----
 	chromaticAberration_ = std::make_unique<ChromaticAberration>();
 
+	//	----- グレインノイズフィルター -----
+	grainNoiseFilter_ = std::make_unique<GrainNoiseFilter>();
+
+	//	----- シャープネスフィルター -----
+	sharpenFilter_ = std::make_unique<SharpenFilter>();
+
 	//	----- ステート登録 -----
 	stateMachine_.reset(new StateMachine<State<SceneGame>>());
 	stateMachine_->RegisterState(new GameState::Wave1State(this));		//	Wave1
@@ -192,6 +198,12 @@ void SceneGame::Update(const float& elapsedTime)
 
 	//	----- 色収差更新処理 -----
 	chromaticAberration_->Update();
+
+	//	----- グレインノイズフィルター更新処理 -----
+	grainNoiseFilter_->Update(elapsedTime);
+
+	//	----- シャープネスフィルター更新処理 -----
+	sharpenFilter_->Update();
 
 	//	ゲームクリアへの遷移はWeve3 State内で行っている	
 	//	ゲームオーバー
@@ -493,6 +505,12 @@ void SceneGame::DrawDebug()
 
 	//	----- 色収差 -----
 	chromaticAberration_->DrawDebug();
+ 
+	//	----- グレインノイズフィルター -----
+	grainNoiseFilter_->DrawDebug();
+
+	//	----- シャープネスフィルター -----
+	sharpenFilter_->DrawDebug();
 
 	//	----- カメラ -----
 	Camera::Instance().DrawDebug();

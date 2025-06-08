@@ -14,6 +14,8 @@
 #include "../../Nova/Graphics/Vignette.h"
 #include "../../Nova/Graphics/ColorFilter.h"
 #include "../../Nova/Graphics/ChromaticAberration.h"
+#include "../../Nova/Graphics/GrainNoiseFilter.h"
+#include "../../Nova/Graphics/SharpenFilter.h"
 
 class SceneGame : public Scene
 {
@@ -93,6 +95,12 @@ private:
 
 	//	色収差
 	std::unique_ptr<ChromaticAberration> chromaticAberration_;
+
+	//	グレインノイズフィルター
+	std::unique_ptr<GrainNoiseFilter> grainNoiseFilter_;
+
+	//	シャープネスフィルター
+	std::unique_ptr<SharpenFilter> sharpenFilter_;
 
 	/* ----- スプライト ----- */
 	enum SPRITE_GAME

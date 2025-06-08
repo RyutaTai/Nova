@@ -348,7 +348,7 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 #endif
 	DirectX::XMStoreFloat3(&rayDirection, Direction);
 
-	DirectX::XMFLOAT3 playerPos = GetTransform()->GetPosition();	//	プレイヤーの位置(足元が基準点)
+	DirectX::XMFLOAT3 myPosition = GetTransform()->GetPosition();	//	プレイヤーの位置(足元が基準点)
 
 	DirectX::XMFLOAT4X4 transform = {};								//	ステージのワールド変換行列
 	DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
@@ -370,7 +370,7 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 	//	レイが当たっていたら
 	if (Stage::Instance().Collision(rayStartPos, rayDirection, transform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial))
 	{
-		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&playerPos) - DirectX::XMLoadFloat3(&rayStartPos)));
+		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&myPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
 		float d1 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&intersectionPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
 
 		float rayOffset = 0.5f;	//	レイの長さを少し増やす
@@ -380,11 +380,11 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 		{
 			//	プレイヤーの位置を補正
 			float d = d0 - d1;
-			playerPos.x -= d * rayDirection.x;
-			playerPos.y -= d * rayDirection.y;
-			playerPos.z -= d * rayDirection.z;
+			myPosition.x -= d * rayDirection.x;
+			myPosition.y -= d * rayDirection.y;
+			myPosition.z -= d * rayDirection.z;
 
-			GetTransform()->SetPosition(playerPos);
+			GetTransform()->SetPosition(myPosition);
 
 			// Reflection
 			//DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
