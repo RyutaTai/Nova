@@ -1,7 +1,6 @@
 #include "FullScreenQuad.hlsli"
 
 #include "ColorFilter.hlsli"
-#include "ChromaticAberration.hlsli"
 
 #define POINT 0
 #define LINEAR 1
@@ -14,13 +13,11 @@ Texture2D		textureMaps[2]		: register(t0);
 Texture2D		depthMap			: register(t2);
 Texture2DArray	cascadedShadowMaps	: register(t3); //	シャドウ
 
-float3 ReinhardToneMapping(float3 color)
+//  色収差の強さを制御する定数
+cbuffer ChromaticAberrationConstantBuffer : register(b6)
 {
-	float luma = dot(color, float3(0.2126, 0.7152, 0.0722));
-	float toneMappedLuma = luma / (1. + luma);
-	color *= toneMappedLuma / luma;
-	return color;
-}
+    float2 chromaticAberrationStrength; // x成分で水平方向、y成分で垂直方向のずれ
+};
 
 //  ヴィネット用定数バッファ
 cbuffer VignetteConstantBuffer : register(b2)
@@ -29,7 +26,6 @@ cbuffer VignetteConstantBuffer : register(b2)
     float2 vignetteCenter;
     float vignetteIntensity;
     float vignetteSmoothness;
-
     float vignetteRounded;
     float vignetteRoundness;
     float vignetteOpacity;
@@ -37,17 +33,56 @@ cbuffer VignetteConstantBuffer : register(b2)
 };
 
 //  シャープネスフィルター用定数バッファ
-cbuffer SharpenConstantBuffer : register(b9) // 新しいレジスタを割り当てる (b4は例)
+cbuffer SharpenConstantBuffer : register(b9)
 {
-    float sharpenAmount;    //  シャープネスの強さ
+    float  sharpenAmount;   //  シャープネスの強さ
     float3 dummySharpen;    //  パディング
 };
+
+//  コントラスト用定数バッファ
+cbuffer ContrastConstantBuffer : register(b13)
+{
+    float   contrast;       //  コントラストの強さ (1.0が標準)
+    float3  dummyContrast;  //  パディング
+};
+
+//  露出フィルター用定数バッファ
+cbuffer ExposureConstantBuffer : register(b8)
+{
+    float   exposure;      //   露出の強さ
+    float3  dummyExposure; //   パディング
+};
+
+//  トーンマップ用
+float3 ReinhardToneMapping(float3 color)
+{
+    float luma = dot(color, float3(0.2126, 0.7152, 0.0722));
+    float toneMappedLuma = luma / (1. + luma);
+    color *= toneMappedLuma / luma;
+    return color;
+}
 
 //  乱数生成関数
 //  Texcoordと時間に基づいてシードを生成し、一様乱数を返す
 float Rand(float2 co,float time)
 {
     return frac(sin(dot(co.xy, float2(12.9898, 78.233) + time)) * 43758.5453);
+}
+
+//  コントラスト調整用
+//  シンプルなS字カーブによるコントラスト調整
+//  input: 0.0から1.0の範囲の色
+//  contrast: 0.0でコントラストなし、1.0で標準、1.0より大きくするとコントラストが強くなる
+float3 AdjustContrast(float3 color, float contrastAmount)
+{
+    //  グレースケールに変換し、中間点からの差を計算する一般的な方法
+    float3 lumaCoeff = float3(0.2126, 0.7152, 0.0722);
+    float averageLuma = dot(color, lumaCoeff);
+
+    //  中間点 (0.5) を基準にコントラストを適用
+    //  contrastAmountは通常、1.0を中心として調整
+    //  0.0から1.0の範囲にクランプする
+    return saturate((color - 0.5) * contrastAmount + 0.5);
 }
 
 float4 main(VS_OUT pin) : SV_TARGET
@@ -63,7 +98,7 @@ float4 main(VS_OUT pin) : SV_TARGET
     float4 colorG = textureMaps[0].Sample(samplerStates[POINT], baseTexcoord); // 緑はそのまま
     float4 colorB = textureMaps[0].Sample(samplerStates[POINT], baseTexcoord + chromaticAberrationStrength);
 
-    // 各チャンネルを合成して最終的な色を構築
+    //  各チャンネルを合成して最終的な色を構築
     float4 color = float4(colorR.r, colorG.g, colorB.b, colorR.a); // アルファはどれか一つから取得
     
     //  ブルーム
@@ -71,9 +106,15 @@ float4 main(VS_OUT pin) : SV_TARGET
 	float3 fragmentColor = color.rgb + bloom.rgb;
 	float alpha = color.a;
 
-	//  トーンマップ
+    //  露出の適用
+    fragmentColor *= exposure;
+    
+	//  トーンマップ(Reinhard)
 	fragmentColor = ReinhardToneMapping(fragmentColor);
 
+    //  コントラスト調整
+    fragmentColor = AdjustContrast(fragmentColor, contrast);
+    
     //  カラーフィルター
     {
         // RGB > HSVに変換
@@ -129,7 +170,7 @@ float4 main(VS_OUT pin) : SV_TARGET
         fragmentColor.rgb *= lerp(vignetteColor.rgb, (float3)1.0f, vignetteFactor);
     }
     
-	// Gamma correction
+	//  ガンマ補正
     const float INV_GAMMA = 1.0 / 2.2;
     fragmentColor = pow(fragmentColor, INV_GAMMA);
 

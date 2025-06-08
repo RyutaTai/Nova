@@ -8,7 +8,7 @@ ColorFilter::ColorFilter()
 {
 	HRESULT hr = S_OK;
 
-	//	カラーフィルター用定数バッファの生成
+	//	定数バッファの生成
 	D3D11_BUFFER_DESC bufferDesc = {};
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -31,7 +31,7 @@ void ColorFilter::Update()
 
 void ColorFilter::DrawDebug()
 {
-	if (ImGui::TreeNode("ColorFilter"))
+	if (ImGui::TreeNode(u8"ColorFilter カラーフィルター"))
 	{
 		ImGui::SliderFloat("HueShift", &colorFilterConstant_.hueShift_, 0.1f, +359.0f);
 		ImGui::SliderFloat("Saturation", &colorFilterConstant_.saturation_, 0.0f, +2.0f);

@@ -10,9 +10,9 @@ class GrainNoiseFilter
 public:
     struct GrainNoiseConstants
     {
-        float               grainStrength_;
-        DirectX::XMFLOAT2   dummy_;         //  パディング
-        float               time_;          //  時間
+        float               grainStrength_ = 0.05f;
+        DirectX::XMFLOAT2   dummy_;                 //  パディング
+		float               time_ = 0.0f;           //  時間
     };
     GrainNoiseConstants constants_;
     Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer_;

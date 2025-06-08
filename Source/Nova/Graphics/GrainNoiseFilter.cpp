@@ -1,8 +1,8 @@
 #include "GrainNoiseFilter.h"
 
 #include "../../Nova/Others/Misc.h"
-#include "../../imgui/imgui.h"
 #include "../../Nova/Graphics/Graphics.h"
+#include "../../imgui/imgui.h"
 
 GrainNoiseFilter::GrainNoiseFilter()
 {
@@ -18,10 +18,6 @@ GrainNoiseFilter::GrainNoiseFilter()
     bufferDesc.ByteWidth = sizeof(GrainNoiseConstants);
     hr = Graphics::Instance().GetDevice()->CreateBuffer(&bufferDesc, nullptr, constantBuffer_.GetAddressOf());
     _ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-    //  初期値設定
-    constants_.grainStrength_ = 0.05f; // デフォルトの強さ
-    constants_.time_ = 0.0f;
 
 }
 

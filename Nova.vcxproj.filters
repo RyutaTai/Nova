@@ -146,6 +146,12 @@
     <Filter Include="Nova\Graphics\SharpnenFilter">
       <UniqueIdentifier>{e5c51e48-4ae6-4f81-8bbc-7e77a9a01c55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nova\Graphics\ExposureFilter">
+      <UniqueIdentifier>{971325e2-b27e-4cf9-88b0-9add6f0b623e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nova\Graphics\ContrastFilter">
+      <UniqueIdentifier>{d481c9ee-7e53-4c61-b30d-885888b6dcd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -420,6 +426,12 @@
     </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\SharpenFilter.cpp">
       <Filter>Nova\Graphics\SharpnenFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\ExposureFilter.cpp">
+      <Filter>Nova\Graphics\ExposureFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Graphics\ContrastFilter.cpp">
+      <Filter>Nova\Graphics\ContrastFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -867,6 +879,12 @@
     <ClInclude Include="Source\Nova\Graphics\SharpenFilter.h">
       <Filter>Nova\Graphics\SharpnenFilter</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\ExposureFilter.h">
+      <Filter>Nova\Graphics\ExposureFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Graphics\ContrastFilter.h">
+      <Filter>Nova\Graphics\ContrastFilter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Nova\Shaders\BlurPs.hlsl">
@@ -1031,9 +1049,6 @@
       <Filter>Nova\Shaders</Filter>
     </None>
     <None Include="Source\Nova\Shaders\FilterFunctions.hlsli">
-      <Filter>Nova\Shaders</Filter>
-    </None>
-    <None Include="Source\Nova\Shaders\ChromaticAberration.hlsli">
       <Filter>Nova\Shaders</Filter>
     </None>
   </ItemGroup>

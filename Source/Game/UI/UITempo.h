@@ -56,9 +56,9 @@ public:
 	void Render()override;
 	void DrawDebug()override;
 
-	Sprite*		GetCenterCircle()				{ return center_.get(); }				//	中心円取得
-	Semicircle* GetSemicircle(const int& index) { return semicircles_[index].get(); }	//	半円取得
-	const float GetTotalRange()const			{ return totalRange_; }					//	中心円からのそれぞれの半円の合計
+	Sprite*			GetCenterCircle()				{ return center_.get(); }				//	中心円取得
+	Semicircle*		GetSemicircle(const int& index) { return semicircles_[index].get(); }	//	半円取得
+	const double	GetTotalRange()const			{ return totalRange_; }					//	中心円からのそれぞれの半円の合計
 
 	int FindNearSemicircleIndex();					//	中心円に一番近い半円の番号を見つける
 
@@ -80,7 +80,7 @@ private:
 
 	//	中心円からの距離
 	double	rangePerOne_ = 1.0;				//	半円1つ当たりの距離 ( 最大距離/個数 に設定し、等間隔に配置する)
-	float	totalRange_ = 0.0f;					//	それぞれの距離の合計
+	double	totalRange_ = 0.0f;					//	それぞれの距離の合計
 	double	semicircleRangeMax_ = 576.0;		//	rangeの最大値
 	double	semicircleRangeMin_ = -0.5;		//	rangeの最小値。これを下回ったら位置リセット
 	

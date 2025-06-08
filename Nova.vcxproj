@@ -231,7 +231,9 @@
     <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp" />
     <ClCompile Include="Source\Nova\Graphics\ChromaticAberration.cpp" />
     <ClCompile Include="Source\Nova\Graphics\ColorFilter.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\ContrastFilter.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Decal.cpp" />
+    <ClCompile Include="Source\Nova\Graphics\ExposureFilter.cpp" />
     <ClCompile Include="Source\Nova\Graphics\GrainNoiseFilter.cpp" />
     <ClCompile Include="Source\Nova\Graphics\SharpenFilter.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Vignette.cpp" />
@@ -372,7 +374,9 @@
     <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h" />
     <ClInclude Include="Source\Nova\Graphics\ChromaticAberration.h" />
     <ClInclude Include="Source\Nova\Graphics\ColorFilter.h" />
+    <ClInclude Include="Source\Nova\Graphics\ContrastFilter.h" />
     <ClInclude Include="Source\Nova\Graphics\Decal.h" />
+    <ClInclude Include="Source\Nova\Graphics\ExposureFilter.h" />
     <ClInclude Include="Source\Nova\Graphics\GrainNoiseFilter.h" />
     <ClInclude Include="Source\Nova\Graphics\SharpenFilter.h" />
     <ClInclude Include="Source\Nova\Graphics\Vignette.h" />
@@ -615,7 +619,6 @@
   <ItemGroup>
     <None Include="Source\Nova\Shaders\BidirectionalReflectanceDistributionFunction.hlsli" />
     <None Include="Source\Nova\Shaders\Bloom.hlsli" />
-    <None Include="Source\Nova\Shaders\ChromaticAberration.hlsli" />
     <None Include="Source\Nova\Shaders\ColorFilter.hlsli" />
     <None Include="Source\Nova\Shaders\Debug.hlsli" />
     <None Include="Source\Nova\Shaders\Decal.hlsli" />

@@ -127,8 +127,14 @@ void SceneGame::Initialize()
 	//	----- 色収差 -----
 	chromaticAberration_ = std::make_unique<ChromaticAberration>();
 
+	//	----- 露出フィルター -----
+	exposureFilter_ = std::make_unique<ExposureFilter>();
+
 	//	----- シャープネスフィルター -----
 	sharpenFilter_ = std::make_unique<SharpenFilter>();
+
+	//	----- コントラストフィルター -----
+	contrastFilter_ = std::make_unique<ContrastFilter>();
 
 	//	----- ステート登録 -----
 	stateMachine_.reset(new StateMachine<State<SceneGame>>());
@@ -195,6 +201,12 @@ void SceneGame::Update(const float& elapsedTime)
 
 	//	----- 色収差更新処理 -----
 	chromaticAberration_->Update();
+
+	//	----- コントラストフィルター更新処理 -----
+	contrastFilter_->Update();
+
+	//	----- 露出フィルター更新処理 -----
+	exposureFilter_->Update();
 
 	//	----- シャープネスフィルター更新処理 -----
 	sharpenFilter_->Update();
@@ -484,7 +496,7 @@ void SceneGame::DrawDebug()
 	if (bloomer_)bloomer_->DrawDebug();
 
 	//	----- シャドウ -----
-	if (ImGui::TreeNode("Shadow"))
+	if (ImGui::TreeNode(u8"Shadow シャドウ"))
 	{
 		ImGui::DragFloat("CriticalDepthValue", &criticalDepthValue_, 0.1f);
 		cascadedShadowMaps_->DrawDebug();
@@ -500,8 +512,14 @@ void SceneGame::DrawDebug()
 	//	----- 色収差 -----
 	chromaticAberration_->DrawDebug();
  
+	//	----- 露出フィルター -----
+	exposureFilter_->DrawDebug();
+
 	//	----- シャープネスフィルター -----
 	sharpenFilter_->DrawDebug();
+
+	//	----- コントラストフィルター -----
+	contrastFilter_->DrawDebug();
 
 	//	----- カメラ -----
 	Camera::Instance().DrawDebug();

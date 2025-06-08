@@ -73,7 +73,7 @@ void Vignette::LerpVignetteIntensity(const float& elapsedTime)
 
 void Vignette::DrawDebug()
 {
-	if (ImGui::TreeNode("Vignette"))
+	if (ImGui::TreeNode(u8"Vignette ヴィネット"))
 	{
 		ImGui::ColorEdit3("Color", &vignetteData_.vignetteColor_.x);
 		ImGui::SliderFloat2("Center", &vignetteData_.vignetteCenter_.x, 0, 1);

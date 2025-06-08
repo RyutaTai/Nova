@@ -10,7 +10,7 @@ class SharpenFilter
 public:
     struct SharpenConstants
     {
-        float               sharpenAmount_;
+		float               sharpenAmount_ = 0.01f;
         DirectX::XMFLOAT3   dummy_;         //  パディング
     };
     SharpenConstants constants_;

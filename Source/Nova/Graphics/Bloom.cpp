@@ -181,7 +181,7 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 
 void Bloom::DrawDebug()
 {
-	if (ImGui::TreeNode(u8"Bloom"))
+	if (ImGui::TreeNode(u8"Bloom ÉuÉãÅ[ÉÄ"))
 	{
 		ImGui::SliderFloat("BloomExtractionThreshold", &bloomExtractionThreshold_, +0.0f, +5.0f);
 		ImGui::SliderFloat("BloomIntensity", &bloomIntensity_, +0.0f, +5.0f);

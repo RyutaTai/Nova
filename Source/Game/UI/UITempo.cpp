@@ -214,8 +214,9 @@ void UITempo::DrawDebug()
 
 		ImGui::Text("----- Range -----");
 		float rangePerOne = static_cast<float>(rangePerOne_);
+		float totalRange = static_cast<float>(totalRange_);
 		ImGui::DragFloat("RangePerOne", &rangePerOne);
-		ImGui::DragFloat("TotalRange", &totalRange_);
+		ImGui::DragFloat("TotalRange", &totalRange);
 		float semicircleRangeMax = static_cast<float>(semicircleRangeMax_);
 		float semicircleRangeMin = static_cast<float>(semicircleRangeMin_);
 		ImGui::DragFloat("RangeMax", &semicircleRangeMax);

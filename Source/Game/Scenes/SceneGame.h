@@ -14,8 +14,9 @@
 #include "../../Nova/Graphics/Vignette.h"
 #include "../../Nova/Graphics/ColorFilter.h"
 #include "../../Nova/Graphics/ChromaticAberration.h"
-#include "../../Nova/Graphics/GrainNoiseFilter.h"
+#include "../../Nova/Graphics/ExposureFilter.h"
 #include "../../Nova/Graphics/SharpenFilter.h"
+#include "../../Nova/Graphics/ContrastFilter.h"
 
 class SceneGame : public Scene
 {
@@ -95,6 +96,12 @@ private:
 
 	//	色収差
 	std::unique_ptr<ChromaticAberration> chromaticAberration_;
+
+	//	露出フィルター
+	std::unique_ptr<ExposureFilter> exposureFilter_;
+
+	//	コントラストフィルター
+	std::unique_ptr<ContrastFilter> contrastFilter_;
 
 	//	シャープネスフィルター
 	std::unique_ptr<SharpenFilter> sharpenFilter_;
