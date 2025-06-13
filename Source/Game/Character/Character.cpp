@@ -1,5 +1,9 @@
 #include "Character.h"
 
+#include <json.hpp>
+#include <iostream>
+#include <fstream>
+
 #include "../Stage/Stage.h"
 #include "../../Nova/Core/Framework.h"
 #include "../../Nova/Others/MathHelper.h"
@@ -255,6 +259,7 @@ void Character::UpdateCollisions(const float& elapsedTime)
 	}
 }
 
+#pragma region ----- 攻撃判定 ----- 
 //	攻撃判定の有効フラグをすべて設定する
 void Character::SetAllAttackDetectionActiveFlag(const bool& isActive)
 {
@@ -264,7 +269,6 @@ void Character::SetAllAttackDetectionActiveFlag(const bool& isActive)
 	}
 }
 
-#pragma region ----- 攻撃判定 ----- 
 //	攻撃判定用データ登録
 void Character::RegisterAttackDetectionData(const AttackDetectionData& data)
 {
@@ -378,6 +382,58 @@ CollisionDetectionData* Character::GetCollisionDetectionData(const int& index)
 #pragma endregion ----- 押し出し判定 ----- 
 #pragma endregion //	========== Collision ========== 
 
+//	Json(当たり判定データ)
+void Character::SaveCollisionDataToJson(const std::string& filePath) const
+{
+	nlohmann::json j;
+	j["collisionDetectionData"] = collisionDetectionData_;
+	j["attackDetectionData"] = attackDetectionData_;
+	j["damageDetectionData"] = damageDetectionData_;
+
+	std::ofstream ofs(filePath);
+	if (ofs.is_open()) {
+		ofs << std::setw(4) << j << std::endl; // 整形して保存 (インデント4)
+		ofs.close();
+		// ★デバッグログやメッセージを追加すると良いでしょう
+		// std::cout << "Collision data saved to: " << filePath << std::endl;
+	}
+	else {
+		// ★エラーハンドリング
+		// std::cerr << "Failed to open file for saving: " << filePath << std::endl;
+	}
+}
+
+void Character::LoadCollisionDataFromJson(const std::string& filePath)
+{
+	std::ifstream ifs(filePath);
+	if (ifs.is_open()) {
+		nlohmann::json j;
+		ifs >> j;
+		ifs.close();
+
+		// 各データが存在するか確認し、存在すればロード
+		if (j.contains("collisionDetectionData")) {
+			j.at("collisionDetectionData").get_to(collisionDetectionData_);
+		}
+		if (j.contains("attackDetectionData")) {
+			j.at("attackDetectionData").get_to(attackDetectionData_);
+		}
+		if (j.contains("damageDetectionData")) {
+			j.at("damageDetectionData").get_to(damageDetectionData_);
+		}
+		// ★デバッグログやメッセージを追加すると良いでしょう
+		// std::cout << "Collision data loaded from: " << filePath << std::endl;
+	}
+	else {
+		// ★エラーハンドリング: ファイルが存在しない場合は空のデータで開始
+		// std::cerr << "File not found or failed to open for loading: " << filePath << std::endl;
+		// データはクリアせず、既存の状態で続行するか、デフォルト値を設定するなど
+		// collisionDetectionData_.clear();
+		// attackDetectionData_.clear();
+		// damageDetectionData_.clear();
+	}
+}
+
 //	描画処理
 void Character::Render()
 {
@@ -403,7 +459,7 @@ void Character::DrawDebug()
 	ImGui::DragFloat("DefaultMoveSpeed", &defaultMoveSpeed_, 0.01f, 0.0f, FLT_MAX);	//	デフォルトの移動する速さ
 
 	//	----- 旋回 -----
-	ImGui::Checkbox("Turn Action", &isTurnAction_);			//	旋回するかどうか
+	ImGui::Checkbox("TurnAction", &isTurnAction_);			//	旋回するかどうか
 	ImGui::DragFloat("TurnSpeed", &turnSpeed_, 0.01f);		//	旋回速度
 
 	//	----- 当たり判定の大きさ -----
@@ -411,8 +467,12 @@ void Character::DrawDebug()
 	ImGui::DragFloat("Radius", &radius_, 0.01f, -FLT_MAX, FLT_MAX);					//	半径
 
 	//	----- Collision -----
-	if (ImGui::TreeNode("Collision"))
+	if (ImGui::TreeNode(u8"Collision 当たり判定"))
 	{
+		if (ImGui::Button(u8"SaveJson Json保存"))	//	Json保存ボタンが押されたら
+		{
+			SaveCollisionDataToJson(collisionDataJsonFileName_);
+		}
 		if (ImGui::TreeNode(u8"DamageDetection くらい判定"))
 		{
 			for (DamageDetectionData& data : damageDetectionData_)

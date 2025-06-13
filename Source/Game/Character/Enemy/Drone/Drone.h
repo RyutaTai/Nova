@@ -55,7 +55,7 @@ public:
 	const float GetLaunchInterval()const { return launchInterval_; }
 
 	//	----- Collision -----
-	void RegisterCollisionData()override;
+	void RegisterCollisionData(const std::string& jsonFileName)override;
 	void UpdateCollisions(const float& elapsedTime)override;
 	bool RayVsVertical(const float& elapsedTime)override;
 	bool RayVsHorizontal(const float& elapsedTime)override;

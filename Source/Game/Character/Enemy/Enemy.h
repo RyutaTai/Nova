@@ -40,7 +40,7 @@ public:
 	EnemyType	GetMyType()const { return myType_; }						//	“G‚Ìí—Şæ“¾
 
 	//	----- Collision -----
-	virtual void RegisterCollisionData()override = 0;
+	virtual void RegisterCollisionData(const std::string& jsonFileName)override = 0;
 	virtual void UpdateCollisions(const float& elapsedTime) = 0;
 
 	//	----- ƒ_ƒ[ƒWˆ— -----

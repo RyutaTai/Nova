@@ -125,7 +125,7 @@ public:
 	const int	GetComboCount()const					{ return comboCount_; }
 
 	//	----- Collision ----
-	void RegisterCollisionData()override;
+	void RegisterCollisionData(const std::string& jsonFileName)override;
 	void SetIsActiveCollisionDetection(const bool& isActiveCollisionDetection) { isActiveCollisionDetection_ = isActiveCollisionDetection; }
 	const bool IsActiveCollisionDetection()const { return isActiveCollisionDetection_; }
 	void UpdateCollisionDetectionData(const float& elapsedTime);

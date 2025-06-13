@@ -21,18 +21,33 @@ void CollisionCylinderData::DrawDebug()
 	ImGui::DragFloat3("JointPos", &jointPosition_.x, 0.01f);
 	ImGui::DragFloat3("OffsetPos", &offsetPosition_.x, 0.01f);
 	ImGui::DragFloat("Radius", &radius_, 0.01f);
+	ImGui::DragFloat("Height", &height_, 0.01f);
 	ImGui::ColorEdit4("CurrentColor", &currentColor_.x);
 	ImGui::ColorEdit4("DefaultColor", &defaultColor_.x);
 	ImGui::ColorEdit4("HitColor", &hitColor_.x);
 
 }
 
-//	攻撃判定用
+//	攻撃判定用ImGui
 void AttackDetectionData::DrawDebug()
 {
 	if (ImGui::TreeNode(GetName().c_str()))
 	{
-		collisionSphereData_.DrawDebug();
+		//	AttackDetectionData自身のプロパティ
+		char bufUpdateName[256];
+		strcpy_s(bufUpdateName, sizeof(bufUpdateName), updateName_.c_str());
+		if (ImGui::InputText("Update Name", bufUpdateName, sizeof(bufUpdateName))) 
+		{
+			updateName_ = bufUpdateName;
+		}
+		ImGui::Checkbox("Is Active", &isActive_);
+
+		//	内部のCollisionSphereDataのプロパティ
+		if (ImGui::TreeNode("Collision Sphere Data##Attack"))
+		{
+			collisionSphereData_.DrawDebug();
+			ImGui::TreePop();
+		}
 		ImGui::TreePop();
 	}
 }
@@ -48,6 +63,7 @@ void DamageDetectionData::Update(const float& elapsedTime)
 		if (hitTimer_ < 0.0f)
 		{
 			isHit_ = false;
+			
 		}
 		SetColor(GetHitColor());
 	}
@@ -56,26 +72,65 @@ void DamageDetectionData::Update(const float& elapsedTime)
 		SetColor(GetDefaultColor());
 	}
 }
-
-//	くらい判定用
+//	くらい判定用ImGui
 void DamageDetectionData::DrawDebug()
 {
 	if (ImGui::TreeNode(GetName().c_str()))
 	{
-		collisionSphereData_.DrawDebug();
-		ImGui::Checkbox("IsHit", &isHit_);
-		ImGui::DragFloat("HitTimer", &hitTimer_);
-		ImGui::DragFloat("Damage", &damage_);
+		// DamageDetectionData自身のプロパティ
+		char bufName[256];
+		strcpy_s(bufName, sizeof(bufName), GetName().c_str());
+		if (ImGui::InputText(("Name##DamageDetection" + std::string(GetName())).c_str(), bufName, sizeof(bufName))) 
+		{
+			SetName(bufName);
+		}
+		char bufUpdateName[256];
+		strcpy_s(bufUpdateName, sizeof(bufUpdateName), updateName_.c_str());
+		if (ImGui::InputText("Update Name", bufUpdateName, sizeof(bufUpdateName)))
+		{
+			updateName_ = bufUpdateName;
+		}
+		ImGui::DragFloat("Damage Multiplier", &damage_, 0.01f);
+		ImGui::Checkbox("Is Hit", &isHit_); 
+		ImGui::DragFloat("Hit Timer", &hitTimer_, 0.01f);
+
+		// 内部のCollisionSphereDataのプロパティ
+		if (ImGui::TreeNode("Collision Sphere Data##Damage"))
+		{
+			collisionSphereData_.DrawDebug();
+			ImGui::TreePop();
+		}
 		ImGui::TreePop();
 	}
 }
 
-//	押し出し判定用
+//	押し出し判定用ImGui
 void CollisionDetectionData::DrawDebug()
 {
 	if (ImGui::TreeNode(GetName().c_str()))
 	{
-		collisionSphereData_.DrawDebug();
+		// CollisionDetectionData自身のプロパティ
+		char bufName[256];
+		strcpy_s(bufName, sizeof(bufName), GetName().c_str());
+		if (ImGui::InputText(("Name##CollisionDetection" + std::string(GetName())).c_str(), bufName, sizeof(bufName)))
+		{
+			SetName(bufName);
+		}
+		char bufUpdateName[256];
+		strcpy_s(bufUpdateName, sizeof(bufUpdateName), updateName_.c_str());
+		if (ImGui::InputText("Update Name", bufUpdateName, sizeof(bufUpdateName))) 
+		{
+			updateName_ = bufUpdateName;
+		}
+		ImGui::Checkbox("Is Active", &isActive_);
+		ImGui::Checkbox("Fixed Y", &fixedY_);
+
+		// 内部のCollisionSphereDataのプロパティ
+		if (ImGui::TreeNode("Collision Sphere Data##Push"))
+		{
+			collisionSphereData_.DrawDebug();
+			ImGui::TreePop();
+		}
 		ImGui::TreePop();
 	}
 }

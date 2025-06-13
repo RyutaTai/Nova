@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DirectXMath.h"
 #include "../../Nova/Resources/GltfModel.h"
 #include "../../Nova/Collision/CollisionData.h"
 
@@ -98,11 +97,14 @@ public:
 	void SetRootMotionSpeed(const float& rootMotionSpeed) { gltfModelResource_->SetRootMotionSpeed(rootMotionSpeed); }
 
 	//	----- Collision -----
-	virtual void RegisterCollisionData() = 0;
+	virtual void RegisterCollisionData(const std::string& jsonFileName) = 0;
 	virtual void UpdateCollisions(const float& elapsedTime);
 	void SetAllAttackDetectionActiveFlag(const bool& isActive);	//	攻撃判定の有効フラグを全て変更する
 	void CollisionCharacterVsStage();
-	
+	//	----- Json -----
+	virtual void SaveCollisionDataToJson(const std::string& filePath) const;
+	virtual void LoadCollisionDataFromJson(const std::string& filePath);
+
 	//	----- 攻撃判定 -----
 	void RegisterAttackDetectionData(const AttackDetectionData& data);
 	const int GetAttackDetectionDataCount() const { return static_cast<int>(attackDetectionData_.size()); }
@@ -156,6 +158,7 @@ protected:
 	std::vector<AttackDetectionData>	attackDetectionData_;		//	攻撃判定用
 	std::vector<DamageDetectionData>	damageDetectionData_;		//	くらい判定
 	std::vector<CollisionDetectionData>	collisionDetectionData_;	//	押し出し判定用
+	std::string collisionDataJsonFileName_ = {};
 	float	radius_ = 30.0f;	//	半径
 	float	height_ = 195.0f;	//	高さ
 

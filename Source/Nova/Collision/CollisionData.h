@@ -1,9 +1,8 @@
 #pragma once
 
-#include <DirectXMath.h>
+#include "../Others/JsonHelper.h"
 #include <string>
-
-#include "../../Nova/Others/MathHelper.h"
+#include "../Others/MathHelper.h"
 
 //	球判定用データ
 struct CollisionSphereData
@@ -16,36 +15,73 @@ public:
 	{}
 	CollisionSphereData() = default;
 
-	//	ImGUi描画
+	//	----- ImGUi描画 -----
 	void DrawDebug();
 
-	//	名前
+	//	----- 名前 -----
 	void SetName(const std::string& name) { name_ = name; }
 	const std::string GetName()const { return name_; }
 
-	//	基準にするジョイント位置
+	//	----- 基準にするジョイント位置 -----
 	void SetJointPosition(const DirectX::XMFLOAT3& jointPos) { jointPosition_ = jointPos; }
 	const DirectX::XMFLOAT3 GetJointPosition()const { return jointPosition_; }
 
-	//	ジョイント位置からのオフセット値
+	//	----- ジョイント位置からのオフセット値 -----
 	void SetOffSetPosition(const DirectX::XMFLOAT3& offsetPos) { offsetPosition_ = offsetPos; }
 	const DirectX::XMFLOAT3 GetOffsetPosition() const{ return offsetPosition_; }
 
-	//	半径
+	//	----- 半径 -----
 	void SetRadius(const float& radius) { radius_ = radius; }
 	const float GetRadius()const { return radius_; }
 
-	//	現在のカラー
+	//	----- 現在のカラー -----
 	void SetColor(const DirectX::XMFLOAT4& color) { currentColor_= color; }
 	const DirectX::XMFLOAT4 GetColor() const { return currentColor_; }
 
-	//	デフォルトカラー
+	//	----- デフォルトカラー -----
 	void SetDefaultColor(const DirectX::XMFLOAT4& color) { defaultColor_ = color; }
 	const DirectX::XMFLOAT4 GetDefaultColor() const{ return defaultColor_; }
 
-	//	ヒット時のカラー
+	//	----- ヒット時のカラー -----
 	void SetHitColor(const DirectX::XMFLOAT4& color) { hitColor_ = color; }
 	const DirectX::XMFLOAT4 GetHitColor()const { return hitColor_; }
+
+	//	----- Json -----
+	friend inline void to_json(nlohmann::json& j, const CollisionSphereData& d)
+	{
+		j = nlohmann::json{
+			{"name_", d.name_},
+			{"jointPosition_", d.jointPosition_},
+			{"offsetPosition_", d.offsetPosition_},
+			{"radius_", d.radius_},
+			{"currentColor_", d.currentColor_},
+			{"defaultColor_", d.defaultColor_},
+			{"hitColor_", d.hitColor_}
+		};
+	}
+	friend inline void from_json(const nlohmann::json& j, CollisionSphereData& d)
+	{
+		std::string name;
+		DirectX::XMFLOAT3 jointPos, offsetPos;
+		float radius;
+		DirectX::XMFLOAT4 currentColor, defaultColor, hitColor;
+
+		j.at("name_").get_to(name);
+		j.at("jointPosition_").get_to(jointPos);
+		j.at("offsetPosition_").get_to(offsetPos);
+		j.at("radius_").get_to(radius);
+		j.at("currentColor_").get_to(currentColor);
+		j.at("defaultColor_").get_to(defaultColor);
+		j.at("hitColor_").get_to(hitColor);
+
+		d.SetName(name);
+		d.SetJointPosition(jointPos);
+		d.SetOffSetPosition(offsetPos);
+		d.SetRadius(radius);
+		d.SetColor(currentColor);
+		d.SetDefaultColor(defaultColor);
+		d.SetHitColor(hitColor);
+	}
 
 private:
 	std::string			name_ = {};									//	名前
@@ -57,6 +93,7 @@ private:
 	DirectX::XMFLOAT4	hitColor_ = { 1.0f,1.0f,1.0f,1.0f };		//	ヒット時のカラー
 
 };
+
 
 //	円柱判定用データ
 struct CollisionCylinderData
@@ -70,40 +107,80 @@ public:
 	{}
 	CollisionCylinderData() = default;
 
-	//	ImGUi描画
+	//	----- ImGUi描画 -----
 	void DrawDebug();
 
-	//	名前
+	//	----- 名前 -----
 	void SetName(const std::string& name) { name_ = name; }
 	const std::string GetName()const { return name_; }
 
-	//	基準にするジョイント位置
-	void SetPosition(const DirectX::XMFLOAT3& jointPos) { jointPosition_ = jointPos; }
-	const DirectX::XMFLOAT3 GetPosition()const { return jointPosition_; }
+	//	----- 基準にするジョイント位置 -----
+	void SetJointPosition(const DirectX::XMFLOAT3& jointPos) { jointPosition_ = jointPos; }
+	const DirectX::XMFLOAT3 GetJointPosition()const { return jointPosition_; }
 
-	//	ジョイント位置からのオフセット値
+	//	----- ジョイント位置からのオフセット値 -----
 	void SetOffSetPosition(const DirectX::XMFLOAT3& offsetPos) { offsetPosition_ = offsetPos; }
 	const DirectX::XMFLOAT3 GetOffsetPosition() const { return offsetPosition_; }
 
-	//	半径
+	//	----- 半径 -----
 	void SetRadius(const float& radius) { radius_ = radius; }
 	const float GetRadius() const{ return radius_; }
 
-	//	高さ
+	//	----- 高さ -----
 	void SetHeight(const float& height) { height_ = height; }
 	const float GetHeight() const { return height_; }
 
-	//	現在のカラー
+	//	----- 現在のカラー -----
 	void SetColor(const DirectX::XMFLOAT4& color) { currentColor_ = color; }
 	const DirectX::XMFLOAT4 GetColor() const { return currentColor_; }
 
-	//	デフォルトカラー
+	//	----- デフォルトカラー -----
 	void SetDefaultColor(const DirectX::XMFLOAT4& color) { defaultColor_ = color; }
 	const DirectX::XMFLOAT4 GetDefaultColor() const{ return defaultColor_; }
 
-	//	ヒット時のカラー
+	//	----- ヒット時のカラー -----
 	void SetHitColor(const DirectX::XMFLOAT4& color) { hitColor_ = color; }
 	const DirectX::XMFLOAT4 GetHitColor() const{ return hitColor_; }
+
+	//	----- Json -----
+	friend inline void to_json(nlohmann::json& j, const CollisionCylinderData& d)
+	{
+		j = nlohmann::json{
+			{"name_", d.name_},
+			{"jointPosition_", d.jointPosition_},
+			{"offsetPosition_", d.offsetPosition_},
+			{"radius_", d.radius_},
+			{"height_", d.height_},
+			{"currentColor_", d.currentColor_},
+			{"defaultColor_", d.defaultColor_},
+			{"hitColor_", d.hitColor_}
+		};
+	}
+	friend inline void from_json(const nlohmann::json& j, CollisionCylinderData& d)
+	{
+		std::string name;
+		DirectX::XMFLOAT3 jointPos, offsetPos;
+		float radius, height;
+		DirectX::XMFLOAT4 currentColor, defaultColor, hitColor;
+
+		j.at("name_").get_to(name);
+		j.at("jointPosition_").get_to(jointPos);
+		j.at("offsetPosition_").get_to(offsetPos);
+		j.at("radius_").get_to(radius);
+		j.at("height_").get_to(height);
+		j.at("currentColor_").get_to(currentColor);
+		j.at("defaultColor_").get_to(defaultColor);
+		j.at("hitColor_").get_to(hitColor);
+
+		d.SetName(name);
+		d.SetJointPosition(jointPos);
+		d.SetOffSetPosition(offsetPos);
+		d.SetRadius(radius);
+		d.SetHeight(height);
+		d.SetColor(currentColor);
+		d.SetDefaultColor(defaultColor);
+		d.SetHitColor(hitColor);
+	}
 
 private:
 	std::string			name_ = {};				//	名前
@@ -129,29 +206,45 @@ public:
 	{}
 	AttackDetectionData() = default;
 
-	//	ImGUi描画
+	//	----- ImGUi描画 -----
 	void DrawDebug();
 
-	// ---------- 名前 ----------
+	// ----- 名前 -----
 	const std::string GetName() const { return collisionSphereData_.GetName(); }
 
-	// ---------- 半径 ----------
+	// ----- 半径 -----
 	const float GetRadius() const { return collisionSphereData_.GetRadius(); }
 
-	// ---------- 位置 ----------
+	// ----- 位置 -----
 	const DirectX::XMFLOAT3 GetOffsetPosition() const { return collisionSphereData_.GetOffsetPosition(); }
 	const DirectX::XMFLOAT3 GetPosition() const { return collisionSphereData_.GetJointPosition(); }
 	void SetJointPosition(const DirectX::XMFLOAT3& position) { collisionSphereData_.SetJointPosition(position); }
 
-	// ---------- 色 ----------
+	// ----- 色 -----
 	const DirectX::XMFLOAT4 GetColor() const { return collisionSphereData_.GetColor(); }
 
-	// ---------- 有効(使用)フラグ ----------
+	// ----- 有効(使用)フラグ -----
 	void SetIsActive(const bool& isActive) { isActive_ = isActive; }
 	const bool GetIsActive() const { return isActive_; }
 
-	// ---------- 更新用名前 ----------
+	// ----- 更新用名前 -----
 	const std::string GetUpdateName() const { return updateName_; }
+
+	//	----- Json -----
+	friend inline void to_json(nlohmann::json& j, const AttackDetectionData& d)
+	{
+		j = nlohmann::json{
+			{"collisionSphereData_", d.collisionSphereData_},
+			{"updateName_", d.GetUpdateName()},
+			{"isActive_", d.GetIsActive()}
+		};
+	}
+	friend inline void from_json(const nlohmann::json& j, AttackDetectionData& d)
+	{
+		j.at("collisionSphereData_").get_to(d.collisionSphereData_);
+		j.at("updateName_").get_to(d.updateName_);
+		j.at("isActive_").get_to(d.isActive_);
+	}
 
 private:
 	CollisionSphereData collisionSphereData_ = {};	//	球体データ
@@ -173,27 +266,28 @@ public:
 	{}
 	DamageDetectionData() = default;
 
+	//	----- 更新処理 -----
 	void Update(const float& elapsedTime);
 
-	//	ImGUi描画
+	//	----- ImGUi描画 -----
 	void DrawDebug();
 
-	//	---------- 名前 ----------
+	//	----- 名前 -----
 	void SetName(const std::string& name) { collisionSphereData_.SetName(name); }
 	const std::string GetName() const { return collisionSphereData_.GetName(); }
 
-	//	---------- 半径 ----------
+	//	----- 半径 -----
 	void SetRadius(const float& radius) { collisionSphereData_.SetRadius(radius); }
 	const float GetRadius() const { return collisionSphereData_.GetRadius(); }
 
-	//	---------- 位置 ----------
+	//	----- 位置 -----
 	void SetJointPosition(const DirectX::XMFLOAT3& position) { collisionSphereData_.SetJointPosition(position); }
 	void SetPosition(const DirectX::XMFLOAT3& jointPosition) { collisionSphereData_.SetJointPosition(jointPosition + collisionSphereData_.GetOffsetPosition()); }
 	const DirectX::XMFLOAT3 GetOffsetPosition() const { return collisionSphereData_.GetOffsetPosition(); }
 	const DirectX::XMFLOAT3 GetPosition() const { return collisionSphereData_.GetJointPosition(); }
 	//const DirectX::XMFLOAT3 GetCollisionPosition() const { return collisionSphereData_.GetPosition() + collisionSphereData_.GetOffsetPosition(); }
 
-	//	---------- 色 ----------
+	//	----- 色 -----
 	//	現在のカラー
 	void SetColor(const DirectX::XMFLOAT4& color) { collisionSphereData_.SetColor(color); }
 	const DirectX::XMFLOAT4 GetColor() const { return collisionSphereData_.GetColor(); }
@@ -204,7 +298,7 @@ public:
 	void SetHitColor(const DirectX::XMFLOAT4& color) { collisionSphereData_.SetHitColor(color); }
 	const DirectX::XMFLOAT4 GetHitColor() const { return collisionSphereData_.GetHitColor(); }
 
-	// ---------- 更新用名前 ----------
+	// ----- 更新用名前 -----
 	const std::string GetUpdateName() const { return updateName_; }
 
 	//	----- 当たっているかのフラグ -----
@@ -215,19 +309,43 @@ public:
 	void SetDamage(const float& damage) { damage_ = damage; }
 	const float GetDamage()const { return damage_; }
 
+	//	----- ヒットタイマー(連続で当たらないようにするためのタイマー) -----
 	void SetHitTimer(const float& time) { hitTimer_ = time; }
 	const float GetHitTimer()const { return hitTimer_; }
+	
+	//	----- Json -----
+	friend inline void to_json(nlohmann::json& j, const DamageDetectionData& d)
+	{
+		j = nlohmann::json{
+			{"collisionSphereData_", d.collisionSphereData_},
+			{"damage_", d.damage_},
+			{"isHit_", d.isHit_},
+			{"hitTimer_", d.hitTimer_},
+			{"updateName_", d.updateName_}
+		};
+	}
+
+	friend inline void from_json(const nlohmann::json& j, DamageDetectionData& d) 
+	{
+		j.at("collisionSphereData_").get_to(d.collisionSphereData_);
+		j.at("damage_").get_to(d.damage_);
+		j.at("isHit_").get_to(d.isHit_);
+		j.at("hitTimer_").get_to(d.hitTimer_);
+		j.at("updateName_").get_to(d.updateName_);
+	}
 
 private:
 	CollisionSphereData collisionSphereData_ = {};	//	球体データ
 
 	float damage_ = 1.0f;		//	ダメージ倍率
 	bool  isHit_ = false;		//	当たっているか
-	float hitTimer_ = 0.0f;
+	float hitTimer_ = 0.0f;		//	連続で当たらないようにするためのタイマー
 
 	std::string updateName_ = {};	//	更新用の名前
 
 };
+
+
 
 //	押し出し判定
 struct CollisionDetectionData
@@ -241,25 +359,25 @@ struct CollisionDetectionData
 	{}
 	CollisionDetectionData() = default;
 
-	//	ImGUi描画
+	//	----- ImGUi描画 -----
 	void DrawDebug();
 
-	//	---------- 名前 ----------
+	//	----- 名前 -----
 	void SetName(const std::string& name) { collisionSphereData_.SetName(name); }
 	const std::string GetName() const { return collisionSphereData_.GetName(); }
 
-	//	---------- 半径 ----------
+	//	----- 半径 -----
 	void SetRadius(const float& radius) { collisionSphereData_.SetRadius(radius); }
 	const float GetRadius() const { return collisionSphereData_.GetRadius(); }
 
-	//	---------- 位置 ----------
+	//	----- 位置 -----
 	void SetPosition(const DirectX::XMFLOAT3& position) { collisionSphereData_.SetJointPosition(position); }
 	void SetJointPosition(const DirectX::XMFLOAT3& jointPosition) { collisionSphereData_.SetJointPosition(jointPosition + collisionSphereData_.GetOffsetPosition()); }
 	const DirectX::XMFLOAT3 GetOffsetPosition() const { return collisionSphereData_.GetOffsetPosition(); }
 	const DirectX::XMFLOAT3 GetPosition() const { return collisionSphereData_.GetJointPosition(); }
 	//const DirectX::XMFLOAT3 GetCollisionPosition() const { return collisionSphereData_.GetPosition() + collisionSphereData_.GetOffsetPosition(); }
 
-	//	---------- 色 ----------
+	//	----- 色 -----
 	//	現在のカラー
 	void SetColor(const DirectX::XMFLOAT4& color) { collisionSphereData_.SetColor(color); }
 	const DirectX::XMFLOAT4 GetColor() const { return collisionSphereData_.GetColor(); }
@@ -270,21 +388,38 @@ struct CollisionDetectionData
 	void SetHitColor(const DirectX::XMFLOAT4& color) { collisionSphereData_.SetHitColor(color); }
 	const DirectX::XMFLOAT4 GetHitColor() const { return collisionSphereData_.GetHitColor(); }
 
-	//	---------- 有効(使用)フラグ ----------
+	//	----- 有効(使用)フラグ -----
 	void SetIsActive(const bool& isActive) { isActive_ = isActive; }
 	const bool GetIsActive() const { return isActive_; }
 
-	//	---------- 更新用名前 ----------
+	//	----- 更新用名前 -----
 	const std::string GetUpdateName() const { return updateName_; }
 
-	//	---------- Yの値が固定 ----------
+	//	----- Yの値が固定 -----
 	const bool GetFixedY() const { return fixedY_; }
+	
+	//	----- Json -----
+	friend inline void to_json(nlohmann::json& j, const CollisionDetectionData& d) 
+	{
+		j = nlohmann::json{
+			{"collisionSphereData_", d.collisionSphereData_},
+			{"isActive_", d.isActive_},
+			{"fixedY_", d.fixedY_},
+			{"updateName_", d.updateName_}
+		};
+	}
 
+	friend inline void from_json(const nlohmann::json& j, CollisionDetectionData& d)
+	{
+		j.at("collisionSphereData_").get_to(d.collisionSphereData_);
+		j.at("isActive_").get_to(d.isActive_);
+		j.at("fixedY_").get_to(d.fixedY_);
+		j.at("updateName_").get_to(d.updateName_);
+	}
 private:
 	CollisionSphereData collisionSphereData_ = {};	//	球判定用データ
 	bool                isActive_ = true;			//	現在有効か
-
 	bool				fixedY_ = false;			//	Yの値を固定するかどうか
-
 	std::string			updateName_ = {};			//	更新名
+
 };

@@ -35,9 +35,6 @@
     <Filter Include="Nova\Debug">
       <UniqueIdentifier>{0a9d13ea-36c0-466d-a481-91d9024d2e76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Nova\AI">
-      <UniqueIdentifier>{1c31d348-952a-4ff8-b203-504c9b5f0684}</UniqueIdentifier>
-    </Filter>
     <Filter Include="External">
       <UniqueIdentifier>{eee26e01-e8ca-491d-8a89-6cf1daaaa205}</UniqueIdentifier>
     </Filter>
@@ -152,6 +149,9 @@
     <Filter Include="Nova\Graphics\ContrastFilter">
       <UniqueIdentifier>{d481c9ee-7e53-4c61-b30d-885888b6dcd9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nova\Collision\AI">
+      <UniqueIdentifier>{1c31d348-952a-4ff8-b203-504c9b5f0684}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -233,7 +233,7 @@
       <Filter>Nova\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\AI\BehaviorTree.cpp">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Audio\Audio.cpp">
       <Filter>Nova\Audio</Filter>
@@ -299,7 +299,7 @@
       <Filter>Nova\Graphics\Vignette</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\AI\BehaviorData.cpp">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Audio\WaveRead.cpp">
       <Filter>Nova\Audio</Filter>
@@ -308,10 +308,10 @@
       <Filter>Nova\Audio</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Audio\Midi.cpp">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\AI\NodeBase.cpp">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Nova\Audio\Frequency.cpp">
       <Filter>Nova\Audio</Filter>
@@ -529,16 +529,16 @@
       <Filter>Nova\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\ActionBase.h">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\State.h">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\StateMachine.h">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\BehaviorTree.h">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Audio\Audio.h">
       <Filter>Nova\Audio</Filter>
@@ -607,7 +607,7 @@
       <Filter>Nova\Graphics\Vignette</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\BehaviorData.h">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Audio\WaveRead.h">
       <Filter>Nova\Audio</Filter>
@@ -619,13 +619,13 @@
       <Filter>Nova\Audio</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\NodeBase.h">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Audio\Frequency.h">
       <Filter>Nova\Audio</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\AI\JudgmentBase.h">
-      <Filter>Nova\AI</Filter>
+      <Filter>Nova\Collision\AI</Filter>
     </ClInclude>
     <ClInclude Include="External\MidiFile\include\Binasc.h">
       <Filter>External\MidiFile\include</Filter>
@@ -884,6 +884,9 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\ContrastFilter.h">
       <Filter>Nova\Graphics\ContrastFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\JsonHelper.h">
+      <Filter>Nova\Others</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

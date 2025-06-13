@@ -54,7 +54,7 @@ Player::Player()
 	SetRootJointIndex(rootNodeIndex);
 
 	//	----- 当たり判定登録 -----
-	RegisterCollisionData();
+	RegisterCollisionData("./Resources/Json/PlayerCollisionData.json");
 
 	//	----- オーディオ初期設定 -----
 	
@@ -155,8 +155,11 @@ void Player::Update(const float& elapsedTime)
 
 
 //	当たり判定登録
-void Player::RegisterCollisionData()
+void Player::RegisterCollisionData(const std::string& jsonFileName)
 {
+	//	Json書き出しパスとファイル名を設定
+	collisionDataJsonFileName_ = jsonFileName;
+
 #pragma region ----- 押し出し判定登録 -----
 	//	{名前、半径、  Y軸を固定するか、オフセット位置、更新名、	デフォルトカラー、	ヒットカラー}
 	//	{name, radius, fixedY,			offsetPosition,	updateName,	defaultColor,		hitColor}

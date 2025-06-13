@@ -79,8 +79,8 @@ public:
 	void PlayAnimation(const AnimationType& animType, const bool& loop = false, const float& blendTime = 1.0f, const float& animSpeed = 1.0f, const float& startFrame = 0.0f, const float& endFrame = 0.0f);
 
 	//	----- Collision -----
+	void RegisterCollisionData(const std::string& jsonFileName)override;
 	void UpdateCollisions(const float& elapsedTime)override;
-	void RegisterCollisionData()override;
 
 	//	----- ビヘイビアツリー -----
 	const std::string GetActiveNodeName()const { return activeNode_->GetName(); }

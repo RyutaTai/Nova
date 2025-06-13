@@ -118,7 +118,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\External\Autodesk\FBX\FBX_SDK\2020.2\include;.\External\cereal-master\include;.\External\DirectXTK-main\Inc;.\External\Effekseer170e\include;.\External\nlohmann</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\External\Autodesk\FBX\FBX_SDK\2020.2\include;.\External\cereal-master\include;.\External\DirectXTK-main\Inc;.\External\Effekseer170e\include;.\External\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -174,7 +174,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\External\cereal-master\include;.\External\DirectXTK-main\Inc;.\External\Autodesk\FBX\FBX_SDK\2020.2\include;.\External\Effekseer170e\include;.\External\nlohmann</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\External\cereal-master\include;.\External\DirectXTK-main\Inc;.\External\Autodesk\FBX\FBX_SDK\2020.2\include;.\External\Effekseer170e\include;.\External\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -425,6 +425,7 @@
     <ClInclude Include="Source\Nova\Input\Mouse.h" />
     <ClInclude Include="Source\Nova\Others\Converter.h" />
     <ClInclude Include="Source\Nova\Others\Easing.h" />
+    <ClInclude Include="Source\Nova\Others\JsonHelper.h" />
     <ClInclude Include="Source\Nova\Others\MathHelper.h" />
     <ClInclude Include="Source\Nova\Others\MemoryUtilities.h" />
     <ClInclude Include="Source\Nova\Others\Misc.h" />

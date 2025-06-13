@@ -57,7 +57,7 @@ void Drone::Initialize()
 	GetTransform()->SetScaleFactor(scale);
 
 	//	----- 当たり判定データ登録 -----
-	RegisterCollisionData();
+	RegisterCollisionData("./Resources/Json/DroneCollisionData.json");
 
 	//	----- 半径、高さ設定 -----
 	height_ = 1.0f;
@@ -331,8 +331,11 @@ void Drone::Destroy()
 }
 
 //	当たり判定登録
-void Drone::RegisterCollisionData()
+void Drone::RegisterCollisionData(const std::string& jsonFileName)
 {
+	//	Json書き出しパスとファイル名を設定
+	collisionDataJsonFileName_ = jsonFileName;
+
 #pragma region ----- 押し出し判定登録 -----
 	//	{名前、半径、  Y軸を固定するか、オフセット位置、更新名、	デフォルトカラー、	ヒットカラー}
 	//	{name, radius, fixedY,			offsetPosition,	updateName,	defaultColor,		hitColor}
