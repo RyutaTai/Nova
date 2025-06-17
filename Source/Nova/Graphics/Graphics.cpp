@@ -17,6 +17,7 @@ Graphics::Graphics(HWND hwnd, bool fullscreen)
 		StylizeWindow(true);
 	}
 
+	//	画面のサイズを取得する
 	RECT clientRect;
 	GetClientRect(hwnd_, &clientRect);
 	frameBufferDimensions_.cx = clientRect.right - clientRect.left;
@@ -102,66 +103,6 @@ void Graphics::AcquireHighPerformanceAdapter(IDXGIFactory6* dxgiFactory6, IDXGIA
 	}
 	*dxgiAdapter3 = enumeratedAdapter.Detach();
 }
-
-#ifdef ENABLE_DIRECT2D
-void Graphics::CreateDirect2dObjects()
-{
-	HRESULT hr{ S_OK };
-
-	Microsoft::WRL::ComPtr<IDXGIDevice2> dxgiDevice2;
-
-	hr = device_->QueryInterface(__uuidof(IDXGIDevice2), reinterpret_cast<void**>(dxgiDevice2.GetAddressOf()));
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	Microsoft::WRL::ComPtr<ID2D1Factory1> d2dFactory1;
-	D2D1_FACTORY_OPTIONS factoryOptions{};
-#ifdef _DEBUG
-	factoryOptions.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
-#endif
-	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, factoryOptions, d2dFactory1.GetAddressOf());
-
-	Microsoft::WRL::ComPtr<ID2D1Device> d2dDevice;
-	hr = d2dFactory1->CreateDevice(dxgiDevice2.Get(), d2dDevice.GetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	hr = d2dDevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, d2d1DeviceContext_.ReleaseAndGetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	hr = dxgiDevice2->SetMaximumFrameLatency(1);
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	Microsoft::WRL::ComPtr<IDXGISurface2> dxgiSurface2;
-	hr = swapChain_->GetBuffer(0, IID_PPV_ARGS(dxgiSurface2.GetAddressOf()));
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	Microsoft::WRL::ComPtr<ID2D1Bitmap1> d2dBitmap1;
-	hr = d2d1DeviceContext_->CreateBitmapFromDxgiSurface(dxgiSurface2.Get(),
-		D2D1::BitmapProperties1(D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
-			D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_IGNORE)), d2dBitmap1.GetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	d2d1DeviceContext_->SetTargetPos(d2dBitmap1.Get());
-
-	Microsoft::WRL::ComPtr<IDWriteFactory> dwriteFactory;
-	hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(dwriteFactory.GetAddressOf()));
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	hr = dwriteFactory->CreateTextFormat(L"Meiryo", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 11, L"", dwriteTextFormats_[0].ReleaseAndGetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-	hr = dwriteTextFormats_[0]->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	hr = dwriteFactory->CreateTextFormat(L"Impact", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 24, L"", dwriteTextFormats_[1].ReleaseAndGetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-	hr = dwriteTextFormats_[1]->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-	hr = d2d1DeviceContext_->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), d2dSolidColorBrushes_[0].ReleaseAndGetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-	hr = d2d1DeviceContext_->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::CornflowerBlue), d2dSolidColorBrushes_[1].ReleaseAndGetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-}
-#endif
 
 void Graphics::CreateSwapChain(IDXGIFactory6* dxgiFactory6)
 {
@@ -269,11 +210,6 @@ void Graphics::OnSizeChanged(UINT64 width, UINT height)
 		frameBufferDimensions_.cx = static_cast<LONG>(width);
 		frameBufferDimensions_.cy = height;
 
-		// Release all objects that hold shader resource views here.
-#ifdef ENABLE_DIRECT2D
-		d2d1DeviceContext_.Reset();
-#endif
-
 		//	FrameBufferリセット(3番目はリセットしない)
 		frameBuffers_[0].reset();
 		frameBuffers_[1].reset();
@@ -286,10 +222,6 @@ void Graphics::OnSizeChanged(UINT64 width, UINT height)
 		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 		CreateSwapChain(dxgiFactory6.Get());
 
-		// Recreate all objects that hold shader resource views here.
-#ifdef ENABLE_DIRECT2D
-		CreateDirect2dObjects();
-#endif
 		//	サイズ再設定
 		frameBuffers_[0] = std::make_unique<FrameBuffer>(device_.Get(), SCREEN_WIDTH, SCREEN_HEIGHT);
 		frameBuffers_[1] = std::make_unique<FrameBuffer>(device_.Get(), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);

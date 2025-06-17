@@ -23,10 +23,10 @@ Camera::Camera()
 void Camera::Initialize()
 {
 	eye_	= { 10.5f, 8.6f, -23.3f };		//	視点
+	eyeOffset_ = { 1.0f,2.0f,0.0f };		//	視点オフセット
 	focus_	= { 14.0f, 7.2f,  -20.0f };		//	注視点
 	up_		= { 0.2f,  0.9f,   0.2f };		//	上方向
 	angle_	= { 0.29f,  0.797f,   0.0f };	//	回転値
-	eyeOffset_ = { 1.0f,2.0f,0.0f };
 	fov_ = 60.0f;							//	視野角
 	currentRange_ = 5.0f;					//	ターゲットとカメラとの距離
 	nearZ_	= 0.01f;
@@ -37,7 +37,7 @@ void Camera::Initialize()
 void Camera::SetPerspectiveFov()
 {
     //	画面アスペクト比
-    float aspectRatio = SCREEN_WIDTH / (float)SCREEN_HEIGHT;
+    float aspectRatio = SCREEN_WIDTH / static_cast<float>(SCREEN_HEIGHT);
 
     //	プロジェクション行列
     projectionMatrix_ = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(fov_), aspectRatio, nearZ_, farZ_);
@@ -214,7 +214,7 @@ void Camera::NormalCamera(const float& elapsedTime)
 		float t = (angle_.x - MinAngleX_) / (MaxAngleX_ - MinAngleX_);		//	補間係数tを計算
 		currentRange_ = minRange_ + (maxRange_ - minRange_) * t;			//	rangeを補完
 
-		//	ベロシティ追加
+		//	ベロシティ更新
 		velocity_.x = ay * speed;
 		velocity_.y = ax * speed;
 
@@ -286,6 +286,8 @@ bool Camera::RayVsHorizontal(const float& elapsedTime)
 			cameraPos.z -= d * rayDirection.z;
 
 			eye_ = cameraPos;
+			DirectX::XMVECTOR EyeToTarget = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&focus_), DirectX::XMLoadFloat3(&eye_));
+			currentRange_ = DirectX::XMVectorGetX(DirectX::XMVector3Length(EyeToTarget));
 
 			// Reflection
 			//DirectX::XMStoreFloat3(&velocity_, DirectX::XMVector3Reflect(DirectX::XMLoadFloat3(&velocity_), DirectX::XMLoadFloat3(&intersectionNormal)));
@@ -314,7 +316,7 @@ void Camera::Reset()
 //	デバッグ描画
 void Camera::DrawDebug()
 {	
-	if (ImGui::TreeNode(u8"Cameraカメラ"))
+	if (ImGui::TreeNode(u8"Camera カメラ"))
 	{
 		ImGui::Checkbox("DebugCamera", &isDebugCamera_);	//	デバッグカメラ切り替え
 		if (ImGui::TreeNode("Transform"))
@@ -333,7 +335,6 @@ void Camera::DrawDebug()
 		ImGui::DragFloat3	("Right",		&right_.x,		0.01f,	-FLT_MAX,	FLT_MAX);	//	右方向
 		ImGui::DragFloat3	("Up",			&up_.x,			0.01f,	-FLT_MAX,	FLT_MAX);	//	上方向
 		ImGui::DragFloat3	("Front",		&front_.x,		0.01f,	-FLT_MAX,	FLT_MAX);	//	前方向
-
 
 		ImGui::Text("----- Angle -----");
 		float maxAngleX = MaxAngleX_;

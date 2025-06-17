@@ -29,7 +29,7 @@ void SharpenFilter::Update()
 
 void SharpenFilter::DrawDebug()
 {
-    if (ImGui::TreeNode(u8"SharpenFilter　シャープネス"))
+    if (ImGui::TreeNode(u8"SharpenFilter シャープネス"))
     {
         ImGui::SliderFloat("Amount", &constants_.sharpenAmount_, 0.0f, 0.1f); // 調整可能な範囲 (シャープは強すぎるとノイズになるので控えめに)
         ImGui::TreePop();

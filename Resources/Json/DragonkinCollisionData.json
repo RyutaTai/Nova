@@ -1,0 +1,5299 @@
+{
+    "attackDetectionData": [
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.998661041259766,
+                    "y": 5.218756675720215,
+                    "z": 3.146571636199951
+                },
+                "name_": "head",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "isActive_": false,
+            "updateName_": "head"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.11408042907715,
+                    "y": 4.1131272315979,
+                    "z": 2.97406005859375
+                },
+                "name_": "spine_02",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "isActive_": false,
+            "updateName_": "spine_02"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.251798629760742,
+                    "y": 4.780076503753662,
+                    "z": 3.3814244270324707
+                },
+                "name_": "Shoulder_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "isActive_": false,
+            "updateName_": "Shoulder_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.725814819335938,
+                    "y": 4.7899322509765625,
+                    "z": 3.1347451210021973
+                },
+                "name_": "Shoulder_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "isActive_": false,
+            "updateName_": "Shoulder_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.67912483215332,
+                    "y": 3.9336986541748047,
+                    "z": 3.5564701557159424
+                },
+                "name_": "lowerarm_l",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "isActive_": false,
+            "updateName_": "lowerarm_l"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.151935577392578,
+                    "y": 4.008296489715576,
+                    "z": 3.0057055950164795
+                },
+                "name_": "lowerarm_r",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "isActive_": false,
+            "updateName_": "lowerarm_r"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.94282341003418,
+                    "y": 3.124310255050659,
+                    "z": 3.424405097961426
+                },
+                "name_": "Hand_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "isActive_": false,
+            "updateName_": "Hand_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.052730560302734,
+                    "y": 3.1729896068573,
+                    "z": 2.8199403285980225
+                },
+                "name_": "Hand_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.2000000476837158
+            },
+            "isActive_": false,
+            "updateName_": "Hand_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.027603149414063,
+                    "y": 2.666572332382202,
+                    "z": 2.741971015930176
+                },
+                "name_": "Hand_R_1",
+                "offsetPosition_": {
+                    "x": 34.20000076293945,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.2000000476837158
+            },
+            "isActive_": false,
+            "updateName_": "Hand_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.10222816467285,
+                    "y": 3.4546449184417725,
+                    "z": 2.933224678039551
+                },
+                "name_": "spine_01",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "isActive_": false,
+            "updateName_": "spine_01"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.452770233154297,
+                    "y": 1.8413052558898926,
+                    "z": 3.286609649658203
+                },
+                "name_": "calf_l",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "isActive_": false,
+            "updateName_": "calf_l"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.59463119506836,
+                    "y": 1.8448231220245361,
+                    "z": 2.7743616104125977
+                },
+                "name_": "calf_r",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "isActive_": false,
+            "updateName_": "calf_r"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.399578094482422,
+                    "y": 0.37892451882362366,
+                    "z": 3.67407488822937
+                },
+                "name_": "Foot_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "isActive_": false,
+            "updateName_": "Foot_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.272735595703125,
+                    "y": 0.36954963207244873,
+                    "z": 2.881450653076172
+                },
+                "name_": "Foot_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "isActive_": false,
+            "updateName_": "Foot_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.998319625854492,
+                    "y": 4.495412826538086,
+                    "z": 3.499366283416748
+                },
+                "name_": "Wing_L03",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L03"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.53677749633789,
+                    "y": 3.9346864223480225,
+                    "z": 4.6552557945251465
+                },
+                "name_": "Wing_L04",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L04"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.77669334411621,
+                    "y": 4.161129474639893,
+                    "z": 5.059196472167969
+                },
+                "name_": "Wing_L05",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.888126373291016,
+                    "y": 3.291774272918701,
+                    "z": 5.437814712524414
+                },
+                "name_": "Wing_L05_1",
+                "offsetPosition_": {
+                    "x": 63.650001525878906,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.004287719726563,
+                    "y": 2.3855416774749756,
+                    "z": 5.832493782043457
+                },
+                "name_": "Wing_L05_2",
+                "offsetPosition_": {
+                    "x": 130.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.968414306640625,
+                    "y": 4.515206336975098,
+                    "z": 5.283382415771484
+                },
+                "name_": "Wing_L06",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.324132919311523,
+                    "y": 3.6594767570495605,
+                    "z": 6.138343811035156
+                },
+                "name_": "Wing_L06_1",
+                "offsetPosition_": {
+                    "x": 80.0,
+                    "y": -25.799999237060547,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.670806884765625,
+                    "y": 2.8962996006011963,
+                    "z": 6.957765579223633
+                },
+                "name_": "Wing_L06_2",
+                "offsetPosition_": {
+                    "x": 153.42999267578125,
+                    "y": -52.540000915527344,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.683837890625,
+                    "y": 1.9479866027832031,
+                    "z": 7.1678009033203125
+                },
+                "name_": "Wing_L06_3",
+                "offsetPosition_": {
+                    "x": 215.11000061035156,
+                    "y": -32.810001373291016,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.807762145996094,
+                    "y": 1.2512414455413818,
+                    "z": 7.543340682983398
+                },
+                "name_": "Wing_L06_4",
+                "offsetPosition_": {
+                    "x": 268.5199890136719,
+                    "y": -32.810001373291016,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.997390747070313,
+                    "y": 4.866017818450928,
+                    "z": 5.253233909606934
+                },
+                "name_": "Wing_L08",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.120784759521484,
+                    "y": 0.8868951797485352,
+                    "z": 6.256784439086914
+                },
+                "name_": "Wing_L08_1",
+                "offsetPosition_": {
+                    "x": 264.0,
+                    "y": 86.0,
+                    "z": -57.99800109863281
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.409160614013672,
+                    "y": 1.6393306255340576,
+                    "z": 8.58689022064209
+                },
+                "name_": "Wing_L08_2",
+                "offsetPosition_": {
+                    "x": 318.05999755859375,
+                    "y": -57.97999954223633,
+                    "z": 0.0
+                },
+                "radius_": 0.800000011920929
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.91861915588379,
+                    "y": 5.093644142150879,
+                    "z": 5.105263710021973
+                },
+                "name_": "Wing_L09",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.02110481262207,
+                    "y": 2.603999614715576,
+                    "z": 7.683770179748535
+                },
+                "name_": "Wing_L09_1",
+                "offsetPosition_": {
+                    "x": 250.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.925233840942383,
+                    "y": 5.367170810699463,
+                    "z": 5.024903297424316
+                },
+                "name_": "Wing_L10",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.27305793762207,
+                    "y": 4.097120761871338,
+                    "z": 7.538334846496582
+                },
+                "name_": "Wing_L10_1",
+                "offsetPosition_": {
+                    "x": 205.1999969482422,
+                    "y": -33.41999816894531,
+                    "z": -9.800000190734863
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.979705810546875,
+                    "y": 4.560999870300293,
+                    "z": 6.91810941696167
+                },
+                "name_": "Wing_L10_2",
+                "offsetPosition_": {
+                    "x": 150.0,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.759174346923828,
+                    "y": 3.3340771198272705,
+                    "z": 8.63554573059082
+                },
+                "name_": "Wing_L10_3",
+                "offsetPosition_": {
+                    "x": 300.0,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.99088478088379,
+                    "y": 2.9693541526794434,
+                    "z": 9.146082878112793
+                },
+                "name_": "Wing_L10_4",
+                "offsetPosition_": {
+                    "x": 344.5899963378906,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 26.25413703918457,
+                    "y": 2.5549814701080322,
+                    "z": 9.726118087768555
+                },
+                "name_": "Wing_L10_5",
+                "offsetPosition_": {
+                    "x": 395.25,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 26.26593589782715,
+                    "y": 2.501209259033203,
+                    "z": 10.265602111816406
+                },
+                "name_": "Wing_L10_6",
+                "offsetPosition_": {
+                    "x": 424.92999267578125,
+                    "y": -48.130001068115234,
+                    "z": 6.360000133514404
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.817855834960938,
+                    "y": 4.505585670471191,
+                    "z": 3.425522804260254
+                },
+                "name_": "Wing_R03",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R03"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.752674102783203,
+                    "y": 4.022213459014893,
+                    "z": 4.184174537658691
+                },
+                "name_": "Wing_R04",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R04"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.305767059326172,
+                    "y": 4.241311550140381,
+                    "z": 4.3430376052856445
+                },
+                "name_": "Wing_R05",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.081382751464844,
+                    "y": 3.4113240242004395,
+                    "z": 4.758151531219482
+                },
+                "name_": "Wing_R05_1",
+                "offsetPosition_": {
+                    "x": 63.650001525878906,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.84747886657715,
+                    "y": 2.546128749847412,
+                    "z": 5.1908745765686035
+                },
+                "name_": "Wing_R05_2",
+                "offsetPosition_": {
+                    "x": 130.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.98893165588379,
+                    "y": 4.575739860534668,
+                    "z": 4.355706214904785
+                },
+                "name_": "Wing_R06",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.294382095336914,
+                    "y": 3.7646212577819824,
+                    "z": 5.026120185852051
+                },
+                "name_": "Wing_R06_1",
+                "offsetPosition_": {
+                    "x": 80.0,
+                    "y": -25.799999237060547,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 19.618709564208984,
+                    "y": 3.041865348815918,
+                    "z": 5.65474271774292
+                },
+                "name_": "Wing_R06_2",
+                "offsetPosition_": {
+                    "x": 153.42999267578125,
+                    "y": -52.540000915527344,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 19.57750701904297,
+                    "y": 2.1347689628601074,
+                    "z": 5.999793529510498
+                },
+                "name_": "Wing_R06_3",
+                "offsetPosition_": {
+                    "x": 215.11000061035156,
+                    "y": -32.810001373291016,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 19.328691482543945,
+                    "y": 1.4707727432250977,
+                    "z": 6.37267541885376
+                },
+                "name_": "Wing_R06_4",
+                "offsetPosition_": {
+                    "x": 268.5199890136719,
+                    "y": -32.810001373291016,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.949289321899414,
+                    "y": 4.910257339477539,
+                    "z": 4.248936653137207
+                },
+                "name_": "Wing_R08",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.634822845458984,
+                    "y": 1.429558515548706,
+                    "z": 6.675539016723633
+                },
+                "name_": "Wing_R08_1",
+                "offsetPosition_": {
+                    "x": 264.0,
+                    "y": 86.0,
+                    "z": -57.99800109863281
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 18.210500717163086,
+                    "y": 1.8511176109313965,
+                    "z": 6.829357147216797
+                },
+                "name_": "Wing_R08_2",
+                "offsetPosition_": {
+                    "x": 318.05999755859375,
+                    "y": -57.97999954223633,
+                    "z": 0.0
+                },
+                "radius_": 0.800000011920929
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.07611846923828,
+                    "y": 5.13160514831543,
+                    "z": 4.127323150634766
+                },
+                "name_": "Wing_R09",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 18.951507568359375,
+                    "y": 2.763486623764038,
+                    "z": 6.112403392791748
+                },
+                "name_": "Wing_R09_1",
+                "offsetPosition_": {
+                    "x": 250.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.090499877929688,
+                    "y": 5.389312267303467,
+                    "z": 4.006190776824951
+                },
+                "name_": "Wing_R10",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 18.823486328125,
+                    "y": 4.244658946990967,
+                    "z": 5.822068214416504
+                },
+                "name_": "Wing_R10_1",
+                "offsetPosition_": {
+                    "x": 205.1999969482422,
+                    "y": -33.41999816894531,
+                    "z": -9.800000190734863
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 19.35922622680664,
+                    "y": 4.680553436279297,
+                    "z": 5.365017414093018
+                },
+                "name_": "Wing_R10_2",
+                "offsetPosition_": {
+                    "x": 150.0,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 17.866262435913086,
+                    "y": 3.517298698425293,
+                    "z": 6.581731796264648
+                },
+                "name_": "Wing_R10_3",
+                "offsetPosition_": {
+                    "x": 300.0,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 17.422452926635742,
+                    "y": 3.171501874923706,
+                    "z": 6.943419933319092
+                },
+                "name_": "Wing_R10_4",
+                "offsetPosition_": {
+                    "x": 344.5899963378906,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 16.918228149414063,
+                    "y": 2.7786316871643066,
+                    "z": 7.354344844818115
+                },
+                "name_": "Wing_R10_5",
+                "offsetPosition_": {
+                    "x": 395.25,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 16.394357681274414,
+                    "y": 2.6515159606933594,
+                    "z": 7.413281440734863
+                },
+                "name_": "Wing_R10_6",
+                "offsetPosition_": {
+                    "x": 424.92999267578125,
+                    "y": -48.130001068115234,
+                    "z": 6.360000133514404
+                },
+                "radius_": 0.7200000286102295
+            },
+            "isActive_": false,
+            "updateName_": "Wing_R10"
+        }
+    ],
+    "collisionDetectionData": [
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.998661041259766,
+                    "y": 5.218756675720215,
+                    "z": 3.146571636199951
+                },
+                "name_": "Head",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "head"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.11408042907715,
+                    "y": 4.1131272315979,
+                    "z": 2.97406005859375
+                },
+                "name_": "Chest",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "spine_02"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.251798629760742,
+                    "y": 4.780076503753662,
+                    "z": 3.3814244270324707
+                },
+                "name_": "Shoulder_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Shoulder_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.725814819335938,
+                    "y": 4.7899322509765625,
+                    "z": 3.1347451210021973
+                },
+                "name_": "Shoulder_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Shoulder_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.67912483215332,
+                    "y": 3.9336986541748047,
+                    "z": 3.5564701557159424
+                },
+                "name_": "lowerarm_l",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "lowerarm_l"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.151935577392578,
+                    "y": 4.008296489715576,
+                    "z": 3.0057055950164795
+                },
+                "name_": "lowerarm_r",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "lowerarm_r"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.94282341003418,
+                    "y": 3.124310255050659,
+                    "z": 3.424405097961426
+                },
+                "name_": "Hand_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Hand_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.052730560302734,
+                    "y": 3.1729896068573,
+                    "z": 2.8199403285980225
+                },
+                "name_": "Hand_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Hand_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.10222816467285,
+                    "y": 3.4546449184417725,
+                    "z": 2.933224678039551
+                },
+                "name_": "spine_01",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "spine_01"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.452770233154297,
+                    "y": 1.8413052558898926,
+                    "z": 3.286609649658203
+                },
+                "name_": "calf_l",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "calf_l"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.59463119506836,
+                    "y": 1.8448231220245361,
+                    "z": 2.7743616104125977
+                },
+                "name_": "calf_r",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "calf_r"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.399578094482422,
+                    "y": 0.37892451882362366,
+                    "z": 3.67407488822937
+                },
+                "name_": "Foot_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Foot_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.272735595703125,
+                    "y": 0.36954963207244873,
+                    "z": 2.881450653076172
+                },
+                "name_": "Foot_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Foot_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.998319625854492,
+                    "y": 4.495412826538086,
+                    "z": 3.499366283416748
+                },
+                "name_": "Wing_L03",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_L03"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.53677749633789,
+                    "y": 3.9346864223480225,
+                    "z": 4.6552557945251465
+                },
+                "name_": "Wing_L04",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_L04"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.77669334411621,
+                    "y": 4.161129474639893,
+                    "z": 5.059196472167969
+                },
+                "name_": "Wing_L05",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_L05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.968414306640625,
+                    "y": 4.515206336975098,
+                    "z": 5.283382415771484
+                },
+                "name_": "Wing_L06",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.997390747070313,
+                    "y": 4.866017818450928,
+                    "z": 5.253233909606934
+                },
+                "name_": "Wing_L08",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_L08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.91861915588379,
+                    "y": 5.093644142150879,
+                    "z": 5.105263710021973
+                },
+                "name_": "Wing_L09",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_L09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.925233840942383,
+                    "y": 5.367170810699463,
+                    "z": 5.024903297424316
+                },
+                "name_": "Wing_L10",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.817855834960938,
+                    "y": 4.505585670471191,
+                    "z": 3.425522804260254
+                },
+                "name_": "Wing_R03",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_R03"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.752674102783203,
+                    "y": 4.022213459014893,
+                    "z": 4.184174537658691
+                },
+                "name_": "Wing_R04",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_R04"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.305767059326172,
+                    "y": 4.241311550140381,
+                    "z": 4.3430376052856445
+                },
+                "name_": "Wing_R05",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_R05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.98893165588379,
+                    "y": 4.575739860534668,
+                    "z": 4.355706214904785
+                },
+                "name_": "Wing_R06",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.949289321899414,
+                    "y": 4.910257339477539,
+                    "z": 4.248936653137207
+                },
+                "name_": "Wing_R08",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_R08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.07611846923828,
+                    "y": 5.13160514831543,
+                    "z": 4.127323150634766
+                },
+                "name_": "Wing_R09",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_R09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.090499877929688,
+                    "y": 5.389312267303467,
+                    "z": 4.006190776824951
+                },
+                "name_": "Wing_R10",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.4000000059604645
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Wing_R10"
+        }
+    ],
+    "damageDetectionData": [
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.998661041259766,
+                    "y": 5.218756675720215,
+                    "z": 3.146571636199951
+                },
+                "name_": "head",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "head"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.11408042907715,
+                    "y": 4.1131272315979,
+                    "z": 2.97406005859375
+                },
+                "name_": "spine_02",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "spine_02"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.251798629760742,
+                    "y": 4.780076503753662,
+                    "z": 3.3814244270324707
+                },
+                "name_": "Shoulder_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Shoulder_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.725814819335938,
+                    "y": 4.7899322509765625,
+                    "z": 3.1347451210021973
+                },
+                "name_": "Shoulder_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Shoulder_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.67912483215332,
+                    "y": 3.9336986541748047,
+                    "z": 3.5564701557159424
+                },
+                "name_": "lowerarm_l",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "lowerarm_l"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.151935577392578,
+                    "y": 4.008296489715576,
+                    "z": 3.0057055950164795
+                },
+                "name_": "lowerarm_r",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "lowerarm_r"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.94282341003418,
+                    "y": 3.124310255050659,
+                    "z": 3.424405097961426
+                },
+                "name_": "Hand_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.699999988079071
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Hand_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.052730560302734,
+                    "y": 3.1729896068573,
+                    "z": 2.8199403285980225
+                },
+                "name_": "Hand_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.699999988079071
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Hand_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.10222816467285,
+                    "y": 3.4546449184417725,
+                    "z": 2.933224678039551
+                },
+                "name_": "spine_01",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.5
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "spine_01"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.452770233154297,
+                    "y": 1.8413052558898926,
+                    "z": 3.286609649658203
+                },
+                "name_": "calf_l",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "calf_l"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.59463119506836,
+                    "y": 1.8448231220245361,
+                    "z": 2.7743616104125977
+                },
+                "name_": "calf_r",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "calf_r"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.399578094482422,
+                    "y": 0.37892451882362366,
+                    "z": 3.67407488822937
+                },
+                "name_": "Foot_L",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Foot_L"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.272735595703125,
+                    "y": 0.36954963207244873,
+                    "z": 2.881450653076172
+                },
+                "name_": "Foot_R",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 1.100000023841858
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Foot_R"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.04994010925293,
+                    "y": 0.6104340553283691,
+                    "z": 2.759354829788208
+                },
+                "name_": "Steps",
+                "offsetPosition_": {
+                    "x": -190.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.699999988079071
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "spine_01"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.998319625854492,
+                    "y": 4.495412826538086,
+                    "z": 3.499366283416748
+                },
+                "name_": "Wing_L03",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L03"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.53677749633789,
+                    "y": 3.9346864223480225,
+                    "z": 4.6552557945251465
+                },
+                "name_": "Wing_L04",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L04"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.77669334411621,
+                    "y": 4.161129474639893,
+                    "z": 5.059196472167969
+                },
+                "name_": "Wing_L05",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.888126373291016,
+                    "y": 3.291774272918701,
+                    "z": 5.437814712524414
+                },
+                "name_": "Wing_L05_1",
+                "offsetPosition_": {
+                    "x": 63.650001525878906,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.004287719726563,
+                    "y": 2.3855416774749756,
+                    "z": 5.832493782043457
+                },
+                "name_": "Wing_L05_2",
+                "offsetPosition_": {
+                    "x": 130.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.968414306640625,
+                    "y": 4.515206336975098,
+                    "z": 5.283382415771484
+                },
+                "name_": "Wing_L06",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.324132919311523,
+                    "y": 3.6594767570495605,
+                    "z": 6.138343811035156
+                },
+                "name_": "Wing_L06_1",
+                "offsetPosition_": {
+                    "x": 80.0,
+                    "y": -25.799999237060547,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.670806884765625,
+                    "y": 2.8962996006011963,
+                    "z": 6.957765579223633
+                },
+                "name_": "Wing_L06_2",
+                "offsetPosition_": {
+                    "x": 153.42999267578125,
+                    "y": -52.540000915527344,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.683837890625,
+                    "y": 1.9479866027832031,
+                    "z": 7.1678009033203125
+                },
+                "name_": "Wing_L06_3",
+                "offsetPosition_": {
+                    "x": 215.11000061035156,
+                    "y": -32.810001373291016,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.807762145996094,
+                    "y": 1.2512414455413818,
+                    "z": 7.543340682983398
+                },
+                "name_": "Wing_L06_4",
+                "offsetPosition_": {
+                    "x": 268.5199890136719,
+                    "y": -32.810001373291016,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.997390747070313,
+                    "y": 4.866017818450928,
+                    "z": 5.253233909606934
+                },
+                "name_": "Wing_L08",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.120784759521484,
+                    "y": 0.8868951797485352,
+                    "z": 6.256784439086914
+                },
+                "name_": "Wing_L08_1",
+                "offsetPosition_": {
+                    "x": 264.0,
+                    "y": 86.0,
+                    "z": -57.99800109863281
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.409160614013672,
+                    "y": 1.6393306255340576,
+                    "z": 8.58689022064209
+                },
+                "name_": "Wing_L08_2",
+                "offsetPosition_": {
+                    "x": 318.05999755859375,
+                    "y": -57.97999954223633,
+                    "z": 0.0
+                },
+                "radius_": 0.800000011920929
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.91861915588379,
+                    "y": 5.093644142150879,
+                    "z": 5.105263710021973
+                },
+                "name_": "Wing_L09",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.02110481262207,
+                    "y": 2.603999614715576,
+                    "z": 7.683770179748535
+                },
+                "name_": "Wing_L09_1",
+                "offsetPosition_": {
+                    "x": 250.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 23.925233840942383,
+                    "y": 5.367170810699463,
+                    "z": 5.024903297424316
+                },
+                "name_": "Wing_L10",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.27305793762207,
+                    "y": 4.097120761871338,
+                    "z": 7.538334846496582
+                },
+                "name_": "Wing_L10_1",
+                "offsetPosition_": {
+                    "x": 205.1999969482422,
+                    "y": -33.41999816894531,
+                    "z": -9.800000190734863
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 24.979705810546875,
+                    "y": 4.560999870300293,
+                    "z": 6.91810941696167
+                },
+                "name_": "Wing_L10_2",
+                "offsetPosition_": {
+                    "x": 150.0,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.759174346923828,
+                    "y": 3.3340771198272705,
+                    "z": 8.63554573059082
+                },
+                "name_": "Wing_L10_3",
+                "offsetPosition_": {
+                    "x": 300.0,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 25.99088478088379,
+                    "y": 2.9693541526794434,
+                    "z": 9.146082878112793
+                },
+                "name_": "Wing_L10_4",
+                "offsetPosition_": {
+                    "x": 344.5899963378906,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 26.25413703918457,
+                    "y": 2.5549814701080322,
+                    "z": 9.726118087768555
+                },
+                "name_": "Wing_L10_5",
+                "offsetPosition_": {
+                    "x": 395.25,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 26.26593589782715,
+                    "y": 2.501209259033203,
+                    "z": 10.265602111816406
+                },
+                "name_": "Wing_L10_6",
+                "offsetPosition_": {
+                    "x": 424.92999267578125,
+                    "y": -48.130001068115234,
+                    "z": 6.360000133514404
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_L10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 22.817855834960938,
+                    "y": 4.505585670471191,
+                    "z": 3.425522804260254
+                },
+                "name_": "Wing_R03",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R03"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.752674102783203,
+                    "y": 4.022213459014893,
+                    "z": 4.184174537658691
+                },
+                "name_": "Wing_R04",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R04"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.305767059326172,
+                    "y": 4.241311550140381,
+                    "z": 4.3430376052856445
+                },
+                "name_": "Wing_R05",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.081382751464844,
+                    "y": 3.4113240242004395,
+                    "z": 4.758151531219482
+                },
+                "name_": "Wing_R05_1",
+                "offsetPosition_": {
+                    "x": 63.650001525878906,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.84747886657715,
+                    "y": 2.546128749847412,
+                    "z": 5.1908745765686035
+                },
+                "name_": "Wing_R05_2",
+                "offsetPosition_": {
+                    "x": 130.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R05"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.98893165588379,
+                    "y": 4.575739860534668,
+                    "z": 4.355706214904785
+                },
+                "name_": "Wing_R06",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.294382095336914,
+                    "y": 3.7646212577819824,
+                    "z": 5.026120185852051
+                },
+                "name_": "Wing_R06_1",
+                "offsetPosition_": {
+                    "x": 80.0,
+                    "y": -25.799999237060547,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 19.618709564208984,
+                    "y": 3.041865348815918,
+                    "z": 5.65474271774292
+                },
+                "name_": "Wing_R06_2",
+                "offsetPosition_": {
+                    "x": 153.42999267578125,
+                    "y": -52.540000915527344,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 19.57750701904297,
+                    "y": 2.1347689628601074,
+                    "z": 5.999793529510498
+                },
+                "name_": "Wing_R06_3",
+                "offsetPosition_": {
+                    "x": 215.11000061035156,
+                    "y": -32.810001373291016,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 19.328691482543945,
+                    "y": 1.4707727432250977,
+                    "z": 6.37267541885376
+                },
+                "name_": "Wing_R06_4",
+                "offsetPosition_": {
+                    "x": 268.5199890136719,
+                    "y": -32.810001373291016,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R06"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.949289321899414,
+                    "y": 4.910257339477539,
+                    "z": 4.248936653137207
+                },
+                "name_": "Wing_R08",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 20.634822845458984,
+                    "y": 1.429558515548706,
+                    "z": 6.675539016723633
+                },
+                "name_": "Wing_R08_1",
+                "offsetPosition_": {
+                    "x": 264.0,
+                    "y": 86.0,
+                    "z": -57.99800109863281
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 18.210500717163086,
+                    "y": 1.8511176109313965,
+                    "z": 6.829357147216797
+                },
+                "name_": "Wing_R08_2",
+                "offsetPosition_": {
+                    "x": 318.05999755859375,
+                    "y": -57.97999954223633,
+                    "z": 0.0
+                },
+                "radius_": 0.800000011920929
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R08"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.07611846923828,
+                    "y": 5.13160514831543,
+                    "z": 4.127323150634766
+                },
+                "name_": "Wing_R09",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 18.951507568359375,
+                    "y": 2.763486623764038,
+                    "z": 6.112403392791748
+                },
+                "name_": "Wing_R09_1",
+                "offsetPosition_": {
+                    "x": 250.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R09"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 21.090499877929688,
+                    "y": 5.389312267303467,
+                    "z": 4.006190776824951
+                },
+                "name_": "Wing_R10",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 18.823486328125,
+                    "y": 4.244658946990967,
+                    "z": 5.822068214416504
+                },
+                "name_": "Wing_R10_1",
+                "offsetPosition_": {
+                    "x": 205.1999969482422,
+                    "y": -33.41999816894531,
+                    "z": -9.800000190734863
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 19.35922622680664,
+                    "y": 4.680553436279297,
+                    "z": 5.365017414093018
+                },
+                "name_": "Wing_R10_2",
+                "offsetPosition_": {
+                    "x": 150.0,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 17.866262435913086,
+                    "y": 3.517298698425293,
+                    "z": 6.581731796264648
+                },
+                "name_": "Wing_R10_3",
+                "offsetPosition_": {
+                    "x": 300.0,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 17.422452926635742,
+                    "y": 3.171501874923706,
+                    "z": 6.943419933319092
+                },
+                "name_": "Wing_R10_4",
+                "offsetPosition_": {
+                    "x": 344.5899963378906,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 16.918228149414063,
+                    "y": 2.7786316871643066,
+                    "z": 7.354344844818115
+                },
+                "name_": "Wing_R10_5",
+                "offsetPosition_": {
+                    "x": 395.25,
+                    "y": -34.34000015258789,
+                    "z": -9.0
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R10"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 16.394357681274414,
+                    "y": 2.6515159606933594,
+                    "z": 7.413281440734863
+                },
+                "name_": "Wing_R10_6",
+                "offsetPosition_": {
+                    "x": 424.92999267578125,
+                    "y": -48.130001068115234,
+                    "z": 6.360000133514404
+                },
+                "radius_": 0.7200000286102295
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Wing_R10"
+        }
+    ]
+}

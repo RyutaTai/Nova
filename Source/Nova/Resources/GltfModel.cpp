@@ -10,6 +10,7 @@
 #include "../Graphics/Graphics.h"
 #include "../Resources/Texture.h"
 #include "../Others/MathHelper.h"
+#include "../Others/GltfUtility.h"
 
 #define TINYGLTF_IMPLEMENTATION
 #define TINYGLTF_NO_EXTERANL_IMAGE
@@ -1358,10 +1359,4 @@ void GltfModel::DrawDebug()
         ImGui::DragFloat("Time", &currentAnimationSeconds_, 0.0f, 5.0f);
         ImGui::TreePop();
     }
-}
-
-bool NullLoadImageData(tinygltf::Image*, const int, std::string*, std::string*,
-    int, int, const unsigned char*, int, void*)
-{
-    return true;
 }

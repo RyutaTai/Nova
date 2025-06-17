@@ -423,11 +423,13 @@
     <ClInclude Include="Source\Nova\Input\GamePad.h" />
     <ClInclude Include="Source\Nova\Input\Input.h" />
     <ClInclude Include="Source\Nova\Input\Mouse.h" />
+    <ClInclude Include="Source\Nova\Others\CerealHelper.h" />
     <ClInclude Include="Source\Nova\Others\Converter.h" />
     <ClInclude Include="Source\Nova\Others\Easing.h" />
+    <ClInclude Include="Source\Nova\Others\GltfUtility.h" />
     <ClInclude Include="Source\Nova\Others\JsonHelper.h" />
     <ClInclude Include="Source\Nova\Others\MathHelper.h" />
-    <ClInclude Include="Source\Nova\Others\MemoryUtilities.h" />
+    <ClInclude Include="Source\Nova\Others\MemoryUtility.h" />
     <ClInclude Include="Source\Nova\Others\Misc.h" />
     <ClInclude Include="Source\Nova\Others\Transform.h" />
     <ClInclude Include="Source\Nova\Resources\Effect.h" />

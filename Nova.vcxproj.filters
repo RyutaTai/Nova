@@ -858,7 +858,7 @@
     <ClInclude Include="Source\Game\Character\Player\PlayerState.h">
       <Filter>Game\Character\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\Others\MemoryUtilities.h">
+    <ClInclude Include="Source\Nova\Others\MemoryUtility.h">
       <Filter>Nova\Others</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\Bloom.h">
@@ -886,6 +886,12 @@
       <Filter>Nova\Graphics\ContrastFilter</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Others\JsonHelper.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\CerealHelper.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\GltfUtility.h">
       <Filter>Nova\Others</Filter>
     </ClInclude>
   </ItemGroup>

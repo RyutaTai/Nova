@@ -57,7 +57,6 @@ Player::Player()
 	RegisterCollisionData("./Resources/Json/PlayerCollisionData.json");
 
 	//	----- オーディオ初期設定 -----
-	
 	//	----- 足音SE -----
 	sources_[static_cast<int>(AudioStereo::Footsteps)] = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/FootstepsOne2.wav", Audio::AudioType::SENormal, "GameScene");
 	sources_[static_cast<int>(AudioStereo::Footsteps)]->SetVolume(0.3f, false);
@@ -99,7 +98,7 @@ void Player::Initialize()
 	//	----- 座標系変換 -----
 	GetTransform()->SetCoordinateSystem(Transform::CoordinateSystem::cRightYup);
 
-	//	----- 当たり判定用半径、高さ設定 -----
+	//	----- 半径、高さ設定 -----
 	radius_ = 0.7f;
 	height_ = 3.4f;
 
@@ -159,7 +158,7 @@ void Player::RegisterCollisionData(const std::string& jsonFileName)
 {
 	//	Json書き出しパスとファイル名を設定
 	collisionDataJsonFileName_ = jsonFileName;
-
+#if 1
 #pragma region ----- 押し出し判定登録 -----
 	//	{名前、半径、  Y軸を固定するか、オフセット位置、更新名、	デフォルトカラー、	ヒットカラー}
 	//	{name, radius, fixedY,			offsetPosition,	updateName,	defaultColor,		hitColor}
@@ -183,7 +182,7 @@ void Player::RegisterCollisionData(const std::string& jsonFileName)
 	//	{名前、半径、	オフセット位置、ダメージ倍率、	更新名、	デフォルトカラー、	ヒットカラー}
 	//	{name, radius,	offsetPos,		damage,			updateName,	defaultColor,		hitColor}
 	
-	RegisterDamageDetectionData({ "head",						0.4f,{0.08f,0.0f,0.0f},0.3f,"" });	//	頭
+	RegisterDamageDetectionData({ "head",						0.4f,{0.08f,0.0f,0.0f},1.0f,"" });	//	頭
 	RegisterDamageDetectionData({ "spine_04",					0.4f,{},1.0f,"" });	//	胸部
 	RegisterDamageDetectionData({ "upperarm_correctiveRoot_l",	0.4f,{},1.0f,"" });	//	左肩
 	RegisterDamageDetectionData({ "upperarm_correctiveRoot_r",	0.4f,{},1.0f,"" });	//	右肩
@@ -209,7 +208,9 @@ void Player::RegisterCollisionData(const std::string& jsonFileName)
 	SetAllAttackDetectionActiveFlag(false);
 
 #pragma endregion ----- 攻撃判定登録 -----
-
+#else
+	LoadCollisionDataFromJson(jsonFileName);
+#endif
 }
 
 //	当たり判定更新
@@ -551,14 +552,14 @@ void Player::DrawStateStr()
 		"Dodge","GetUp","Damage","Flinch","Death"
 	};
 
-	ImGui::Text(u8"State　%s", stateStr[static_cast<int>(stateMachine_->GetStateIndex())].c_str());	//	ステート表示
+	ImGui::Text(u8"State　%s", stateStr[static_cast<int>(stateMachine_->GetCurrentStateIndex())].c_str());	//	ステート表示
 
 }
 
 //	デバッグ描画
 void Player::DrawDebug()
 {
-	if (ImGui::TreeNode(u8"Playerプレイヤー"))
+	if (ImGui::TreeNode(u8"Player プレイヤー"))
 	{
 		//	----- ステート -----
 		DrawStateStr();				//	現在のステート表示
@@ -596,8 +597,7 @@ void Player::DrawDebug()
 		ImGui::Checkbox("PlayEffect", &playEffectFlag_);	//	エフェクト再生フラグ
 		ImGui::Checkbox("DrawEffect", &drawEffectFlag_);	//	エフェクト描画フラグ
 		ImGui::Checkbox("AddGravity", &isAddGravity_);		//	重力フラグ
-
-		
+	
 		ImGui::TreePop();
 	}
 }
@@ -608,7 +608,7 @@ void Player::DrawDebugPrimitive()
 	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 
 	//	衝突判定用のデバッグ円柱を描画
-	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), radius_, height_, DirectX::XMFLOAT4(0, 0, 0, 1));
+	debugRenderer->DrawCylinder(GetTransform()->GetPosition(), radius_, height_, DirectX::XMFLOAT4(0, 0, 0, 1));
 
 	//	----- Collision -----
 	if (isCollisionSphere_)

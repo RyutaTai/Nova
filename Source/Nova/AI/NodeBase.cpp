@@ -3,7 +3,7 @@
 #include "JudgmentBase.h"
 #include "BehaviorData.h"
 #include "../Others/MathHelper.h"
-#include "../Others/MemoryUtilities.h"
+#include "../Others/MemoryUtility.h"
 
 //	コンストラクタ
 NodeBase::NodeBase(const std::string& name, NodeBase* parent, NodeBase* sibling, const int& priority,

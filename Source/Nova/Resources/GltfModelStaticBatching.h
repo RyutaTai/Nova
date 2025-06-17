@@ -12,13 +12,9 @@
 #include <unordered_map>
 
 #include "../../tinygltf-release/tiny_gltf.h"
-#include <cereal/archives/binary.hpp>
-#include <cereal/types/memory.hpp>
-#include <cereal/types/vector.hpp>
-#include <cereal/types/set.hpp>
-#include <cereal/types/unordered_map.hpp>
+
 #include "../Others/Transform.h"
-#include "../Resources/GltfModel.h"
+#include "../Others/CerealHelper.h" 
 
 class GltfModelStaticBatching
 {

@@ -4,8 +4,10 @@
 #include <functional>
 #include <fbxsdk.h>
 
-#include "../Resources/GltfModel.h"
+#include "../../../External/imgui/imgui.h"
+
 #include "../Others/Converter.h"
+#include "../Others/GltfUtility.h"
 
 CollisionMesh::CollisionMesh(ID3D11Device* device, const std::string& filename, bool triangulate)
 {
@@ -46,8 +48,8 @@ CollisionMesh::CollisionMesh(ID3D11Device* device, const std::string& filename, 
 				}
 
 				const FbxVector4* controlPoints = fbxMesh->GetControlPoints();
-				const int polygon_count = fbxMesh->GetPolygonCount();
-				for (int polygonIndex = 0; polygonIndex < polygon_count; ++polygonIndex)
+				const int polygonCount = fbxMesh->GetPolygonCount();
+				for (int polygonIndex = 0; polygonIndex < polygonCount; ++polygonIndex)
 				{
 					const int materialIndex = materialCount > 0 ? fbxMesh->GetElementMaterial()->GetIndexArray().GetAt(polygonIndex) : 0;
 					decltype(mesh.subsets_)::reference subset = mesh.subsets_.at(materialIndex);
@@ -275,6 +277,7 @@ void CollisionMesh::CreateAreas(const int& gridSizeX, const int& gridSizeZ)
 	}
 }
 
+//	レイとAABB
 inline bool IntersectRayAABB(const float rayPos[3], const float rayDirection[3], const float p0[3], const float p1[3])
 {
 	float tMin = 0;
@@ -538,6 +541,7 @@ void CollisionMesh::DrawDebug()
 {
 	if (ImGui::TreeNode("CollisionMesh"))
 	{
+		//	空間分割サイズ
 		if (ImGui::InputInt("AreaGridSize", &areaGridSize_))
 		{
 			SetAreaGridSize(areaGridSize_);

@@ -38,9 +38,14 @@ HRESULT MakeDummyTexture(ID3D11Device* device, ID3D11ShaderResourceView** shader
 	shaderResourceViewDesc.Format = texture2dDesc.Format;
 	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
-	hr = device->CreateShaderResourceView(texture2d.Get(), &shaderResourceViewDesc,
-		shaderResourceView);
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv;
+	hr = device->CreateShaderResourceView(texture2d.Get(), &shaderResourceViewDesc, srv.GetAddressOf());
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+
+	if (shaderResourceView)
+	{
+		srv.CopyTo(shaderResourceView); // 呼び出し元にComPtr経由で渡す
+	}
 
 	return hr;
 }
@@ -50,20 +55,26 @@ HRESULT LoadTextureFromFile(ID3D11Device* device, const wchar_t* filename,
 {
 	HRESULT hr{ S_OK };
 	Microsoft::WRL::ComPtr<ID3D11Resource>resource;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv;
 	std::filesystem::path ddsFilename(filename);
 	ddsFilename.replace_extension("dds");
 	if (std::filesystem::exists(ddsFilename.c_str()))	//	ファイル拡張子がddsの場合
 	{
-		hr = DirectX::CreateDDSTextureFromFile(device, ddsFilename.c_str(), resource.GetAddressOf(), shaderResourceView);
+		hr = DirectX::CreateDDSTextureFromFile(device, ddsFilename.c_str(), resource.GetAddressOf(), srv.GetAddressOf());
 		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 	}
 	else
 	{
-		hr = DirectX::CreateWICTextureFromFile(device, filename, resource.GetAddressOf(), shaderResourceView);
+		hr = DirectX::CreateWICTextureFromFile(device, filename, resource.GetAddressOf(), srv.GetAddressOf());
 		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 	}
-	resources.insert(std::make_pair(filename, *shaderResourceView));
+	resources.insert(std::make_pair(filename, srv));
 	
+	if (shaderResourceView)
+	{
+		srv.CopyTo(shaderResourceView);
+	}
+
 	if (texture2dDesc)
 	{
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> texture2D;
@@ -80,14 +91,20 @@ HRESULT LoadTextureFromMemory(ID3D11Device* device, const void* data,
 {
 	HRESULT hr{ S_OK };
 	Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv;
 
 	hr = DirectX::CreateDDSTextureFromMemory(device, reinterpret_cast<const uint8_t*>(data),
-		size, resource.GetAddressOf(), shaderResourceView);
+		size, resource.GetAddressOf(), srv.GetAddressOf());
 	if (hr != S_OK)
 	{
 		hr = DirectX::CreateWICTextureFromMemory(device, reinterpret_cast<const uint8_t*>(data),
-			size, resource.GetAddressOf(), shaderResourceView);
+			size, resource.GetAddressOf(), srv.GetAddressOf());
 		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
+	}
+
+	if (shaderResourceView)
+	{
+		srv.CopyTo(shaderResourceView); // 呼び出し元にComPtr経由で渡す
 	}
 
 	return hr;

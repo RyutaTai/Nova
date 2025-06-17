@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Others/JsonHelper.h"
 #include <string>
+#include "../Others/JsonHelper.h"
 #include "../Others/MathHelper.h"
 
 //	球判定用データ
@@ -49,7 +49,8 @@ public:
 	//	----- Json -----
 	friend inline void to_json(nlohmann::json& j, const CollisionSphereData& d)
 	{
-		j = nlohmann::json{
+		j = nlohmann::json
+		{
 			{"name_", d.name_},
 			{"jointPosition_", d.jointPosition_},
 			{"offsetPosition_", d.offsetPosition_},
@@ -145,7 +146,8 @@ public:
 	//	----- Json -----
 	friend inline void to_json(nlohmann::json& j, const CollisionCylinderData& d)
 	{
-		j = nlohmann::json{
+		j = nlohmann::json
+		{
 			{"name_", d.name_},
 			{"jointPosition_", d.jointPosition_},
 			{"offsetPosition_", d.offsetPosition_},
@@ -210,6 +212,7 @@ public:
 	void DrawDebug();
 
 	// ----- 名前 -----
+	void SetName(const std::string& name) { collisionSphereData_.SetName(name); }
 	const std::string GetName() const { return collisionSphereData_.GetName(); }
 
 	// ----- 半径 -----
@@ -233,7 +236,8 @@ public:
 	//	----- Json -----
 	friend inline void to_json(nlohmann::json& j, const AttackDetectionData& d)
 	{
-		j = nlohmann::json{
+		j = nlohmann::json
+		{
 			{"collisionSphereData_", d.collisionSphereData_},
 			{"updateName_", d.GetUpdateName()},
 			{"isActive_", d.GetIsActive()}
@@ -316,7 +320,8 @@ public:
 	//	----- Json -----
 	friend inline void to_json(nlohmann::json& j, const DamageDetectionData& d)
 	{
-		j = nlohmann::json{
+		j = nlohmann::json
+		{
 			{"collisionSphereData_", d.collisionSphereData_},
 			{"damage_", d.damage_},
 			{"isHit_", d.isHit_},
@@ -401,7 +406,8 @@ struct CollisionDetectionData
 	//	----- Json -----
 	friend inline void to_json(nlohmann::json& j, const CollisionDetectionData& d) 
 	{
-		j = nlohmann::json{
+		j = nlohmann::json
+		{
 			{"collisionSphereData_", d.collisionSphereData_},
 			{"isActive_", d.isActive_},
 			{"fixedY_", d.fixedY_},

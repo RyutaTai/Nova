@@ -18,8 +18,8 @@ private:
 		float				timer_ = 0.0f;			//	タイマー
 
 	public:
-		Sprite* GetLeft()	{ return left_.get(); }			//	左側の半円取得
-		Sprite* GetRight()	{ return right_.get(); }		//	右側の半円取得
+		Sprite* GetLeft()	const { return left_.get(); }		//	左側の半円取得
+		Sprite* GetRight()	const { return right_.get(); }		//	右側の半円取得
 		
 		//	初期の中心円からの距離
 		void SetInitRange(const float& range) { initRange_ = range; }
@@ -69,26 +69,26 @@ private:
 	void UpdateScale(const float& elapsedTime);		//	UIのスケール更新処理
 
 public:
-	static constexpr int		SemicircleMax_ = 4;				//	半円の数
+	static constexpr int		SemicircleMax_ = 4;				//	半円の最大数
 
 private:
 	std::unique_ptr<Sprite>		center_;						//	テンポガイドの中心
 	std::unique_ptr<Semicircle> semicircles_[SemicircleMax_];	//	半円の組
 	
 	float quarterNoteDuration_ = 0.4285714285714286f;		//	BPM140のときの、4分音符1つ分の長さ
-	float semicircleOffset_ = 0.1f;
+	float semicircleOffset_ = 0.1f;							//	最初は半円を配置する際のオフセット値
 
 	//	中心円からの距離
 	double	rangePerOne_ = 1.0;				//	半円1つ当たりの距離 ( 最大距離/個数 に設定し、等間隔に配置する)
-	double	totalRange_ = 0.0f;					//	それぞれの距離の合計
-	double	semicircleRangeMax_ = 576.0;		//	rangeの最大値
+	double	totalRange_ = 0.0f;				//	それぞれの距離の合計
+	double	semicircleRangeMax_ = 576.0;	//	rangeの最大値
 	double	semicircleRangeMin_ = -0.5;		//	rangeの最小値。これを下回ったら位置リセット
 	
 	//	スケール
-	float	centerScaleMax_ = 1.0f;				//	中心円のスケール最大値
-	float	centerScaleMin_ = 0.75f;			//	中心円のスケール最小値
-	float	semicircleScaleMax_ = 1.5f;			//	半円のスケール最大値
-	float	semicircleScaleMin_ = 1.0f;			//	半円のスケール最小値
+	float	centerScaleMax_ = 1.0f;			//	中心円のスケール最大値
+	float	centerScaleMin_ = 0.75f;		//	中心円のスケール最小値
+	float	semicircleScaleMax_ = 1.5f;		//	半円のスケール最大値
+	float	semicircleScaleMin_ = 1.0f;		//	半円のスケール最小値
 
 	//	アニメーション
 	bool	centerCircleAnimFlag_ = false;		//	中心円のアニメーション更新フラグ

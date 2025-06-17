@@ -22,7 +22,7 @@
 //	初期化
 void SceneGame::Initialize()
 {
-	/* ----- オーディオ初期化 ----- */
+	// ----- オーディオ初期化 -----
 #if 1
 	//AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Game.wav", Audio::AudioType::BGMNormal, "GameScene");
 	AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/452_BPM140_2.wav", Audio::AudioType::BGMNormal, "GameScene");
@@ -34,13 +34,13 @@ void SceneGame::Initialize()
 	gameBGM->SetAudioName("GameBGM");
 	AudioManager::Instance().Register(gameBGM);
 
-	/* ----- スプライト初期化 ----- */
+	// ----- スプライト初期化 -----
 	//sprite_[static_cast<int>(SPRITE_GAME::BACK)] = std::make_unique<Sprite>(Graphics::Instance().GetDevice(), L"./Resources/Image/Game.png");
 
-	sprites_[static_cast<int>(SPRITE_GAME::Clear)]	 = std::make_unique<Sprite>(L"./Resources/Image/Clear.png");
-	sprites_[static_cast<int>(SPRITE_GAME::GameOver)] = std::make_unique<Sprite>(L"./Resources/Image/GameOver.png");
+	sprites_[static_cast<int>(SPRITE_GAME::Clear)]		= std::make_unique<Sprite>(L"./Resources/Image/Clear.png");
+	sprites_[static_cast<int>(SPRITE_GAME::GameOver)]	= std::make_unique<Sprite>(L"./Resources/Image/GameOver.png");
 
-	/* ----- UI初期化(生成したらUIクラスでマネージャーに登録される) ----- */
+	// ----- UI初期化 -----
 	std::unique_ptr<UIHealth> uiHealth = std::make_unique<UIHealth>();
 	UIManager::Instance().Register(std::move(uiHealth));
 	//UIInstructions* uiInstructions	= new UIInstructions();
@@ -54,31 +54,30 @@ void SceneGame::Initialize()
 	UIManager::Instance().Register(std::move(uiRank));
 	UIManager::Instance().Initialize();					//	登録し終わってから初期化処理をする
 
-	/* ----- Rhythmクラス初期化 ----- */
+	// ----- Rhythmクラス初期化 -----
 	JudgeRhythm::Instance().Initialize();
 
-	/* ----- ステージ初期化 ----- */
+	// ----- ステージ初期化 -----
 	stage_ = std::make_unique<Stage>();					//	シティモデル
 
-	/* ----- シーン定数バッファ ----- */
-	D3D11_BUFFER_DESC desc;
-	desc.ByteWidth = (sizeof(Graphics::SceneConstants));
-	desc.Usage = D3D11_USAGE_DEFAULT;
-	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	desc.CPUAccessFlags = 0;
-	desc.MiscFlags = 0;
-	desc.StructureByteStride = 0;
-	Graphics::Instance().GetDevice()->CreateBuffer(&desc, nullptr, sceneConstantBuffer_.GetAddressOf());
+	// ----- シーン定数バッファ -----
+	D3D11_BUFFER_DESC bufferDesc{};
+	bufferDesc.ByteWidth = (sizeof(Graphics::SceneConstants));
+	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	bufferDesc.CPUAccessFlags = 0;
+	bufferDesc.MiscFlags = 0;
+	bufferDesc.StructureByteStride = 0;
+	Graphics::Instance().GetDevice()->CreateBuffer(&bufferDesc, nullptr, sceneConstantBuffer_.GetAddressOf());
 
-	/* ----- カメラ初期化 ----- */
+	// ----- カメラ初期化 -----
 	Camera::Instance().Initialize();
 
-	/* ----- プレイヤー初期化 ----- */
+	// ----- プレイヤー初期化 -----
 	player_ = std::make_unique<Player>();
-	//player_ = std::make_unique<Player>("./Resources/Model/free-mixamo-retextured-model/source/model4.fbx", false, 60.0f);
 	player_->Initialize();
 
-	/* ----- エネミー初期化 ----- */
+	// ----- エネミー初期化 -----
 	dragonkin_ = std::make_unique<Dragonkin>();
 	dragonkin_->Initialize();
 	EnemyManager::Instance().Register(std::move(dragonkin_));
@@ -143,7 +142,6 @@ void SceneGame::Initialize()
 	stateMachine_->RegisterState(new GameState::Wave3State(this));		//	Wave3
 	stateMachine_->RegisterState(new GameState::GameClearState(this));	//	ゲームクリア
 	stateMachine_->RegisterState(new GameState::GameOverState(this));	//	ゲームオーバー
-	stateMachine_->RegisterState(new GameState::ContinueState(this));	//	コンティニュー
 	//	初期ステート設定
 	stateMachine_->SetState(static_cast<int>(SceneGameState::Wave1));	//	初期ステートセット
 
@@ -212,16 +210,16 @@ void SceneGame::Update(const float& elapsedTime)
 	sharpenFilter_->Update();
 
 	//	ゲームクリアへの遷移はWeve3 State内で行っている	
-	//	ゲームオーバー
+	//	ゲームオーバーへの遷移
 	float playerHp = player_->GetHp();
-	if (playerHp <= 0.0f && stateMachine_->GetStateIndex() != static_cast<int>(SceneGameState::GameOver))
+	if (playerHp <= 0.0f && stateMachine_->GetCurrentStateIndex() != static_cast<int>(SceneGameState::GameOver))
 	{
 		AudioManager::Instance().GetAudioResource("GameBGM")->SetVolume(0.1f, false);
 		ChangeState(SceneGameState::GameOver);
 	}
 
 	//	タイトルへ遷移
-	if (changeTitle_)
+	if (changeTitleFlag_)
 	{
 		SceneManager::Instance().ChangeScene(new SceneTitle);
 	}
@@ -453,9 +451,9 @@ void SceneGame::DrawShadow()
 	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::NONE);
 	ID3D11ShaderResourceView* shaderResourceViews[]
 	{
-		framebuffers_[0]->shaderResourceViews_[0].Get(),	// colorMap
-		framebuffers_[0]->shaderResourceViews_[1].Get(),	// DepthMap
-		cascadedShadowMaps_->DepthMap().Get()				// cascadedShadowMaps
+		framebuffers_[0]->shaderResourceViews_[0].Get(),	//	colorMap
+		framebuffers_[0]->shaderResourceViews_[1].Get(),	//	DepthMap
+		cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMaps
 	};
 	fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[2].Get());
 
@@ -485,7 +483,7 @@ void SceneGame::DrawDebug()
 	//	----- DebugRenderer -----
 	Graphics::Instance().GetDebugRenderer()->DrawDebugGUI();
 
-	//	SceneConstant
+	//	----- SceneConstant -----
 	if (ImGui::TreeNode("SceneConstant"))
 	{
 		ImGui::DragFloat4("LightDirection", &lightDirection_.x, 0.01f, -1.0f, 1.0f);	//	ライトの向き
@@ -535,6 +533,7 @@ void SceneGame::DrawDebug()
 	
 	//	----- UI -----
 	UIManager::Instance().DrawDebug();
+
 	//	----- Rhythm -----
 	JudgeRhythm::Instance().DrawDebug();
 

@@ -64,7 +64,7 @@ public:
 	int			GetCurrentAnimNum()			const{ return gltfModelResource_->GetCurrentAnimNum(); }				//	現在再生中のアニメーション番号取得
 	const float GetAnimationDuration(const int& animIndex)const { return gltfModelResource_->GetAnimationDuration(animIndex); }
 
-	//	-----	ピクセルシェーダー -----
+	//	----- ピクセルシェーダー -----
 	void SetPixelShader(const char* csoName);
 	
 	//	----- シャドウマップ -----
@@ -170,8 +170,8 @@ private:
 	const float MoveSpeed_ = 20.0f;	//	最大の速さ
 
 private:
-	std::shared_ptr <GltfModel>					gltfModelResource_;		//	Gltfモデル
-	Microsoft::WRL::ComPtr <ID3D11PixelShader>	pixelShader_;
+	std::shared_ptr<GltfModel>					gltfModelResource_;		//	Gltfモデル
+	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShader_;
 
 };
 

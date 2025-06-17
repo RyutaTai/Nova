@@ -7,13 +7,6 @@
 #include <mutex>
 #include <dxgi1_6.h>
 
-#ifdef ENABLE_DIRECT2D
-#include <d2d1_1.h>
-#include <dwrite.h>
-#pragma comment(lib,"d2d1.lib")
-#pragma comment(lib,"dwrite.lib")
-#endif
-
 #include "../Graphics/Framebuffer.h"
 #include "../Graphics/FullScreenQuad.h"
 #include "../Graphics/Shader.h"
@@ -52,9 +45,6 @@ public:
 	void	StylizeWindow(bool fullscreen);
 	void	PresentFrame();
 	size_t	VideoMemoryUsage();
-#ifdef ENABLE_DIRECT2D
-	void	CreateDirect2dObjects();
-#endif
 
 	void ClearSceneConstant() { sceneConstant_ = {}; }
 	//	セッター
@@ -111,11 +101,6 @@ private:
 	//	Fullscreen
 	CONST HWND	hwnd_;
 	Microsoft::WRL::ComPtr<IDXGIAdapter3>			adapter_;
-#ifdef ENABLE_DIRECT2D
-	Microsoft::WRL::ComPtr<ID2D1DeviceContext>		d2d1DeviceContext_;
-	Microsoft::WRL::ComPtr<IDWriteTextFormat>		dwriteTextFormats_[8];
-	Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>	d2dSolidColorBrushes_[8];
-#endif
 	bool	fullScreenMode_		= false;
 	bool	tearingSupported_	= false;
 	RECT	windowedRect_;

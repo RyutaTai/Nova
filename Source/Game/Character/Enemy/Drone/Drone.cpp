@@ -468,7 +468,7 @@ void Drone::DrawStateStr()
 		"Attack","Avoidance","Damage","Death",
 	};
 
-	ImGui::Text(u8"State　%s", stateStr[static_cast<int>(stateMachine_->GetStateIndex())].c_str());	//	ステート表示
+	ImGui::Text(u8"State　%s", stateStr[static_cast<int>(stateMachine_->GetCurrentStateIndex())].c_str());	//	ステート表示
 
 }
 

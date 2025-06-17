@@ -1,8 +1,8 @@
 #include "sprite.h"
 
-#include "../Graphics/Graphics.h"
-#include "../../imgui/ImGuiCtrl.h"
 #include <algorithm>
+#include "../../imgui/ImGuiCtrl.h"
+#include "../Graphics/Graphics.h"
 
 //	コンストラクタ
 Sprite::Sprite(const wchar_t* filename,const InitInfo& initInfo)
@@ -41,9 +41,9 @@ Sprite::Sprite(const wchar_t* filename,const InitInfo& initInfo)
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,		 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
-	// シェーダー読み込み
+	//	シェーダー読み込み
 	Shader* shader = Graphics::Instance().GetShader();
-	if (!initInfo.vsFilename_.empty())
+	if (initInfo.vsFilename_.empty() == false)
 	{
 		hr = shader->CreateVsFromCso(device, initInfo.vsFilename_.c_str(), vertexShader_.GetAddressOf(), inputLayout_.GetAddressOf(), inputElementDesc, _countof(inputElementDesc));
 	}
@@ -53,7 +53,7 @@ Sprite::Sprite(const wchar_t* filename,const InitInfo& initInfo)
 	}
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
-	if (!initInfo.psFilename_.empty())
+	if (initInfo.psFilename_.empty() == false)
 	{
 		hr = shader->CreatePsFromCso(device, initInfo.psFilename_.c_str(), pixelShader_.GetAddressOf());
 	}
@@ -69,12 +69,7 @@ Sprite::Sprite(const wchar_t* filename,const InitInfo& initInfo)
 	GetTransform()->SetSize(static_cast<float>(texture2dDesc_.Width), static_cast<float>(texture2dDesc_.Height));
 	GetTransform()->SetTexSize(static_cast<float>(texture2dDesc_.Width), static_cast<float>(texture2dDesc_.Height));
 	GetTransform()->SetDefaultSize(static_cast<float>(texture2dDesc_.Width), static_cast<float>(texture2dDesc_.Height));
-}
-
-//	デストラクタ
-Sprite::~Sprite()
-{
-
+	
 }
 
 //	描画処理
@@ -427,9 +422,7 @@ void Sprite::Render(uint32_t slot,ID3D11Buffer** ppConstantBuffer)
 	graphics.GetDeviceContext()->IASetInputLayout(inputLayout_.Get());
 	graphics.GetDeviceContext()->VSSetShader(vertexShader_.Get(), nullptr, 0);
 	graphics.GetDeviceContext()->PSSetShader(pixelShader_.Get(), nullptr, 0);
-
 	graphics.GetDeviceContext()->PSSetConstantBuffers(slot, 1, ppConstantBuffer);
-
 	graphics.GetDeviceContext()->PSSetShaderResources(0, 1, shaderResourceView_.GetAddressOf());
 
 	// 各種ステートの設定
@@ -463,27 +456,6 @@ void Sprite::Textout(std::string s,
 	}
 }
 
-//	切り取り
-void Sprite::SpriteTransform::CutOut()
-{
-	//	x方向
-	//size_.x += cutSize_.x;
-	texSize_.x += cutSize_.x;
-
-	if (fabs(cutSize_.x) > 0)
-		cutSize_.x = 0;
-
-	//	y方向
-	//size_.y += cutSize_.y;
-	texSize_.y += cutSize_.y;
-
-	if (fabs(cutSize_.y) > 0)
-		cutSize_.y = 0;
-
-	isCut_ = false;
-
-}
-
 //	スケーリング
 void Sprite::SpriteTransform::Scaling(const float& scaleFactor)
 {
@@ -513,7 +485,6 @@ void Sprite::SpriteTransform::ResetScale()
 	SetSize(defaultSize_);
 }
 
-
 //	デバッグ描画
 void Sprite::DrawDebug()
 {
@@ -524,8 +495,6 @@ void Sprite::DrawDebug()
 void Sprite::SpriteTransform::DrawDebug()
 {
 #if USE_IMGUI
-	//if (ImGui::TreeNode("Sprite"))
-	//{
 	ImGui::DragFloat2("Position", &position_.x);
 	ImGui::DragFloat2("Pivot", &pivot_.x, 0.01f);
 	ImGui::DragFloat2("Size", &size_.x);
@@ -538,14 +507,6 @@ void Sprite::SpriteTransform::DrawDebug()
 
 	ImGui::ColorEdit4("Color", &color_.x);
 
-	ImGui::Checkbox("IsDebugSize", &isCut_);		//	画像切り抜き
-	if (isCut_)
-	{
-		ImGui::DragFloat2("DebugSize", &cutSize_.x);
-		CutOut();
-	}
-	//ImGui::TreePop();
-//}
 #endif
 }
 

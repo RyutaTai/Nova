@@ -56,7 +56,7 @@ private:	//	スプライト
 		KeyText,			//	キーテキスト
 		Max,				//	スプライトの上限数
 	};
-	std::unique_ptr	<Sprite> sprites_[static_cast<int>(SpriteTitle::Max)];
+	std::unique_ptr<Sprite> sprites_[static_cast<int>(SpriteTitle::Max)];
 
 	//	----- フェード処理 -----
 	float titleLogoAlpha_ = 0.0f;		//	タイトルロゴのアルファ値

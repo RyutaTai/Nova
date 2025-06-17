@@ -40,20 +40,20 @@ void Character::AddVelocity(const DirectX::XMFLOAT3& addVelocity,const float& el
 	DirectX::XMStoreFloat3(&velocity_, Velocity);
 }
 
-//	VelocityのY方向のみ加算する
+//	速度をY方向のみ加算する
 void Character::AddVelocityY(const float& addVelocityY, const float& elapsedTime)
 {
 	velocity_.y += addVelocityY * elapsedTime;
 }
 
-//	VelocityのXZ方向のみ加算する
+//	速度をXZ方向のみ加算する
 void Character::AddVelocityXZ(const float& addVelocityX, const float& addVelocityZ, const float& elapsedTime)
 {
 	velocity_.x += addVelocityX * elapsedTime;
 	velocity_.z += addVelocityZ * elapsedTime;
 }
 
-//	VelocityのXZ方向のみ乗算する
+//	速度をXZ方向のみ乗算する
 void Character::MultiplyVelocityXZ(const float& multiplyVelocity, const float& elapsedTime)
 {
 	velocity_.x *= multiplyVelocity * elapsedTime;
@@ -69,17 +69,20 @@ void Character::AddAcceleration(const DirectX::XMFLOAT3& addAcceleration, const 
 	DirectX::XMStoreFloat3(&acceleration_, Acceleration);
 }
 
+//	加速度をY方向のみ加算する
 void Character::AddAccelerationY(const float& addAccelerationY, const float& elapsedTime)
 {
 	acceleration_.y += addAccelerationY * elapsedTime;
 }
 
+//	加速度をXZ方向のみ加算する
 void Character::AddAccelerationXZ(const float& addAccelerationX, const float& addAccelerationZ, const float& elapsedTime)
 {
 	acceleration_.x += addAccelerationX * elapsedTime;
 	acceleration_.z += addAccelerationZ * elapsedTime;
 }
 
+//	移動スピード加算
 void Character::AddMoveSpeed(const float& addMoveSpeed, const float& elapsedTime)
 {
 	//	最大スピードを超えていない場合のみ加算処理
@@ -97,8 +100,9 @@ void Character::AddMoveSpeed(const float& addMoveSpeed, const float& elapsedTime
 void Character::UpdateForce(const float& elapsedTime)
 {
 	//	パワーが無いときは処理しない
-	if (blowPower_ <= 0) return;
+	if (blowPower_ <= 0.0f) return;
 
+	//	吹っ飛ばす力更新
 	blowPower_ -= decelerationForce_ * elapsedTime;
 	blowPower_ = std::max(blowPower_, 0.0f); // 0.0f未満にならないようにする
 
@@ -132,7 +136,7 @@ void Character::Turn(const float& elapsedTime, float vx, float vz, float speed)
 	//	進行ベクトルがゼロベクトルの場合は処理する必要なし
 	float length;
 	length = sqrtf(vx * vx + vz * vz);
-	if (length <= 0)
+	if (length <= 0.0f)
 	{
 		return;
 	}
@@ -391,46 +395,46 @@ void Character::SaveCollisionDataToJson(const std::string& filePath) const
 	j["damageDetectionData"] = damageDetectionData_;
 
 	std::ofstream ofs(filePath);
-	if (ofs.is_open()) {
+	if (ofs.is_open())
+	{
 		ofs << std::setw(4) << j << std::endl; // 整形して保存 (インデント4)
 		ofs.close();
-		// ★デバッグログやメッセージを追加すると良いでしょう
-		// std::cout << "Collision data saved to: " << filePath << std::endl;
+
 	}
-	else {
-		// ★エラーハンドリング
-		// std::cerr << "Failed to open file for saving: " << filePath << std::endl;
+	else 
+	{
+		//	保存失敗
+		_ASSERT_EXPR(false, "Failed to open file for saving");
 	}
 }
 
 void Character::LoadCollisionDataFromJson(const std::string& filePath)
 {
 	std::ifstream ifs(filePath);
-	if (ifs.is_open()) {
+	if (ifs.is_open()) 
+	{
 		nlohmann::json j;
 		ifs >> j;
 		ifs.close();
 
-		// 各データが存在するか確認し、存在すればロード
-		if (j.contains("collisionDetectionData")) {
+		//	各データが存在するか確認し、存在すればロード
+		if (j.contains("collisionDetectionData"))
+		{
 			j.at("collisionDetectionData").get_to(collisionDetectionData_);
 		}
-		if (j.contains("attackDetectionData")) {
+		if (j.contains("attackDetectionData"))
+		{
 			j.at("attackDetectionData").get_to(attackDetectionData_);
 		}
-		if (j.contains("damageDetectionData")) {
+		if (j.contains("damageDetectionData")) 
+		{
 			j.at("damageDetectionData").get_to(damageDetectionData_);
 		}
-		// ★デバッグログやメッセージを追加すると良いでしょう
-		// std::cout << "Collision data loaded from: " << filePath << std::endl;
 	}
-	else {
-		// ★エラーハンドリング: ファイルが存在しない場合は空のデータで開始
-		// std::cerr << "File not found or failed to open for loading: " << filePath << std::endl;
-		// データはクリアせず、既存の状態で続行するか、デフォルト値を設定するなど
-		// collisionDetectionData_.clear();
-		// attackDetectionData_.clear();
-		// damageDetectionData_.clear();
+	else 
+	{
+		//	読み込み失敗
+		_ASSERT_EXPR(false, "File not found or failed to open for loading");
 	}
 }
 
@@ -469,7 +473,8 @@ void Character::DrawDebug()
 	//	----- Collision -----
 	if (ImGui::TreeNode(u8"Collision 当たり判定"))
 	{
-		if (ImGui::Button(u8"SaveJson Json保存"))	//	Json保存ボタンが押されたら
+		//	Json保存ボタンを押したら保存
+		if (ImGui::Button(u8"SaveJson Json保存"))
 		{
 			SaveCollisionDataToJson(collisionDataJsonFileName_);
 		}
@@ -485,12 +490,11 @@ void Character::DrawDebug()
 		{
 			for (AttackDetectionData& data : attackDetectionData_)
 			{
-				//if (data.GetIsActive() == false) continue;
 				data.DrawDebug();
 			}
 			ImGui::TreePop();
 		}
-		if (ImGui::TreeNode(u8"CollisionDetection 当たり判定"))
+		if (ImGui::TreeNode(u8"CollisionDetection 押し出し判定"))
 		{
 			for (CollisionDetectionData& data : collisionDetectionData_)
 			{

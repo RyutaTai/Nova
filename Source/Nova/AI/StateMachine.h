@@ -8,7 +8,7 @@ template <class T>
 class StateMachine
 {
 public:
-    StateMachine() {};
+    StateMachine() {}
     ~StateMachine();
 
     void Update(const float& elapsedTime); // 更新処理
@@ -20,7 +20,7 @@ public:
     void RegisterState(T* state);       // ステート登録
 
 public:// 取得・設定
-    int GetStateIndex();                // 現在のステート番号取得
+    int GetCurrentStateIndex();                // 現在のステート番号取得
     //T* GetCurrentState() { return currentState_; } // 現在のステート取得
 
 private:
@@ -32,7 +32,7 @@ private:
 template<class T>
 inline StateMachine<T>::~StateMachine()
 {
-    // 登録したステートを削除する
+    //  登録したステートを削除する
     for (T* state : statePool_)
     {
         delete state;
@@ -83,19 +83,19 @@ inline void StateMachine<T>::RegisterState(T* state)
 }
 
 template<class T>
-inline int StateMachine<T>::GetStateIndex()
+inline int StateMachine<T>::GetCurrentStateIndex()
 {
     int i = 0;
     for (T* state : statePool_)
     {
         if (state == currentState_)
         {
-            // i番号目のステートをリターン
+            //  i番号目のステートをリターン
             return i;
         }
         ++i;
     }
 
-    // ステートが見つからなかったとき
+    //  ステートが見つからなかったとき
     return -1;
 }

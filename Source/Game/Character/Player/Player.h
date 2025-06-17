@@ -96,9 +96,13 @@ public:
 	//	----- エフェクト再生 -----
 	void PlayEffect();
 
-	//	----- 判定処理 -----
-	bool RayVsVertical(const float& elapsedTime)override;		//	ステージとの当たり判定(垂直方向)
-	bool RayVsHorizontal(const float& elapsedTime)override;		//	ステージとの当たり判定(水平方向)	
+	//	----- 当たり判定処理 -----
+	bool RayVsVertical(const float& elapsedTime)override;					//	ステージとの当たり判定(垂直方向)
+	bool RayVsHorizontal(const float& elapsedTime)override;					//	ステージとの当たり判定(水平方向)	
+	void RegisterCollisionData(const std::string& jsonFileName)override;	//	当たり判定登録
+	void SetIsActiveCollisionDetection(const bool& isActiveCollisionDetection) { isActiveCollisionDetection_ = isActiveCollisionDetection; }
+	const bool IsActiveCollisionDetection()const { return isActiveCollisionDetection_; }
+	void UpdateCollisionDetectionData(const float& elapsedTime);
 
 	//	----- エフェクト -----
 	void SetEffectScale(const float& scale) { effectScale_ = scale; }
@@ -123,12 +127,6 @@ public:
 	void		AddComboCount()							{ comboCount_++; }
 	void		ResetComboCount()						{ comboCount_ = 0; }
 	const int	GetComboCount()const					{ return comboCount_; }
-
-	//	----- Collision ----
-	void RegisterCollisionData(const std::string& jsonFileName)override;
-	void SetIsActiveCollisionDetection(const bool& isActiveCollisionDetection) { isActiveCollisionDetection_ = isActiveCollisionDetection; }
-	const bool IsActiveCollisionDetection()const { return isActiveCollisionDetection_; }
-	void UpdateCollisionDetectionData(const float& elapsedTime);
 
 	//	----- 攻撃ヒットフラグ(自分の攻撃が相手に当たったか) -----
 	void		SetAttackHit(const bool& isHit) { isAttackHit_ = isHit; }

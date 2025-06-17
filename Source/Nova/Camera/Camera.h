@@ -56,13 +56,12 @@ public:
 	const DirectX::XMFLOAT3		GetRight()	const	{ return right_; }						//	カメラ右方向取得
 	const float					GetNearZ()  const	{ return nearZ_; }
 	const float					GetFarZ()	const	{ return farZ_; }
-	bool						GetIsPose()			{ return isPose_; }
+	const bool					GetIsPose()	const	{ return isPose_; }
 
 	//	----- カメラ移動 -----
-	bool	IsCameraMove()		{ return cameraMove_; }		//	カメラ演出中かどうか
-	bool	CameraMove(const float& elapsedTime);			//	
+	const bool IsCameraMove()const { return cameraMove_; }	//	カメラ演出中かどうか
+	bool	CameraMove(const float& elapsedTime);			//	カメラ移動更新
 	bool	RayVsHorizontal(const float& elapsedTime);		//	ステージとの当たり判定(水平方向)	
-
 
 	//	----- ベロシティ -----
 	void UpdateVelocity(const float& elapsedTime);
@@ -86,9 +85,9 @@ private:
 	DirectX::XMMATRIX viewProjectionMatrix_;					//	ビュープロジェクション行列
 	DirectX::XMMATRIX invViewProjectionMatrix_;					//	ビュープロジェクション逆行列
 	DirectX::XMFLOAT3 eye_ = {};								//	カメラの視点
+	DirectX::XMFLOAT3 eyeOffset_	= { 0,0,0 };				//	カメラの視点eye_を動かすときの移動値
 	DirectX::XMFLOAT3 focus_		= { 0,-10,10 };				//	カメラの注視点
 	DirectX::XMFLOAT3 angle_		= { 0,0,0 };				//	カメラの回転値
-	DirectX::XMFLOAT3 eyeOffset_	= { 0,0,0 };				//	カメラの視点eye_を動かすときの移動値
 
 	float fov_				= 60.0f;							//	視野角
 	float currentRange_		= 250.0f;							//	カメラとターゲットの距離を決めるのに使う
@@ -101,10 +100,9 @@ private:
 	float nearZ_			= 50.0f;
 	float farZ_				= 400000.0f;
 
-	DirectX::XMFLOAT3 up_		= {};									//	カメラの上方向
-	DirectX::XMFLOAT3 front_	= {};									//	カメラの前方向
-	DirectX::XMFLOAT3 right_	= {};									//	カメラの右方向
-
+	DirectX::XMFLOAT3 up_		= {};							//	カメラの上方向
+	DirectX::XMFLOAT3 front_	= {};							//	カメラの前方向
+	DirectX::XMFLOAT3 right_	= {};							//	カメラの右方向
 
 	bool isPose_ = false;
 

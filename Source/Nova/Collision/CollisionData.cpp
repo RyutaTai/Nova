@@ -34,6 +34,12 @@ void AttackDetectionData::DrawDebug()
 	if (ImGui::TreeNode(GetName().c_str()))
 	{
 		//	AttackDetectionData自身のプロパティ
+		char bufName[256];
+		strcpy_s(bufName, sizeof(bufName), GetName().c_str());
+		if (ImGui::InputText("Name", bufName, sizeof(bufName)))
+		{
+			SetName(bufName);
+		}
 		char bufUpdateName[256];
 		strcpy_s(bufUpdateName, sizeof(bufUpdateName), updateName_.c_str());
 		if (ImGui::InputText("Update Name", bufUpdateName, sizeof(bufUpdateName))) 
@@ -43,7 +49,7 @@ void AttackDetectionData::DrawDebug()
 		ImGui::Checkbox("Is Active", &isActive_);
 
 		//	内部のCollisionSphereDataのプロパティ
-		if (ImGui::TreeNode("Collision Sphere Data##Attack"))
+		if (ImGui::TreeNode("Collision Sphere Data"))
 		{
 			collisionSphereData_.DrawDebug();
 			ImGui::TreePop();
@@ -80,7 +86,7 @@ void DamageDetectionData::DrawDebug()
 		// DamageDetectionData自身のプロパティ
 		char bufName[256];
 		strcpy_s(bufName, sizeof(bufName), GetName().c_str());
-		if (ImGui::InputText(("Name##DamageDetection" + std::string(GetName())).c_str(), bufName, sizeof(bufName))) 
+		if (ImGui::InputText("Name", bufName, sizeof(bufName))) 
 		{
 			SetName(bufName);
 		}
@@ -95,7 +101,7 @@ void DamageDetectionData::DrawDebug()
 		ImGui::DragFloat("Hit Timer", &hitTimer_, 0.01f);
 
 		// 内部のCollisionSphereDataのプロパティ
-		if (ImGui::TreeNode("Collision Sphere Data##Damage"))
+		if (ImGui::TreeNode("Collision Sphere Data"))
 		{
 			collisionSphereData_.DrawDebug();
 			ImGui::TreePop();
@@ -112,7 +118,7 @@ void CollisionDetectionData::DrawDebug()
 		// CollisionDetectionData自身のプロパティ
 		char bufName[256];
 		strcpy_s(bufName, sizeof(bufName), GetName().c_str());
-		if (ImGui::InputText(("Name##CollisionDetection" + std::string(GetName())).c_str(), bufName, sizeof(bufName)))
+		if (ImGui::InputText("Name", bufName, sizeof(bufName)))
 		{
 			SetName(bufName);
 		}
@@ -126,7 +132,7 @@ void CollisionDetectionData::DrawDebug()
 		ImGui::Checkbox("Fixed Y", &fixedY_);
 
 		// 内部のCollisionSphereDataのプロパティ
-		if (ImGui::TreeNode("Collision Sphere Data##Push"))
+		if (ImGui::TreeNode("Collision Sphere Data"))
 		{
 			collisionSphereData_.DrawDebug();
 			ImGui::TreePop();

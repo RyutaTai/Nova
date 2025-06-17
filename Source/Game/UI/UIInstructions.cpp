@@ -7,8 +7,6 @@ UIInstructions::UIInstructions()
 {
 	instruction_ = std::make_unique<Sprite>(L"./Resources/Image/Instructions.png");
 	instruction_->GetTransform()->SetPosition(24, 250);
-	instruction_->GetTransform()->SetIsCut(true);
-	instruction_->GetTransform()->SetCutSizeY(200.0f);
 }
 
 void UIInstructions::Initialize()

@@ -21,7 +21,7 @@ class Framework
 {
 public:
 	Framework(HWND hwnd);
-	~Framework();
+	~Framework() = default;
 
 	Framework(const Framework&) = delete;
 	Framework& operator=(const Framework&) = delete;

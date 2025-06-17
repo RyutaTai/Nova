@@ -111,20 +111,3 @@ namespace GameState
 		float volume_ = 0.25f;
 	};
 }
-
-//	コンティニュー
-namespace GameState
-{
-	class ContinueState : public State <SceneGame>
-	{
-	public:
-		ContinueState(SceneGame* owner) :State(owner) {}
-		~ContinueState() {}
-
-		void Initialize()override;
-		void Update(const float& elapsedTime)override;
-		void Finalize()override;
-		void DrawDebug()override;
-
-	};
-}

@@ -14,7 +14,7 @@ Stage* Stage::instance_ = nullptr;
 
 Stage::Stage()
 {
-	//	インスタンスポイント設定
+	//	インスタンス設定
 	_ASSERT_EXPR(instance_ == instance_, L"already instance");
 	instance_ = this;
 
@@ -464,7 +464,7 @@ void Stage::UpdateFFTConstantBuffer()
 //	デバッグ描画
 void Stage::DrawDebug()
 {
-	if (ImGui::TreeNode(u8"Stageステージ"))
+	if (ImGui::TreeNode(u8"Stage ステージ"))
 	{
 		GetTransform()->DrawDebug();
 

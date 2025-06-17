@@ -19,14 +19,13 @@ public:
 		std::string vsFilename_ = {};
 	};
 	
-	// 構造体
+	//	Sprite情報
 	struct SpriteTransform
 	{
 	public:
-		void CutOut();							//	画像切り取り
-
 		void DrawDebug();	//	ImGui描画
 
+		//	----- 位置 -----
 		void SetPosition(const DirectX::XMFLOAT2& pos) { position_ = pos; }
 		void SetPosition(const float& x, const float& y) { position_ = { x, y }; }
 		void SetPositionX(const float& x) { position_.x = x; }
@@ -38,6 +37,7 @@ public:
 		float GetPositionX() { return position_.x; }
 		float GetPositionY() { return position_.y; }
 
+		//	----- 基準点 -----
 		void SetPivot(const DirectX::XMFLOAT2& pivot) { pivot_ = pivot; }
 		void SetPivot(const float& x, const float& y) { pivot_ = { x, y }; }
 		void SetPivotX(const float& x) { pivot_.x = x; }
@@ -46,11 +46,17 @@ public:
 		float GetCenterX() { return pivot_.x; }
 		float GetPivotY() { return pivot_.y; }
 
+		//	----- スケール -----
 		void SetScale(const DirectX::XMFLOAT2& scale) { scale_ = scale; }
 		void SetScaleFactor(const float& scaleFactor) { scaleFactor_ = scaleFactor; }
 		DirectX::XMFLOAT2 GetScale() { return scale_; }
 		float GetScaleFactor() { return scaleFactor_; }
+		void Scaling(const float& scaleFactor);
+		void ScalingX(const float& scaleFactorX);
+		void ScalingY(const float& scaleFactorY);
+		void ResetScale();
 
+		//	----- サイズ -----
 		void SetSize(const DirectX::XMFLOAT2& size) { size_ = size; }
 		void SetSize(const float& x, const float& y) { size_ = { x, y }; }
 		void SetSizeX(const float& x) { size_.x = x; }
@@ -59,6 +65,12 @@ public:
 		float GetSizeX() { return size_.x; }
 		float GetSizeY() { return size_.y; }
 
+		//	----- デフォルトサイズ -----
+		void SetDefaultSize(const DirectX::XMFLOAT2& size) { defaultSize_ = size; }
+		void SetDefaultSize(const float& sizeX, const float& sizeY) { defaultSize_ = { sizeX,sizeY }; }
+		const DirectX::XMFLOAT2 GetDefaultSize()const { return defaultSize_; }
+
+		//	----- 切り取り位置 -----
 		void SetTexPos(const DirectX::XMFLOAT2& texPos) { texPos_ = texPos; }
 		void SetTexPos(const float& x, const float& y) { texPos_ = { x, y }; }
 		void SetTexPosX(const float& x) { texPos_.x = x; }
@@ -69,6 +81,7 @@ public:
 		float GetTexPosX() { return texPos_.x; }
 		float GetTexPosY() { return texPos_.y; }
 
+		//	----- 切り取りサイズ -----
 		void SetTexSize(const DirectX::XMFLOAT2& texSize) { texSize_ = texSize; }
 		void SetTexSize(const float& x, const float& y) { texSize_ = { x, y }; }
 		void SetTexSizeX(const float& x) { texSize_.x = x; }
@@ -77,6 +90,7 @@ public:
 		float GetTexSizeX() { return texSize_.x; }
 		float GetTexSizeY() { return texSize_.y; }
 
+		//	----- 色 -----
 		void SetColor(const DirectX::XMFLOAT4& color) { color_ = color; }
 		void SetColor(const float& r, const float& g, const float& b, const float& a) { color_ = { r,g,b,a }; }
 		void SetColorR(const float& r) { color_.x = r; }
@@ -85,25 +99,9 @@ public:
 		void SetColorA(const float& a) { color_.w = a; }
 		DirectX::XMFLOAT4 GetColor() { return color_; }
 
+		//	----- 角度 -----
 		void SetAngle(const float& angle) { angle_ = angle; }
 		float GetAngle() { return angle_; }
-
-		void SetIsCut(bool isCut) { isCut_ = isCut; }
-		bool IsCut() { return isCut_; }
-
-		void SetCutSize(const DirectX::XMFLOAT2& cutSize) { cutSize_ = cutSize; }
-		void SetCutSizeX(const float& cutSizeX) { cutSize_.x = cutSizeX; }
-		void SetCutSizeY(const float& cutSizeY) { cutSize_.y = cutSizeY; }
-
-		void SetDefaultSize(const DirectX::XMFLOAT2& size) { defaultSize_ = size; }
-		void SetDefaultSize(const float& sizeX, const float& sizeY) { defaultSize_ = { sizeX,sizeY }; }
-
-		DirectX::XMFLOAT2 GetDefaultSize() { return defaultSize_; }
-
-		void Scaling(const float& scaleFactor);
-		void ScalingX(const float& scaleFactorX);
-		void ScalingY(const float& scaleFactorY);
-		void ResetScale();
 
 	private:
 		DirectX::XMFLOAT2	position_ = {};			//	位置 
@@ -112,13 +110,11 @@ public:
 		DirectX::XMFLOAT2	texPos_ = {};			//	切り取り開始位置
 		DirectX::XMFLOAT2	texSize_ = {};			//	切り取りサイズ
 		DirectX::XMFLOAT2	scale_ = { 1.0f,1.0f };	//	スケール
-		float				scaleFactor_ = 1.0f;	
+		float				scaleFactor_ = 1.0f;	//	スケール
 		DirectX::XMFLOAT4	color_ = { 1,1,1,1 };	//	描画色 
 		float				angle_ = 0.0f;			//	回転角度
 
 	private:
-		bool isCut_ = false;						//	切り取りフラグ
-		DirectX::XMFLOAT2 cutSize_ = {};			//	切り取りサイズ
 		DirectX::XMFLOAT2 defaultSize_ = {};		//	デフォルトサイズ(スケール1.0fのサイズ)を保持する
 	};
 
@@ -132,22 +128,25 @@ private:
 
 public:
 	Sprite(const wchar_t* filename, const InitInfo& initInfo = {});
-	~Sprite();
+	~Sprite() = default;
 
 	void Render();
 	void Render(uint32_t slot,ID3D11Buffer** ppConstantBuffer);
 	void DrawDebug();
 
+	//	テキスト描画
 	void Textout(std::string s,
 		float x, float y, float w, float h, float r = 1.0f, float g = 1.0f, float b = 1.0f, float a = 1.0f);
-	
 
+	//	名前
 	void SetName(const std::string& name)		{ name_ = name; }
+	const std::string GetName()const { return name_; }
+	
+	//	描画フラグ
 	void SetRenderFlag(const bool& renderFlag)	{ renderFlag_ = renderFlag; }
+	const bool GetRenderFlag()const { return renderFlag_; }
 
-	const std::string	GetName()const	{ return name_; }
-	const bool			GetRenderFlag() { return renderFlag_; }
-
+	//	スプライトトランスフォーム取得
 	SpriteTransform*	GetTransform()	{ return &transform_; }
 
 private:

@@ -6,7 +6,7 @@
 #include "../../../../Nova/AI/BehaviorData.h"
 #include "../../../../Nova/Graphics/Graphics.h"
 #include "../../../../Nova/Collision/Collision.h"
-#include "../../../../Nova/Others/MemoryUtilities.h"
+#include "../../../../Nova/Others/MemoryUtility.h"
 
 //	コンストラクタ
 Dragonkin::Dragonkin()

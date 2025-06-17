@@ -5,7 +5,7 @@
 #include "JudgmentBase.h"
 #include "BehaviorData.h"
 #include "../../Game/Character/Enemy/Enemy.h"
-#include "../Others/MemoryUtilities.h"
+#include "../Others/MemoryUtility.h"
 
 //	デストラクタ
 BehaviorTree::~BehaviorTree()

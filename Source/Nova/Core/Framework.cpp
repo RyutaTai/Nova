@@ -1,6 +1,7 @@
 #include "Framework.h"
 
 #include <dxgi.h>
+#include <dxgidebug.h>
 
 #include "../Graphics/Graphics.h"
 #include "../Graphics/Shader.h"
@@ -17,42 +18,7 @@ Framework::Framework(HWND hwnd)
 	: graphics_(hwnd, FULLSCREEN/*fullscreen*/),
 	input_(hwnd)
 {
-	//	XAUDIO2デバッグ用
-	{
-		HRESULT hr = S_OK;
-		IXAudio2* xaudio = nullptr;
 
-		hr = XAudio2Create(&xaudio, 0, XAUDIO2_DEFAULT_PROCESSOR);
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-		// create masteringvoice
-		IXAudio2MasteringVoice* masteringVoice = nullptr;
-#if 0
-		hr = xaudio->CreateMasteringVoice(&masteringVoice, 2, 44100/*サンプリングレート*/, 0U, NULL, 0, AudioCategory_GameEffects);
-#else
-		hr = xaudio->CreateMasteringVoice(&masteringVoice, XAUDIO2_DEFAULT_CHANNELS, 44100/*サンプリングレート*/, 0U, NULL, 0, AudioCategory_GameEffects);
-#endif
-		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-		XAUDIO2_VOICE_DETAILS masterDetails;
-		masteringVoice->GetVoiceDetails(&masterDetails);
-
-		//	マスタリングボイス情報(デバッグ用)
-		int masterInputChannel = masterDetails.InputChannels;
-		DWORD ChannelMask = {};
-		masteringVoice->GetChannelMask(&ChannelMask);
-		int masterSampleRate = masterDetails.InputSampleRate;
-	}
-
-}
-
-//	デストラクタ
-Framework::~Framework()
-{
-	////	シーン終了化
-	//SceneManager::Instance().Clear();
-
-	
 }
 
 //	初期化
@@ -234,6 +200,34 @@ void Framework::Render()
 //	終了化
 bool Framework::Uninitialize()
 {
+#ifdef _DEBUG
+	// D3D11Debug オブジェクトを取得
+	Microsoft::WRL::ComPtr<ID3D11Debug> d3dDebug;
+	HRESULT hr = Graphics::Instance().GetDevice()->QueryInterface(__uuidof(ID3D11Debug), &d3dDebug);
+
+	if (SUCCEEDED(hr))
+	{
+		// DebugRenderer のように、明示的に Reset() が必要な ComPtr ではないリソースがあれば、ここで解放を試みる。
+		// ただし、通常 ComPtr で管理されていれば、明示的な解放は不要。
+		// ここでは、未解放のオブジェクトをレポートする目的。
+
+		// LiveObjects をレポートする前に、デバイスコンテキストの状態をクリーンアップ
+		// これがないと、ReportLiveObjects が誤った参照カウントを報告することがあります。
+		Graphics::Instance().GetDeviceContext()->ClearState();
+		Graphics::Instance().GetDeviceContext()->Flush();
+
+		// ReportLiveObjects を呼び出し
+		d3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL | D3D11_RLDO_SUMMARY);
+	}
+
+	// DXGIDebug オブジェクトを取得（必要であれば）
+	Microsoft::WRL::ComPtr<IDXGIDebug> dxgiDebug;
+	hr = DXGIGetDebugInterface1(0, IID_PPV_ARGS(&dxgiDebug)); // DXGIGetDebugInterface は dxgi.h にある
+	if (SUCCEEDED(hr))
+	{
+		dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_DETAIL);
+	}
+#endif
 	//	シーン終了化
 	SceneManager::Instance().Clear();
 

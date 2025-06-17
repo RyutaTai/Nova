@@ -29,7 +29,6 @@ public:
 		Wave3,
 		Clear,
 		GameOver,
-		Continue,
 		Max,
 	};
 
@@ -52,7 +51,7 @@ public:
 	void Reset();
 
 	void SetChangeTitleTimer(const float& changeTitleTimer) { changeTitleTimer_ = changeTitleTimer; }
-	void ChangeToTitle(const bool& changeTitle) { changeTitle_ = changeTitle; }
+	void ChangeToTitle(const bool& changeTitle) { changeTitleFlag_ = changeTitle; }
 	void SetWaveStartTimer(const float& timer)		{ waveStartTimer_ = timer; }
 	void SetGameOver(const bool& gameOver)			{ isGameOver_ = gameOver; }
 	void SetGameClear(const bool& gameClear)		{ isGameClear_ = gameClear; }
@@ -125,7 +124,7 @@ private:
 	/* ----- ゲーム内で使う変数 ----- */
 	float	waveStartTimer_		= 0.0f;		//	ウェーブ開始のUIが表示されている間
 	bool	isGameOver_			= false;
-	bool	changeTitle_		= false;
+	bool	changeTitleFlag_	= false;
 	bool	isGameClear_		= false;
 	float	changeTitleTimer_	= 3.0f;
 	bool	isResult_			= false;	//	リザルト画面かどうか(クリア、ゲームオーバー)

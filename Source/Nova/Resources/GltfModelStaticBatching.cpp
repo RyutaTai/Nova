@@ -6,9 +6,10 @@
 #include <iostream>
 #include <fstream>
 
-#include "../Others/Misc.h"
 #include "../Graphics/Graphics.h"
 #include "../Resources/Texture.h"
+#include "../Others/Misc.h"
+#include "../Others/GltfUtility.h"
 
 #define USE_SERIALIZE 1
 

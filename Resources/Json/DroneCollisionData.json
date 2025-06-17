@@ -1,0 +1,307 @@
+{
+    "attackDetectionData": [],
+    "collisionDetectionData": [
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 50.865333557128906,
+                    "y": 2.5,
+                    "z": -7.047624588012695
+                },
+                "name_": "Body",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.8700000047683716
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Body"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 49.49641418457031,
+                    "y": 2.5,
+                    "z": -7.531737327575684
+                },
+                "name_": "Head",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 2.4200000762939453
+                },
+                "radius_": 0.5
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Body"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 52.03114318847656,
+                    "y": 2.5,
+                    "z": -8.544584274291992
+                },
+                "name_": "Left",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.5
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Left"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 50.83086395263672,
+                    "y": 2.5,
+                    "z": -5.150570869445801
+                },
+                "name_": "Right",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.5
+            },
+            "fixedY_": false,
+            "isActive_": true,
+            "updateName_": "Right"
+        }
+    ],
+    "damageDetectionData": [
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 50.865333557128906,
+                    "y": 2.5,
+                    "z": -7.047624588012695
+                },
+                "name_": "Body",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.8999999761581421
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Body"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 49.2362060546875,
+                    "y": 2.5,
+                    "z": -7.623758792877197
+                },
+                "name_": "Head",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 2.880000114440918
+                },
+                "radius_": 1.399999976158142
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Body"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 52.03114318847656,
+                    "y": 2.5,
+                    "z": -8.544584274291992
+                },
+                "name_": "Left",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Left"
+        },
+        {
+            "collisionSphereData_": {
+                "currentColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "defaultColor_": {
+                    "w": 1.0,
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "hitColor_": {
+                    "w": 1.0,
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "jointPosition_": {
+                    "x": 50.83086395263672,
+                    "y": 2.5,
+                    "z": -5.150570869445801
+                },
+                "name_": "Right",
+                "offsetPosition_": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "radius_": 0.6000000238418579
+            },
+            "damage_": 1.0,
+            "hitTimer_": 0.0,
+            "isHit_": false,
+            "updateName_": "Right"
+        }
+    ]
+}
