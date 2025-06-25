@@ -336,35 +336,9 @@ void Drone::RegisterCollisionData(const std::string& jsonFileName)
 	//	Json書き出しパスとファイル名を設定
 	collisionDataJsonFileName_ = jsonFileName;
 
-#pragma region ----- 押し出し判定登録 -----
-	//	{名前、半径、  Y軸を固定するか、オフセット位置、更新名、	デフォルトカラー、	ヒットカラー}
-	//	{name, radius, fixedY,			offsetPosition,	updateName,	defaultColor,		hitColor}
+	//	Jsonから読み込んで当たり判定データを設定
+	LoadCollisionDataFromJson(collisionDataJsonFileName_);
 
-	RegisterCollisionDetectionData({ "Body",	0.87f,	false });
-	RegisterCollisionDetectionData({ "Head",	0.5f,	false,	{0.0f,0.0f,2.42f},"Body" });
-	RegisterCollisionDetectionData({ "Left",	0.5f,	false });
-	RegisterCollisionDetectionData({ "Right",	0.5f,	false });
-
-#pragma endregion ----- 押し出し判定登録 -----
-
-#pragma region ----- くらい判定登録 -----
-	//	{名前、半径、	オフセット位置、ダメージ倍率、	更新名、	デフォルトカラー、	ヒットカラー}
-	//	{name, radius,	offsetPos,		damage,			updateName,	defaultColor,		hitColor}
-
-	RegisterDamageDetectionData({ "Body",	0.9f });
-	RegisterDamageDetectionData({ "Head",	1.4f,{0.0f,0.0f,2.88f},1.0f,"Body" });
-	RegisterDamageDetectionData({ "Left",	0.6f });
-	RegisterDamageDetectionData({ "Right",	0.6f });
-
-#pragma endregion ----- くらい判定登録 -----
-
-#pragma region ----- 攻撃判定登録 -----
-	//	{名前、半径、	オフセット位置、更新名、	デフォルトカラー、	ヒットカラー}
-	//	{name, radius,	offsetPos,		updateName, defaultColor,		hitColor}
-
-	//RegisterAttackDetectionData();
-	
-#pragma endregion ----- 攻撃判定登録 -----
 }
 
 //	当たり判定更新
