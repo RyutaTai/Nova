@@ -201,7 +201,7 @@ void Framework::Render()
 bool Framework::Uninitialize()
 {
 #ifdef _DEBUG
-	// D3D11Debug オブジェクトを取得
+	//	D3D11Debug オブジェクトを取得
 	Microsoft::WRL::ComPtr<ID3D11Debug> d3dDebug;
 	HRESULT hr = Graphics::Instance().GetDevice()->QueryInterface(__uuidof(ID3D11Debug), &d3dDebug);
 
@@ -212,7 +212,7 @@ bool Framework::Uninitialize()
 		// ここでは、未解放のオブジェクトをレポートする目的。
 
 		// LiveObjects をレポートする前に、デバイスコンテキストの状態をクリーンアップ
-		// これがないと、ReportLiveObjects が誤った参照カウントを報告することがあります。
+		// これがないと、ReportLiveObjects が誤った参照カウントを報告することがある。
 		Graphics::Instance().GetDeviceContext()->ClearState();
 		Graphics::Instance().GetDeviceContext()->Flush();
 
@@ -252,7 +252,6 @@ void Framework::DrawDebug()
 	AudioManager::Instance().DrawDebug();
 	graphics_.DrawDebug();
 	input_.DrawDebug();
-
 
 	SceneManager::Instance().DrawDebug();	//	シーンごとのDrawDebug()
 	ImGui::End();

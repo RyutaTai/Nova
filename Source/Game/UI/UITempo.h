@@ -69,13 +69,13 @@ private:
 	void UpdateScale(const float& elapsedTime);		//	UIのスケール更新処理
 
 public:
-	static constexpr int		SemicircleMax_ = 4;				//	半円の最大数
+	static const int SemicircleMax_ = 4;			//	半円の最大数
 
 private:
 	std::unique_ptr<Sprite>		center_;						//	テンポガイドの中心
 	std::unique_ptr<Semicircle> semicircles_[SemicircleMax_];	//	半円の組
 	
-	float quarterNoteDuration_ = 0.4285714285714286f;		//	BPM140のときの、4分音符1つ分の長さ
+	double quarterNoteDuration_ = 0.4285714285714286;		//	BPM140のときの、4分音符1つ分の長さ
 	float semicircleOffset_ = 0.1f;							//	最初は半円を配置する際のオフセット値
 
 	//	中心円からの距離
@@ -91,9 +91,9 @@ private:
 	float	semicircleScaleMin_ = 1.0f;		//	半円のスケール最小値
 
 	//	アニメーション
-	bool	centerCircleAnimFlag_ = false;		//	中心円のアニメーション更新フラグ
-	int		animChangeThreshold_ = 9;			//	何フレームでアニメーションを遷移するか
-	int		centerAnimTime_ = 0;				//	中心円のアニメーション時間カウント
+	bool	centerCircleAnimFlag_ = false;	//	中心円のアニメーション更新フラグ
+	int		animChangeThreshold_ = 9;		//	何フレームでアニメーションを遷移するか
+	int		centerAnimTime_ = 0;			//	中心円のアニメーション時間カウント
 
 };
 

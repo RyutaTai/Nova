@@ -10,39 +10,39 @@ struct TextureInfo
 
 struct NormalTextureInfo
 {
-    int index;
-    int texcoord;
-    float scale;
+    int     index;
+    int     texcoord;
+    float   scale;
 };
 
 struct OcclusionTextureInfo
 {
-    int index;
-    int texcoord;
-    float strength;
+    int     index;
+    int     texcoord;
+    float   strength;
 };
 
 struct PbrMetallicRoughness
 {
-    float4 baseColorFactor;
+    float4      baseColorFactor;
     TextureInfo baseColorTexture;
-    float metallicFactor;
-    float roughnessFactor;
+    float       metallicFactor;
+    float       roughnessFactor;
     TextureInfo metallicRoughnessTexture;
 };
 
 struct MaterialConstants
 {
-    float3 emissiveFactor;
-    int alphaMode; //  "OPAQUE" : 0,"MASK" : 1,"BLEND" : 2
-    float alphaCutOff;
-    bool doubleSided;
+    float3  emissiveFactor;
+    int     alphaMode; //  "OPAQUE" : 0,"MASK" : 1,"BLEND" : 2
+    float   alphaCutOff;
+    bool    doubleSided;
     
     PbrMetallicRoughness pbrMetallicRoughness;
     
-    NormalTextureInfo normalTexture;
-    OcclusionTextureInfo occlusionTexture;
-    TextureInfo emissiveTexture;
+    NormalTextureInfo       normalTexture;
+    OcclusionTextureInfo    occlusionTexture;
+    TextureInfo             emissiveTexture;
 };
 StructuredBuffer<MaterialConstants> materials : register(t0);
 
@@ -51,7 +51,7 @@ StructuredBuffer<MaterialConstants> materials : register(t0);
 #define NORMAL_TEXTURE 2
 #define EMISSIVE_TEXTURE 3
 #define OCCLUSION_TEXTURE 4
-Texture2D<float4> material_textures[5] : register(t1);
+Texture2D<float4> materialTextures[5] : register(t1);
 
 #define POINT 0
 #define LINEAR 1
@@ -62,56 +62,56 @@ Texture2D<float4> material_textures[5] : register(t1);
 [earlydepthstencil]
 #endif
 
-float4 main(VS_OUT pin, bool is_front_face : SV_IsFrontFace) : SV_TARGET
+float4 main(VS_OUT pin, bool isFrontFace : SV_IsFrontFace) : SV_TARGET
 {
     const float GAMMA = 2.2;
 
     const MaterialConstants m = materials[material];
 
-    float4 basecolor_factor = m.pbrMetallicRoughness.baseColorFactor;
-    const int basecolor_texture = m.pbrMetallicRoughness.baseColorTexture.index;
-    if (basecolor_texture > -1)
+    float4 baseColorFactor = m.pbrMetallicRoughness.baseColorFactor;
+    const int baseColorTexture = m.pbrMetallicRoughness.baseColorTexture.index;
+    if (baseColorTexture > -1)
     {
-        float4 sampled = material_textures[BASECOLOR_TEXTURE].Sample(samplerStates[ANISOTROPIC], pin.texcoord);
+        float4 sampled = materialTextures[BASECOLOR_TEXTURE].Sample(samplerStates[ANISOTROPIC], pin.texcoord);
         sampled.rgb = pow(sampled.rgb, GAMMA);
-        basecolor_factor *= sampled;
+        baseColorFactor *= sampled;
     }
 #if 1
-    clip(basecolor_factor.a - 0.25);
+    clip(baseColorFactor.a - 0.25);
 #endif
 
-    float3 emmisive_factor = m.emissiveFactor;
-    const int emissive_texture = m.emissiveTexture.index;
-    if (emissive_texture > -1)
+    float3 emmisiveFactor = m.emissiveFactor;
+    const int emissiveTexture = m.emissiveTexture.index;
+    if (emissiveTexture > -1)
     {
-        float4 sampled = material_textures[EMISSIVE_TEXTURE].Sample(samplerStates[ANISOTROPIC], pin.texcoord);
+        float4 sampled = materialTextures[EMISSIVE_TEXTURE].Sample(samplerStates[ANISOTROPIC], pin.texcoord);
         sampled.rgb = pow(sampled.rgb, GAMMA);
-        emmisive_factor *= sampled.rgb;
+        emmisiveFactor *= sampled.rgb;
     }
 
-    float roughness_factor = m.pbrMetallicRoughness.roughnessFactor;
-    float metallic_factor = m.pbrMetallicRoughness.metallicFactor;
-    const int metallic_roughness_texture = m.pbrMetallicRoughness.metallicRoughnessTexture.index;
-    if (metallic_roughness_texture > -1)
+    float roughnessFactor = m.pbrMetallicRoughness.roughnessFactor;
+    float metallicFactor = m.pbrMetallicRoughness.metallicFactor;
+    const int metallicRoughnessTexture = m.pbrMetallicRoughness.metallicRoughnessTexture.index;
+    if (metallicRoughnessTexture > -1)
     {
-        float4 sampled = material_textures[METALLIC_ROUGHNESS_TEXTURE].Sample(samplerStates[LINEAR], pin.texcoord);
-        roughness_factor *= sampled.g;
-        metallic_factor *= sampled.b;
+        float4 sampled = materialTextures[METALLIC_ROUGHNESS_TEXTURE].Sample(samplerStates[LINEAR], pin.texcoord);
+        roughnessFactor *= sampled.g;
+        metallicFactor *= sampled.b;
     }
 
-    float occlusion_factor = 1.0;
-    const int occlusion_texture = m.occlusionTexture.index;
-    if (occlusion_texture > -1)
+    float occlusionFactor = 1.0;
+    const int occlusionTexture = m.occlusionTexture.index;
+    if (occlusionTexture > -1)
     {
-        float4 sampled = material_textures[OCCLUSION_TEXTURE].Sample(samplerStates[LINEAR], pin.texcoord);
-        occlusion_factor *= sampled.r;
+        float4 sampled = materialTextures[OCCLUSION_TEXTURE].Sample(samplerStates[LINEAR], pin.texcoord);
+        occlusionFactor *= sampled.r;
     }
-    const float occlusion_strength = m.occlusionTexture.strength;
+    const float occlusionStrength = m.occlusionTexture.strength;
 
-    const float3 f0 = lerp(0.04, basecolor_factor.rgb, metallic_factor);
+    const float3 f0 = lerp(0.04, baseColorFactor.rgb, metallicFactor);
     const float3 f90 = 1.0;
-    const float alpha_roughness = roughness_factor * roughness_factor;
-    const float3 c_diff = lerp(basecolor_factor.rgb, 0.0, metallic_factor);
+    const float alphaRoughness = roughnessFactor * roughnessFactor;
+    const float3 cDiff = lerp(baseColorFactor.rgb, 0.0, metallicFactor);
 
     const float3 P = pin.wPosition.xyz;
     const float3 V = normalize(cameraPosition.xyz - pin.wPosition.xyz);
@@ -123,7 +123,7 @@ float4 main(VS_OUT pin, bool is_front_face : SV_IsFrontFace) : SV_TARGET
     float3 B = normalize(cross(N, T) * sigma);
 #if 1
 	// For a back-facing surface, the tangential basis vectors are negated.
-    if (is_front_face == false)
+    if (isFrontFace == false)
     {
         T = -T;
         B = -B;
@@ -131,14 +131,14 @@ float4 main(VS_OUT pin, bool is_front_face : SV_IsFrontFace) : SV_TARGET
     }
 #endif
 
-    const int normal_texture = m.normalTexture.index;
-    if (normal_texture > -1)
+    const int normalTexture = m.normalTexture.index;
+    if (normalTexture > -1)
     {
-        float4 sampled = material_textures[NORMAL_TEXTURE].Sample(samplerStates[LINEAR], pin.texcoord);
-        float3 normal_factor = sampled.xyz;
-        normal_factor = (normal_factor * 2.0) - 1.0;
-        normal_factor = normalize(normal_factor * float3(m.normalTexture.scale, m.normalTexture.scale, 1.0));
-        N = normalize((normal_factor.x * T) + (normal_factor.y * B) + (normal_factor.z * N));
+        float4 sampled = materialTextures[NORMAL_TEXTURE].Sample(samplerStates[LINEAR], pin.texcoord);
+        float3 normalFactor = sampled.xyz;
+        normalFactor = (normalFactor * 2.0) - 1.0;
+        normalFactor = normalize(normalFactor * float3(m.normalTexture.scale, m.normalTexture.scale, 1.0));
+        N = normalize((normalFactor.x * T) + (normalFactor.y * B) + (normalFactor.z * N));
     }
 
     float3 diffuse = 0;
@@ -158,18 +158,18 @@ float4 main(VS_OUT pin, bool is_front_face : SV_IsFrontFace) : SV_TARGET
         const float NoH = max(0.0, dot(N, H));
         const float HoV = max(0.0, dot(H, V));
 
-        diffuse += Li * NoL * BrdfLambertian(f0, f90, c_diff, HoV);
-        specular += Li * NoL * BrdfSpecularGgx(f0, f90, alpha_roughness, HoV, NoL, NoV, NoH);
+        diffuse += Li * NoL * BrdfLambertian(f0, f90, cDiff, HoV);
+        specular += Li * NoL * BrdfSpecularGgx(f0, f90, alphaRoughness, HoV, NoL, NoV, NoH);
     }
     
-    diffuse += IblRadianceLambertian(N, V, roughness_factor, c_diff, f0);
-    specular += IblRadianceGgx(N, V, roughness_factor, f0);
+    diffuse += IblRadianceLambertian(N, V, roughnessFactor, cDiff, f0);
+    specular += IblRadianceGgx(N, V, roughnessFactor, f0);
 
-    float3 emmisive = emmisive_factor;
-    diffuse = lerp(diffuse, diffuse * occlusion_factor, occlusion_strength);
-    specular = lerp(specular, specular * occlusion_factor, occlusion_strength);
+    float3 emmisive = emmisiveFactor;
+    diffuse = lerp(diffuse, diffuse * occlusionFactor, occlusionStrength);
+    specular = lerp(specular, specular * occlusionFactor, occlusionStrength);
 
     float3 Lo = diffuse + specular + emmisive;
-    return float4(Lo, basecolor_factor.a);
+    return float4(Lo, baseColorFactor.a);
 }
 

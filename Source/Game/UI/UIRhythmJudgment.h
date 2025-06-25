@@ -2,7 +2,7 @@
 
 #include "UI.h"
 #include "UITempo.h"
-#include "../../Game/JudgeRhythm.h"
+#include "../../Game/Rhythm/JudgeRhythm.h"
 
 //	”»’è•¶ŽšUI
 class UIRhythmJudgment :public UI

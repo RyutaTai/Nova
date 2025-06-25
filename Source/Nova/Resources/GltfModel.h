@@ -15,6 +15,7 @@
 #include "../Others/Transform.h"
 #include "../Others/CerealHelper.h"
 
+//	Gltfモデルクラス(アニメーションあり)
 class GltfModel
 {
 public:

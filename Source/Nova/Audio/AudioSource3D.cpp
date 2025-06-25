@@ -100,19 +100,6 @@ void AudioSource3D::Set3DPan()
 	int masterInputChannel = masterDetails.InputChannels;
 	int masterSampleRate = masterDetails.InputSampleRate;
 
-#if 0
-	float   volumes[] = { 1.0f, 0.0f,1.0f,0.0f };
-	float pan = -90.0f;	//	真左
-	float rad = ((-90.0f + 90.0f) / 2.0f) * (M_PI / 180.0f);	//  ラジアンに変換
-	volumes[0] = cosf(rad);										//  左ボリューム
-	volumes[2] = cosf(rad);										//  左ボリューム
-	volumes[1] = sinf(rad);										//  右ボリューム
-	volumes[3] = sinf(rad);										//  右ボリューム
-
-
-	hr = sourceVoice_->SetOutputMatrix(AudioManager::Instance().GetMasteringVoice(), voiceDetails.InputChannels, masterDetails.InputChannels, volumes);
-	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-#else
 	// リスナーと音源の位置関係から出力先配列を適用
 	float   volumes[] = { 1.0f, 0.0f,1.0f,0.0f };
 	int count = dspSetting_.srcChannelCount_ * dspSetting_.dstChannelCount_;
@@ -122,8 +109,6 @@ void AudioSource3D::Set3DPan()
 	}
 	sourceVoice_->SetOutputMatrix(AudioManager::Instance().GetMasteringVoice(), voiceDetails.InputChannels, masterDetails.InputChannels, dspSetting_.outputMatrix_);
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
-
-#endif
 
 }
 
@@ -173,7 +158,7 @@ void AudioSource3D::DrawDebug()
 		//	確認用
 		ImGui::DragFloat4("Volumes", &dspSetting_.outputMatrix_[0]);
 
-		//	デバッグ
+		//	ピッチ
 		ImGui::DragFloat("Pitch", &pitch_, 0.01f, XAUDIO2_MIN_FREQ_RATIO, XAUDIO2_MAX_FREQ_RATIO);	//	ピッチ変更テスト
 
 		//	再生時間表示

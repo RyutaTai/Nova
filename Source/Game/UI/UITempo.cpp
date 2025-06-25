@@ -1,7 +1,7 @@
 #include "UITempo.h"
 
 #include "../../../External/imgui/imgui.h"
-#include "../JudgeRhythm.h"
+#include "../Rhythm/JudgeRhythm.h"
 #include "../UI/UIRhythmJudgment.h"
 #include "../Stage/Stage.h"
 #include "../../Nova/Graphics/Vignette.h"
@@ -97,7 +97,7 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 {
 	double centerPosX = center_->GetTransform()->GetPositionX();	//	中心円のX座標
 	
-	double totalRange = 0.0f;
+	double totalRange = 0.0;
 	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	range更新
@@ -170,13 +170,13 @@ int UITempo::FindNearSemicircleIndex()
 	double nearRange = DBL_MAX;			//	中心円に一番近い半円の最短距離
 	int nearSemicircleIndex = INT_MAX;	//	中心円に一番近い半円の番号
 
-	for (int i = 0; i < SemicircleMax_; ++i)
+	for (int index = 0; index < SemicircleMax_; ++index)
 	{
 		//	前回より中心円に近い半円があれば、最短距離と番号を更新する
-		if (nearRange > semicircles_[i]->currentRange_)
+		if (nearRange > semicircles_[index]->currentRange_)
 		{
-			nearSemicircleIndex = i;
-			nearRange = semicircles_[i]->currentRange_;
+			nearSemicircleIndex = index;
+			nearRange = semicircles_[index]->currentRange_;
 		}
 	}
 	return nearSemicircleIndex;
@@ -196,6 +196,7 @@ void UITempo::Render()
 	}
 }
 
+//	デバッグ描画S
 void UITempo::DrawDebug()
 {
 	if (ImGui::TreeNode("Tempo"))
@@ -203,7 +204,8 @@ void UITempo::DrawDebug()
 		UI::DrawDebug();
 		float bpm = JudgeRhythm::Instance().GetBPM();
 		ImGui::DragFloat("BPM", &bpm, 0.1f);
-		ImGui::DragFloat("QuarterNoteDuration", &quarterNoteDuration_);	
+		float quarterNoteDuration = static_cast<float>(quarterNoteDuration_);
+		ImGui::DragFloat("QuarterNoteDuration", &quarterNoteDuration);	
 
 		//	描画フラグ
 		ImGui::Checkbox("IsVisible", &isVisible_);

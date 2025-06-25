@@ -5,7 +5,7 @@
 #include <thread>
 #include <mutex>
 
-//	エフェクト
+//	Effekseerエフェクトクラス
 class Effect
 {
 public:

@@ -36,7 +36,7 @@ public:
 	NodeBase* SequenceBack(NodeBase* sequenceNode, BehaviorData* data);
 
 	//	ÉmÅ[Éhí«â¡
-	void AddNode(const std::string& parentName, const std::string& entryName, const int& priority, const SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const bool& isForceExecution = false);
+	void AddNode(const std::string& parentName, const std::string& entryName, const int& priority, const SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action);
 
 	//	é¿çs
 	NodeBase* Run(NodeBase* actionNode, BehaviorData* data, const float& elapsedTime);

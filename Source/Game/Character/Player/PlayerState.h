@@ -2,7 +2,7 @@
 
 #include "Player.h"
 #include "../../../Nova/AI/State.h"
-#include "../../TimeRangeJudge.h"
+#include "../../../Nova/Others/TimeRangeJudge.h"
 
 //	待機ステート
 namespace PlayerState

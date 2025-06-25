@@ -16,6 +16,7 @@
 #include "../Others/Transform.h"
 #include "../Others/CerealHelper.h" 
 
+//	Gltfモデルクラス(アニメーションなし)
 class GltfModelStaticBatching
 {
 public:

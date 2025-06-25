@@ -72,7 +72,6 @@ public:
 	void DrawDebugPrimitive()override;
 
 	//	----- 破棄処理 -----
-	void JudgeDestroy();
 	void Destroy()override;
 
 	//	----- アニメーション -----
@@ -97,11 +96,6 @@ private:
 	NodeBase*		activeNode_		= nullptr;
 
 private:	//	デバッグ用
-	//	----- DebugPrimitive -----
-	bool isCollisionSphere_ = true;
-	bool isAttackSphere_ = true;
-	bool isDamageSphere_ = false;
-
 	bool updateFlag_ = true;				//	更新フラグ
 	bool behaviorTreeUpdateFlag_ = true;	//	ビヘイビアツリー更新フラグ
 

@@ -2,7 +2,7 @@
 
 #include "Dragonkin.h"
 #include "../../../../Nova/AI/ActionBase.h"
-#include "../../../../Game/TimeRangeJudge.h"
+#include "../../../../Nova/Others/TimeRangeJudge.h"
 
 //	ë“ã@çsìÆ
 namespace DragonkinAction

@@ -32,7 +32,7 @@ public:
 	//	----- FFTデータ -----
 	struct FFTConstant
 	{
-		float				fftData_[Frequency::BlockCount];					//	FFTのデータを分割数分GPUに渡す
+		float				fftData_[Frequency::BlockCount_];					//	FFTのデータを分割数分GPUに渡す
 		DirectX::XMFLOAT4	color_[static_cast<int>(AudioSpectrumType::Max)];	//	オーディオスペクトラムの数だけcolorを設定
 	};
 	FFTConstant fftConstant_;

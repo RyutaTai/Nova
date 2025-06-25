@@ -7,10 +7,10 @@
 
 //	コンストラクタ
 NodeBase::NodeBase(const std::string& name, NodeBase* parent, NodeBase* sibling, const int& priority,
-	const BehaviorTree::SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution) :
+	const BehaviorTree::SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo) :
 	name_(name), parent_(parent), sibling_(sibling), priority_(priority),
 	selectRule_(selectRule), judgment_(judgment), action_(action), hierarchyNo_(hierarchyNo),
-	children_(NULL), isForceExecution_(isForceExecution)
+	children_(NULL)
 {
 
 }
@@ -197,7 +197,6 @@ NodeBase* NodeBase::SelectSequence(std::vector<NodeBase*>* list, BehaviorData* d
 
 	}
 	//	実行可能リストに登録されているデータの数だけループを行う
-#if 1
 	for (auto itr = list->begin(); itr != list->end(); itr++)
 	{
 		//	子ノードが実行可能リストに含まれているか
@@ -215,18 +214,6 @@ NodeBase* NodeBase::SelectSequence(std::vector<NodeBase*>* list, BehaviorData* d
 			return children_.at(step);
 		}
 	}
-#else
-	for (NodeBase* node : *list)
-	{
-		//	子ノードが実行可能リストに含まれているか
-		if (children.at(step)->GetName() == node->GetName())
-		{
-			data->PushSequenceNode(this);
-			data->SetSequenceStep(this->name, step + 1);
-			return children.at(step);
-		}
-	}
-#endif
 
 	//	指定された中間ノードに実行可能ノードがないのでnullptrをreturn
 	return nullptr;

@@ -4,7 +4,7 @@
 #include <Effekseer/Effekseer.h>
 #include <EffekseerRendererDX11/EffekseerRendererDX11.h>
 
-//	エフェクトマネージャー
+//	Effekseerエフェクト管理クラス
 class EffectManager
 {
 private:

@@ -403,7 +403,12 @@ void Drone::UpdateCollisions(const float& elapsedTime)
 //	描画処理
 void Drone::Render()
 {
-	//	ドローン描画
+	//	ステート設定
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+	//	モデル描画
 	Character::Render();
 
 	//	弾丸描画
@@ -427,34 +432,8 @@ void Drone::DrawDebugPrimitive()
 	//	弾丸のデバッグ球描画
 	BulletManager::Instance().DrawDebugPrimitive();
 
-	//	----- Collision -----
-	if (isCollisionSphere_)		//	押し出し判定
-	{
-		for (auto& data : GetCollisionDetectionData())
-		{
-			// 現在アクティブではないので表示しない
-			if (data.GetIsActive() == false) continue;
-
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
-	if (isDamageSphere_)		//	くらい判定
-	{
-		for (auto& data : GetDamageDetectionData())
-		{
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
-	if (isAttackSphere_)		//	攻撃判定
-	{
-		for (auto& data : GetAttackDetectionData())
-		{
-			// 現在アクティブではないでの表示しない
-			if (data.GetIsActive() == false) continue;
-
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
+	//	当たり判定表示
+	Character::DrawDebugPrimitive();
 
 }
 
@@ -483,11 +462,6 @@ void Drone::DrawDebug()
 
 		Character::DrawDebug();
 
-		//	----- コリジョン描画フラグ -----
-		ImGui::Checkbox("IsCollisionSphere", &isCollisionSphere_);	//	押し出し判定
-		ImGui::Checkbox("IsAttackSphere", &isAttackSphere_);		//	攻撃判定
-		ImGui::Checkbox("IsDamageSphere", &isDamageSphere_);		//	くらい判定
-		
 		//	----- ステージに当たっているか -----
 		ImGui::Checkbox("IsHitStage", &isHitStage_);
 

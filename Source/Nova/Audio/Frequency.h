@@ -33,21 +33,19 @@ public:
 	std::vector<float>	GetAmplitudeSpectrum() { return amplitudeSpectrum_; }
 	float				GetAmplitudeSpectrum(const int& index) { return amplitudeSpectrum_.at(index); }
 
-	float	GetBPM() { return bpm_; }	//	BPM取得
+	const float	GetBPM()const { return bpm_; }	//	BPM取得
 
 public:
-	static constexpr int BlockCount = 512;		//	ハミング窓サンプル数(何分割するか)
-	//static constexpr int BlockCount = 2048;		//	ハミング窓サンプル数(何分割するか)
-	//static constexpr int blockCount_ = 1024;	//	ハミング窓サンプル数(何分割するか)
-
+	static constexpr int BlockCount_ = 512;		//	ハミング窓サンプル数(何分割するか)(SpectrumPS,SpectrumCirclePS.hlslのFFT_BLOCK_COUNTと合わせる)
+	
 private:
-	static constexpr float AUDIO_PI			= 3.14159265358979323846f;
-	static constexpr double AUDIO_PI_LONG	= 3.14159265358979323846264338328L;
+	static constexpr float	AudioPI_		= 3.14159265358979323846f;
+	static constexpr double AudioPILong_	= 3.14159265358979323846264338328L;
 
 	std::vector<float> amplitudeSpectrum_;			//	振幅スぺクトラム(周波数帯ごとのデシベル値)
 	std::vector<float> oldAmplitudeSpectrum_;		//	前回の振幅スペクトラム
 	std::vector<float> window_;
-	float bpm_ = 120.0f;	//	BPMを保持
+	float bpm_ = 120.0f;		//	BPMを保持
 
 	float audioTimer_ = 0.0f;	//	再生時間
 

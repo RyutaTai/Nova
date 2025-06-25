@@ -7,7 +7,7 @@
 #include "../../../Bullet/BulletManager.h"
 #include "../../../../Nova/AI/StateMachine.h"
 #include "../../../../Nova/Audio/AudioManager.h"
-#include "../../../../Game/TimeRangeJudge.h"
+#include "../../../../Nova/Others/TimeRangeJudge.h"
 
 //	ドローンクラス(浮いている敵)
 class Drone :public Enemy
@@ -100,16 +100,9 @@ private:
 	//	----- ステート -----
 	std::unique_ptr<StateMachine<State<Drone>>>	stateMachine_ = nullptr;		//	ステートマシン
 
-private://	デバッグ用の変数
-	// ----- DrawDebugPrimitive -----
-	bool isCollisionSphere_ = true;		//	押し出し判定
-	bool isAttackSphere_ = true;		//	攻撃判定
-	bool isDamageSphere_ = false;		//	くらい判定
-
+private://	デバッグ用変数
 	bool	isBulletLaunch_	= true;		//	弾丸発射処理をするかどうか
 	static const int MaxHp_ = 40;		//	最大HP
-	//static const int MaxHp_ = 60;		//	最大HP
-	//static const int MaxHp_ = 3;		//	最大HP
 
 	bool isHitStage_ = false;
 

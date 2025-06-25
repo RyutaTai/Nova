@@ -47,26 +47,26 @@ Dragonkin::Dragonkin()
 	//	(優先度4) Idle   : 上記のどれでもなければ選ばれる
 	behaviorTree_->AddNode("", "Root", 0, BehaviorTree::SelectRule::Priority, nullptr, nullptr);
 	{
-		behaviorTree_->AddNode("Root", "Death", 0, BehaviorTree::SelectRule::Non, new DragonkinJudgment::DeathJudgment(this), new DragonkinAction::DeathAction(this), true);	//	死亡ノード(末端)
-		behaviorTree_->AddNode("Root", "Damage", 1, BehaviorTree::SelectRule::Non, new DragonkinJudgment::DamageJudgment(this), new DragonkinAction::DamageAction(this), true);	//	ダメージノード(末端)
+		behaviorTree_->AddNode("Root", "Death", 0, BehaviorTree::SelectRule::Non, new DragonkinJudgment::DeathJudgment(this), new DragonkinAction::DeathAction(this));	//	死亡ノード(末端)
+		behaviorTree_->AddNode("Root", "Damage", 1, BehaviorTree::SelectRule::Non, new DragonkinJudgment::DamageJudgment(this), new DragonkinAction::DamageAction(this));	//	ダメージノード(末端)
 		behaviorTree_->AddNode("Root", "Search", 2, BehaviorTree::SelectRule::Non, new DragonkinJudgment::SearchJudgment(this), new DragonkinAction::SearchAction(this));		//	索敵ノード(末端)
 		behaviorTree_->AddNode("Root", "Battle", 3, BehaviorTree::SelectRule::Random, new DragonkinJudgment::BattleJudgment(this), nullptr);									//	戦闘ノード(中間)
 		{
-			// AttackPunchSequence
+			//	AttackPunchSequence
 			behaviorTree_->AddNode("Battle", "AttackPunchSequence", 0, BehaviorTree::SelectRule::Sequence, nullptr, nullptr); // Sequenceノード
 			{
 				behaviorTree_->AddNode("AttackPunchSequence", "AttackPunch", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackPunchAction(this)); // 実際の攻撃アクション
 				behaviorTree_->AddNode("AttackPunchSequence", "AttackWait", 1, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackWaitAction(this));   // 攻撃後待機＆旋回
 			}
 
-			// AttackKickSequence
+			//	AttackKickSequence
 			behaviorTree_->AddNode("Battle", "AttackKickSequence", 0, BehaviorTree::SelectRule::Sequence, nullptr, nullptr); // Sequenceノード
 			{
 				behaviorTree_->AddNode("AttackKickSequence", "AttackKick", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackKickAction(this));     // 実際の攻撃アクション
 				behaviorTree_->AddNode("AttackKickSequence", "AttackWait", 1, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackWaitAction(this));     // 攻撃後待機＆旋回
 			}
 
-			// AttackWingSequence
+			//	AttackWingSequence
 			behaviorTree_->AddNode("Battle", "AttackWingSequence", 0, BehaviorTree::SelectRule::Sequence, nullptr, nullptr); // Sequenceノード
 			{
 				behaviorTree_->AddNode("AttackWingSequence", "AttackWing", 0, BehaviorTree::SelectRule::Non, nullptr, new DragonkinAction::AttackWingAction(this));     // 実際の攻撃アクション
@@ -75,7 +75,7 @@ Dragonkin::Dragonkin()
 		}
 		behaviorTree_->AddNode("Root", "Idle", 4, BehaviorTree::SelectRule::Non, new DragonkinJudgment::IdleJudgment(this), new DragonkinAction::IdleAction(this));				//	待機ノード(末端)
 	}
-
+	activeNode_ = behaviorTree_->ActiveNodeInference(behaviorData_);
 }
 
 Dragonkin::~Dragonkin()
@@ -237,7 +237,7 @@ void Dragonkin::RegisterCollisionData(const std::string& jsonFileName)
 	RegisterAttackDetectionData({ "Foot_R",			1.1f,{}, "Foot_R" });		//	右足首
 
 	//	左の翼
-	RegisterAttackDetectionData({ "Wing_L03",		0.72f,{}, "Wing_L03" });	//	一番付け根に近い
+	RegisterAttackDetectionData({ "Wing_L03",		0.72f,{}, "Wing_L03" });
 	RegisterAttackDetectionData({ "Wing_L04",		0.72f,{}, "Wing_L04" });
 	RegisterAttackDetectionData({ "Wing_L05",		0.72f,{}, "Wing_L05" });
 	RegisterAttackDetectionData({ "Wing_L05_1",		0.72f,{63.65f,0.0f,0.0f}, "Wing_L05" });
@@ -252,17 +252,16 @@ void Dragonkin::RegisterCollisionData(const std::string& jsonFileName)
 	RegisterAttackDetectionData({ "Wing_L08_2",		0.8f,{318.06f,-57.98f,0.0f}, "Wing_L08" });
 	RegisterAttackDetectionData({ "Wing_L09",		0.72f,{}, "Wing_L09" });
 	RegisterAttackDetectionData({ "Wing_L09_1",		0.72f,{250.0f,0.0f,0.0f}, "Wing_L09" });
-	RegisterAttackDetectionData({ "Wing_L10",		0.72f,{}, "Wing_L10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_L10_1",		0.72f,{205.2f,-33.42f,-9.8f}, "Wing_L10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_L10_2",		0.72f,{150.0f,-34.34f,-9.0f}, "Wing_L10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_L10_3",		0.72f,{300.0f,-34.34f,-9.0f}, "Wing_L10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_L10_4",		0.72f,{344.59f,-34.34f,-9.0f}, "Wing_L10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_L10_5",		0.72f,{395.25f,-34.34f,-9.0f}, "Wing_L10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_L10_6",		0.72f,{424.93f,-48.13f,6.36f}, "Wing_L10" });	//	一番先の方
-
+	RegisterAttackDetectionData({ "Wing_L10",		0.72f,{}, "Wing_L10" });	
+	RegisterAttackDetectionData({ "Wing_L10_1",		0.72f,{205.2f,-33.42f,-9.8f}, "Wing_L10" });
+	RegisterAttackDetectionData({ "Wing_L10_2",		0.72f,{150.0f,-34.34f,-9.0f}, "Wing_L10" });
+	RegisterAttackDetectionData({ "Wing_L10_3",		0.72f,{300.0f,-34.34f,-9.0f}, "Wing_L10" });
+	RegisterAttackDetectionData({ "Wing_L10_4",		0.72f,{344.59f,-34.34f,-9.0f}, "Wing_L10" });
+	RegisterAttackDetectionData({ "Wing_L10_5",		0.72f,{395.25f,-34.34f,-9.0f}, "Wing_L10" });
+	RegisterAttackDetectionData({ "Wing_L10_6",		0.72f,{424.93f,-48.13f,6.36f}, "Wing_L10" });
 
 	//	右の翼												  
-	RegisterAttackDetectionData({ "Wing_R03",		0.72f,{}, "Wing_R03" });	//	一番付け根に近い
+	RegisterAttackDetectionData({ "Wing_R03",		0.72f,{}, "Wing_R03" });
 	RegisterAttackDetectionData({ "Wing_R04",		0.72f,{}, "Wing_R04" });
 	RegisterAttackDetectionData({ "Wing_R05",		0.72f,{}, "Wing_R05" });
 	RegisterAttackDetectionData({ "Wing_R05_1",		0.72f,{63.65f,0.0f,0.0f}, "Wing_R05" });
@@ -277,14 +276,13 @@ void Dragonkin::RegisterCollisionData(const std::string& jsonFileName)
 	RegisterAttackDetectionData({ "Wing_R08_2",		0.8f,{318.06f,-57.98f,0.0f}, "Wing_R08" });
 	RegisterAttackDetectionData({ "Wing_R09",		0.72f,{}, "Wing_R09" });
 	RegisterAttackDetectionData({ "Wing_R09_1",		0.72f,{250.0f,0.0f,0.0f}, "Wing_R09" });
-	RegisterAttackDetectionData({ "Wing_R10",		0.72f,{}, "Wing_R10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_R10_1",		0.72f,{205.2f,-33.42f,-9.8f}, "Wing_R10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_R10_2",		0.72f,{150.0f,-34.34f,-9.0f}, "Wing_R10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_R10_3",		0.72f,{300.0f,-34.34f,-9.0f}, "Wing_R10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_R10_4",		0.72f,{344.59f,-34.34f,-9.0f}, "Wing_R10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_R10_5",		0.72f,{395.25f,-34.34f,-9.0f}, "Wing_R10" });	//	一番先の方
-	RegisterAttackDetectionData({ "Wing_R10_6",		0.72f,{424.93f,-48.13f,6.36f}, "Wing_R10" });	//	一番先の方
-
+	RegisterAttackDetectionData({ "Wing_R10",		0.72f,{}, "Wing_R10" });
+	RegisterAttackDetectionData({ "Wing_R10_1",		0.72f,{205.2f,-33.42f,-9.8f}, "Wing_R10" });	
+	RegisterAttackDetectionData({ "Wing_R10_2",		0.72f,{150.0f,-34.34f,-9.0f}, "Wing_R10" });	
+	RegisterAttackDetectionData({ "Wing_R10_3",		0.72f,{300.0f,-34.34f,-9.0f}, "Wing_R10" });	
+	RegisterAttackDetectionData({ "Wing_R10_4",		0.72f,{344.59f,-34.34f,-9.0f}, "Wing_R10" });	
+	RegisterAttackDetectionData({ "Wing_R10_5",		0.72f,{395.25f,-34.34f,-9.0f}, "Wing_R10" });	
+	RegisterAttackDetectionData({ "Wing_R10_6",		0.72f,{424.93f,-48.13f,6.36f}, "Wing_R10" });	
 
 #pragma endregion ----- 攻撃判定登録 -----
 }
@@ -317,7 +315,6 @@ void Dragonkin::UpdateBehaviorTree(const float& elapsedTime)
 	//	ビヘイビアツリー更新フラグがfalseなら更新しない
 	if (behaviorTreeUpdateFlag_ == false)return;
 
-#if 1
 	//	現在実行するノードがあれば
 	if (activeNode_ != nullptr)
 	{
@@ -330,24 +327,6 @@ void Dragonkin::UpdateBehaviorTree(const float& elapsedTime)
 		//	次に実行するノードを推論する
 		activeNode_ = behaviorTree_->ActiveNodeInference(behaviorData_);
 	}
-#else
-	//	次に実行するノードを推論する
-	NodeBase* inferenceNode = behaviorTree_->ActiveNodeInference(behaviorData_);
-	if (inferenceNode->IsForceExecution())
-	{
-		activeNode_ = inferenceNode;
-	}
-	if (activeNode_ == nullptr)
-	{
-		activeNode_ = inferenceNode;
-	}
-	//	現在実行するノードがあれば
-	if (activeNode_ != nullptr)
-	{
-		//	ビヘイビアツリーからノードを実行
-		activeNode_ = behaviorTree_->Run(activeNode_, behaviorData_, elapsedTime);
-	}
-#endif
 }
 
 //	ステージとの当たり判定
@@ -413,54 +392,19 @@ void Dragonkin::Destroy()
 //	描画処理
 void Dragonkin::Render()
 {
+	//	ステート設定
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+	//	モデル描画
 	Character::Render();
-}
-
-//	デバッグプリミティブ描画
-void Dragonkin::DrawDebugPrimitive()
-{
-	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-
-	//	衝突判定用のデバッグ球を描画
-	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), radius_, height_, DirectX::XMFLOAT4(0, 0, 0, 1));
-
-	//	索敵範囲描画(円柱)
-	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), searchRange_, 1.0f, { 0,1,0.1f,1.0f });
-
-	//	----- Collision -----
-	if (isCollisionSphere_)
-	{
-		for (auto& data : GetCollisionDetectionData())
-		{
-			// 現在アクティブではないので表示しない
-			if (data.GetIsActive() == false) continue;
-
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
-	if (isDamageSphere_)
-	{
-		for (auto& data : GetDamageDetectionData())
-		{
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
-	if (isAttackSphere_)
-	{
-		for (auto& data : GetAttackDetectionData())
-		{
-			// 現在アクティブではないでの表示しない
-			if (data.GetIsActive() == false) continue;
-
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
 }
 
 //	デバッグ描画
 void Dragonkin::DrawDebug()
 {
-	if (ImGui::TreeNode(u8"Dragonkin竜人"))
+	if (ImGui::TreeNode(u8"Dragonkin 竜人"))
 	{
 		//	----- 更新フラグ -----
 		ImGui::Checkbox("UpdateFlag", &updateFlag_);	//	更新フラグ
@@ -480,17 +424,26 @@ void Dragonkin::DrawDebug()
 			ImGui::TreePop();
 		}
 
-		//	----- コリジョン描画フラグ -----
-		ImGui::Checkbox("IsCollisionSphere", &isCollisionSphere_);	//	押し出し判定
-		ImGui::Checkbox("IsAttackSphere", &isAttackSphere_);		//	攻撃判定
-		ImGui::Checkbox("IsDamageSphere", &isDamageSphere_);		//	くらい判定
-
 		Character::DrawDebug();
 
-		ImGui::DragFloat3("moveVec", &moveVec_.x, 0.01f, -FLT_MAX, FLT_MAX);
 		ImGui::DragFloat("SearchRange", &searchRange_, 0.01f);
-
 
 		ImGui::TreePop();
 	}
+}
+
+//	デバッグプリミティブ描画
+void Dragonkin::DrawDebugPrimitive()
+{
+	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
+
+	//	衝突判定用のデバッグ球を描画
+	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), radius_, height_, DirectX::XMFLOAT4(0, 0, 0, 1));
+
+	//	索敵範囲描画(円柱)
+	debugRenderer->DrawCylinder(this->GetTransform()->GetPosition(), searchRange_, 1.0f, { 0,1,0.1f,1.0f });
+
+	//	当たり判定表示
+	Character::DrawDebugPrimitive();
+
 }

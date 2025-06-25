@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Character.h"
-#include "../../TimeRangeJudge.h"
+#include "../../../Nova/Others/TimeRangeJudge.h"
 
 //	エネミークラス
 class Enemy :public Character

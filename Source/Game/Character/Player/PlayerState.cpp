@@ -5,7 +5,7 @@
 #include "../../Bullet/Bullet.h"
 #include "../../Bullet/BulletManager.h"
 #include "../../Character/Enemy/EnemyManager.h"
-#include "../../JudgeRhythm.h"
+#include "../../Rhythm/JudgeRhythm.h"
 #include "../../UI/UIManager.h"
 #include "../../UI/UITempo.h"
 #include "../../Scenes/SceneManager.h"

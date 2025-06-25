@@ -171,9 +171,8 @@ private:
 	bool						drawEffectFlag_ = true;							//	エフェクト描画フラグ(falseなら描画しない)
 	//AnimationType				currentAnimNum_;								//	現在のアニメーション番号
 	
-	//	----- プレイヤーのパラメータ -----
-	static constexpr float MaxHp_ = 100.0f;											//	最大HP
-	float				 turnSpeed_ = DirectX::XMConvertToRadians(720);			//	旋回速度
+	static constexpr float MaxHp_ = 100.0f;							//	最大HP
+	float	turnSpeed_ = DirectX::XMConvertToRadians(720);			//	旋回速度
 
 	//	----- Collision -----
 	bool isActiveCollisionDetection_ = true;	//	押し出し判定が有効かどうか
@@ -184,6 +183,7 @@ private:
 	
 	//	----- コンボ -----
 	bool isAutoCombo_ = false;	//	オートコンボ(デフォルトはfalseにする)
+	int comboCount_ = 0;		//	コンボ攻撃が何連撃ヒットしたか
 
 	//	----- ターゲット -----
 	bool				isTraget_	= false;	//	ターゲットがいるか
@@ -196,15 +196,6 @@ private:
 
 
 private://	----- デバッグ用 -----
-	//	----- Collision -----
-		//	----- DebugPrimitive -----
-	bool isCollisionSphere_ = true;
-	bool isAttackSphere_ = true;
-	bool isDamageSphere_ = false;
-
-	//	----- コンボ -----
-	int comboCount_ = 0;	//	コンボ攻撃が何連撃ヒットしたか
-
 	//	ImGui用
 	bool				isCollisionStage_	= true;
 	bool				isHitStage_			= false;

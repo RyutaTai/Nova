@@ -16,35 +16,26 @@
 #include "../../Game/UI/UIInstructions.h"
 #include "../../Game/UI/UITempo.h"
 #include "../../Game/UI/UIRank.h"
-#include "../../Game/JudgeRhythm.h"
+#include "../../Game/Rhythm/JudgeRhythm.h"
 #include "../../Nova/Collision/CollisionManager.h"
 
 //	初期化
 void SceneGame::Initialize()
 {
 	// ----- オーディオ初期化 -----
-#if 1
-	//AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Game.wav", Audio::AudioType::BGMNormal, "GameScene");
-	AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/452_BPM140_2.wav", Audio::AudioType::BGMNormal, "GameScene");
-#else
-	//AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/fourOnTheFloor_Basic_120BPM_44100Hz_16bit.wav", Audio::AudioType::BGMNormal, "GameScene");
-	AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/fourOnTheFloor_Basic_140BPM_44100Hz_16bit.wav", Audio::AudioType::BGMNormal, "GameScene");
-#endif
+	AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Game.wav", Audio::AudioType::BGMNormal, "GameScene");
 	gameBGM->SetVolume(0.3f, false);
 	gameBGM->SetAudioName("GameBGM");
 	AudioManager::Instance().Register(gameBGM);
 
 	// ----- スプライト初期化 -----
-	//sprite_[static_cast<int>(SPRITE_GAME::BACK)] = std::make_unique<Sprite>(Graphics::Instance().GetDevice(), L"./Resources/Image/Game.png");
-
 	sprites_[static_cast<int>(SPRITE_GAME::Clear)]		= std::make_unique<Sprite>(L"./Resources/Image/Clear.png");
 	sprites_[static_cast<int>(SPRITE_GAME::GameOver)]	= std::make_unique<Sprite>(L"./Resources/Image/GameOver.png");
 
 	// ----- UI初期化 -----
 	std::unique_ptr<UIHealth> uiHealth = std::make_unique<UIHealth>();
 	UIManager::Instance().Register(std::move(uiHealth));
-	//UIInstructions* uiInstructions	= new UIInstructions();
-	
+
 	std::unique_ptr<UITempo> uiTempo = std::make_unique<UITempo>();
 	UIManager::Instance().RegisterUITempo(uiTempo.get());
 	UIManager::Instance().Register(std::move(uiTempo));
@@ -58,7 +49,7 @@ void SceneGame::Initialize()
 	JudgeRhythm::Instance().Initialize();
 
 	// ----- ステージ初期化 -----
-	stage_ = std::make_unique<Stage>();					//	シティモデル
+	stage_ = std::make_unique<Stage>();
 
 	// ----- シーン定数バッファ -----
 	D3D11_BUFFER_DESC bufferDesc{};
@@ -86,29 +77,15 @@ void SceneGame::Initialize()
 	D3D11_TEXTURE2D_DESC texture2dDesc = {};
 	ID3D11Device* device = Graphics::Instance().GetDevice();
 
-#if 1
 	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/sunset_jhbcentral_4k/sunset_jhbcentral_4k.dds",
 		shaderResourceViews_[0].GetAddressOf(), &texture2dDesc);
 	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/sunset_jhbcentral_4k/diffuse_iem.dds",
 		shaderResourceViews_[1].GetAddressOf(), &texture2dDesc);
 	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/sunset_jhbcentral_4k/specular_pmrem.dds",
 		shaderResourceViews_[2].GetAddressOf(), &texture2dDesc);
-	/*LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/sunset_jhbcentral_4k/sheen_pmrem.dds",
-		shaderResourceViews_[3].GetAddressOf(), &texture2dDesc);*/
 	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/lut_charlie.dds",
 		shaderResourceViews_[3].GetAddressOf(), &texture2dDesc);
-#endif
 
-#if 0
-	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/tears_of_steel_bridge_4k/tears_of_steel_bridge_4k.dds",
-		shaderResourceViews_[0].GetAddressOf(), &texture2dDesc);
-	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/tears_of_steel_bridge_4k/diffuse_iem.dds",
-		shaderResourceViews_[1].GetAddressOf(), &texture2dDesc);
-	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/tears_of_steel_bridge_4k/specular_pmrem.dds",
-		shaderResourceViews_[2].GetAddressOf(), &texture2dDesc);
-	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/tears_of_steel_bridge_4k/sheen_pmrem.dds",
-		shaderResourceViews_[3].GetAddressOf(), &texture2dDesc);
-#endif
 	//	----- ブルーム -----
 	framebuffers_[0] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	framebuffers_[1] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);	//	sprite
@@ -144,14 +121,6 @@ void SceneGame::Initialize()
 	stateMachine_->RegisterState(new GameState::GameOverState(this));	//	ゲームオーバー
 	//	初期ステート設定
 	stateMachine_->SetState(static_cast<int>(SceneGameState::Wave1));	//	初期ステートセット
-
-}
-
-//	リセット
-void SceneGame::Reset()
-{
-	/* ----- カメラ初期化 ----- */
-	Camera::Instance().Initialize();
 
 }
 
@@ -226,29 +195,16 @@ void SceneGame::Update(const float& elapsedTime)
 	
 }
 
-//	ポーズにする
-void SceneGame::IsPose(const bool& isPose)
-{
-	player_->SetIsPose(isPose);
-}
-
 //	ウェーブ画像読み込み
 void SceneGame::LoadWaveSprite(const wchar_t* filename)
 {
 	sprites_[SPRITE_GAME::WAVE] = std::make_unique<Sprite>(filename);
 }
 
-//	描画処理
-void SceneGame::Render()
+//	シーン定数バッファ更新
+void SceneGame::UpdateSceneConstants()
 {
 	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
-	ID3D11ShaderResourceView* nullShaderResourceViews[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT]{};
-	deviceContext->VSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
-	deviceContext->PSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
-	
-	Camera::Instance().SetPerspectiveFov();
-
-	//	シーン定数バッファ更新
 	Graphics::Instance().SetViewProjection(Camera::Instance().CalcViewProjectionMatrix());
 	Graphics::Instance().SetLightDirection(lightDirection_);
 	Graphics::Instance().SetCameraPosition({ 0,0,1,0 });
@@ -260,165 +216,186 @@ void SceneGame::Render()
 	deviceContext->VSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
 	deviceContext->PSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
 
-	/* ----- モデル描画 ----- */
-	{
-#if 1
-		//	ステート設定
-		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
-		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
-		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+}
 
-		{
-			DirectX::XMFLOAT4 cameraPosition = { Camera::Instance().GetEye().x,Camera::Instance().GetEye().y,Camera::Instance().GetEye().z,1.0f };
-			Graphics::Instance().SetCameraPosition(cameraPosition);
+//	レンダー初期設定
+void SceneGame::SetupRender()
+{
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
+	ID3D11ShaderResourceView* nullShaderResourceViews[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT]{};
+	deviceContext->VSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
+	deviceContext->PSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
 
-			D3D11_VIEWPORT viewport;
-			UINT numViewports{ 1 };
-			deviceContext->RSGetViewports(&numViewports, &viewport);
+	Camera::Instance().SetPerspectiveFov();
 
-#if 1
-			Camera::Instance().SetPerspectiveFov();
-			DirectX::XMMATRIX Projection = Camera::Instance().GetProjectionMatrix();
-			
-			DirectX::XMVECTOR Eye{ DirectX::XMLoadFloat3(&Camera::Instance().GetEye()) };
-			DirectX::XMVECTOR Focus{DirectX::XMLoadFloat3(&Camera::Instance().GetFocus()) };
-			DirectX::XMVECTOR Up{ DirectX::XMLoadFloat3(&Camera::Instance().GetUp()) };
-			DirectX::XMMATRIX V{ DirectX::XMMatrixLookAtLH(Eye, Focus, Up) };
-#else
-			DirectX::XMMATRIX P{ DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(30), aspectRatio, 0.1f, 100.0f) };
-			DirectX::XMVECTOR eye{ DirectX::XMLoadFloat4(&ShadowMap::Instance().GetCameraPosition()) };
-			DirectX::XMVECTOR focus{ DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f) };
-			DirectX::XMVECTOR up{ DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) };
-			DirectX::XMMATRIX V{ DirectX::XMMatrixLookAtLH(eye, focus, up) };
-#endif
-			Graphics::Instance().SetViewProjection(V * Projection);
+}
 
-		}
-#endif
+//	描画処理
+void SceneGame::Render()
+{
+	//	レンダー初期設定
+	SetupRender();
+	
+	//	シーン定数バッファ更新
+	UpdateSceneConstants();
 
-		/* ----- モデル描画 ----- */
-		framebuffers_[0]->Clear(deviceContext);
-		framebuffers_[0]->Activate(deviceContext);
+	// メインの3Dシーンとポストエフェクトの描画
+	Render3DScene();
 
-		deviceContext->PSSetShaderResources(32, 1, shaderResourceViews_[0].GetAddressOf());
-		deviceContext->PSSetShaderResources(33, 1, shaderResourceViews_[1].GetAddressOf());
-		deviceContext->PSSetShaderResources(34, 1, shaderResourceViews_[2].GetAddressOf());
-		deviceContext->PSSetShaderResources(35, 1, shaderResourceViews_[3].GetAddressOf());
+	// ----- エフェクト描画 -----
+	RenderEffect();
 
-		/* ----- ステージ ----- */
-		//	ステート設定
-		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
-		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
-		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-		stage_->Render();
+	// ----- デバッグプリミティブ描画 -----
+	RenderDebugPrimitive();
 
-		/* ----- プレイヤー ----- */
-		//	ステート設定
-		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::SOLID);
-		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
-		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-		player_->Render();
+	// ----- スプライト描画 -----
+	RenderSprite();
 
-		/* ----- エネミー ----- */
-		//	ステート設定
-		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
-		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
-		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-		EnemyManager::Instance().Render();
-
-		framebuffers_[0]->Deactivate(deviceContext);
-
-		//	ブルーム
-		if (bloomer_)
-		{
-			bloomer_->Make(deviceContext, framebuffers_[0]->shaderResourceViews_[0].Get());
-		}
-
-		//	シャドウマップ
-		MakeShadow();
-		framebuffers_[1]->Clear(deviceContext);
-		framebuffers_[1]->Activate(deviceContext); 
-		DrawShadow();
-		framebuffers_[1]->Deactivate(deviceContext);
-
-		//	ヴィネット
-		Vignette::Instance().Make();
-
-		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
-		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
-		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-		ID3D11ShaderResourceView* shaderResourceViews[] =
-		{
-			framebuffers_[1]->shaderResourceViews_[0].Get(),	//	colorMap
-			bloomer_->ShaderResourceView(),						//	boom
-			framebuffers_[1]->shaderResourceViews_[1].Get(),	//	depthMap
-			cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMap
-
-		};
-		fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[0].Get());
-
-	}
-
-	/* ----- エフェクト描画 ----- */
-	{
-		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::SOLID);
-		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
-		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-
-		DirectX::XMFLOAT4X4 view;
-		DirectX::XMStoreFloat4x4(&view, Camera::Instance().GetViewMatrix());
-		DirectX::XMFLOAT4X4 projection;
-		DirectX::XMStoreFloat4x4(&projection, Camera::Instance().GetProjectionMatrix());
-		EffectManager::Instance().Render(view, projection);
-	}
-
-	/* ----- デバッグプリミティブ描画 ----- */
-	{
-		//	デバッグレンダラ描画実行
-#if _DEBUG
-		player_->DrawDebugPrimitive();
-		EnemyManager::Instance().DrawDebugPrimitive();
-		Graphics::Instance().GetDebugRenderer()->Render();
-#endif
-	}
-
-	/* ----- スプライト描画 ----- */
-	{
-		//	手前にスプライト出すならZON_ON、奥に描画ならOFF_OFF
-		Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);//	各ステート毎のスプライト描画
-		Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
-		//Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
-		Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-
-		//	ウェーブ数描画
-		if (sprites_[SPRITE_GAME::WAVE] && waveStartTimer_ > 0)
-		{
-			//sprite_[static_cast<int>(SPRITE_GAME::WAVE)]->Render();
-		}
-
-		//	操作方法描画
-		if (waveStartTimer_ <= 0.0f && isResult_ == false)
-		{
-			//ui_[static_cast<int>(UI_GAME::Instructions)]->SetRenderFlag(true);
-		}
-
-		//	ゲームクリア
-		if (isGameClear_)
-		{
-			sprites_[static_cast<int>(SPRITE_GAME::Clear)]->GetTransform()->SetPosition(320, 180);
-			sprites_[static_cast<int>(SPRITE_GAME::Clear)]->Render();
-		}
-
-		//	ゲームオーバー
-		if (isGameOver_)
-		{
-			sprites_[static_cast<int>(SPRITE_GAME::GameOver)]->GetTransform()->SetPosition(320, 180);
-			sprites_[static_cast<int>(SPRITE_GAME::GameOver)]->Render();
-		}
-	}
-
-	/* ----- UI描画 ----- */
+	// ----- UI描画 -----
 	UIManager::Instance().Render();
+
+}
+
+// メインの3Dシーンとポストエフェクトの描画
+void SceneGame::Render3DScene()
+{
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
+
+	//	ステート設定（モデル描画用）
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+	DirectX::XMFLOAT4 cameraPosition = { Camera::Instance().GetEye().x, Camera::Instance().GetEye().y, Camera::Instance().GetEye().z, 1.0f };
+	Graphics::Instance().SetCameraPosition(cameraPosition);
+
+	// ビューポートの取得は、通常は描画ターゲットのアクティベート時に設定されるため、
+	// ここで取得する必要があるか再確認 (SetViewportsで設定し直す場合は意味がある)
+	D3D11_VIEWPORT viewport;
+	UINT numViewports{ 1 };
+	deviceContext->RSGetViewports(&numViewports, &viewport);
+
+	// カメラの投影行列を再度設定（冗長な可能性あり）
+	Camera::Instance().SetPerspectiveFov();
+	DirectX::XMMATRIX Projection = Camera::Instance().GetProjectionMatrix();
+	DirectX::XMVECTOR Eye{ DirectX::XMLoadFloat3(&Camera::Instance().GetEye()) };
+	DirectX::XMVECTOR Focus{ DirectX::XMLoadFloat3(&Camera::Instance().GetFocus()) };
+	DirectX::XMVECTOR Up{ DirectX::XMLoadFloat3(&Camera::Instance().GetUp()) };
+	DirectX::XMMATRIX V{ DirectX::XMMatrixLookAtLH(Eye, Focus, Up) };
+	Graphics::Instance().SetViewProjection(V * Projection);
+
+	//	----- 最初のオフスクリーンパス: シーンの3Dモデルを描画	-----
+	framebuffers_[0]->Clear(deviceContext);
+	framebuffers_[0]->Activate(deviceContext); // framebuffers_[0]をレンダーターゲットに設定
+
+	//	環境マップなどのシェーダーリソースをピクセルシェーダーにバインド
+	deviceContext->PSSetShaderResources(32, 1, shaderResourceViews_[0].GetAddressOf());
+	deviceContext->PSSetShaderResources(33, 1, shaderResourceViews_[1].GetAddressOf());
+	deviceContext->PSSetShaderResources(34, 1, shaderResourceViews_[2].GetAddressOf());
+	deviceContext->PSSetShaderResources(35, 1, shaderResourceViews_[3].GetAddressOf());
+
+	//	各モデルの描画
+	//	もしモデル個別に異なるステートが必要なら、そのモデルのRender関数内で設定しておく
+	stage_->Render();
+	player_->Render();
+	EnemyManager::Instance().Render();
+
+	//	元のレンダーターゲットに戻す
+	framebuffers_[0]->Deactivate(deviceContext);
+
+	//	----- ポストエフェクト処理 -----
+	//	ブルームの生成
+	bloomer_->Make(deviceContext, framebuffers_[0]->shaderResourceViews_[0].Get());
+
+	//	シャドウマップの生成
+	MakeShadow(); //	この関数内でシャドウマップ用のレンダーパスが行われる
+
+	//	シャドウ描画パス（framebuffers_[1]へ）
+	framebuffers_[1]->Clear(deviceContext);
+	framebuffers_[1]->Activate(deviceContext);
+	DrawShadow(); // framebuffers_[0]の結果とシャドウマップを合成し、framebuffers_[1]に描画
+	framebuffers_[1]->Deactivate(deviceContext);
+
+	//	ヴィネット効果の生成
+	Vignette::Instance().Make();
+
+	//	----- 最終パス: 全てのポストエフェクトを合成して画面に描画 -----
+	//	最終合成用のレンダー設定
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_OFF_ZW_OFF);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+	//	合成に必要なすべてのテクスチャをシェーダーにバインド
+	ID3D11ShaderResourceView* shaderResourceViews[] =
+	{
+		framebuffers_[1]->shaderResourceViews_[0].Get(),	//	colorMap (シャドウ適用後のメインシーンカラー)
+		bloomer_->ShaderResourceView(),						//	bloom (ブルーム効果)
+		framebuffers_[1]->shaderResourceViews_[1].Get(),	//	depthMap (メインシーンの深度)
+		cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMap (シャドウマップ)
+	};
+	//	フルスクリーンクアッドで最終ピクセルシェーダーを適用し、画面に描画
+	fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[0].Get());
+
+}
+
+//	スプライト描画
+void SceneGame::RenderSprite()
+{
+	//	手前にスプライト出すならZON_ON、奥に描画ならOFF_OFF
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);//	各ステート毎のスプライト描画
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+	//	ウェーブ数描画
+	if (sprites_[SPRITE_GAME::WAVE] && waveStartTimer_ > 0)
+	{
+		//sprite_[static_cast<int>(SPRITE_GAME::WAVE)]->Render();
+	}
+
+	//	操作方法描画
+	if (waveStartTimer_ <= 0.0f && isResult_ == false)
+	{
+		//ui_[static_cast<int>(UI_GAME::Instructions)]->SetRenderFlag(true);
+	}
+
+	//	ゲームクリア
+	if (isGameClear_)
+	{
+		sprites_[static_cast<int>(SPRITE_GAME::Clear)]->GetTransform()->SetPosition(320, 180);
+		sprites_[static_cast<int>(SPRITE_GAME::Clear)]->Render();
+	}
+
+	//	ゲームオーバー
+	if (isGameOver_)
+	{
+		sprites_[static_cast<int>(SPRITE_GAME::GameOver)]->GetTransform()->SetPosition(320, 180);
+		sprites_[static_cast<int>(SPRITE_GAME::GameOver)]->Render();
+	}
+
+}
+
+//	デバッグプリミティブ描画
+void SceneGame::RenderDebugPrimitive()
+{
+#if _DEBUG
+	player_->DrawDebugPrimitive();
+	EnemyManager::Instance().DrawDebugPrimitive();
+	Graphics::Instance().GetDebugRenderer()->Render();
+#endif
+}
+
+//	エフェクト描画
+void SceneGame::RenderEffect()
+{
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::SOLID);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+	DirectX::XMFLOAT4X4 view;
+	DirectX::XMStoreFloat4x4(&view, Camera::Instance().GetViewMatrix());
+	DirectX::XMFLOAT4X4 projection;
+	DirectX::XMStoreFloat4x4(&projection, Camera::Instance().GetProjectionMatrix());
+	EffectManager::Instance().Render(view, projection);
 
 }
 
@@ -470,7 +447,9 @@ void SceneGame::Finalize()
 
 	//	オーディオ終了化
 	AudioManager::Instance().RemoveBySceneName("GameScene");
-
+	
+	//	テクスチャ解放
+	ReleaseAllTextures();
 }
 
 //	デバッグ描画

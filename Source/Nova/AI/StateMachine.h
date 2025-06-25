@@ -15,17 +15,16 @@ public:
 
     void DrawDebug();               // ImGui用
 
-    void SetState(const int& newState);        // ステートセット
-    void ChangeState(const int& newState);     // ステート変更
-    void RegisterState(T* state);       // ステート登録
+    void SetState(const int& newState);         //  ステートセット
+    void ChangeState(const int& newState);      //  ステート変更
+    void RegisterState(T* state);               //  ステート登録
 
-public:// 取得・設定
-    int GetCurrentStateIndex();                // 現在のステート番号取得
+    int GetCurrentStateIndex();                 //  現在のステート番号取得
     //T* GetCurrentState() { return currentState_; } // 現在のステート取得
 
 private:
-    T* currentState_;            // 現在のステート
-    std::vector<T*> statePool_;  // 各ステートを保持する配列
+    T* currentState_;           //  現在のステート
+    std::vector<T*> statePool_; //  各ステートを保持する配列
 
 };
 

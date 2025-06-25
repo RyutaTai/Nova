@@ -19,6 +19,7 @@ CONST BOOL FULLSCREEN{ TRUE };
 class Graphics
 {
 public:
+	//	シーン定数バッファ
 	struct SceneConstants
 	{
 		DirectX::XMFLOAT4X4 viewProjection_ = {};
@@ -42,12 +43,12 @@ public:
 	void	AcquireHighPerformanceAdapter(IDXGIFactory6* dxgiFactory6, IDXGIAdapter3** dxgiAdapter3);
 	void	CreateSwapChain(IDXGIFactory6* dxgiFactory6);
 	void	OnSizeChanged(UINT64 width, UINT height);
-	void	StylizeWindow(bool fullscreen);
+	void	StylizeWindow(const bool& fullscreen);
 	void	PresentFrame();
 	size_t	VideoMemoryUsage();
 
 	void ClearSceneConstant() { sceneConstant_ = {}; }
-	//	セッター
+
 	void SetSceneConstant(const SceneConstants& sceneConstant)					{ sceneConstant_ = sceneConstant; }
 	void SetViewProjection(const DirectX::XMFLOAT4X4& viewProjection)			{ sceneConstant_.viewProjection_ = viewProjection; }
 	void SetViewProjection(const DirectX::XMMATRIX& viewProjection)				{ DirectX::XMStoreFloat4x4(&sceneConstant_.viewProjection_, viewProjection); }
@@ -59,7 +60,6 @@ public:
 	void SetInvProjection(const DirectX::XMMATRIX& invProjection)				{ DirectX::XMStoreFloat4x4(&sceneConstant_.invProjection_, invProjection); }
 	void SetIsVSync(const bool& isVSync);
 
-	//	ゲッター
 	CONST HWND					GetHwnd()					CONST	{ return hwnd_; }
 	ID3D11Device*				GetDevice()					const	{ return device_.Get(); }
 	ID3D11DeviceContext*		GetDeviceContext()			const 	{ return deviceContext_.Get(); }
@@ -86,10 +86,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>	renderTargetView_	= nullptr;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>	depthStencilView_	= nullptr;
 
-	//	SceneConstant
 	SceneConstants	sceneConstant_ = {};
 
-	//	ConstantBuffer
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	constantBuffer_		= nullptr;
 	std::unique_ptr<FrameBuffer>			frameBuffers_[8]	= { nullptr };
 	std::unique_ptr<FullScreenQuad>			fullScreenQuad_	= nullptr;
@@ -100,7 +98,7 @@ private:
 
 	//	Fullscreen
 	CONST HWND	hwnd_;
-	Microsoft::WRL::ComPtr<IDXGIAdapter3>			adapter_;
+	Microsoft::WRL::ComPtr<IDXGIAdapter3> adapter_;
 	bool	fullScreenMode_		= false;
 	bool	tearingSupported_	= false;
 	RECT	windowedRect_;

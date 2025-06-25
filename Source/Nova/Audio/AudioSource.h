@@ -10,7 +10,7 @@ class AudioSource :public Audio
 {
 public:
 	AudioSource(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType, const std::string& sceneName);
-	~AudioSource()override;
+	~AudioSource()override = default;
 
 public:
 	//	XVˆ—

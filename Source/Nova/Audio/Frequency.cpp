@@ -8,9 +8,9 @@
 void Frequency::Initialize()
 {
     //  Hamming窓の生成
-    window_ = HammingWindow(BlockCount);
+    window_ = HammingWindow(BlockCount_);
 
-    oldAmplitudeSpectrum_.resize(BlockCount, 0.0f);
+    oldAmplitudeSpectrum_.resize(BlockCount_, 0.0f);
 
 }
 
@@ -20,15 +20,15 @@ void Frequency::Update(const float& elapsedTime, Audio* audioSource)
     size_t          SPsize      = audioSource->GetAudioBytes();     //  オーディオのバッファサイズ取得
     const BYTE*     SPdata      = audioSource->GetAudioData();
     //std::vector<uint8_t> audioVector = ConvertToVector(SPdata, SPsize);
-    const uint8_t*  audioVector = audioSource->GetAudioData();
-	int             SPNowData   = static_cast<int>(audioSource->GetCurrentSample());  //  現在のサンプル
-    int             SPNowBlock  = SPNowData / BlockCount;           //  現在のブロック計算
+    const uint8_t*  audioVector = audioSource->GetAudioData(); 
+	int             SPNowData   = static_cast<int>(audioSource->GetCurrentSample());    //  現在のサンプル
+    int             SPNowBlock  = SPNowData / BlockCount_;                               //  現在のブロック計算
 
     //  FFT変換
     std::vector<Complex> windowedData;
-    int spNowBlock = BlockCount * SPNowBlock;
+    int spNowBlock = BlockCount_ * SPNowBlock;
 
-    for (int i = 0; i < BlockCount; ++i)
+    for (int i = 0; i < BlockCount_; ++i)
     {
         int index = i + spNowBlock;
         if (index < SPsize)  // 範囲内かチェック
@@ -71,23 +71,23 @@ void Frequency::Update(const float& elapsedTime, Audio* audioSource)
     //auto& SPdata = audioSource->GetAudioData();
     auto& SPdata = ConvertToVector(audioSource->GetAudioData(), SPsize);
     int SPNowData = audioSource->GetCurrentSample();    // 現在のサンプル
-    int SPNowBlock = SPNowData / BlockCount;    // 現在のブロック計算
+    int SPNowBlock = SPNowData / BlockCount_;    // 現在のブロック計算
 
     // SPNowBlock が SPdata の範囲を超えないようにする
-    if (SPNowBlock * BlockCount + BlockCount > SPsize)
+    if (SPNowBlock * BlockCount_ + BlockCount_ > SPsize)
     {
-        SPNowBlock = (SPsize - BlockCount) / BlockCount;
+        SPNowBlock = (SPsize - BlockCount_) / BlockCount_;
     }
 
     // windowedDataのサイズをdataBlockSizeに設定する
-    std::vector<Complex> windowedData(BlockCount);
+    std::vector<Complex> windowedData(BlockCount_);
 
-    for (int i = 0; i < BlockCount; ++i)
+    for (int i = 0; i < BlockCount_; ++i)
     {
         // 範囲チェックを追加する
-        if ((i + BlockCount * SPNowBlock) < SPsize)
+        if ((i + BlockCount_ * SPNowBlock) < SPsize)
         {
-            windowedData[i] = hamming_[i] * SPdata[i + BlockCount * SPNowBlock];
+            windowedData[i] = hamming_[i] * SPdata[i + BlockCount_ * SPNowBlock];
         }
         else
         {
@@ -137,7 +137,7 @@ std::vector<float> Frequency::HammingWindow(const int& count)
     for (int i = 0; i < count; ++i)
     {
         float h;
-        h = 0.54f - (0.46f * cosf((2 * AUDIO_PI * i) / (count - 1)));   //  ハミング窓
+        h = 0.54f - (0.46f * cosf((2 * AudioPI_ * i) / (count - 1)));   //  ハミング窓
         hm.emplace_back(h);
     }
     return hm;
@@ -145,7 +145,7 @@ std::vector<float> Frequency::HammingWindow(const int& count)
 float Frequency::HammingWindow(const int& index, const int& count)
 {
 	float h;
-	h = 0.54f - (0.46f * cosf((2 * AUDIO_PI * index) / (count - 1)));   //  ハミング窓
+	h = 0.54f - (0.46f * cosf((2 * AudioPI_ * index) / (count - 1)));   //  ハミング窓
 	return h;
 }
 
@@ -156,7 +156,7 @@ std::vector<float> Frequency::BlackmanWindow(const int& count)
     for (int i = 0; i < count; ++i)
     {
         float h;
-        h = 0.42f - 0.5f * cosf(2 * AUDIO_PI * i / (count - 1)) + 0.08f * cosf(4 * AUDIO_PI * i / (count - 1));   //  ブラックマン窓
+        h = 0.42f - 0.5f * cosf(2 * AudioPI_ * i / (count - 1)) + 0.08f * cosf(4 * AudioPI_ * i / (count - 1));   //  ブラックマン窓
         hm.emplace_back(h);
     }
     return hm;
@@ -164,7 +164,7 @@ std::vector<float> Frequency::BlackmanWindow(const int& count)
 float Frequency::BlackmanWindow(const int& index, const int& count)
 {
     float h;
-    h = 0.42f - 0.5f * cosf(2 * AUDIO_PI * index / (count - 1)) + 0.08f * cosf(4 * AUDIO_PI * index / (count - 1));   //  ブラックマン窓
+    h = 0.42f - 0.5f * cosf(2 * AudioPI_ * index / (count - 1)) + 0.08f * cosf(4 * AudioPI_ * index / (count - 1));   //  ブラックマン窓
     return h;
 }
 
@@ -172,7 +172,7 @@ float Frequency::BlackmanWindow(const int& index, const int& count)
 void Frequency::FFT(std::vector<Complex>& x)
 {
 	unsigned int N = static_cast<int>(x.size()), k = N, n;
-	float thetaT = static_cast<float>(AUDIO_PI_LONG / N);
+	float thetaT = static_cast<float>(AudioPILong_ / N);
 
     //  DFT
     Complex phiT = Complex(cos(thetaT), -sin(thetaT)), T;

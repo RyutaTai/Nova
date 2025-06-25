@@ -10,6 +10,7 @@
 #include "../Graphics/Shader.h"
 #include "../Resources/Texture.h"
 
+//	スプライトクラス
 class Sprite
 {
 public:	

@@ -137,9 +137,6 @@
     <Filter Include="Nova\Graphics\ChromaticAberration">
       <UniqueIdentifier>{338f0a76-3b48-4fc6-aa2d-39b6e8b42e22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Nova\Graphics\GrainNoiseFilter">
-      <UniqueIdentifier>{eedf37f4-311f-45cf-b2dd-fa685215673e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Nova\Graphics\SharpnenFilter">
       <UniqueIdentifier>{e5c51e48-4ae6-4f81-8bbc-7e77a9a01c55}</UniqueIdentifier>
     </Filter>
@@ -151,6 +148,9 @@
     </Filter>
     <Filter Include="Nova\Collision\AI">
       <UniqueIdentifier>{1c31d348-952a-4ff8-b203-504c9b5f0684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Rhythm">
+      <UniqueIdentifier>{8cc995b8-2fc2-4069-bfaf-36b3e9b5591c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -264,9 +264,6 @@
     </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\CascadedShadowMaps.cpp">
       <Filter>Nova\Graphics\CascadedShadowMaps</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\JudgeRhythm.cpp">
-      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\UI\UI.cpp">
       <Filter>Game\UI</Filter>
@@ -400,9 +397,6 @@
     <ClCompile Include="Source\Game\Stage\Stage.cpp">
       <Filter>Game\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\TimeRangeJudge.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game\Character\Player\Player.cpp">
       <Filter>Game\Character\Player</Filter>
     </ClCompile>
@@ -421,9 +415,6 @@
     <ClCompile Include="Source\Nova\Graphics\ChromaticAberration.cpp">
       <Filter>Nova\Graphics\ChromaticAberration</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Nova\Graphics\GrainNoiseFilter.cpp">
-      <Filter>Nova\Graphics\GrainNoiseFilter</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\SharpenFilter.cpp">
       <Filter>Nova\Graphics\SharpnenFilter</Filter>
     </ClCompile>
@@ -432,6 +423,12 @@
     </ClCompile>
     <ClCompile Include="Source\Nova\Graphics\ContrastFilter.cpp">
       <Filter>Nova\Graphics\ContrastFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Rhythm\JudgeRhythm.cpp">
+      <Filter>Game\Rhythm</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova\Others\TimeRangeJudge.cpp">
+      <Filter>Nova\Others</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -555,9 +552,6 @@
     <ClInclude Include="Source\Nova\Audio\AudioSource3D.h">
       <Filter>Nova\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\Audio\AudioStructures.h">
-      <Filter>Nova\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Nova\Collision\CollisionData.h">
       <Filter>Nova\Collision</Filter>
     </ClInclude>
@@ -572,9 +566,6 @@
     </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\CascadedShadowMaps.h">
       <Filter>Nova\Graphics\CascadedShadowMaps</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\JudgeRhythm.h">
-      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\UI\UI.h">
       <Filter>Game\UI</Filter>
@@ -849,9 +840,6 @@
     <ClInclude Include="Source\Game\Stage\Stage.h">
       <Filter>Game\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\TimeRangeJudge.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\Character\Player\Player.h">
       <Filter>Game\Character\Player</Filter>
     </ClInclude>
@@ -873,9 +861,6 @@
     <ClInclude Include="Source\Nova\Graphics\ChromaticAberration.h">
       <Filter>Nova\Graphics\ChromaticAberration</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\Graphics\GrainNoiseFilter.h">
-      <Filter>Nova\Graphics\GrainNoiseFilter</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\SharpenFilter.h">
       <Filter>Nova\Graphics\SharpnenFilter</Filter>
     </ClInclude>
@@ -892,6 +877,12 @@
       <Filter>Nova\Others</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Others\GltfUtility.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Rhythm\JudgeRhythm.h">
+      <Filter>Game\Rhythm</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\TimeRangeJudge.h">
       <Filter>Nova\Others</Filter>
     </ClInclude>
   </ItemGroup>
@@ -989,7 +980,7 @@
     <FxCompile Include="Source\Nova\Shaders\GltfModelStaticBatchingCsmVS.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Source\Nova\Shaders\CityPS.hlsl">
+    <FxCompile Include="Source\Nova\Shaders\StagePS.hlsl">
       <Filter>Nova\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Source\Nova\Shaders\DronePS.hlsl">

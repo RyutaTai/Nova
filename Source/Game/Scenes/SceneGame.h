@@ -43,37 +43,43 @@ public:
 	void Render()							override;
 	void DrawDebug()						override;
 
-	void ChangeState(SceneGameState state) { stateMachine_->ChangeState(static_cast<int>(state)); }	//	ステート遷移
-
+	//	----- スプライト -----
 	void LoadWaveSprite(const wchar_t* filename);
-	StateMachine<State<SceneGame>>* GetStateMachine() { return stateMachine_.get(); }	//	ステートマシン取得
-	void IsPose(const bool& isPose);
-	void Reset();
 
+	//	----- ステートマシン -----
+	void ChangeState(SceneGameState state) { stateMachine_->ChangeState(static_cast<int>(state)); }	//	ステート遷移
+	StateMachine<State<SceneGame>>* GetStateMachine() { return stateMachine_.get(); }	//	ステートマシン取得
+	
+	//	----- シーン遷移に関わる関数 -----
 	void SetChangeTitleTimer(const float& changeTitleTimer) { changeTitleTimer_ = changeTitleTimer; }
 	void ChangeToTitle(const bool& changeTitle) { changeTitleFlag_ = changeTitle; }
 	void SetWaveStartTimer(const float& timer)		{ waveStartTimer_ = timer; }
 	void SetGameOver(const bool& gameOver)			{ isGameOver_ = gameOver; }
 	void SetGameClear(const bool& gameClear)		{ isGameClear_ = gameClear; }
 	void SetIsResult(const bool& isResult)			{ isResult_ = isResult; }
-
-	float	GetWaveStartTimer()		{ return waveStartTimer_; }
-	float	GetChangeTitleTimer()	{ return changeTitleTimer_; }
-	bool	GetIsResult()			{ return isResult_; }
-
-private:
-	//	シャドウマップ
-	void MakeShadow();	//	シャドウ生成
-	void DrawShadow();	//	シャドウ描画
+	const float	GetWaveStartTimer()		const { return waveStartTimer_; }
+	const float	GetChangeTitleTimer()	const { return changeTitleTimer_; }
+	const bool	GetIsResult()			const { return isResult_; }
 
 private:
-	/* ----- オブジェクト ----- */
+	//	----- 描画処理 -----
+	void SetupRender();				//	レンダー初期設定
+	void UpdateSceneConstants();	//	シーン定数バッファ更新
+	void MakeShadow();				//	シャドウ生成
+	void DrawShadow();				//	シャドウ描画
+	void Render3DScene();			//	モデルの描画、ポストエフェクト
+	void RenderSprite();			//	スプライト描画
+	void RenderDebugPrimitive();	//	デバッグプリミティブ描画
+	void RenderEffect();			//	エフェクト描画
+
+private:
+	// ----- オブジェクト -----
 	std::unique_ptr	<Stage>		stage_;								//	ステージ
 	std::unique_ptr	<Player>	player_;							//	プレイヤー
 	std::unique_ptr	<Dragonkin>	dragonkin_;							//	竜人
 	std::unique_ptr<StateMachine<State<SceneGame>>>	stateMachine_;	//	ステートマシン
 
-	/* ----- 描画関係 ----- */
+	// ----- 描画関係 -----
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	shaderResourceViews_[8];
 	std::unique_ptr<FrameBuffer>				framebuffers_[8];
 	std::unique_ptr<FullScreenQuad>				fullScreenQuad_;
@@ -105,7 +111,7 @@ private:
 	//	シャープネスフィルター
 	std::unique_ptr<SharpenFilter> sharpenFilter_;
 
-	/* ----- スプライト ----- */
+	// ----- スプライト -----
 	enum SPRITE_GAME
 	{
 		BACK,			//	背景画像
@@ -121,12 +127,12 @@ private:
 	};
 	std::unique_ptr <Sprite>			  sprites_[static_cast<int>(SPRITE_GAME::Max)];
 
-	/* ----- ゲーム内で使う変数 ----- */
-	float	waveStartTimer_		= 0.0f;		//	ウェーブ開始のUIが表示されている間
-	bool	isGameOver_			= false;
-	bool	changeTitleFlag_	= false;
-	bool	isGameClear_		= false;
-	float	changeTitleTimer_	= 3.0f;
+	// ----- シーン遷移に関わる変数 -----
+	float	waveStartTimer_		= 0.0f;		//	ウェーブ開始のUIが表示されている時間
+	bool	isGameOver_			= false;	//	ゲームオーバーフラグ
+	bool	isGameClear_		= false;	//	ゲームクリアフラグ
+	bool	changeTitleFlag_	= false;	//	タイトルシーン遷移フラグ
+	float	changeTitleTimer_	= 3.0f;		//	タイトルシーンへ遷移するまでに待つ時間
 	bool	isResult_			= false;	//	リザルト画面かどうか(クリア、ゲームオーバー)
 
 	//	デバッグ用

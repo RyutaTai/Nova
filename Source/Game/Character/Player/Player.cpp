@@ -8,7 +8,7 @@
 #include "../../../Nova/Resources/ResourceManager.h"
 #include "../../../Game/UI/UIManager.h"
 #include "../../../Game/UI/UITempo.h"
-#include "../../JudgeRhythm.h"
+#include "../../Rhythm/JudgeRhythm.h"
 #include "PlayerState.h"
 #include "../../Stage/Stage.h"
 #include "../Enemy/EnemyManager.h"
@@ -44,8 +44,8 @@ Player::Player()
 	stateMachine_->RegisterState(new PlayerState::DamageState(this));	//	ダメージ
 	stateMachine_->RegisterState(new PlayerState::FlinchState(this));	//	怯み
 	stateMachine_->RegisterState(new PlayerState::DeathState(this));	//	死亡
-
 	stateMachine_->SetState(static_cast<int>(StateType::Idle));			//	初期ステートセット
+
 	//	----- アニメーションセット -----
 	PlayAnimation(Player::AnimationType::Idle, true, 1.0f);
 
@@ -151,7 +151,6 @@ void Player::Update(const float& elapsedTime)
 	
 	
 }
-
 
 //	当たり判定登録
 void Player::RegisterCollisionData(const std::string& jsonFileName)
@@ -489,6 +488,12 @@ DirectX::XMFLOAT3 Player::GetMoveVec()const
 //	描画処理
 void Player::Render()
 {
+	//	ステート設定
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::SOLID);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+	//	モデル描画
 	Character::Render();
 
 	//	エフェクト描画
@@ -534,6 +539,7 @@ void Player::ChangeState(const StateType& state)
 //	回避ステートへ遷移
 void Player::ChangeDodgeState()
 {
+	//	Bボタン(Xキー)が押されたら、リズム判定をして回避ステートへ遷移
 	if (Input::Instance().GetGamePad().GetButtonDown() & GamePad::BTN_B/*Xキー*/)
 	{
 		JudgeRhythm::Instance().Judge();
@@ -587,11 +593,8 @@ void Player::DrawDebug()
 		ImGui::DragInt("ComboCount", &comboCount_);			//	コンボヒット数
 
 		//	----- コリジョンフラグ -----
-		ImGui::Checkbox("UseCollisionDetection", &isActiveCollisionDetection_);	//	押し出し判定が有効かどうか
-		ImGui::Checkbox("IsCollisionSphere", &isCollisionSphere_);				//	押し出し判定
-		ImGui::Checkbox("IsAttackSphere", &isAttackSphere_);					//	攻撃判定
-		ImGui::Checkbox("IsDamageSphere", &isDamageSphere_);					//	くらい判定
-
+		ImGui::Checkbox("UseCollisionDetection", &isActiveCollisionDetection_);		//	押し出し判定が有効かどうか
+		
 		//	----- エフェクト -----
 		ImGui::DragFloat("EffectScale", &effectScale_, 0.01f, -FLT_MAX, FLT_MAX);						//	エフェクトスケール
 		ImGui::Checkbox("PlayEffect", &playEffectFlag_);	//	エフェクト再生フラグ
@@ -610,33 +613,7 @@ void Player::DrawDebugPrimitive()
 	//	衝突判定用のデバッグ円柱を描画
 	debugRenderer->DrawCylinder(GetTransform()->GetPosition(), radius_, height_, DirectX::XMFLOAT4(0, 0, 0, 1));
 
-	//	----- Collision -----
-	if (isCollisionSphere_)
-	{
-		for (auto& data : GetCollisionDetectionData())
-		{
-			//	現在アクティブではないため表示しない
-			if (data.GetIsActive() == false) continue;
-
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
-	if (isDamageSphere_)
-	{
-		for (auto& data : GetDamageDetectionData())
-		{
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
-	if (isAttackSphere_)
-	{
-		for (auto& data : GetAttackDetectionData())
-		{
-			//	現在アクティブではないため表示しない
-			if (data.GetIsActive() == false) continue;
-
-			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
-		}
-	}
+	//	当たり判定表示
+	Character::DrawDebugPrimitive();
 
 }

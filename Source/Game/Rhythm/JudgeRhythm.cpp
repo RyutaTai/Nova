@@ -2,12 +2,12 @@
 
 #include <algorithm>
 
-#include "Stage/Stage.h"
-#include "UI/UIManager.h"
-#include "UI/UITempo.h"
-#include "UI/UIRank.h"
-#include "UI/UIRhythmJudgment.h"
-#include "../Nova/Core/Framework.h"
+#include "../Stage/Stage.h"
+#include "../UI/UIManager.h"
+#include "../UI/UITempo.h"
+#include "../UI/UIRank.h"
+#include "../UI/UIRhythmJudgment.h"
+#include "../../Nova/Core/Framework.h"
 #include "../../imgui/imgui.h"
 
 void JudgeRhythm::Initialize()

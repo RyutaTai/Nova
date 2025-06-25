@@ -7,11 +7,11 @@
 class FrameBuffer
 {
 public:
-	FrameBuffer(ID3D11Device* device, uint32_t width, uint32_t height, bool hasDepthstencil = true/*BLOOM*/);
+	FrameBuffer(ID3D11Device* device, uint32_t width, uint32_t height, bool hasDepthstencil = true/*深度ステンシルバッファを持つかどうか*/);
 	virtual ~FrameBuffer() = default;
 
 	void Clear(ID3D11DeviceContext* deviceContext,
-		float r = 0, float g = 0, float b = 0, float a = 1, float depth = 1);
+		const float& r = 0, const float& g = 0, const float& b = 0, const float& a = 1, const float& depth = 1);
 	void Activate  (ID3D11DeviceContext* deviceContext);
 	void Deactivate(ID3D11DeviceContext* deviceContext);
 

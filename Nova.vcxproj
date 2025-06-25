@@ -209,7 +209,7 @@
     <ClCompile Include="Source\Game\Character\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Source\Game\Character\Player\Player.cpp" />
     <ClCompile Include="Source\Game\Character\Player\PlayerState.cpp" />
-    <ClCompile Include="Source\Game\TimeRangeJudge.cpp" />
+    <ClCompile Include="Source\Game\Rhythm\JudgeRhythm.cpp" />
     <ClCompile Include="Source\Game\Scenes\GameState.cpp" />
     <ClCompile Include="Source\Game\Scenes\SceneGame.cpp" />
     <ClCompile Include="Source\Game\Scenes\SceneLoading.cpp" />
@@ -220,7 +220,6 @@
     <ClCompile Include="Source\Nova\Camera\Camera.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Bloom.cpp" />
     <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
-    <ClCompile Include="Source\Game\JudgeRhythm.cpp" />
     <ClCompile Include="Source\Game\UI\UIInstructions.cpp" />
     <ClCompile Include="Source\Game\UI\UIRank.cpp" />
     <ClCompile Include="Source\Nova\AI\BehaviorData.cpp" />
@@ -234,7 +233,6 @@
     <ClCompile Include="Source\Nova\Graphics\ContrastFilter.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Decal.cpp" />
     <ClCompile Include="Source\Nova\Graphics\ExposureFilter.cpp" />
-    <ClCompile Include="Source\Nova\Graphics\GrainNoiseFilter.cpp" />
     <ClCompile Include="Source\Nova\Graphics\SharpenFilter.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Vignette.cpp" />
     <ClCompile Include="Source\Game\UI\UIHealth.cpp" />
@@ -275,6 +273,7 @@
     <ClCompile Include="Source\Nova\Input\GamePad.cpp" />
     <ClCompile Include="Source\Nova\Input\Input.cpp" />
     <ClCompile Include="Source\Nova\Input\Mouse.cpp" />
+    <ClCompile Include="Source\Nova\Others\TimeRangeJudge.cpp" />
     <ClCompile Include="Source\Nova\Others\Transform.cpp" />
     <ClCompile Include="Source\Nova\Resources\Effect.cpp" />
     <ClCompile Include="Source\Nova\Resources\EffectManager.cpp" />
@@ -304,7 +303,7 @@
     <ClInclude Include="Source\Game\Character\Enemy\EnemyManager.h" />
     <ClInclude Include="Source\Game\Character\Player\Player.h" />
     <ClInclude Include="Source\Game\Character\Player\PlayerState.h" />
-    <ClInclude Include="Source\Game\TimeRangeJudge.h" />
+    <ClInclude Include="Source\Game\Rhythm\JudgeRhythm.h" />
     <ClInclude Include="Source\Game\Scenes\GameState.h" />
     <ClInclude Include="Source\Game\Scenes\Scene.h" />
     <ClInclude Include="Source\Game\Scenes\SceneGame.h" />
@@ -361,7 +360,6 @@
     <ClInclude Include="External\nlohmann\ordered_map.hpp" />
     <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="External\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
-    <ClInclude Include="Source\Game\JudgeRhythm.h" />
     <ClInclude Include="Source\Game\UI\UIInstructions.h" />
     <ClInclude Include="Source\Game\UI\UIRank.h" />
     <ClInclude Include="Source\Nova\AI\ActionBase.h" />
@@ -377,7 +375,6 @@
     <ClInclude Include="Source\Nova\Graphics\ContrastFilter.h" />
     <ClInclude Include="Source\Nova\Graphics\Decal.h" />
     <ClInclude Include="Source\Nova\Graphics\ExposureFilter.h" />
-    <ClInclude Include="Source\Nova\Graphics\GrainNoiseFilter.h" />
     <ClInclude Include="Source\Nova\Graphics\SharpenFilter.h" />
     <ClInclude Include="Source\Nova\Graphics\Vignette.h" />
     <ClInclude Include="Source\Game\UI\UIHealth.h" />
@@ -406,7 +403,6 @@
     <ClInclude Include="Source\Nova\Audio\Audio3DSystem.h" />
     <ClInclude Include="Source\Nova\Audio\AudioSource.h" />
     <ClInclude Include="Source\Nova\Audio\AudioSource3D.h" />
-    <ClInclude Include="Source\Nova\Audio\AudioStructures.h" />
     <ClInclude Include="Source\Nova\Audio\Frequency.h" />
     <ClInclude Include="Source\Nova\Audio\PitchShifter.h" />
     <ClInclude Include="Source\Nova\Audio\WaveRead.h" />
@@ -431,6 +427,7 @@
     <ClInclude Include="Source\Nova\Others\MathHelper.h" />
     <ClInclude Include="Source\Nova\Others\MemoryUtility.h" />
     <ClInclude Include="Source\Nova\Others\Misc.h" />
+    <ClInclude Include="Source\Nova\Others\TimeRangeJudge.h" />
     <ClInclude Include="Source\Nova\Others\Transform.h" />
     <ClInclude Include="Source\Nova\Resources\Effect.h" />
     <ClInclude Include="Source\Nova\Resources\EffectManager.h" />
@@ -458,7 +455,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="Source\Nova\Shaders\CityPS.hlsl">
+    <FxCompile Include="Source\Nova\Shaders\StagePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>

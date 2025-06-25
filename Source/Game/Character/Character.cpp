@@ -301,6 +301,7 @@ AttackDetectionData* Character::GetAttackDetectionData(const int& index)
 	//	インデックスが有効範囲内かチェック
 	if (index < 0 || static_cast<size_t>(index) >= attackDetectionData_.size())
 	{
+		//	範囲外だった
 		_ASSERT_EXPR(false, "Invalid index for AttackDetectionData");
 		return nullptr;
 	}
@@ -338,6 +339,7 @@ DamageDetectionData* Character::GetDamageDetectionData(const int& index)
 	//	インデックスが有効範囲内かチェック
 	if (index < 0 || static_cast<size_t>(index) >= damageDetectionData_.size())
 	{
+		//	範囲外だった
 		_ASSERT_EXPR(false, "Invalid index for DamageDetectionData");
 		return nullptr;
 	}
@@ -376,6 +378,7 @@ CollisionDetectionData* Character::GetCollisionDetectionData(const int& index)
 	//	インデックスが有効範囲内かチェック
 	if (index < 0 || static_cast<size_t>(index) >= collisionDetectionData_.size())
 	{
+		//	範囲外だった
 		_ASSERT_EXPR(false, "Invalid index for CollisionDetectionData");
 		return nullptr;
 	}
@@ -386,7 +389,7 @@ CollisionDetectionData* Character::GetCollisionDetectionData(const int& index)
 #pragma endregion ----- 押し出し判定 ----- 
 #pragma endregion //	========== Collision ========== 
 
-//	Json(当たり判定データ)
+//	Json(当たり判定データ)保存
 void Character::SaveCollisionDataToJson(const std::string& filePath) const
 {
 	nlohmann::json j;
@@ -408,6 +411,7 @@ void Character::SaveCollisionDataToJson(const std::string& filePath) const
 	}
 }
 
+//	Json(当たり判定データ)読み込み
 void Character::LoadCollisionDataFromJson(const std::string& filePath)
 {
 	std::ifstream ifs(filePath);
@@ -473,36 +477,290 @@ void Character::DrawDebug()
 	//	----- Collision -----
 	if (ImGui::TreeNode(u8"Collision 当たり判定"))
 	{
-		//	Json保存ボタンを押したら保存
-		if (ImGui::Button(u8"SaveJson Json保存"))
+		//	当たり判定表示フラグ
+		ImGui::Text(u8"CollisionDrawFlag 当たり判定表示フラグ");
+		ImGui::Checkbox("IsCollisionSphere", &isDrawCollisionSphere_);				//	押し出し判定
+		ImGui::Checkbox("IsAttackSphere", &isDrawAttackSphere_);					//	攻撃判定
+		ImGui::Checkbox("IsDamageSphere", &isDrawDamageSphere_);					//	くらい判定
+
+		CollisionDrawDebug();
+		ImGui::TreePop();
+	}
+
+}
+
+//	当たり判定データImGui
+void Character::CollisionDrawDebug()
+{
+	//	----- Collision -----
+	if (ImGui::TreeNode(u8"Collision 当たり判定"))
+	{
+		//	JSONファイル名表示とボタン
+		ImGui::Text("JSON File: %s", collisionDataJsonFileName_.c_str());
+
+		//	JSON保存
+		if (ImGui::Button(u8"Save JSON"))
 		{
 			SaveCollisionDataToJson(collisionDataJsonFileName_);
 		}
+		ImGui::SameLine();
+		//	JSON読み込み
+		if (ImGui::Button(u8"Load JSON"))
+		{
+			LoadCollisionDataFromJson(collisionDataJsonFileName_);
+		}
+		ImGui::Separator(); // 区切り線
+
+		//	手動でのインデックス入力/表示
+		ImGui::InputInt("AttackDetectionDataIndex", &selectedAttackDetectionDataIndex_, 1);
+		ImGui::InputInt("DamageDetectionDataIndex", &selectedDamageDetectionDataIndex_, 1);
+		ImGui::InputInt("CollisionDetectionDataIndex", &selectedCollisionDetectionDataIndex_, 1);
+		ImGui::Separator();
+
+		//	DamageDetection くらい判定
 		if (ImGui::TreeNode(u8"DamageDetection くらい判定"))
 		{
-			for (DamageDetectionData& data : damageDetectionData_)
+			//	選択したデータを複製
+			if (ImGui::Button(u8"Duplicate Selected DamageDetection 複製"))
 			{
-				data.DrawDebug();
+				if (selectedDamageDetectionDataIndex_ != -1 && selectedDamageDetectionDataIndex_ < damageDetectionData_.size())
+				{
+					damageDetectionData_.insert(damageDetectionData_.begin() + selectedDamageDetectionDataIndex_ + 1,
+						damageDetectionData_[selectedDamageDetectionDataIndex_]);
+					selectedDamageDetectionDataIndex_++;
+				}
 			}
-			ImGui::TreePop();
+
+			//	各DamageDetectionDataのループ
+			for (int i = 0; i < damageDetectionData_.size(); ++i)
+			{
+				ImGui::PushID(i); // ループ内のアイテムにユニークなIDをプッシュ
+
+				std::string nodeName = "DamageDetection [" + std::to_string(i) + "] " + damageDetectionData_[i].GetName();
+
+				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_None;
+				//	現在のアイテムが選択されている場合、TreeNodeのヘッダーをハイライト表示
+				if (selectedDamageDetectionDataIndex_ == i) 
+				{
+					nodeFlags |= ImGuiTreeNodeFlags_Selected;
+				}
+
+				//	TreeNodeEx を使って、展開可能かつ選択可能な項目として表示
+				bool nodeOpen = ImGui::TreeNodeEx(nodeName.c_str(), nodeFlags);
+
+				//	TreeNodeのヘッダーがクリックされたら、そのアイテムを選択状態にする
+				if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+				{
+					selectedDamageDetectionDataIndex_ = i;
+				}
+
+				if (nodeOpen)
+				{
+					//	個別の判定データのImGuiを描画
+					damageDetectionData_[i].DrawDebug();
+
+					//	削除ボタン
+					ImGui::PushID("Delete");	//	削除ボタンにユニークなIDをプッシュ
+					if (ImGui::Button("Delete"))
+					{
+						damageDetectionData_.erase(damageDetectionData_.begin() + i);
+						if (selectedDamageDetectionDataIndex_ == i)		//	削除されたアイテムが選択されていたら選択解除
+						{
+							selectedDamageDetectionDataIndex_ = -1;
+						}
+						else if (selectedDamageDetectionDataIndex_ > i) //	削除されたアイテムより後ろのアイテムが選択されていたらインデックスを調整
+						{
+							selectedDamageDetectionDataIndex_--;
+						}
+						ImGui::PopID();		//	"Delete" IDをポップ
+						ImGui::TreePop();	//	現在のTreeNodeをポップ
+						ImGui::PopID();		//	アイテムIDをポップ
+						--i;				//	要素が削除されたのでループのインデックスを調整
+						continue;			//	このイテレーションの残りをスキップ
+					}
+					ImGui::PopID();		//	"Delete" IDをポップ
+
+					ImGui::TreePop();	//	現在のTreeNodeをポップ
+				}
+				ImGui::PopID();	//	アイテムIDをポップ
+			}
+			ImGui::TreePop();	//	"DamageDetection くらい判定" TreeNodeをポップ
 		}
+
+		//	AttackDetection 攻撃判定
 		if (ImGui::TreeNode(u8"AttackDetection 攻撃判定"))
 		{
-			for (AttackDetectionData& data : attackDetectionData_)
+			//	選択したデータを複製
+			if (ImGui::Button(u8"Duplicate Selected AttackDetection 複製"))
 			{
-				data.DrawDebug();
+				if (selectedAttackDetectionDataIndex_ != -1 && selectedAttackDetectionDataIndex_ < attackDetectionData_.size())
+				{
+					attackDetectionData_.insert(attackDetectionData_.begin() + selectedAttackDetectionDataIndex_ + 1,
+						attackDetectionData_[selectedAttackDetectionDataIndex_]);
+					selectedAttackDetectionDataIndex_++;
+				}
 			}
-			ImGui::TreePop();
+
+			//	各AttackDetectionDataのループ
+			for (int i = 0; i < attackDetectionData_.size(); ++i)
+			{
+				ImGui::PushID(i);
+
+				std::string nodeName = "AttackDetection [" + std::to_string(i) + "] " + attackDetectionData_[i].GetName();
+
+				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_None;
+				//	現在のアイテムが選択されている場合、TreeNodeのヘッダーをハイライト表示
+				if (selectedAttackDetectionDataIndex_ == i)
+				{
+					nodeFlags |= ImGuiTreeNodeFlags_Selected;
+				}
+
+				//	TreeNodeEx を使って、展開可能かつ選択可能な項目として表示
+				bool nodeOpen = ImGui::TreeNodeEx(nodeName.c_str(), nodeFlags);
+
+				//	TreeNodeのヘッダーがクリックされたら、そのアイテムを選択状態にする
+				if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+				{
+					selectedAttackDetectionDataIndex_ = i;
+				}
+
+				if (nodeOpen)
+				{
+					//	個別の判定データのImGuiを描画
+					attackDetectionData_[i].DrawDebug();
+
+					//	削除ボタン
+					ImGui::PushID("Delete");
+					if (ImGui::Button("Delete"))
+					{
+						attackDetectionData_.erase(attackDetectionData_.begin() + i);
+						if (selectedAttackDetectionDataIndex_ == i)		//	削除されたアイテムが選択されていたら選択解除
+						{
+							selectedAttackDetectionDataIndex_ = -1;
+						}
+						else if (selectedAttackDetectionDataIndex_ > i)	//	削除されたアイテムより後ろのアイテムが選択されていたらインデックスを調整
+						{
+							selectedAttackDetectionDataIndex_--;
+						}
+						ImGui::PopID();		//	"Delete" IDをポップ
+						ImGui::TreePop();	//	現在のTreeNodeをポップ
+						ImGui::PopID();		//	アイテムIDをポップ
+						--i;				//	要素が削除されたのでループのインデックスを調整
+						continue;			//	このイテレーションの残りをスキップ
+					}
+					ImGui::PopID();		//	"Delete" IDをポップ
+
+					ImGui::TreePop();	//	現在のTreeNodeをポップ
+				}
+				ImGui::PopID();	//	アイテムIDをポップ
+			}
+			ImGui::TreePop();	//	"AttackDetection 攻撃判定" TreeNodeをポップ
 		}
+
+		//	CollisionDetection 押し出し判定
 		if (ImGui::TreeNode(u8"CollisionDetection 押し出し判定"))
 		{
-			for (CollisionDetectionData& data : collisionDetectionData_)
+			//	選択したデータを複製
+			if (ImGui::Button(u8"Duplicate Selected CollisionDetection 複製"))
 			{
-				data.DrawDebug();
+				if (selectedCollisionDetectionDataIndex_ != -1 && selectedCollisionDetectionDataIndex_ < collisionDetectionData_.size())
+				{
+					collisionDetectionData_.insert(collisionDetectionData_.begin() + selectedCollisionDetectionDataIndex_ + 1,
+						collisionDetectionData_[selectedCollisionDetectionDataIndex_]);
+					selectedCollisionDetectionDataIndex_++;
+				}
 			}
-			ImGui::TreePop();
+
+			//	各CollisionDetectionDataのループ
+			for (int i = 0; i < collisionDetectionData_.size(); ++i)
+			{
+				ImGui::PushID(i);
+
+				std::string nodeName = "CollisionDetection [" + std::to_string(i) + "] " + collisionDetectionData_[i].GetName();
+
+				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_None;
+				//	現在のアイテムが選択されている場合、TreeNodeのヘッダーをハイライト表示
+				if (selectedCollisionDetectionDataIndex_ == i) 
+				{
+					nodeFlags |= ImGuiTreeNodeFlags_Selected;
+				}
+
+				//	TreeNodeEx を使って、展開可能かつ選択可能な項目として表示
+				bool nodeOpen = ImGui::TreeNodeEx(nodeName.c_str(), nodeFlags);
+
+				//	TreeNodeのヘッダーがクリックされたら、そのアイテムを選択状態にする
+				if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+				{
+					selectedCollisionDetectionDataIndex_ = i;
+				}
+
+				if (nodeOpen)
+				{
+					//	個別の判定データのImGuiを描画
+					collisionDetectionData_[i].DrawDebug();
+
+					//	削除ボタン
+					ImGui::PushID("Delete");
+					if (ImGui::Button("Delete"))
+					{
+						collisionDetectionData_.erase(collisionDetectionData_.begin() + i);
+						if (selectedCollisionDetectionDataIndex_ == i)		//	削除されたアイテムが選択されていたら選択解除
+						{
+							selectedCollisionDetectionDataIndex_ = -1;
+						}
+						else if (selectedCollisionDetectionDataIndex_ > i)	//	削除されたアイテムより後ろのアイテムが選択されていたらインデックスを調整
+						{
+							selectedCollisionDetectionDataIndex_--;
+						}
+						ImGui::PopID();		//	"Delete" IDをポップ
+						ImGui::TreePop();	//	現在のTreeNodeをポップ
+						ImGui::PopID();		//	アイテムIDをポップ
+						--i;				//	要素が削除されたのでループのインデックスを調整
+						continue;			//	このイテレーションの残りをスキップ
+					}
+					ImGui::PopID();		//	"Delete" IDをポップ
+
+					ImGui::TreePop();	//	現在のTreeNodeをポップ
+				}
+				ImGui::PopID();	//	アイテムIDをポップ
+			}
+			ImGui::TreePop();	//	"AttackDetection 攻撃判定" TreeNodeをポップ
 		}
-		ImGui::TreePop();
+		ImGui::TreePop(); // "Collision 当たり判定" TreeNodeをポップ
 	}
 }
 
+//	デバッグプリミティブ描画
+void Character::DrawDebugPrimitive()
+{
+	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
+
+	//	----- Collision -----
+	if (isDrawCollisionSphere_)
+	{
+		for (auto& data : GetCollisionDetectionData())
+		{
+			//	現在アクティブではないので表示しない
+			if (data.GetIsActive() == false) continue;
+
+			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
+		}
+	}
+	if (isDrawDamageSphere_)
+	{
+		for (auto& data : GetDamageDetectionData())
+		{
+			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
+		}
+	}
+	if (isDrawAttackSphere_)
+	{
+		for (auto& data : GetAttackDetectionData())
+		{
+			//	現在アクティブではないでの表示しない
+			if (data.GetIsActive() == false) continue;
+
+			debugRenderer->DrawSphere(data.GetPosition(), data.GetRadius(), data.GetColor());
+		}
+	}
+}

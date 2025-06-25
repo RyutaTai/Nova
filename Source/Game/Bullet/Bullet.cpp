@@ -182,9 +182,7 @@ bool Bullet::RayVsHorizontal(const float& elapsedTime)
 
 			//	“–‚½‚è”»’èƒtƒ‰ƒO‚ð—§‚Ä‚é
 			isHit = true;
-
 		}
-
 	}
 
 	return isHit;

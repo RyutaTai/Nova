@@ -1,6 +1,6 @@
 #include "UIRank.h"
 
-#include "../JudgeRhythm.h"
+#include "../Rhythm/JudgeRhythm.h"
 #include "../../Nova/Graphics/Graphics.h"
 #include "../../../External/imgui/imgui.h"
 
@@ -29,12 +29,12 @@ void UIRank::Initialize()
 	rankTextBack_->GetTransform()->SetTexSizeX(RankTextSize_);
 	rankTextBack_->GetTransform()->SetPivot(0.5f, 0.5f);
 	rankTextBack_->GetTransform()->SetTexPosX(0.0f);
-	rankTextBack_->GetTransform()->SetPosition(1580.0f, 330.0f);
+	rankTextBack_->GetTransform()->SetPosition(220.0f, 330.0f);
 	//	ƒ‰ƒ“ƒN•¶š‚Ì”wŒi
 	rankText_->GetTransform()->SetTexSizeX(RankTextSize_);
 	rankText_->GetTransform()->SetPivot(0.5f, 0.5f);
 	rankText_->GetTransform()->SetTexPosX(0.0f);
-	rankText_->GetTransform()->SetPosition(1580.0f, 330.0f);
+	rankText_->GetTransform()->SetPosition(220.0f, 330.0f);
 
 	//	Œ»İ‚Ìƒ‰ƒ“ƒN
 	currentRankInfo_.index_ = static_cast<int>(RankType::C);

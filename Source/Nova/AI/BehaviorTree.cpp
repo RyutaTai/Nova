@@ -14,7 +14,7 @@ BehaviorTree::~BehaviorTree()
 }
 
 //	ƒm[ƒh’Ç‰Á
-void BehaviorTree::AddNode(const std::string& parentName, const std::string& entryName, const int& priority, const SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action,const bool& isForceExecution)
+void BehaviorTree::AddNode(const std::string& parentName, const std::string& entryName, const int& priority, const SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action)
 {
 	if (parentName != "")
 	{
@@ -23,7 +23,7 @@ void BehaviorTree::AddNode(const std::string& parentName, const std::string& ent
 		if (parentNode != nullptr)
 		{
 			NodeBase* sibling = parentNode->GetLastChild();
-			NodeBase* addNode = new NodeBase(entryName, parentNode, sibling, priority, selectRule, judgment, action, parentNode->GetHirerchyNo() + 1, isForceExecution);
+			NodeBase* addNode = new NodeBase(entryName, parentNode, sibling, priority, selectRule, judgment, action, parentNode->GetHirerchyNo() + 1);
 
 			parentNode->AddChild(addNode);
 		}
@@ -32,7 +32,7 @@ void BehaviorTree::AddNode(const std::string& parentName, const std::string& ent
 	{
 		if (root_ == nullptr)
 		{
-			root_ = new NodeBase(entryName, nullptr, nullptr, priority, selectRule, judgment, action, 1, isForceExecution);
+			root_ = new NodeBase(entryName, nullptr, nullptr, priority, selectRule, judgment, action, 1);
 		}
 	}
 }

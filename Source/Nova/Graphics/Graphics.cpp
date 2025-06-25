@@ -228,7 +228,7 @@ void Graphics::OnSizeChanged(UINT64 width, UINT height)
 	}
 }
 
-void Graphics::StylizeWindow(bool fullscreen)
+void Graphics::StylizeWindow(const bool& fullscreen)
 {
 	fullScreenMode_ = fullscreen;
 

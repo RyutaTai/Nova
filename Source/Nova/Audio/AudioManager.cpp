@@ -177,26 +177,6 @@ void AudioManager::RemoveBySceneName(const std::string& sceneName)
 //	オーディオ全削除
 void AudioManager::Clear()
 {
-#if 0
-	//	破棄処理
-	for (auto it = audioRemoves_.begin(); it != audioRemoves_.end();)
-	{
-		Audio* audio = *it;
-
-		//	audioがaudioResources_内に存在するか確認
-		auto audioIt = std::find(audioResources_.begin(), audioResources_.end(), audio);
-		if (audioIt != audioResources_.end())
-		{
-			delete audio;
-			audioResources_.erase(audioIt);
-		}
-
-		//	破棄したオーディオをリストから削除
-		it = audioRemoves_.erase(it);
-	}
-	audioRemoves_.clear();
-#endif
-
 	for (Audio*& audio : audioResources_)
 	{
 		delete audio;

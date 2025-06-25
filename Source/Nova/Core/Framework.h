@@ -36,7 +36,7 @@ public:
 
 private:
 	bool	Initialize();
-	void	Update(const float& elapsedTime/*Elapsed seconds from last frame*/);
+	void	Update(const float& elapsedTime);
 	void	Render();
 	bool	Uninitialize();
 	void	DrawDebug();
@@ -48,7 +48,7 @@ private:
 	float						elapsedTime_ = 0.0f;
 
 	uint32_t					framesPerSecond_ = 0;
-	float						fps_;					//	Œ»İ‚Ìfps’l‚ğ•Û‚·‚é•Ï”
+	float						fps_ = 0.0f;			//	Œ»İ‚Ìfps’l‚ğ•Û‚·‚é•Ï”
 	std::vector<float>			fpsBuffer_ = {};		//	fps”•Û‘¶—p
 	const size_t				maxHistorySize_ = 100;	//	fps‚ğ•Û‘¶‚·‚éÅ‘å”
 

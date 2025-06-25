@@ -51,7 +51,7 @@ class Input
 {
 public:
 	Input(HWND hWnd);
-	~Input() {}
+	~Input() = default;
 
 public:
 	static Input& Instance() { return *instance_; }	//	インスタンス取得

@@ -55,6 +55,7 @@ void Audio::Play(const bool& loop)
 	//	再生可能でないなら処理しない
 	if (isPlayable_ == false)return;
 
+	//	ループ設定
 	buffer_.LoopCount = loop ? XAUDIO2_LOOP_INFINITE : 0;
 
 	//	再生終わりを待たずに即時再生(要調整)
@@ -110,7 +111,6 @@ size_t Audio::GetCurrentSample()const
 	sourceVoice_->GetState(&vs);
 
 	return (size_t(vs.SamplesPlayed) * size_t(wfx_.nBlockAlign)) % buffer_.AudioBytes;
-	//return (size_t(vs.SamplesPlayed) * size_t(wfx_.nBlockAlign)) % buffer_.AudioBytes;
 }
 
 //	再生中かどうか

@@ -107,7 +107,7 @@ Stage::Stage()
 	}
 
 	//	モデルのピクセルシェーダーセット
-	gltfStaticModelResource_->SetPixelShader("./Resources/Shader/CityPS.cso");
+	gltfStaticModelResource_->SetPixelShader("./Resources/Shader/StagePS.cso");
 
 }
 
@@ -395,10 +395,14 @@ bool Stage::Collision(_In_ const DirectX::XMFLOAT3& rayStartPosition, _In_ const
 //	描画処理
 void Stage::Render()
 {
-	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
-	
+	//	----- ステート設定 -----
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+	 
 	//	----- 円形のオーディオスペクトラム -----
 	int spectrumIndex = static_cast<int>(AudioSpectrumType::Circle);
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
 	spectrumFramebuffer_[spectrumIndex]->Clear(deviceContext, 0, 0, 0, 1);
 	spectrumFramebuffer_[spectrumIndex]->Activate(deviceContext);
 	fullScreenQuad_->Blit(deviceContext, projectionMapping_[static_cast<int>(AudioSpectrumType::Circle)].texture_.GetAddressOf(), 1, 0, spectrumCirclePS_.Get());
@@ -450,7 +454,7 @@ void Stage::UpdateFFTConstantBuffer()
 #endif
 
 	//	----- FFT定数バッファ更新 -----
-	for (int index = 0; index < Frequency::BlockCount; ++index)
+	for (int index = 0; index < Frequency::BlockCount_; ++index)
 	{
 		fftConstant_.fftData_[index] = fftData.at(index);
 	}
@@ -528,7 +532,7 @@ void Stage::DrawDebug()
 		{
 			frequency_->DrawDebug();
 			ImGui::Checkbox("UseFrequency", &useFrequency_);
-			ImGui::DragInt("FrequencyIndex", &frequencyIndex_, 1.0f, 0, (Frequency::BlockCount - 1));
+			ImGui::DragInt("FrequencyIndex", &frequencyIndex_, 1.0f, 0, (Frequency::BlockCount_ - 1));
 			ImGui::DragFloat("CurrentFrequency", &currentFrequencyValue_, 1.0f, 0.0f);
 			ImGui::DragFloat("FrequencyMin", &frequencyMinValue_, 1.0f, 0.0f);
 			ImGui::DragFloat("FrequencyMax", &frequencyMaxValue_, 1.0f, 0.0f);

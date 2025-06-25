@@ -16,7 +16,8 @@ public:
 	virtual bool RayVsHorizontal(const float& elapsedTime) = 0;
 	virtual void Render();
 	virtual void DrawDebug();	//	デバッグ描画
-	
+	virtual void DrawDebugPrimitive();
+
 	Transform* GetTransform() { return gltfModelResource_->GetTransform(); }
 
 	//	----- 移動 -----
@@ -100,7 +101,7 @@ public:
 	virtual void RegisterCollisionData(const std::string& jsonFileName) = 0;
 	virtual void UpdateCollisions(const float& elapsedTime);
 	void SetAllAttackDetectionActiveFlag(const bool& isActive);	//	攻撃判定の有効フラグを全て変更する
-	void CollisionCharacterVsStage();
+	void CollisionDrawDebug();
 	//	----- Json -----
 	virtual void SaveCollisionDataToJson(const std::string& filePath) const;
 	virtual void LoadCollisionDataFromJson(const std::string& filePath);
@@ -137,14 +138,13 @@ public:
 	DirectX::XMFLOAT3	blowDirection_ = {};		//	吹っ飛ばす方向
 	float				decelerationForce_ = 0.0f;	//	1フレームでどれくらい力を減衰させるか
 
-
 protected:
 	//	----- 移動 -----
-	DirectX::XMFLOAT3	velocity_		= {};	//	移動速度
-	DirectX::XMFLOAT3	acceleration_	= {};	//	加速度(0なら等速直線運動)
-	DirectX::XMFLOAT3	moveVec_		= {};	//	移動ベクトル
-	float				moveSpeed_		= 4.0f;								//	移動する速さ
-	float				defaultMoveSpeed_ = 4.0f;							//	通常時の移動する速さ
+	DirectX::XMFLOAT3	velocity_		= {};					//	移動速度
+	DirectX::XMFLOAT3	acceleration_	= {};					//	加速度(0なら等速直線運動)
+	DirectX::XMFLOAT3	moveVec_		= {};					//	移動ベクトル
+	float				moveSpeed_		= 4.0f;					//	移動する速さ
+	float				defaultMoveSpeed_ = 4.0f;				//	通常時の移動する速さ
 
 	//	----- 旋回処理 -----
 	bool	isTurnAction_	= true;								//	旋回処理するかどうか
@@ -154,11 +154,22 @@ protected:
 	bool	isInvincible_	= false;		//	無敵かどうか
 	float	invincibleTimer_ = 0.0f;		//	無敵時間
 
-	//	----- Collision -----
+	//	----- 当たり判定データ -----
 	std::vector<AttackDetectionData>	attackDetectionData_;		//	攻撃判定用
 	std::vector<DamageDetectionData>	damageDetectionData_;		//	くらい判定
 	std::vector<CollisionDetectionData>	collisionDetectionData_;	//	押し出し判定用
+	//	----- 現在ImGuiで選択されているデータの番号 -----
+	int selectedCollisionDetectionDataIndex_ = -1;
+	int selectedAttackDetectionDataIndex_ = -1;
+	int selectedDamageDetectionDataIndex_ = -1;
+	//	----- 当たり判定データのJsonファイルパス -----
 	std::string collisionDataJsonFileName_ = {};
+
+	//	----- 当たり判定表示フラグ -----
+	bool isDrawCollisionSphere_ = true;
+	bool isDrawAttackSphere_ = true;
+	bool isDrawDamageSphere_ = false;
+
 	float	radius_ = 30.0f;	//	半径
 	float	height_ = 195.0f;	//	高さ
 
@@ -170,7 +181,7 @@ private:
 	const float MoveSpeed_ = 20.0f;	//	最大の速さ
 
 private:
-	std::shared_ptr<GltfModel>					gltfModelResource_;		//	Gltfモデル
+	std::shared_ptr<GltfModel>					gltfModelResource_;		//	Gltfモデルリソース
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShader_;
 
 };

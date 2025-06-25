@@ -12,12 +12,6 @@ AudioSource::AudioSource(IXAudio2* xaudio, WaveReader* resource, const AudioType
 	delete resource;	//	メモリリーク防止
 }
 
-//	デストラクタ
-AudioSource::~AudioSource()
-{
-	
-}
-
 //	更新処理
 void AudioSource::Update(const float& elapsedTime)
 {
@@ -48,39 +42,6 @@ void AudioSource::Update(const float& elapsedTime)
 	{
 		isPlaying_ = false;
 	}
-
-	//INT32 CurrentDiskReadBuffer = 0;
-	//INT32 CurrentPosition = 0;
-	//while (CurrentPosition < resource->GetWaveFormat().cbSize)
-	//{
-	//	DWORD cbValid = min(STREAMING_BUFFER_SIZE, resource->GetWaveFormat().cbSize - CurrentPosition);
-	//	DWORD dwRead;
-	//	if (0 == ReadFile(hFile, buffers[CurrentDiskReadBuffer], STREAMING_BUFFER_SIZE, &dwRead, &overlapped))
-	//		hr = HRESULT_FROM_WIN32(GetLastError());
-	//	Overlapped.Offset += cbValid;
-
-	//	//update the file position to where it will be once the read finishes
-	//	CurrentPosition += cbValid;
-
-	//	DWORD NumberBytesTransferred;
-	//	::GetOverlappedResult(hFile, &Overlapped, &NumberBytesTransferred, TRUE);
-
-	//	while (state.BuffersQueued >= MAX_BUFFER_COUNT - 1)
-	//	{
-	//		WaitForSingleObject(Context.hBufferEndEvent, INFINITE);
-	//	}
-
-	//	buffer.AudioBytes = cbValid;
-	//	buffer.pAudioData = buffers[CurrentDiskReadBuffer];
-	//	if (CurrentPosition >= resource->GetWaveFormat().cbSize)
-	//	{
-	//		buffer.Flags = XAUDIO2_END_OF_STREAM;
-	//	}
-	//	source_voice->SubmitSourceBuffer(&buffer);
-
-	//	CurrentDiskReadBuffer++;
-	//	CurrentDiskReadBuffer %= MAX_BUFFER_COUNT;
-	//}
 
 }
 
@@ -149,8 +110,8 @@ void AudioSource::SetStereoPan(const float& pan)
 void AudioSource::Filter(const XAUDIO2_FILTER_TYPE& type, const float& cutoff, const float& overq)
 {
 	filterParameters_.Type = type;				//	使うフィルターの種類
-	filterParameters_.Frequency					//	カットする周波数の基準(0Hz(0.0f) ~ 7350Hz(1.0f))
-		= cutoff / wfx_.nSamplesPerSec * 6.0f;	//	式:カットオフ周波数 / サンプリングレート * 6.0f 例 : 7350 / 44100 * 6.0f = 1.0f(正確には1.000002fだがまあこれでおｋ)
+	filterParameters_.Frequency					//	カットする周波数の基準(0Hz(0.0f) ～ 7350Hz(1.0f))
+		= cutoff / wfx_.nSamplesPerSec * 6.0f;	//	式:カットオフ周波数 / サンプリングレート * 6.0f 例 : 7350 / 44100 * 6.0f = 1.0f(正確には1.000002f)
 												//	単極フィルターを使う場合はXAudio2CutoffFrequencyToOnePoleCoefficient()というマクロを使う(XAUDIO2_HELPER_FUNCTIONSが必要)
 	
 	filterParameters_.OneOverQ = overq;			//	実際にどのくらいの音量がカットされているかを指定する

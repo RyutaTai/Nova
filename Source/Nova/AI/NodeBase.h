@@ -9,16 +9,13 @@
 class JudgmentBase;
 class BehaviorData;
 
-//	メモリリーク調査用
-#define debug_new new(_NORMAL_BLOCK,__FILE__,__LINE__)
-
 //	ノード
 class NodeBase
 {
 public:
 	//	コンストラクタ
 	NodeBase(const std::string& name, NodeBase* parent, NodeBase* sibling, const int& priority,
-		const BehaviorTree::SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo, const bool& isForceExecution = false);
+		const BehaviorTree::SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo);
 	//	デストラクタ
 	~NodeBase();
 	//	名前ゲッター
@@ -62,10 +59,6 @@ public:
 	//	実行
 	ActionBase::State Run(const float& elapsedTime);
 
-	//	----- 強制実行フラグ -----
-	void SetIsForceExecution(const bool& isForceExecution) { isForceExecution_ = isForceExecution; }
-	const bool IsForceExecution() const{ return isForceExecution_; }
-
 public:
 	std::vector<NodeBase*>		children_;		//	子ノード
 
@@ -78,7 +71,5 @@ protected:
 	NodeBase*					parent_;		//	親ノード
 	NodeBase*					sibling_;		//	兄弟ノード
 	int							hierarchyNo_;	//	階層番号
-
-	bool						isForceExecution_ = false;	//	強制実行フラグ(他のノードが実行中でもJudgmentがtrueなら実行する)
 
 };

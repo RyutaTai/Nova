@@ -119,8 +119,8 @@ HRESULT WaveReader::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DW
         switch (dwChunkType)
         {
         case fourccRIFF:    //  RIFFチャンクの場合
-            dwRIFFDataSize  = dwChunkDataSize;       // RIFFチャンクのデータサイズを保存
-            dwChunkDataSize = 4;                    // RIFFチャンク内のファイルタイプ(WAVEなど)のサイズは4バイト
+            dwRIFFDataSize = dwChunkDataSize;       //  RIFFチャンクのデータサイズを保存
+            dwChunkDataSize = 4;                    //  RIFFチャンク内のファイルタイプ(WAVEなど)のサイズは4バイト
             //  ファイルタイプを読み込む
             if (0 == ReadFile(hFile, &dwFileType, sizeof(DWORD), &dwRead, NULL))
                 hr = HRESULT_FROM_WIN32(GetLastError());
