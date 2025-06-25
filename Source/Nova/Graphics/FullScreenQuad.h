@@ -4,6 +4,7 @@
 #include <wrl.h>
 #include <cstdint>
 
+//	オフスクリーンで生成されたテクスチャを画面全体に表示したり、ポストエフェクトを適用したりする際に使うクラス
 class FullScreenQuad
 {
 public:

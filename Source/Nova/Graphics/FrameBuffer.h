@@ -4,6 +4,7 @@
 #include <wrl.h>
 #include <cstdint>
 
+//	オフスクリーンレンダリングを行う際の、カラーや深度情報を書き込むバッファとそのビューを管理するクラス
 class FrameBuffer
 {
 public:
@@ -22,9 +23,9 @@ public:
 	D3D11_VIEWPORT										viewport_;
 
 private:
-	UINT viewportCount_{ D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE };
-	D3D11_VIEWPORT cachedViewports_[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
-	Microsoft::WRL::ComPtr <ID3D11RenderTargetView>		cachedRenderTargetView_;
-	Microsoft::WRL::ComPtr <ID3D11DepthStencilView>		cachedDepthStencilView_;
+	UINT viewportCount_{ D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE };			//	キャッシュするビューポートの数
+	D3D11_VIEWPORT cachedViewports_[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];	//	キャッシュしたビューポートの配列
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView>		cachedRenderTargetView_;				//	キャッシュしたレンダーターゲットビュー
+	Microsoft::WRL::ComPtr <ID3D11DepthStencilView>		cachedDepthStencilView_;				//	キャッシュした深度ステンシルビュー
 
 };
