@@ -33,7 +33,7 @@ void Vignette::Make()
 	VignetteConstants constant;
 	constant.vignetteColor_		= vignetteData_.vignetteColor_;
 	constant.vignetteCenter_	= vignetteData_.vignetteCenter_;
-	constant.vignetteIntensity_ = vignetteData_.vignetteCurrentIntensity_ * 3.0f;
+	constant.vignetteIntensity_ = vignetteData_.currentVignetteIntensity_ * 3.0f;
 	constant.vignetteSmoothness_ = max(0.000001f, vignetteData_.vignetteSmoothness_ * 5.0f);
 	constant.vignetteRounded_	= vignetteData_.vignetteRounded_ ? 1.0f : 0.0f;
 	constant.vignetteRoundness_ = 6.0f * (1.0f - vignetteData_.vignetteRoundness_) + vignetteData_.vignetteRoundness_;
@@ -46,28 +46,29 @@ void Vignette::Make()
 void Vignette::LerpVignetteIntensity(const float& elapsedTime)
 {
 	//	補完フラグが経っていなければ更新しない
-	if (isLerp_ == false)return;
+	if (vignetteIsLerp_ == false)return;
 
 	//	補完タイマー更新
-	lerpTimer_ += elapsedTime;
+	vignetteLerpTimer_ += elapsedTime;
+	
 	//	補完しきったらリセット
-	if (lerpTimer_ >= lerpTimerMax_)
+	if (vignetteLerpTimer_ >= vignetteLerpTimerMax_)
 	{
-		isFadeIn_ = !isFadeIn_;
-		if (isFadeIn_ == false)isLerp_ = false;
-		lerpTimer_ = 0.0f;
+		vignetteIsFadeIn_ = !vignetteIsFadeIn_;
+		if (vignetteIsFadeIn_ == false)vignetteIsLerp_ = false;
+		vignetteLerpTimer_ = 0.0f;
 	}
 
 	//	ヴィネットの強度を強めるか弱めるかで補完する最大値、最小値を切り替える
-	if (isFadeIn_)
+	if (vignetteIsFadeIn_)
 	{
-		vignetteData_.vignetteCurrentIntensity_ = 
-			Mathf::Lerp(vignetteData_.vignetteIntensityMin_, vignetteData_.vignetteIntensityMax_, lerpTimer_ / lerpTimerMax_);
+		vignetteData_.currentVignetteIntensity_ = 
+			Mathf::Lerp(vignetteData_.vignetteIntensityMin_, vignetteData_.vignetteIntensityMax_, vignetteLerpTimer_ / vignetteLerpTimerMax_);
 	}
 	else
 	{
-		vignetteData_.vignetteCurrentIntensity_ =
-			Mathf::Lerp(vignetteData_.vignetteIntensityMax_, vignetteData_.vignetteIntensityMin_, lerpTimer_ / lerpTimerMax_);
+		vignetteData_.currentVignetteIntensity_ =
+			Mathf::Lerp(vignetteData_.vignetteIntensityMax_, vignetteData_.vignetteIntensityMin_, vignetteLerpTimer_ / vignetteLerpTimerMax_);
 	}
 }
 
@@ -77,7 +78,7 @@ void Vignette::DrawDebug()
 	{
 		ImGui::ColorEdit3("Color", &vignetteData_.vignetteColor_.x);
 		ImGui::SliderFloat2("Center", &vignetteData_.vignetteCenter_.x, 0, 1);
-		ImGui::SliderFloat("CurrentIntensity", &vignetteData_.vignetteCurrentIntensity_, 0.0f, +1.0f);
+		ImGui::SliderFloat("CurrentIntensity", &vignetteData_.currentVignetteIntensity_, 0.0f, +1.0f);
 		ImGui::SliderFloat("MaxIntensity", &vignetteData_.vignetteIntensityMax_, 0.0f, +1.0f);
 		ImGui::SliderFloat("MinIntensity", &vignetteData_.vignetteIntensityMin_, 0.0f, +1.0f);
 		ImGui::SliderFloat("Smoothness", &vignetteData_.vignetteSmoothness_, 0.0f, +1.0f);
@@ -85,10 +86,10 @@ void Vignette::DrawDebug()
 		ImGui::SliderFloat("Roundness", &vignetteData_.vignetteRoundness_, 0.0f, +1.0f);
 
 		//	補完に使用する変数
-		ImGui::DragFloat("LerpTimer", &lerpTimer_, 0.01f);
-		ImGui::DragFloat("LerpTimerMax", &lerpTimerMax_, 0.01f);
-		ImGui::Checkbox("IsLerp", &isLerp_);
-		ImGui::Checkbox("IsFadeIn", &isFadeIn_);
+		ImGui::DragFloat("LerpTimer", &vignetteLerpTimer_, 0.01f);
+		ImGui::DragFloat("LerpTimerMax", &vignetteLerpTimerMax_, 0.01f);
+		ImGui::Checkbox("IsLerp", &vignetteIsLerp_);
+		ImGui::Checkbox("IsFadeIn", &vignetteIsFadeIn_);
 
 		ImGui::TreePop();
 	}

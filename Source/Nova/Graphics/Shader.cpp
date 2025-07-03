@@ -259,12 +259,6 @@ Shader::Shader()
 
 }
 
-//	デストラクタ
-Shader::~Shader()
-{
-
-}
-
 //	SamplerState設定
 void Shader::SetSamplerState(ID3D11DeviceContext* deviceContext)
 {

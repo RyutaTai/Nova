@@ -479,9 +479,9 @@ void Character::DrawDebug()
 	{
 		//	当たり判定表示フラグ
 		ImGui::Text(u8"CollisionDrawFlag 当たり判定表示フラグ");
-		ImGui::Checkbox("IsCollisionSphere", &isDrawCollisionSphere_);				//	押し出し判定
-		ImGui::Checkbox("IsAttackSphere", &isDrawAttackSphere_);					//	攻撃判定
-		ImGui::Checkbox("IsDamageSphere", &isDrawDamageSphere_);					//	くらい判定
+		ImGui::Checkbox("IsDrawDamageSphere", &isDrawDamageSphere_);		//	くらい判定
+		ImGui::Checkbox("IsDrawAttackSphere", &isDrawAttackSphere_);		//	攻撃判定
+		ImGui::Checkbox("IsDrawCollisionSphere", &isDrawCollisionSphere_);	//	押し出し判定
 
 		CollisionDrawDebug();
 		ImGui::TreePop();

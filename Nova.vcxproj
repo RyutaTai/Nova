@@ -219,7 +219,6 @@
     <ClCompile Include="Source\Game\Stage\Stage.cpp" />
     <ClCompile Include="Source\Nova\Camera\Camera.cpp" />
     <ClCompile Include="Source\Nova\Graphics\Bloom.cpp" />
-    <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp" />
     <ClCompile Include="Source\Game\UI\UIInstructions.cpp" />
     <ClCompile Include="Source\Game\UI\UIRank.cpp" />
     <ClCompile Include="Source\Nova\AI\BehaviorData.cpp" />

@@ -5,27 +5,27 @@
 //	当たった結果をまとめて持つ
 struct HitResult
 {
-	DirectX::XMFLOAT3	position = { 0, 0, 0 };	// レイとポリゴンの交点
-	DirectX::XMFLOAT3	normal = { 0, 0, 0 };	// 衝突したポリゴンの法線ベクトル
-	float				distance = 0.0f; 		// レイの始点から交点までの距離
-	int					materialIndex = -1; 	// 衝突したポリゴンのマテリアル番号
+	DirectX::XMFLOAT3	position = { 0, 0, 0 };	//	レイとポリゴンの交点
+	DirectX::XMFLOAT3	normal = { 0, 0, 0 };	//	衝突したポリゴンの法線ベクトル
+	float				distance = 0.0f; 		//	レイの始点から交点までの距離
+	int					materialIndex = -1; 	//	衝突したポリゴンのマテリアル番号
 	DirectX::XMFLOAT3	triangleVerts[3] = {};
 };
 struct HitResultVector
 {
-	DirectX::XMVECTOR	position = { 0, 0, 0 };	// レイとポリゴンの交点
-	DirectX::XMVECTOR	normal = { 0, 0, 0 };	// 衝突したポリゴンの法線ベクトル
-	float				distance = 0.0f; 		// レイの始点から交点までの距離
+	DirectX::XMVECTOR	position = { 0, 0, 0 };	//	レイとポリゴンの交点
+	DirectX::XMVECTOR	normal = { 0, 0, 0 };	//	衝突したポリゴンの法線ベクトル
+	float				distance = 0.0f; 		//	レイの始点から交点までの距離
 	DirectX::XMVECTOR	triangleVerts[3] = {};
-	int					materialIndex = -1; 	// 衝突したポリゴンのマテリアル番号
+	int					materialIndex = -1; 	//	衝突したポリゴンのマテリアル番号
 };
 //	オブジェクトの交差結果の構造体
 struct IntersectionResult
 {
-	DirectX::XMVECTOR	pointA = {};			// オブジェクトA側の交点。オブジェクトA Vs オブジェクトBで関数が構成される
-	DirectX::XMVECTOR	pointB = {};			// オブジェクトB側の交点。オブジェクトA Vs オブジェクトBで関数が構成される
-	DirectX::XMVECTOR	normal = {};			// 交点を結ぶ衝突の単位法線ベクトル。方向はオブジェクトB→オブジェクトA
-	float				penetration = 0.0f; 	// 法線ベクトルを元にしためり込み量。交差している場合にプラスの値が返却される
+	DirectX::XMVECTOR	pointA = {};			//	オブジェクトA側の交点。オブジェクトA Vs オブジェクトBで関数が構成される
+	DirectX::XMVECTOR	pointB = {};			//	オブジェクトB側の交点。オブジェクトA Vs オブジェクトBで関数が構成される
+	DirectX::XMVECTOR	normal = {};			//	交点を結ぶ衝突の単位法線ベクトル。方向はオブジェクトB→オブジェクトA
+	float				penetration = 0.0f; 	//	法線ベクトルを元にしためり込み量。交差している場合にプラスの値が返却される
 };
 
 //	コリジョン

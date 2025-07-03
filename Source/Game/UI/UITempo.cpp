@@ -116,6 +116,7 @@ void UITempo::UpdatePosition(const float& elapsedTime)
 
 			//	ヴィネット範囲を最大値に変更
 			Vignette::Instance().SetLerpFlag(true);
+			Stage::Instance().SetLerpFlag(true);
 
 		}
 

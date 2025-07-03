@@ -43,8 +43,8 @@ public:
 	bool	GetRhythm();
 
 	//	----- ƒRƒ“ƒ{ -----
-	void		SetComboCount(const int& comboCount)	{ comboCount_ = comboCount; }
 	void		AddComboCount(const int& comboCount);
+	void		SetComboCount(const int& comboCount)	{ comboCount_ = comboCount; }
 	const int	GetComboCount() const					{ return comboCount_; }
 
 private:

@@ -215,6 +215,11 @@ void CascadedShadowMaps::Deactivate(ID3D11DeviceContext* deviceContext)
 	deviceContext->OMSetRenderTargets(1, cachedRenderTargetView_.GetAddressOf(), cachedDepthStencilView_.Get());
 }
 
+void CascadedShadowMaps::Clear(ID3D11DeviceContext* deviceContext)
+{
+	deviceContext->ClearDepthStencilView(depthStencilView_.Get(), D3D11_CLEAR_DEPTH, 1, 0);
+}
+
 void CascadedShadowMaps::DrawDebug()
 {
 	ImGui::SliderFloat("SplitSchemeWeight", &splitSchemeWeight_, 0.0f, +1.0f);

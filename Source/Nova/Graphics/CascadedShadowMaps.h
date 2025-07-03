@@ -24,10 +24,7 @@ public:
 		float criticalDepthValue /*If this value is 0, the camera's far panel distance is used.*/,
 		UINT cbSlot);
 	void Deactivate(ID3D11DeviceContext* deviceContext);
-	void Clear(ID3D11DeviceContext* deviceContext)
-	{
-		deviceContext->ClearDepthStencilView(depthStencilView_.Get(), D3D11_CLEAR_DEPTH, 1, 0);
-	}
+	void Clear(ID3D11DeviceContext* deviceContext);
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& DepthMap()
 	{
 		return shaderResourceView_;
@@ -36,10 +33,10 @@ public:
 	void DrawDebug();
 
 public:
-	const UINT cascadeCount_;
-	float splitSchemeWeight_ = 0.205f;
-	bool fitToCascade_ = true;
-	float zMult_ = 15.3f;
+	const UINT	cascadeCount_;
+	float		splitSchemeWeight_ = 0.205f;
+	bool		fitToCascade_ = true;
+	float		zMult_ = 15.3f;
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer_;

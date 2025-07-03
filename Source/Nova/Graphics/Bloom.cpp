@@ -8,22 +8,26 @@
 
 Bloom::Bloom(ID3D11Device* device, uint32_t width, uint32_t height)
 {
+	//	フルスクリーンクアッドを初期化
 	fullScreenQuad_ = std::make_unique<FullScreenQuad>(device);
 
+	//	輝度抽出用のフレームバッファを初期化
 	glowExtraction_ = std::make_unique<FrameBuffer>(device, width, height, false);
 	for (size_t downsampledIndex = 0; downsampledIndex < downsampledCount_; ++downsampledIndex)
 	{
 		gaussianBlur_[downsampledIndex][0] = std::make_unique<FrameBuffer>(device, width >> downsampledIndex, height >> downsampledIndex, false);
 		gaussianBlur_[downsampledIndex][1] = std::make_unique<FrameBuffer>(device, width >> downsampledIndex, height >> downsampledIndex, false);
 	}
-	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GlowExtractionPs.cso",			glowExtractionPs_.GetAddressOf());
-	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GaussianBlurDownsamplingPs.cso",	gaussianBlurDownsamplingPs_.GetAddressOf());
-	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GaussianBlurHorizontalPs.cso",	gaussianBlurHorizontalPs_.GetAddressOf());
-	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GaussianBlurVerticalPs.cso",		gaussianBlurVerticalPs_.GetAddressOf());
-	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GaussianBlurUpsamplingPs.cso",	gaussianBlurUpsamplingPs_.GetAddressOf());
+	//	各処理（輝度抽出、ダウンサンプリング、水平・垂直ぼかし、アップサンプリング）のピクセルシェーダーを作成
+	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GlowExtractionPs.cso", glowExtractionPs_.GetAddressOf());
+	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GaussianBlurDownsamplingPs.cso", gaussianBlurDownsamplingPs_.GetAddressOf());
+	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GaussianBlurHorizontalPs.cso", gaussianBlurHorizontalPs_.GetAddressOf());
+	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GaussianBlurVerticalPs.cso", gaussianBlurVerticalPs_.GetAddressOf());
+	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/GaussianBlurUpsamplingPs.cso", gaussianBlurUpsamplingPs_.GetAddressOf());
 
 	HRESULT hr{ S_OK };
 
+	//	ラスタライザーステート設定
 	D3D11_RASTERIZER_DESC rasterizerDesc{};
 	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 	rasterizerDesc.CullMode = D3D11_CULL_BACK;
@@ -38,6 +42,7 @@ Bloom::Bloom(ID3D11Device* device, uint32_t width, uint32_t height)
 	hr = device->CreateRasterizerState(&rasterizerDesc, rasterizerState_.GetAddressOf());
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
+	//	デプステンシルステートを設定（深度テスト無効）
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc{};
 	depthStencilDesc.DepthEnable = FALSE;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
@@ -45,6 +50,7 @@ Bloom::Bloom(ID3D11Device* device, uint32_t width, uint32_t height)
 	hr = device->CreateDepthStencilState(&depthStencilDesc, depthStencilState_.GetAddressOf());
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
+	//	ブレンドステートを設定（ブレンド無効）
 	D3D11_BLEND_DESC blendDesc{};
 	blendDesc.AlphaToCoverageEnable = FALSE;
 	blendDesc.IndependentBlendEnable = FALSE;
@@ -59,6 +65,7 @@ Bloom::Bloom(ID3D11Device* device, uint32_t width, uint32_t height)
 	hr = device->CreateBlendState(&blendDesc, blendState_.GetAddressOf());
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
+	//	定数バッファを作成
 	D3D11_BUFFER_DESC bufferDesc{};
 	bufferDesc.ByteWidth = sizeof(BloomConstants);
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -71,9 +78,10 @@ Bloom::Bloom(ID3D11Device* device, uint32_t width, uint32_t height)
 
 }
 
+//	ブルーム効果を適用する関数
 void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* colorMap)
 {
-	//	Store current states
+	//	現在のステートを保存
 	ID3D11ShaderResourceView* nullShaderResourceView{};
 	ID3D11ShaderResourceView* cachedShaderResourceViews[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT]{};
 	deviceContext->PSGetShaderResources(0, downsampledCount_, cachedShaderResourceViews);
@@ -90,34 +98,34 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 	Microsoft::WRL::ComPtr<ID3D11Buffer>  cachedConstantBuffer;
 	deviceContext->PSGetConstantBuffers(8, 1, cachedConstantBuffer.GetAddressOf());
 
-	//	Bind states
+	//	ブルーム処理に必要なステートを設定
 	deviceContext->OMSetDepthStencilState(depthStencilState_.Get(), 0);
 	deviceContext->RSSetState(rasterizerState_.Get());
 	deviceContext->OMSetBlendState(blendState_.Get(), nullptr, 0xFFFFFFFF);
 
+	//	ブルームの定数バッファを更新し、ピクセルシェーダーに設定
 	BloomConstants data{};
 	data.bloomExtractionThreshold_ = bloomExtractionThreshold_;
 	data.bloomIntensity_ = bloomIntensity_;
 	deviceContext->UpdateSubresource(constantBuffer_.Get(), 0, 0, &data, 0, 0);
 	deviceContext->PSSetConstantBuffers(8, 1, constantBuffer_.GetAddressOf());
 
-	//	Extracting bright color
+	//	明るい部分を抽出（輝度抽出）
 	glowExtraction_->Clear(deviceContext, 0, 0, 0, 1);
 	glowExtraction_->Activate(deviceContext);
 	fullScreenQuad_->Blit(deviceContext, &colorMap, 0, 1, glowExtractionPs_.Get());
 	glowExtraction_->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
-	//	Gaussian blur
-	//	Efficient Gaussian blur with linear sampling
-	//	Downsampling
+	//	ガウスぼかし処理を開始
+	//	最初のダウンサンプリングとぼかし
 	gaussianBlur_[0][0]->Clear(deviceContext, 0, 0, 0, 1);
 	gaussianBlur_[0][0]->Activate(deviceContext);
 	fullScreenQuad_->Blit(deviceContext, glowExtraction_->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurDownsamplingPs_.Get());
 	gaussianBlur_[0][0]->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
-	//	Ping-pong gaussian blur
+	//	水平・垂直でガウスぼかしを適用
 	gaussianBlur_[0][1]->Clear(deviceContext, 0, 0, 0, 1);
 	gaussianBlur_[0][1]->Activate(deviceContext);
 	fullScreenQuad_->Blit(deviceContext, gaussianBlur_[0][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurHorizontalPs_.Get());
@@ -130,16 +138,17 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 	gaussianBlur_[0][0]->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
+	//	ダウンサンプリングされた各レベルに対してガウスぼかしを適用
 	for (size_t downsampledIndex = 1; downsampledIndex < downsampledCount_; ++downsampledIndex)
 	{
-		//	Downsampling
+		//	ダウンサンプリング
 		gaussianBlur_[downsampledIndex][0]->Clear(deviceContext, 0, 0, 0, 1);
 		gaussianBlur_[downsampledIndex][0]->Activate(deviceContext);
 		fullScreenQuad_->Blit(deviceContext, gaussianBlur_[downsampledIndex - 1][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurDownsamplingPs_.Get());
 		gaussianBlur_[downsampledIndex][0]->Deactivate(deviceContext);
 		deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
-		//	Ping-pong gaussian blur
+		//	水平・垂直でガウスぼかしを適用
 		gaussianBlur_[downsampledIndex][1]->Clear(deviceContext, 0, 0, 0, 1);
 		gaussianBlur_[downsampledIndex][1]->Activate(deviceContext);
 		fullScreenQuad_->Blit(deviceContext, gaussianBlur_[downsampledIndex][0]->shaderResourceViews_[0].GetAddressOf(), 0, 1, gaussianBlurHorizontalPs_.Get());
@@ -153,7 +162,7 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 		deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 	}
 
-	//	Downsampling
+	//	全てのダウンサンプリングされたぼかし結果をアップサンプリングして合成
 	glowExtraction_->Clear(deviceContext, 0, 0, 0, 1);
 	glowExtraction_->Activate(deviceContext);
 	std::vector<ID3D11ShaderResourceView*> shaderResourceViews;
@@ -165,7 +174,7 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 	glowExtraction_->Deactivate(deviceContext);
 	deviceContext->PSSetShaderResources(0, 1, &nullShaderResourceView);
 
-	//	Restore states
+	//	元のステートを復元
 	deviceContext->PSSetConstantBuffers(8, 1, cachedConstantBuffer.GetAddressOf());
 
 	deviceContext->OMSetDepthStencilState(cachedDepthStencilState.Get(), 0);

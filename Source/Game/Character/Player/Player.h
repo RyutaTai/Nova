@@ -194,6 +194,8 @@ private:
 	//	----- オーディオ -----
 	AudioSource* sources_[static_cast<int>(AudioStereo::Max)] = { nullptr };
 
+	//	----- レイキャスト -----
+	float rayLengthOffset_ = 0.0f;	//	水平方向のレイの長さを少し増やす
 
 private://	----- デバッグ用 -----
 	//	ImGui用

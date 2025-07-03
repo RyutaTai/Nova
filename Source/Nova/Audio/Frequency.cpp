@@ -168,7 +168,7 @@ float Frequency::BlackmanWindow(const int& index, const int& count)
     return h;
 }
 
-//  フーリエ変換
+//  高速フーリエ変換(FFT)
 void Frequency::FFT(std::vector<Complex>& x)
 {
 	unsigned int N = static_cast<int>(x.size()), k = N, n;

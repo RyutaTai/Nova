@@ -3,8 +3,6 @@
 #include "../../Game/Scenes/SceneGame.h"
 #include "../Character/Enemy/EnemyManager.h"
 
-#define USE_CONTINUE 0
-
 //	ウェーブ1（敵1体）
 namespace GameState
 {
@@ -182,11 +180,7 @@ namespace GameState
 		changeTitleTimer_ -= elapsedTime;
 		if (changeTitleTimer_ <= 0.0f)
 		{
-#if USE_CONTINUE
-			owner_->ChangeState(SceneGame::SceneGameState::Continue);
-#else
 			owner_->ChangeToTitle(true);
-#endif
 			changeTitleTimer_ = 3.0f;
 		}
 	}
@@ -236,11 +230,7 @@ namespace GameState
 		changeTitleTimer_ -= elapsedTime;
 		if (changeTitleTimer_ <= 0.0f)
 		{
-#if USE_CONTINUE
-			owner_->ChangeState(SceneGame::SceneGameState::Continue);
-#else
 			owner_->ChangeToTitle(true);
-#endif
 			changeTitleTimer_ = 3.0f;
 		}
 	}

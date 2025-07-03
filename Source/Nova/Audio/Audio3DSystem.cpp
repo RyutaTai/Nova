@@ -5,14 +5,14 @@
 
 #include "../../Nova/Others/MathHelper.h"
 
-FLOAT32 Angle(const DirectX::XMFLOAT3& emitterPos, const DirectX::XMFLOAT3& listenerPos, const DirectX::XMFLOAT3& vector)
+FLOAT32 Angle(const DirectX::XMFLOAT3& emitterPos, const DirectX::XMFLOAT3& listenerPos, const DirectX::XMFLOAT3& axis)
 {
     //  リスナーからエミッターまでのベクトルを算出
     DirectX::XMFLOAT3 listenerToEmitter = emitterPos - listenerPos;
     listenerToEmitter = Normalize(listenerToEmitter);
 
     //  軸ベクトル
-    DirectX::XMVECTOR Axis = DirectX::XMLoadFloat3(&vector);
+    DirectX::XMVECTOR Axis = DirectX::XMLoadFloat3(&axis);
     Axis = DirectX::XMVectorSetY(Axis, 0.0f);
     //  正規化
     Axis = DirectX::XMVector3Normalize(Axis);
@@ -37,18 +37,15 @@ void DSP(SoundDSPSetting& dspSetting, const SoundListener& listener, const Sound
                                     (SPEED_OF_SOUND - (emitter.velocity_.x + emitter.velocity_.y + emitter.velocity_.z));
 
     //  リスナーからエミッターまでの角度
-    float debugAngle = Angle(emitter.position_, listener.position_, listener.rightVec_);
-	if (debugAngle < M_PI * 0.5f)
+    float angle = Angle(emitter.position_, listener.position_, listener.rightVec_);
+	if (angle < M_PI * 0.5f)
     {
-        debugAngle = Angle(emitter.position_, listener.position_, listener.frontVec_);
+        dspSetting.radianListenerToEmitter_ = Angle(emitter.position_, listener.position_, listener.frontVec_);
     }
     else
     {
-        debugAngle = -Angle(emitter.position_, listener.position_, listener.frontVec_);
+        dspSetting.radianListenerToEmitter_ = -Angle(emitter.position_, listener.position_, listener.frontVec_);
     }
-
-    dspSetting.radianListenerToEmitter_ = (Angle(emitter.position_, listener.position_,  listener.rightVec_) < M_PI * 0.5f) ?
-                                                Angle(emitter.position_, listener.position_, listener.frontVec_) : -Angle(emitter.position_, listener.position_, listener.frontVec_);
 
     //  音の減衰率
     FLOAT32 scaler = std::clamp(1.0f - dspSetting.distanceListnerToEmitter_ / emitter.maxDistance_, 0.0f, 1.0f);

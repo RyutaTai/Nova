@@ -240,12 +240,11 @@ bool Player::RayVsVertical(const float& elapsedTime)
 	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 	debugRenderer->DrawSphere(rayStartPos, rayPosRadius_, DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));	//	青
 #endif
-
 	//	Collision()の結果格納用
-	DirectX::XMFLOAT3	intersectionPosition = {};			//	当たった位置
-	DirectX::XMFLOAT3	intersectionNormal = {};			//	法線の方向
-	std::string			intersectionMesh = {};				//	メッシュ名
-	std::string			intersectionMaterial = {};			//	マテリアル名
+	DirectX::XMFLOAT3	intersectionPosition	= {};			//	当たった位置
+	DirectX::XMFLOAT3	intersectionNormal		= {};			//	法線の方向
+	std::string			intersectionMesh		= {};			//	メッシュ名
+	std::string			intersectionMaterial	= {};			//	マテリアル名
 
 	//	当たり判定処理
 	bool isHit = false;
@@ -278,14 +277,13 @@ bool Player::RayVsVertical(const float& elapsedTime)
 			DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 			debugRenderer->DrawSphere(intersectionPosition, rayPosRadius_ , DirectX::XMFLOAT4(1, 1, 1, 1));	//	白
 #endif
-
 		}
-
 	}
 
 	return isHit;
 }
 
+//	ステージとの当たり判定	水平方向
 bool Player::RayVsHorizontal(const float& elapsedTime)
 {
 	DirectX::XMFLOAT3 rayStartPos;									//	レイの始点
@@ -308,11 +306,10 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 	DirectX::XMStoreFloat4x4(&transform, Stage::Instance().GetTransform()->CalcWorld());
 
 	//	レイの開始点描画
-#if 1
+#if 0
 	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 	debugRenderer->DrawSphere(rayStartPos, rayPosRadius_, DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));	//	青
 #endif
-
 	//	当たり判定結果格納用
 	DirectX::XMFLOAT3	intersectionPosition = {};			//	当たった位置
 	DirectX::XMFLOAT3	intersectionNormal = {};			//	法線の方向
@@ -327,10 +324,8 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 		float d0 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&myPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
 		float d1 = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&intersectionPosition) - DirectX::XMLoadFloat3(&rayStartPos)));
 
-		float rayOffset = 0.5f;	//	レイの長さを少し増やす
-
 		//	プレイヤーとステージが当たっていたら
-		if (d0 + radius_ + rayOffset > d1)
+		if (d0 + radius_ + rayLengthOffset_ > d1)
 		{
 			//	プレイヤーの位置を補正
 			float d = d0 - d1;
@@ -348,7 +343,7 @@ bool Player::RayVsHorizontal(const float& elapsedTime)
 
 			//	デバッグ描画
 			//	レイが当たった位置
-#if 1
+#if 0
 			DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 			debugRenderer->DrawSphere(intersectionPosition, rayPosRadius_ , DirectX::XMFLOAT4(1, 1, 1, 1));	//	白
 #endif
@@ -532,7 +527,8 @@ void Player::DrawDebug()
 		ImGui::DragFloat("RayPosRadius", &rayPosRadius_);	//	レイキャストの始点終点を表す球の半径
 		ImGui::Checkbox(u8"StageCollision", &isCollisionStage_);										//	ステージとの当たり判定オン/オフ
 		ImGui::Text(u8"HitStage %s", hitStage.c_str());													//	ステージと当たっているか
-		
+		ImGui::DragFloat("RayLengthOffset",&rayLengthOffset_ , 0.001f);
+
 		//	----- 重力 -----
 		ImGui::DragFloat("Gravity", &gravity_, 0.01f, -FLT_MAX, FLT_MAX);								//	重力
 		

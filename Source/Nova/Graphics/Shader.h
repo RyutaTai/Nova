@@ -53,7 +53,7 @@ public:
 
 public:
 	Shader();
-	~Shader();
+	~Shader() = default;
 
 	//	ステート設定
 	void SetSamplerState(ID3D11DeviceContext* deviceContext);

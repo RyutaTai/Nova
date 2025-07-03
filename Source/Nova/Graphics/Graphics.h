@@ -86,6 +86,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>	renderTargetView_	= nullptr;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>	depthStencilView_	= nullptr;
 
+	//	シーン定数バッファ
 	SceneConstants	sceneConstant_ = {};
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	constantBuffer_		= nullptr;

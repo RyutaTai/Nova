@@ -124,7 +124,7 @@ void Stage::Update(const float& elapsedTime)
 	UpdateEmissive(elapsedTime);
 
 	//	FFT定数バッファ更新
-	UpdateFFTConstantBuffer();
+	UpdateFFTConstantBuffer(elapsedTime);
 
 	//	オーディオスペクトラム更新
 	UpdateAudioSpectrum(elapsedTime);
@@ -134,74 +134,35 @@ void Stage::Update(const float& elapsedTime)
 //	エミッシブ更新処理
 void Stage::UpdateEmissive(const float& elapsedTime)
 {
-#if 1	//	通常
-	//	frequencyによるエミッシブの変化をしないならemissiveIntensity_を1.0fに設定
-	if (useFrequency_ == false)emissiveConstant_.emissiveIntensity_ = 1.0f;
+	//	補完フラグが経っていなければ更新しない
+	if (emissiveIsLerp_ == false)return;
 
-	//	周波数データ更新
-	frequency_->Update(elapsedTime, AudioManager::Instance().GetAudioResource("GameBGM"));
+	//	補完タイマー更新
+	emissiveLerpTimer_ += elapsedTime;
 
-	//	frequencyData_更新(配列のデータをずらし、新しいデータを設定)
-	for (int i = FrequencyDataMax - 1; 0 < i; --i)
+	//	補完しきったらリセット
+	if (emissiveLerpTimer_ >= emissiveLerpTimerMax_)
 	{
-		frequencyData_[i] = frequencyData_[i - 1];
-	}
-	currentFrequencyValue_ = frequency_->GetAmplitudeSpectrum(frequencyIndex_);
-	frequencyData_[0] = currentFrequencyValue_;
-
-	//	frequencyの最大値と最小値を更新
-	UpdateFrequencyMin();
-	UpdateFrequencyMax();
-
-	//	フーリエ変換で取得した振幅
-	float frequencyValue = currentFrequencyValue_;
-	if (frequencyMaxValue_ > 0.0f)frequencyValue = (frequencyValue - frequencyMinValue_) / frequencyMaxValue_;
-
-	//	emissiveIntensity_更新
-	emissiveConstant_.emissiveIntensity_ = frequencyValue * emissiveFactor_;
-
-#else	//	currentFrequencyValue_にcurrent閾値を設定し、それを越していないならエミッシブにデフォルト値を設定してreturnする
-
-	//	frequencyを使用しないならemissiveIntensityを1.0fに設定
-	if (useFrequency_ == false)emissiveConstant_.emissiveIntensity_ = 1.0f;
-
-	//	周波数データ更新
-	frequency_->Update(elapsedTime, AudioManager::Instance().GetAudioResource("Game.wav"));
-	//frequency_->Update(elapsedTime, AudioManager::Instance().GetAudioResource("fourOnTheFloor_Basic_44100Hz_16bit.wav"));
-
-	//	frequencyData_更新(配列のデータをずらし、新しいデータを設定)
-	for (int i = FrequencyDataMax - 1; 0 < i; --i)
-	{
-		frequencyData_[i] = frequencyData_[i - 1];
-	}
-	currentFrequencyValue_ = frequency_->GetAmplitudeSpectrum(frequencyIndex_);
-
-	//	閾値に達していなければデフォルト値を設定してreturn
-	if (currentFrequencyValue_ < threshold_)
-	{
-		emissiveConstant_.emissiveIntensity_ = defaultEmissiveIntensity_;
-		return;
+		emissiveIsFadeIn_ = !emissiveIsFadeIn_;
+		if (emissiveIsFadeIn_ == false)emissiveIsLerp_ = false;
+		emissiveLerpTimer_ = 0.0f;
 	}
 
-	frequencyData_[0] = currentFrequencyValue_;
+	//	ヴィネットの強度を強めるか弱めるかで補完する最大値、最小値を切り替える
+	if (emissiveIsFadeIn_)
+	{
+		emissiveData_.currentEmissiveIntensity_ =
+			Mathf::Lerp(emissiveData_.emissiveIntensityMin_, emissiveData_.emissiveIntensityMax_, emissiveLerpTimer_ / emissiveLerpTimerMax_);
+	}
+	else
+	{
+		emissiveData_.currentEmissiveIntensity_ =
+			Mathf::Lerp(emissiveData_.emissiveIntensityMax_, emissiveData_.emissiveIntensityMin_, emissiveLerpTimer_ / emissiveLerpTimerMax_);
+	}
 
-	//	frequencyの最大値と最小値を更新
-	UpdateFrequencyMin();
-	UpdateFrequencyMax();
+	//	リズムUIに合わせてエミッシブを変化させる
+	emissiveConstant_.emissiveIntensity_ = emissiveData_.currentEmissiveIntensity_;
 
-	//	フーリエ変換で取得した振幅
-	float frequencyValue = currentFrequencyValue_;
-	if (frequencyMaxValue_ > 0.0f)frequencyValue = (frequencyValue - frequencyMinValue_) / frequencyMaxValue_;
-
-	//	BPM取得
-	//float bpm = AudioManager::Instance().GetAudioResource("Game.wav")->GetWaveFormat().GetBPM();
-
-	//	emissiveIntensity_更新
-	emissiveConstant_.emissiveIntensity_ = frequencyValue * emissiveFactor_;
-	/*emissiveConstant_.emissiveIntensity_ = std::clamp(currentFrequencyValue,
-		emissiveIntencityMin_, emissiveIntencityMax_);*/
-
-#endif
 }
 
 //	オーディオスペクトラム更新
@@ -259,7 +220,7 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 		DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(projectionMappingFovy), 1.0f, 1.0f, 500.0f);
 	DirectX::XMStoreFloat4x4(&projectionMappingConstants_[projectionMappingIndex].transform_, ProjectionMappingTransform);
 #else
-	// ビュー行列
+	//	ビュー行列
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(
 		DirectX::XMLoadFloat3(&projectionMappingEye),
 		DirectX::XMLoadFloat3(&projectionMappingFocus),
@@ -268,12 +229,12 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 			DirectX::XMMatrixRotationRollPitchYaw(0, DirectX::XMConvertToRadians(projectionMapping_[projectionMappingIndex].rotation_), 0))
 	);
 
-	// プロジェクション行列
+	//	プロジェクション行列
 	DirectX::XMMATRIX projMatrix = DirectX::XMMatrixPerspectiveFovLH(
 		DirectX::XMConvertToRadians(projectionMappingFovy), 1.0f, 1.0f, 500.0f
 	);
 
-	// 変換行列にスケールを掛ける
+	//	変換行列にスケールを掛ける
 	DirectX::XMMATRIX ProjectionMappingTransform = viewMatrix * projMatrix;
 	DirectX::XMStoreFloat4x4(&projectionMappingConstants_[projectionMappingIndex].transform_, ProjectionMappingTransform);
 
@@ -427,9 +388,10 @@ void Stage::Render()
 }
 
 //	FFT定数バッファ更新
-void Stage::UpdateFFTConstantBuffer()
+void Stage::UpdateFFTConstantBuffer(const float& elapsedTime)
 {
 	//	----- FFT結果を取得 -----
+	frequency_->Update(elapsedTime, AudioManager::Instance().GetAudioResource("GameBGM"));
 	std::vector<float> fftData = frequency_->GetAmplitudeSpectrum();
 
 #if 1	//	正規化
@@ -537,15 +499,23 @@ void Stage::DrawDebug()
 			ImGui::DragFloat("FrequencyMin", &frequencyMinValue_, 1.0f, 0.0f);
 			ImGui::DragFloat("FrequencyMax", &frequencyMaxValue_, 1.0f, 0.0f);
 			ImGui::DragFloat("EmissiveIntencity", &emissiveConstant_.emissiveIntensity_, 0.1f, 0.0f, FLT_MAX);
-			ImGui::DragFloat("DefaultEmissiveIntencity", &defaultEmissiveIntensity_, 0.1f, 0.0f, FLT_MAX);
 			ImGui::DragFloat("EmissiveThreshold", &threshold_, 0.1f, 0.0f, FLT_MAX);
-			ImGui::DragFloat("EmissiveFactor", &emissiveFactor_, 1.0f, 0.0f);
-			ImGui::DragFloat("EmissiveIntencityMin", &emissiveIntencityMin_, 1.0f, 0.0f);
-			ImGui::DragFloat("EmissiveIntencityMax", &emissiveIntencityMax_, 1.0f, 0.0f);
+
 
 			ImGui::TreePop();
 		}
 
+		//	----- エミッシブ変化用データ -----
+		if (ImGui::TreeNode("Emissive Data"))
+		{
+			ImGui::DragFloat("CurrentEmissiveIntensity", &emissiveData_.currentEmissiveIntensity_, 0.01f);
+			ImGui::DragFloat("EmissiveIntensityMax", &emissiveData_.emissiveIntensityMax_, 0.01f);
+			ImGui::DragFloat("EmissiveIntensityMin", &emissiveData_.emissiveIntensityMin_, 0.01f);
+
+			ImGui::TreePop();
+		}
+
+		//	モデルのデバッグ描画
 		gltfStaticModelResource_->DrawDebug();
 
 		ImGui::TreePop();

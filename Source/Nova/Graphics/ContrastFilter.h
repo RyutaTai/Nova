@@ -8,6 +8,13 @@
 class ContrastFilter
 {
 public:
+    ContrastFilter();
+    virtual ~ContrastFilter() = default;
+
+    void Update();
+    void DrawDebug();
+
+private:
     struct ContrastConstants
     {
         float               contrast_ = 1.0f;   //  コントラストの強さ(1.0が標準)
@@ -15,12 +22,5 @@ public:
     };
     ContrastConstants constants_;
     Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer_;
-
-public:
-    ContrastFilter();
-    virtual ~ContrastFilter() = default;
-
-    void Update();
-    void DrawDebug();
 
 };

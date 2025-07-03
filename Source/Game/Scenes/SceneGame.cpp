@@ -43,7 +43,8 @@ void SceneGame::Initialize()
 	std::unique_ptr<UIRank> uiRank = std::make_unique<UIRank>();
 	UIManager::Instance().RegisterUIRank(uiRank.get());
 	UIManager::Instance().Register(std::move(uiRank));
-	UIManager::Instance().Initialize();					//	登録し終わってから初期化処理をする
+	//	登録し終わってから初期化処理をする
+	UIManager::Instance().Initialize();
 
 	// ----- Rhythmクラス初期化 -----
 	JudgeRhythm::Instance().Initialize();
@@ -88,7 +89,7 @@ void SceneGame::Initialize()
 
 	//	----- ブルーム -----
 	framebuffers_[0] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
-	framebuffers_[1] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);	//	sprite
+	framebuffers_[1] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	fullScreenQuad_ = std::make_unique<FullScreenQuad>(device);
 	bloomer_ = std::make_unique<Bloom>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/FinalPassPs.cso", pixelShaders_[0].ReleaseAndGetAddressOf());
@@ -146,7 +147,6 @@ void SceneGame::Update(const float& elapsedTime)
 
 	// ----- エネミー更新処理 -----
 	EnemyManager::Instance().Update(elapsedTime);
-	//drone_->Update(elapsedTime);
 
 	// ----- エフェクト更新処理 -----
 	EffectManager::Instance().Update(elapsedTime);
@@ -204,7 +204,6 @@ void SceneGame::LoadWaveSprite(const wchar_t* filename)
 //	シーン定数バッファ更新
 void SceneGame::UpdateSceneConstants()
 {
-	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
 	Graphics::Instance().SetViewProjection(Camera::Instance().CalcViewProjectionMatrix());
 	Graphics::Instance().SetLightDirection(lightDirection_);
 	Graphics::Instance().SetCameraPosition({ 0,0,1,0 });
@@ -212,6 +211,7 @@ void SceneGame::UpdateSceneConstants()
 	Graphics::Instance().SetInvProjection(Camera::Instance().CalcInvProjectionMatrix());
 
 	Graphics::SceneConstants sceneConstants = Graphics::Instance().GetSceneConstant();
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
 	deviceContext->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
 	deviceContext->VSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
 	deviceContext->PSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
@@ -342,21 +342,9 @@ void SceneGame::Render3DScene()
 void SceneGame::RenderSprite()
 {
 	//	手前にスプライト出すならZON_ON、奥に描画ならOFF_OFF
-	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);//	各ステート毎のスプライト描画
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
 	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
 	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-
-	//	ウェーブ数描画
-	if (sprites_[SPRITE_GAME::WAVE] && waveStartTimer_ > 0)
-	{
-		//sprite_[static_cast<int>(SPRITE_GAME::WAVE)]->Render();
-	}
-
-	//	操作方法描画
-	if (waveStartTimer_ <= 0.0f && isResult_ == false)
-	{
-		//ui_[static_cast<int>(UI_GAME::Instructions)]->SetRenderFlag(true);
-	}
 
 	//	ゲームクリア
 	if (isGameClear_)

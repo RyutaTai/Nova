@@ -9,10 +9,9 @@ class DebugRenderer
 {
 public:
 	DebugRenderer(ID3D11Device* device);
-	~DebugRenderer() {}
+	~DebugRenderer() = default;
 
 public:
-	// •`‰æÀs
 	void Render();
 
 	// ‹…•`‰æ
@@ -68,7 +67,7 @@ private:
 		DirectX::XMFLOAT4 color_;
 	};
 
-
+private:
 	Microsoft::WRL::ComPtr	<ID3D11Buffer>				sphereVertexBuffer_;
 	Microsoft::WRL::ComPtr	<ID3D11Buffer>				cylinderVertexBuffer_;
 	Microsoft::WRL::ComPtr	<ID3D11Buffer>				coneVertexBuffer_;

@@ -122,9 +122,6 @@
     <Filter Include="External\tinygltf-release">
       <UniqueIdentifier>{54831016-a7a2-448e-af6a-a9907493b16d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External\ImGuizmo-master">
-      <UniqueIdentifier>{c733ef46-6797-473c-b10d-1776309cbe19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="External\nlohmann\detail\meta\call_std">
       <UniqueIdentifier>{6c1cdba1-132d-46da-a07b-f40c1b49c284}</UniqueIdentifier>
     </Filter>
@@ -333,9 +330,6 @@
     </ClCompile>
     <ClCompile Include="External\tinygltf-release\tiny_gltf.cc">
       <Filter>External\tinygltf-release</Filter>
-    </ClCompile>
-    <ClCompile Include="External\ImGuizmo-master\ImSequencer.cpp">
-      <Filter>External\ImGuizmo-master</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Character\Enemy\Dragonkin\Dragonkin.cpp">
       <Filter>Game\Character\Enemy\Dragonkin</Filter>

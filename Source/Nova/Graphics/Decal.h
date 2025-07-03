@@ -16,7 +16,7 @@ public:
 
 	VOID DrawDebug();
 
-public:
+private:	
 	struct Spot
 	{
 		DirectX::XMFLOAT3 position_ = { 0, 0, 0 };

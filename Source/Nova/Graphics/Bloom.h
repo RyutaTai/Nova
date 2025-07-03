@@ -31,6 +31,15 @@ public:
 	float bloomIntensity_ = 0.036f;
 
 private:
+	struct BloomConstants
+	{
+		float bloomExtractionThreshold_;
+		float bloomIntensity_;
+		float something_[2];
+	};
+	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer_;
+
+private:
 	std::unique_ptr<FullScreenQuad>	fullScreenQuad_;
 	std::unique_ptr<FrameBuffer>	glowExtraction_;
 
@@ -47,12 +56,5 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState>	rasterizerState_;
 	Microsoft::WRL::ComPtr<ID3D11BlendState>		blendState_;
 
-	struct BloomConstants
-	{
-		float bloomExtractionThreshold_;
-		float bloomIntensity_;
-		float something_[2];
-	};
-	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer_;
 
 };
