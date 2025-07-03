@@ -17,11 +17,11 @@ void AudioManager::Initialize()
 	createFlags |= XAUDIO2_DEBUG_ENGINE;
 #endif
 
-	//	XAudio初期化
+	//	XAudioの初期化
 	hr = XAudio2Create(&xaudio_, createFlags);
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 
-	//	マスターボイス作成
+	//	マスターボイスを作成
 #if 0	//	自動検出で設定
 	hr = xaudio->CreateMasteringVoice(&masteringVoice, XAUDIO2_DEFAULT_CHANNELS, 44100/*サンプリングレート*/, 0U, NULL, 0, AudioCategory_GameEffects);
 #else	//	手動で設定	
@@ -33,7 +33,6 @@ void AudioManager::Initialize()
 
 }
 
-//	デストラクタ
 AudioManager::~AudioManager()
 {
 	//	オーディオ全削除
@@ -64,6 +63,7 @@ AudioSource* AudioManager::LoadAudioSource(const char* filename, const Audio::Au
 	return new AudioSource(xaudio_, resource, audioType, sceneName);
 }
 
+//	3Dで鳴らすオーディオソース読み込み
 AudioSource3D* AudioManager::LoadAudioSource3D(const char* filename, const Audio::AudioType& audioType, const std::string& sceneName, SoundEmitter* emitter)
 {
 	WaveReader* resource = new WaveReader(filename);
@@ -156,6 +156,25 @@ const bool AudioManager::AudioSourceIsExist(const std::string& name)const
 	return false;
 }
 
+//	再生フラグ設定
+void AudioManager::SetPlayableFlag(const bool& isPlayable)
+{
+	for (Audio* audio : audioResources_)
+	{
+		audio->SetPlayable(isPlayable);
+		//	false→trueになった場合リスタート
+		if (audio->IsPlayable())
+		{
+			audio->Restart();
+		}
+		//	true→falseになった場合一時停止
+		else
+		{
+			audio->Pause();
+		}
+	}
+}
+
 //	オーディオ削除
 void AudioManager::Remove(Audio* audio)
 {
@@ -196,7 +215,12 @@ void AudioManager::DrawDebug()
 	if (ImGui::TreeNode("AudioManager"))
 	{
 		int size = static_cast<int>(audioResources_.size());
-		ImGui::DragInt("AudioCount", &size);	//	オーディオの数
+		//	オーディオの数
+		ImGui::DragInt("AudioCount", &size);
+		if (ImGui::Checkbox("IsPlayable", &isAllPlayable_))
+		{
+			SetPlayableFlag(isAllPlayable_);
+		}
 
 		for (Audio* audio : audioResources_)	//	各オーディオのImGui
 		{

@@ -71,7 +71,7 @@ public:
 	std::string		GetSceneName() { return sceneName_; }
 
 	void			SetPlayable(const bool& playable) { isPlayable_ = playable; }
-	bool			IsPlayable() { return isPlayable_; }
+	const bool		IsPlayable()const { return isPlayable_; }
 
 protected:
 	static constexpr float		DefaultSamplingRate = 44100.0f;		//	基本のサンプリングレート
@@ -98,8 +98,7 @@ protected:
 	std::string audioName_ = {};	//	音源の名前
 	std::string	sceneName_ = {};	//	使用シーンを設定(Title,Gameなど)
 
-private:	//	デバッグ用
-	bool isPlayable_ = true;	//	再生可能かどうか(ImGuiで再生する音を絞るときに使う)
+	bool isPlayable_ = true;	//	再生可能かどうか(falseなら再生しない)
 
 };
 

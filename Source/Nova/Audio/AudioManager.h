@@ -52,6 +52,9 @@ public:
 	void Remove(Audio* audio);				//	オーディオ削除
 	void RemoveBySceneName(const std::string& sceneName);	//	オーディオをシーンごとに削除
 
+	//	----- 再生フラグ設定 -----
+	void SetPlayableFlag(const bool& isPlayable);
+
 private:
 	DWORD		channelMask_ = {};
 	IXAudio2*	xaudio_ = nullptr;
@@ -60,6 +63,7 @@ private:
 	std::vector<Audio*>		audioResources_ = {};
 	std::set<Audio*>		audioRemoves_ = {};
 
+	bool isAllPlayable_ = false;
 
 };
 
