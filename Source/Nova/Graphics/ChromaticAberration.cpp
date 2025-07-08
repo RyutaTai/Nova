@@ -23,7 +23,7 @@ ChromaticAberration::ChromaticAberration()
 
 void ChromaticAberration::Update()
 {
-	static constexpr int ChromaticAberrationCBIndex = 6; // 未使用のレジスタ番号
+	static constexpr int ChromaticAberrationCBIndex = 6; //	色収差用定数バッファのレジスタ番号
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(chromaticAberrationConstantBuffer_.Get(), 0, 0, &chromaticAberrationConstant_, 0, 0);
 	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(ChromaticAberrationCBIndex, 1, chromaticAberrationConstantBuffer_.GetAddressOf());
 }

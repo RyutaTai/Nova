@@ -23,7 +23,7 @@ ColorFilter::ColorFilter()
 
 void ColorFilter::Update()
 {
-	static constexpr int ColorFilterCBIndex = 7;
+	static constexpr int ColorFilterCBIndex = 7;	//	カラーフィルター用定数バッファのレジスタ番号
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(colorFilterConstantBuffer_.Get(), 0, 0, &colorFilterConstant_, 0, 0);
 	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(ColorFilterCBIndex, 1, colorFilterConstantBuffer_.GetAddressOf());
 

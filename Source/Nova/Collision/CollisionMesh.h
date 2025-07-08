@@ -43,6 +43,7 @@ public:
 
 public:
 	CollisionMesh(ID3D11Device* device, const std::string& filename, bool triangulate = false);
+	~CollisionMesh() = default;
 
 	//	デバッグ描画
 	void DrawDebug();

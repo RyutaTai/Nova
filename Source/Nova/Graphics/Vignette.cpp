@@ -29,7 +29,7 @@ Vignette::Vignette()
 void Vignette::Make()
 {
 	//	ヴィネット用定数バッファ
-	static constexpr int VignetteCBVIndex = 2;
+	static constexpr int VignetteCBIndex = 2;
 	VignetteConstants constant;
 	constant.vignetteColor_		= vignetteData_.vignetteColor_;
 	constant.vignetteCenter_	= vignetteData_.vignetteCenter_;
@@ -39,7 +39,7 @@ void Vignette::Make()
 	constant.vignetteRoundness_ = 6.0f * (1.0f - vignetteData_.vignetteRoundness_) + vignetteData_.vignetteRoundness_;
 
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(vignetteConstantBuffer_.Get(), 0, 0, &constant, 0, 0);
-	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(VignetteCBVIndex, 1, vignetteConstantBuffer_.GetAddressOf());
+	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(VignetteCBIndex, 1, vignetteConstantBuffer_.GetAddressOf());
 
 }
 

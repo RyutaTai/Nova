@@ -5,7 +5,6 @@
 #include "../../Nova/Collision/Collision.h"
 #include "../Character/Player/Player.h"
 
-//	コンストラクタ
 BulletHorming::BulletHorming()
 	:Bullet()
 {

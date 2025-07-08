@@ -8,7 +8,6 @@
 #include "../../../../Nova/Collision/Collision.h"
 #include "../../../../Nova/Others/MemoryUtility.h"
 
-//	コンストラクタ
 Dragonkin::Dragonkin()
 	:Enemy("./Resources/Model/Dragonkin/Dragonkin.gltf")
 {

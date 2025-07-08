@@ -3,7 +3,6 @@
 #include "../Others/Misc.h"
 #include "../Graphics/Graphics.h"
 
-//	コンストラクタ
 Shader::Shader()
 {
 	HRESULT hr{ S_OK };

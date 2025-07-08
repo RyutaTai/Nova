@@ -3,7 +3,6 @@
 #include "Bullet.h"
 #include "../../External/imgui/imgui.h"
 
-//	コンストラクタ
 BulletManager::BulletManager()
 {
 	

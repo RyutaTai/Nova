@@ -272,6 +272,7 @@
     <ClCompile Include="Source\Nova\Input\GamePad.cpp" />
     <ClCompile Include="Source\Nova\Input\Input.cpp" />
     <ClCompile Include="Source\Nova\Input\Mouse.cpp" />
+    <ClCompile Include="Source\Nova\Others\Dialog.cpp" />
     <ClCompile Include="Source\Nova\Others\TimeRangeJudge.cpp" />
     <ClCompile Include="Source\Nova\Others\Transform.cpp" />
     <ClCompile Include="Source\Nova\Resources\Effect.cpp" />
@@ -420,6 +421,7 @@
     <ClInclude Include="Source\Nova\Input\Mouse.h" />
     <ClInclude Include="Source\Nova\Others\CerealHelper.h" />
     <ClInclude Include="Source\Nova\Others\Converter.h" />
+    <ClInclude Include="Source\Nova\Others\Dialog.h" />
     <ClInclude Include="Source\Nova\Others\Easing.h" />
     <ClInclude Include="Source\Nova\Others\GltfUtility.h" />
     <ClInclude Include="Source\Nova\Others\JsonHelper.h" />

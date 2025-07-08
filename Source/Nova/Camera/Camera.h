@@ -35,11 +35,11 @@ public:
 
 	void SetPerspectiveFov();		//	パースペクティブ設定
 	void SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& focus, const DirectX::XMFLOAT3& up);	//	指定方向を向く
-	void SetEye(const DirectX::XMFLOAT3& eye)		{ eye_ = eye; }					//	視点設定
+	void SetEye(const DirectX::XMFLOAT3& eye)		{ eye_ = eye; }							//	視点設定
 	void SetEyeX(const float& eyeX)					{ eye_.x = eyeX; }	
 	void SetEyeY(const float& eyeY)					{ eye_.y = eyeY; }
 	void SetEyeZ(const float& eyeZ)					{ eye_.z = eyeZ; }
-	void SetTargetPos(const DirectX::XMFLOAT3& target) { focus_ = target; }				//	ターゲット位置設定
+	void SetTargetPos(const DirectX::XMFLOAT3& target) { focus_ = target; }					//	ターゲット位置設定
 	void SetRange(const float& range)				{ currentRange_ = range; }				//	カメラ距離設定
 	void SetIsPose(const bool& isPose)				{ isPose_ = isPose; }
 
@@ -67,8 +67,8 @@ public:
 	void UpdateVelocity(const float& elapsedTime);
 
 	//	----- オーディオ -----
-	void			UpdateListener();							//	リスナー情報更新
-	SoundListener	GetListener()const { return listener_; }	//	リスナー取得
+	void			UpdateListener();					//	リスナー情報更新
+	SoundListener*	GetListener() { return listener_; }	//	リスナー取得
 
 private:
 	Transform transform_ = {};
@@ -116,7 +116,7 @@ private:
 	DirectX::XMFLOAT3 cashAngle_ = {};
 
 	//	----- オーディオ -----
-	SoundListener listener_ = {};	//	リスナー
+	SoundListener* listener_ = nullptr;		//	リスナー
 
 	//	----- 当たり判定 -----
 	float radius_ = 0.1f;

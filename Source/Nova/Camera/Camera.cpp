@@ -9,14 +9,15 @@
 #include "../Input/Input.h"
 #include "../../Game/Stage/Stage.h"
 
-//	コンストラクタ
 Camera::Camera()
 {
 	//	リスナー情報セット
-	listener_.innerRadius_ = 0.7f;
-	listener_.outerRadius_ = 1.67f;
-	listener_.filterParam_ = 0.8f;
-
+	listener_ = new SoundListener();
+	listener_->innerRadius_ = 0.7f;
+	listener_->outerRadius_ = 1.67f;
+	listener_->filterParam_ = 0.8f;
+	listener_->name_ = "Camera";
+	AudioManager::Instance().ListenerRegister(listener_);
 }
 
 //	初期化
@@ -168,10 +169,10 @@ void Camera::Update(const float& elapsedTime)
 //	リスナー情報更新
 void Camera::UpdateListener()
 {
-	listener_.position_ = { eye_.x, eye_.y , eye_.z };
-	listener_.frontVec_ = GetFront();
-	listener_.velocity_ = {0,0,0};
-	listener_.rightVec_ = GetRight();
+	listener_->position_ = { eye_.x, eye_.y , eye_.z };
+	listener_->frontVec_ = GetFront();
+	listener_->velocity_ = {0,0,0};
+	listener_->rightVec_ = GetRight();
 
 }
 //	通常カメラ
@@ -351,13 +352,13 @@ void Camera::DrawDebug()
 		//	3Dオーディオのリスナー情報
 		if (ImGui::TreeNode("3DAudio_Listener"))
 		{
-			ImGui::DragFloat3("Position", &listener_.position_.x);
-			ImGui::DragFloat("InnerRadius", &listener_.innerRadius_);
-			ImGui::DragFloat("OuterRadius", &listener_.outerRadius_);
-			ImGui::DragFloat("FilterParam", &listener_.filterParam_);
-			ImGui::DragFloat3("FrontVec", &listener_.frontVec_.x);
-			ImGui::DragFloat3("RightVec", &listener_.rightVec_.x);
-			ImGui::DragFloat3("Velocity", &listener_.velocity_.x);
+			ImGui::DragFloat3("Position",	&listener_->position_.x);
+			ImGui::DragFloat("InnerRadius", &listener_->innerRadius_);
+			ImGui::DragFloat("OuterRadius", &listener_->outerRadius_);
+			ImGui::DragFloat("FilterParam", &listener_->filterParam_);
+			ImGui::DragFloat3("FrontVec",	&listener_->frontVec_.x);
+			ImGui::DragFloat3("RightVec",	&listener_->rightVec_.x);
+			ImGui::DragFloat3("Velocity",	&listener_->velocity_.x);
 
 			ImGui::TreePop();
 		}

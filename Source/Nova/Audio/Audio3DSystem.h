@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include <vector>
+#include <string>
 
 typedef float FLOAT32;
 
@@ -18,6 +19,7 @@ struct SoundListener
 	FLOAT32				innerRadius_ = {};	//	内半径
 	FLOAT32				outerRadius_ = {};	//	外半径
 	FLOAT32				filterParam_ = {};	//	ローパスに適応する値
+	std::string			name_ = {};			//	名前
 };
 
 //	エミッター情報
@@ -28,6 +30,7 @@ struct SoundEmitter
 	FLOAT32				minDistance_ = {};	//	距離減衰が始まる距離
 	FLOAT32				maxDistance_ = {};	//	音が聞こえる最大距離
 	float				volume_ = 1.0f;		//	ボリューム
+	std::string			name_ = {};			//	名前
 };
 
 struct SoundDSPSetting
@@ -42,4 +45,4 @@ struct SoundDSPSetting
 };
 
 
-void DSP(SoundDSPSetting& dspSetting, const SoundListener& listener, const SoundEmitter& emitter);
+void DSP(SoundDSPSetting& dspSetting, const SoundListener* listener, const SoundEmitter& emitter);

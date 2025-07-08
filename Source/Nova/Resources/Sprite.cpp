@@ -1,10 +1,10 @@
 #include "sprite.h"
 
 #include <algorithm>
+
 #include "../../imgui/ImGuiCtrl.h"
 #include "../Graphics/Graphics.h"
 
-//	コンストラクタ
 Sprite::Sprite(const wchar_t* filename,const InitInfo& initInfo)
 {
 	HRESULT hr = S_OK;

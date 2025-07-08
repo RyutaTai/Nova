@@ -166,7 +166,7 @@ namespace GameState
 		volume_ = 0.25f;
 		clearSE->SetVolume(volume_, false);
 		clearSE->SetAudioName("ClearSE");
-		AudioManager::Instance().Register(clearSE);
+		AudioManager::Instance().AudioRegister(clearSE);
 		clearSE->Play(false);
 	}
 
@@ -216,7 +216,7 @@ namespace GameState
 		volume_ = 0.25f;
 		gameOverSE->SetVolume(volume_, false);
 		gameOverSE->SetAudioName("GameOverSE");
-		AudioManager::Instance().Register(gameOverSE);
+		AudioManager::Instance().AudioRegister(gameOverSE);
 		gameOverSE->Play(false);
 	}
 

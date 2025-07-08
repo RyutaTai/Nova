@@ -1,19 +1,18 @@
 #include "Drone.h"
 
+#include "DroneState.h"
 #include "../../../../Nova/Graphics/Graphics.h"
 #include "../../../../Nova/Input/Input.h"
 #include "../../../../Nova/Core/Framework.h"
 #include "../../../../Nova/Others/MathHelper.h"
 #include "../../../../Nova/Others/Converter.h"
 #include "../../../../Nova/Resources/ResourceManager.h"
-#include "DroneState.h"
+#include "../../../../Nova/Camera/Camera.h"
 #include "../../../Bullet/BulletStraight.h"
 #include "../../../Bullet/BulletHorming.h"
 #include "../../Player/Player.h"
-#include "../../../../Nova/Camera/Camera.h"
 #include "../../../Stage/Stage.h"
 
-//	コンストラクタ
 Drone::Drone()
 	:Enemy("./Resources/Model/Drone/Drone.gltf")
 {
@@ -86,19 +85,23 @@ void Drone::Initialize()
 	float posOffsetY = -10.0f;
 
 	//	エミッターの設定
-	emitter_.position_ = GetTransform()->GetPosition();
+	emitter_ = new SoundEmitter();
+	emitter_->position_ = GetTransform()->GetPosition();
 	//emitter_[static_cast<int>(Audio3D::Shot)].position.y = playerPos.y + playerHeight / 2.0f + posOffsetY;
-	emitter_.velocity_ = { 1.0f, 2.0f, 1.0f };
-	emitter_.minDistance_ = 7.0f;
-	emitter_.maxDistance_ = 22.0f;
-	emitter_.volume_ = 1.0f;
-	
+	emitter_->velocity_ = { 1.0f, 2.0f, 1.0f };
+	emitter_->minDistance_ = 7.0f;
+	emitter_->maxDistance_ = 22.0f;
+	emitter_->volume_ = 1.0f;
+	emitter_->name_ = "Drone";
+	AudioManager::Instance().EmitterRegister(emitter_);
+
 	//	発射音
-	sources_[static_cast<int>(Audio3D::Shot)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Drone/launchSE.wav", Audio::AudioType::SE3D, "GameScene", &emitter_);
+	sources_[static_cast<int>(Audio3D::Shot)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Drone/launchSE.wav", Audio::AudioType::SE3D, "GameScene", emitter_);
 	sources_[static_cast<int>(Audio3D::Shot)]->SetVolume(0.3f, false);
 	sources_[static_cast<int>(Audio3D::Shot)]->SetAudioName("LaunchBullet");
 	sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
-	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Shot)]);
+	sources_[static_cast<int>(Audio3D::Shot)]->SetListenerName(Camera::Instance().GetListener()->name_);
+	AudioManager::Instance().AudioRegister(sources_[static_cast<int>(Audio3D::Shot)]);
 
 #endif
 
@@ -111,7 +114,7 @@ void Drone::Initialize()
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Camera::Instance().GetListener());
 	sources_[static_cast<int>(Audio3D::Bgm)]->SetPlayable(true);	//	再生するかのフラグ
 	sources_[static_cast<int>(Audio3D::Bgm)]->Play(true);
-	AudioManager::Instance().Register(sources_[static_cast<int>(Audio3D::Bgm)]);
+	AudioManager::Instance().AudioRegister(sources_[static_cast<int>(Audio3D::Bgm)]);
 #endif
 
 }
@@ -132,8 +135,10 @@ void Drone::Update(const float& elapsedTime)
 
 	//	----- 当たり判定更新 -----
 	UpdateCollisions(elapsedTime);
+
 	//	----- ステージとの当たり判定 -----
 	isHitStage_ = RayVsHorizontal(elapsedTime);
+
 	//	----- 位置更新 -----
 	UpdatePosition(elapsedTime);
 
@@ -157,7 +162,7 @@ void Drone::Update(const float& elapsedTime)
 //	エミッター更新
 void Drone::UpdateEmitter()
 {
-	emitter_.position_ = GetTransform()->GetPosition();
+	emitter_->position_ = GetTransform()->GetPosition();
 	
 }
 
@@ -189,14 +194,14 @@ void Drone::UpdateAudioSource()
 	//	発射音
 	if (sources_[static_cast<int>(Audio3D::Shot)])
 	{
-		sources_[static_cast<int>(Audio3D::Shot)]->SetEmitterPosition(emitter_.position_);
+		sources_[static_cast<int>(Audio3D::Shot)]->SetEmitterPosition(emitter_->position_);
 		sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
 		
 	}
 	//	BGM(デバッグ用)
 	if (sources_[static_cast<int>(Audio3D::Bgm)])
 	{
-		sources_[static_cast<int>(Audio3D::Bgm)]->SetEmitterPosition(emitter_.position_);
+		sources_[static_cast<int>(Audio3D::Bgm)]->SetEmitterPosition(emitter_->position_);
 		sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Camera::Instance().GetListener());
 	}
 }

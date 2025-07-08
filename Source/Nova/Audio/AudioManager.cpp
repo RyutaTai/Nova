@@ -1,7 +1,12 @@
 #include "AudioManager.h"
 
+#include <memory>
+
+#include "../Graphics/Graphics.h"
+#include "../Camera/Camera.h"
 #include "../Others/Misc.h"
 #include "../Others/MemoryUtility.h"
+#include "../Others/Dialog.h"
 #include "../../imgui/imgui.h"
 
 void AudioManager::Initialize()
@@ -16,7 +21,6 @@ void AudioManager::Initialize()
 #if defined(DEBUG) || defined(_DEBUG)
 	createFlags |= XAUDIO2_DEBUG_ENGINE;
 #endif
-
 	//	XAudioの初期化
 	hr = XAudio2Create(&xaudio_, createFlags);
 	_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
@@ -107,9 +111,21 @@ void AudioManager::Update(const float& elapsedTime)
 }
 
 //	オーディオ登録
-void AudioManager::Register(Audio* audio)
+void AudioManager::AudioRegister(Audio* audio)
 {
 	audioResources_.emplace_back(audio);
+}
+
+//	リスナー登録
+void AudioManager::ListenerRegister(SoundListener* listener)
+{
+	soundListeners_.emplace_back(listener);
+}
+
+//	エミッター登録
+void AudioManager::EmitterRegister(SoundEmitter* emitter)
+{
+	soundEmitters_.emplace_back(emitter);
 }
 
 //	名前で指定して再生する
@@ -156,8 +172,8 @@ const bool AudioManager::AudioSourceIsExist(const std::string& name)const
 	return false;
 }
 
-//	再生フラグ設定
-void AudioManager::SetPlayableFlag(const bool& isPlayable)
+//	オーディオ再生フラグ設定
+void AudioManager::SetAllPlayableFlag(const bool& isPlayable)
 {
 	for (Audio* audio : audioResources_)
 	{
@@ -196,11 +212,19 @@ void AudioManager::RemoveBySceneName(const std::string& sceneName)
 //	オーディオ全削除
 void AudioManager::Clear()
 {
+	//	オーディオリソースクリア
 	for (Audio*& audio : audioResources_)
 	{
 		delete audio;
 	}
 	audioResources_.clear();
+
+	//	エミッタークリア
+	soundEmitters_.clear();
+
+	//	リスナークリア
+	soundListeners_.clear();
+
 }
 
 //	オーディオ終了化
@@ -214,21 +238,174 @@ void AudioManager::DrawDebug()
 {
 	if (ImGui::TreeNode("AudioManager"))
 	{
-		int size = static_cast<int>(audioResources_.size());
 		//	オーディオの数
+		int size = static_cast<int>(audioResources_.size());
 		ImGui::DragInt("AudioCount", &size);
-		if (ImGui::Checkbox("IsPlayable", &isAllPlayable_))
+		
+		//	オーディオ再生フラグ
+		if (ImGui::Checkbox("IsAllPlayable", &isAllPlayable_))
 		{
-			SetPlayableFlag(isAllPlayable_);
+			SetAllPlayableFlag(isAllPlayable_);
 		}
 
-		for (Audio* audio : audioResources_)	//	各オーディオのImGui
+		//	各オーディオのImGui
+		int audioIndex = 0;
+		for (Audio* audio : audioResources_)
 		{
 			std::string name = audio->GetAudioName();
 			if (ImGui::TreeNode(name.c_str()))
 			{
+				//	オーディオファイル選択メニュー表示
+				DrawAudioSelection(audioIndex);
+				//	オーディオのImGui描画
 				audio->DrawDebug();
 				ImGui::TreePop();
+			}
+			audioIndex++;
+		}
+		ImGui::TreePop();
+	}
+}
+
+//	オーディオファイル選択メニュー表示
+void AudioManager::DrawAudioSelection(const int& audioIndex)
+{
+	//	ファイル選択ボタン
+	if (ImGui::TreeNode(u8"Audio File Select"))
+	{
+		//	----- オーディオの種類を選択 -----
+		char* audioTypeNames[] =
+		{
+			"BGMNormal","SENormal","BGM3D","SE3D",
+		};
+		int audioTypeId = audioResources_.at(audioIndex)->GetAudioTypeID();
+		ImGui::Combo("Audio Type", &audioTypeId, audioTypeNames, _countof(audioTypeNames));
+		//	audioResource.at(audioIndex).GetAudioType()にしないのは、ImGuiで変更したaudioTypeを使用したいから
+		Audio::AudioType audioType;
+		switch (audioTypeId)
+		{
+		case 0: audioType = Audio::AudioType::BGMNormal; break;
+		case 1: audioType = Audio::AudioType::SENormal;	 break;
+		case 2: audioType = Audio::AudioType::BGM3D;	 break;
+		case 3: audioType = Audio::AudioType::SE3D;		 break;
+		}
+		audioResources_.at(audioIndex)->SetAudioTypeID(audioTypeId);
+
+		//	----- シーン名を選択 -----
+		const char* sceneNames[] = 
+		{
+			"TitleScene","LoadingScene","GameScene",
+		};
+		int sceneTypeId = audioResources_.at(audioIndex)->GetSceneTypeID();
+		ImGui::Combo("Scene Type", &sceneTypeId, sceneNames, _countof(sceneNames));
+		audioResources_.at(audioIndex)->SetSceneTypeID(sceneTypeId);
+
+		//	----- 3Dの場合リスナーとエミッターを設定する -----
+		//	立体音響を使う音源なら
+		if (audioTypeId >= 2)
+		{
+			//	リスナーを選択                                                                                                                                                                                                                    
+			std::string currentListenerName = audioResources_.at(audioIndex)->GetListenerName();
+			if (ImGui::BeginCombo("Listener Select%s", currentListenerName.c_str()))
+			{
+				for (int i = 0; i < soundListeners_.size(); ++i)
+				{
+					const bool isSelected = (currentListenerName == soundListeners_[i]->name_.c_str());
+					if (ImGui::Selectable(soundListeners_[i]->name_.c_str(), isSelected))
+					{
+						currentListenerName = soundListeners_[i]->name_.c_str();
+						audioResources_.at(audioIndex)->SetListenerName(currentListenerName);
+					}
+					if (isSelected)
+						ImGui:: SetItemDefaultFocus();
+				}                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+				ImGui::EndCombo();
+			}
+
+			//	エミッターを選択
+			std::string currentEmitterName = audioResources_.at(audioIndex)->GetEmitterName();
+			if (ImGui::BeginCombo(u8"Emitter Select%s", currentEmitterName.c_str()))
+			{
+				for (int i = 0; i < soundEmitters_.size(); ++i)
+				{
+					const bool isSelected = (currentEmitterName == soundEmitters_[i]->name_.c_str());
+					if (ImGui::Selectable(soundEmitters_[i]->name_.c_str(), isSelected))
+					{
+						currentEmitterName = soundEmitters_[i]->name_.c_str();
+						audioResources_.at(audioIndex)->SetEmitterName(currentEmitterName);
+					}
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+		}
+	
+		//	----- オーディオファイルを選択し、新しく読み込む -----
+		if (ImGui::Button("Open AudioFile"))
+		{
+			const char* filter = "Audio Files(*.wav;)\0*.wav;\0All Files(*.*)\0*.*;\0\0";
+
+			char filename[256] = "./Resources/Audio/";
+			HWND hWnd = Graphics::Instance().GetWindowHandle();
+			DialogResult result = Dialog::OpenFileName(filename, sizeof(filename), filter, nullptr, hWnd);
+			if (result == DialogResult::OK)
+			{
+				//	新しくオーディオを読み込む
+				//	立体音響なし
+				if (audioTypeId <= 1)
+				{
+					//	前フレームの必要な情報を保存し、再生中なら停止しておく
+					std::string lastAudioName		= audioResources_.at(audioIndex)->GetAudioName();	//	前フレームの音源名を保存
+					bool		lastPlayFlag		= audioResources_.at(audioIndex)->IsPlaying();		//	前のフレームの再生フラグを保存
+					bool		lastIsLoopFlag		= audioResources_.at(audioIndex)->GetIsLoopFlag();	//	前のフレームの音源のループ設定保存
+					if (lastPlayFlag)audioResources_.at(audioIndex)->Stop();							//	再生中なら停止する
+					
+					//	オーディオファイルを新しく読み込む
+					audioResources_.at(audioIndex)	= AudioManager::Instance().LoadAudioSource(filename,audioType, sceneNames[sceneTypeId]);
+					
+					//	前フレームの情報を復元し、再生処理
+					audioResources_.at(audioIndex)->SetAudioName(lastAudioName);				//	前フレームの音源名を復元
+					if (lastPlayFlag)audioResources_.at(audioIndex)->Play(lastIsLoopFlag);		//	前フレームで再生していたなら再生再開
+
+				}
+				//	立体音響あり
+				else
+				{
+					//	前フレームの必要な情報を保存し、再生中なら停止しておく
+					std::string lastAudioName = audioResources_.at(audioIndex)->GetAudioName();	//	前フレームの音源名を保存
+					bool lastPlayFlag = audioResources_.at(audioIndex)->IsPlaying();			//	前のフレームの再生フラグを保存
+					bool lastIsLoopFlag = audioResources_.at(audioIndex)->GetIsLoopFlag();		//	前のフレームの音源のループ設定保存
+					if (lastPlayFlag)audioResources_.at(audioIndex)->Stop();					//	再生中なら停止する
+
+					AudioSource3D* audioSource3D = nullptr;
+					//	選択されたリスナー番号を取得
+					int listenerId = 0;
+					for (const auto& listener : soundListeners_)
+					{
+						if (listener->name_ == audioResources_.at(audioIndex)->GetListenerName())
+							break;
+						listenerId++;
+					}
+
+					//	選択されたエミッター番号を取得
+					int emitterId = 0;
+					for (const auto& emitterPtr : soundEmitters_)
+					{
+						if (emitterPtr->name_ == audioResources_.at(audioIndex)->GetEmitterName())
+							break;
+						emitterId++;
+					}
+					//	新しく読み込む
+					audioSource3D = AudioManager::Instance().LoadAudioSource3D(filename, audioType, sceneNames[sceneTypeId], soundEmitters_.at(emitterId).get());
+					audioSource3D->SetDSPSetting(soundListeners_.at(listenerId).get());
+					audioSource3D->SetListenerName(soundListeners_.at(listenerId)->name_);
+					audioResources_.at(audioIndex) = audioSource3D;
+
+					//	前フレームの情報を復元し、再生処理
+					audioResources_.at(audioIndex)->SetAudioName(lastAudioName);				//	前フレームの音源名を復元
+					if (lastPlayFlag)audioResources_.at(audioIndex)->Play(lastIsLoopFlag);		//	前フレームで再生していたなら再生再開
+				}
 			}
 		}
 		ImGui::TreePop();

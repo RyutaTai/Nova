@@ -1,6 +1,5 @@
 #include "BulletStraight.h"
 
-//	コンストラクタ
 BulletStraight::BulletStraight()
 	:Bullet()
 {

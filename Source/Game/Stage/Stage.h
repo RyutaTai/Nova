@@ -94,7 +94,7 @@ private:
 	};
 	EmissiveData emissiveData_;
 
-	//	----- FFTデータ -----
+	//	----- FFTデータ転送用定数バッファ -----
 	struct FFTConstant
 	{
 		float				fftData_[Frequency::BlockCount_];					//	FFTのデータを分割数分GPUに渡す

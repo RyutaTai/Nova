@@ -15,10 +15,11 @@ public:
     void DrawDebug();
 
 private:
+    //  コントラスト用定数バッファ
     struct ContrastConstants
     {
         float               contrast_ = 1.0f;   //  コントラストの強さ(1.0が標準)
-        DirectX::XMFLOAT3   dummy_;             //  パディング
+        DirectX::XMFLOAT3   dummy_ = {};        //  パディング
     };
     ContrastConstants constants_;
     Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer_;

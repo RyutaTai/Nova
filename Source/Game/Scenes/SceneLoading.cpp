@@ -27,7 +27,7 @@ void SceneLoading::Initialize()
 	AudioSource* loadBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Load.wav", Audio::AudioType::BGMNormal, "LoadingScene");
 	loadBGM->SetVolume(0.2f, false);
 	loadBGM->SetAudioName("LoadBGM");
-	AudioManager::Instance().Register(loadBGM);
+	AudioManager::Instance().AudioRegister(loadBGM);
 	AudioManager::Instance().GetAudioResource("LoadBGM")->Play(true);
 
 }

@@ -424,6 +424,9 @@
     <ClCompile Include="Source\Nova\Others\TimeRangeJudge.cpp">
       <Filter>Nova\Others</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Nova\Others\Dialog.cpp">
+      <Filter>Nova\Others</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h">
@@ -840,9 +843,6 @@
     <ClInclude Include="Source\Game\Character\Player\PlayerState.h">
       <Filter>Game\Character\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Nova\Others\MemoryUtility.h">
-      <Filter>Nova\Others</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Nova\Graphics\Bloom.h">
       <Filter>Nova\Graphics\Bloom</Filter>
     </ClInclude>
@@ -877,6 +877,12 @@
       <Filter>Game\Rhythm</Filter>
     </ClInclude>
     <ClInclude Include="Source\Nova\Others\TimeRangeJudge.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\Dialog.h">
+      <Filter>Nova\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova\Others\MemoryUtility.h">
       <Filter>Nova\Others</Filter>
     </ClInclude>
   </ItemGroup>

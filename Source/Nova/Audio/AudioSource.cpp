@@ -5,7 +5,6 @@
 #include "../Others/Misc.h"
 #include "../Graphics/Graphics.h"
 
-//	コンストラクタ
 AudioSource::AudioSource(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType, const std::string& sceneName)
 	:Audio(xaudio, resource, audioType, sceneName)
 {

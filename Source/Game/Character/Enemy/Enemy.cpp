@@ -5,7 +5,6 @@
 #include "../Player/Player.h"
 #include "EnemyManager.h"
 
-//	コンストラクタ
 Enemy::Enemy(const std::string& filename, const std::string& rootNodeName)
 	:Character(filename, rootNodeName)
 {

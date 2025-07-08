@@ -3,7 +3,6 @@
 #include "EffectManager.h"
 #include "../Graphics/Graphics.h"
 
-//	コンストラクタ
 Effect::Effect(const char* filename)
 {
 	//	エフェクトを読み込みする前にロックする

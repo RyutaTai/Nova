@@ -31,6 +31,7 @@ public:
 	float bloomIntensity_ = 0.036f;
 
 private:
+	//	ブルーム用定数バッファ
 	struct BloomConstants
 	{
 		float bloomExtractionThreshold_;

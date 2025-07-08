@@ -402,12 +402,8 @@ bool CollisionMesh::Raycast(_In_ DirectX::XMFLOAT3 rayStartPosition, _In_ Direct
 					}
 				}
 			}
-			delete positions;
 		}
-		delete AABBMin;
-		delete AABBMax;
 	}
-
 	return intersectionCount > 0;
 }
 

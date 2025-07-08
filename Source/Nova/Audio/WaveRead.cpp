@@ -201,6 +201,12 @@ HRESULT WaveReader::FileCreate()
 //	音源名を設定する
 void WaveReader::SetName(const char* filename)
 {
+#if 1
     std::filesystem::path filepath = filename;
-    name_ = filepath.filename().string();       //  パスからファイル名部分のみを抽出し、name_に格納
+    name_ = filepath.filename().string();        //  パスからファイル名部分のみを抽出し、name_に格納
+#else   //  拡張子を削除
+    std::filesystem::path filepath = filename;
+    filepath = filepath.filename().string();        //  パスからファイル名部分のみを抽出する
+    name_ = filepath.stem().string();               //  拡張子を削除
+#endif
 }

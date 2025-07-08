@@ -16,13 +16,13 @@ void SceneTitle::Initialize()
 	AudioSource* titleBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGMNormal, "TitleScene");
 	titleBGM->SetVolume(0.3f, false);
 	titleBGM->SetAudioName("TitleBGM");
-	AudioManager::Instance().Register(titleBGM);
+	AudioManager::Instance().AudioRegister(titleBGM);
 	AudioManager::Instance().GetAudioResource("TitleBGM")->Play(true);
 
 	AudioSource* decision = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Decision.wav", Audio::AudioType::SENormal, "TitleScene");
 	decision->SetVolume(0.2f, false);
 	decision->SetAudioName("Decision");
-	AudioManager::Instance().Register(decision);
+	AudioManager::Instance().AudioRegister(decision);
 
 	//	スプライト初期化
 	sprites_[static_cast<int>(SpriteTitle::Back)] = std::make_unique<Sprite>(L"./Resources/Image/Back2.png");

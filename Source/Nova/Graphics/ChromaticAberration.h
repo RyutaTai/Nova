@@ -15,6 +15,7 @@ public:
     void DrawDebug(); // ImGui用
 
 private:
+    //  色収差用定数バッファ
     struct ChromaticAberrationConstants
     {
         DirectX::XMFLOAT2   strength_ = {};     //  色収差の強さ (X:水平 Y:垂直)

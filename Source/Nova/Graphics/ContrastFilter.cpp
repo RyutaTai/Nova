@@ -23,7 +23,7 @@ ContrastFilter::ContrastFilter()
 
 void ContrastFilter::Update()
 {
-    static constexpr int ContrastCBIndex = 13;
+    static constexpr int ContrastCBIndex = 13;  //  コントラスト用定数バッファのレジスタ番号
     Graphics::Instance().GetDeviceContext()->UpdateSubresource(constantBuffer_.Get(), 0, 0, &constants_, 0, 0);
     Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(ContrastCBIndex, 1, constantBuffer_.GetAddressOf());
 }

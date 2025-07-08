@@ -129,7 +129,7 @@ protected:
 	float lifeTimer_ = 2.5f;
 
 	//	----- オーディオ -----
-	SoundEmitter emitter_ = {};											//	エミッターを自分の位置で持つ
+	SoundEmitter* emitter_ = nullptr;									//	エミッターを自分の位置で持つ
 	AudioSource3D* se_[static_cast<int>(Audio3D::Max)] = { nullptr };	//	弾丸のSE(3Dで鳴らす)
 
 	//	----- 更新フラグ -----

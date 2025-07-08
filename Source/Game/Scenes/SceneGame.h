@@ -81,12 +81,24 @@ private:
 
 	// ----- 描画関係 -----
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	shaderResourceViews_[8];
-	std::unique_ptr<FrameBuffer>				framebuffers_[8];
+	std::unique_ptr<FrameBuffer>				framebuffers_[2];
 	std::unique_ptr<FullScreenQuad>				fullScreenQuad_;
-	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShaders_[8];
+
+	//	----- ピクセルシェーダー -----
+	enum class PixelShaderType
+	{
+		FinalPass,
+		Shadow,
+		Max
+	};
+	Microsoft::WRL::ComPtr<ID3D11PixelShader>	pixelShaders_[static_cast<int>(PixelShaderType::Max)];
+
+	//	
 	float										nearZ_ = 50.0f;
 	float										farZ_ = 400000.0f;
-	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;	//	シーン定数バッファ
+
+	//	----- シーン定数バッファ -----
+	Microsoft::WRL::ComPtr <ID3D11Buffer>		sceneConstantBuffer_;								//	シーン定数バッファ
 	DirectX::XMFLOAT4							lightDirection_ = { +0.63f, -0.67f, 0.12f, 0.0f };	//	ディレクショナルライトの方向
 
 	//	ブルーム
@@ -94,7 +106,7 @@ private:
 
 	//	シャドウマップ
 	std::unique_ptr<CascadedShadowMaps> cascadedShadowMaps_;
-	float criticalDepthValue_ = 100.0f; // If this value is 0, the camera's far panel distance is used.
+	float criticalDepthValue_ = 100.0f; //	この値が0の場合、カメラのファーパネルの距離が使用される
 
 	//	カラーフィルター
 	std::unique_ptr<ColorFilter> colorFilter_;

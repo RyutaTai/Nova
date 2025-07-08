@@ -49,32 +49,62 @@ public:
 	int						GetPlayLength()		const	{ return length_; }
 	float					GetPlayLengthFloat()const	{ return lengthFloat_; }
 
+	//	再生タイマー
 	void					ResetPlayTimer()			{ timer_ = 0.0f; }
 	float					GetPlayTimer()		const	{ return timer_; }
 	float					GetTotalPlayTimer()	const	{ return totalPlayTimer_; }
 	
+	//	音量
 	void					SetVolume(const float& volume, const bool& useDb);
-	float					GetVolume()			const	{ return lastVolume_; }
+	const float				GetCurrentVolume()const { return currentVolume_; }
+	const float				GetLastVolume()	const	{ return lastVolume_; }
 
-
+	//	オーディオの種類
 	void			SetAudioType(const AudioType& type) { audioType_ = type; }
 	AudioType		GetAudioType() { return audioType_; }
-	
+	const int		GetAudioTypeIndex() const{ return static_cast<int>(audioType_); }
+	const std::string GetAudioTypeName()const;
+
+	//	再生中フラグ
 	bool			IsPlaying();	//	手動で切り替えているisPlaying_フラグより精度がいいが、毎フレームGetStateを呼びたくないため分けている
 	const bool		GetIsPlayingFlag()const { return isPlaying_; }
+	
+	//	種別判定関数
 	bool			IsBGM();		//	BGMかどうか
 	bool			IsSE();			//	SEかどうか
 
-	void			SetAudioName(const std::string& audioName) { audioName_ = audioName; }
-	std::string		GetAudioName()	const { return audioName_; }
-	void			SetSceneName(const std::string& sceneName) { sceneName_ = sceneName; }
-	std::string		GetSceneName() { return sceneName_; }
+	//	音源の名前
+	void				SetAudioName(const std::string& audioName) { audioName_ = audioName; }
+	const std::string	GetAudioName()	const	{ return audioName_; }
+	void				SetSceneName(const std::string& sceneName) { sceneName_ = sceneName; }
+	const std::string	GetSceneName()	const	{ return sceneName_; }
 
+	//	再生フラグ
 	void			SetPlayable(const bool& playable) { isPlayable_ = playable; }
 	const bool		IsPlayable()const { return isPlayable_; }
 
+	//	オーディオの種類ID
+	void SetAudioTypeID(const int& audioTypeId) { audioTypeId_ = audioTypeId; }
+	const int GetAudioTypeID()const { return audioTypeId_; }
+	//	シーンの名前
+	void SetSceneTypeID(const int& sceneTypeId) { sceneTypeId_ = sceneTypeId; }
+	const int GetSceneTypeID() const{ return sceneTypeId_; }
+	//	エミッターの名前
+	void SetEmitterName(const std::string& emitterName) { emitterName_ = emitterName; }
+	const std::string GetEmitterName()const { return emitterName_; }
+	//	リスナーの名前
+	void SetListenerName(const std::string& listenerName) { listenerName_ = listenerName; }
+	const std::string GetListenerName()const { return listenerName_; }
+
+	//	ファイル名
+	void SetFilename(const std::string& filename) { filename_ = filename; }
+	const std::string& GetFilename()const { return filename_; }
+
+	//	ループ再生フラグ
+	const bool SetIsLoopFlag(const bool& isLoopFlag) { isLoopFlag_ = isLoopFlag; }
+	const bool GetIsLoopFlag()const { return isLoopFlag_; }
+
 protected:
-	static constexpr float		DefaultSamplingRate = 44100.0f;		//	基本のサンプリングレート
 	static constexpr int		OutputMatrixMax_ = 8;				//	出力マトリックス最大数
 
 	IXAudio2SourceVoice*		sourceVoice_ = nullptr;	//	ソースボイス
@@ -91,14 +121,24 @@ protected:
 	int		length_			= {};		//	音源の長さ
 	float	lengthFloat_	= {};		//	音源の長さ
 
+	//	音量(ボリューム)
+	float	currentVolume_	= 0.5f;		//	現在のボリューム
 	float	lastVolume_		= {};		//	前フレーム時点でのボリューム : SetVolumeを使う前にこの値と比べる
 
 	bool	isPlaying_		= false;	//	再生中かどうかのフラグ(playしたらtrue,stopしたらfalseにしている)
-	AudioType	audioType_ = {};	//	オーディオタイプ
-	std::string audioName_ = {};	//	音源の名前
-	std::string	sceneName_ = {};	//	使用シーンを設定(Title,Gameなど)
+	AudioType	audioType_	= {};		//	オーディオタイプ
+	std::string audioName_	= {};		//	音源の名前
+	std::string	sceneName_	= {};		//	使用シーンを設定(Title,Gameなど)
 
-	bool isPlayable_ = true;	//	再生可能かどうか(falseなら再生しない)
+	bool isPlayable_ = true;	//	再生フラグ(falseなら再生しない)
+
+	//	オーディオファイル種類選択メニュー用
+	int				audioTypeId_	= -1;	//	オーディオの種類ID
+	int				sceneTypeId_	= -1;	//	シーンのID
+	std::string		emitterName_	= {};	//	エミッターの名前
+	std::string		listenerName_	= {};	//	リスナーの名前
+	std::string		filename_		= {};	//	ファイル名
+	bool			isLoopFlag_	= false;	//	ループ再生フラグ
 
 };
 

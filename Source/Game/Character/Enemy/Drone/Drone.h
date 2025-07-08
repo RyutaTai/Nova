@@ -93,7 +93,7 @@ private:
 	float	launchRange_	= 10.0f;	//	射程距離
 
 	//	----- オーディオ -----
-	SoundEmitter	emitter_ = {};				//	エミッター
+	SoundEmitter*	emitter_ = nullptr;				//	エミッター
 	AudioSource3D*	sources_[static_cast<int>(Audio3D::Max)] = { nullptr };		//	オーディオソース
 	AudioSource* debugSource_ = nullptr;
 

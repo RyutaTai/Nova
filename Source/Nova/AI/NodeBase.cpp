@@ -5,7 +5,6 @@
 #include "../Others/MathHelper.h"
 #include "../Others/MemoryUtility.h"
 
-//	コンストラクタ
 NodeBase::NodeBase(const std::string& name, NodeBase* parent, NodeBase* sibling, const int& priority,
 	const BehaviorTree::SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo) :
 	name_(name), parent_(parent), sibling_(sibling), priority_(priority),

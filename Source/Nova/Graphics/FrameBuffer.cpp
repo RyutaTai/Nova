@@ -2,12 +2,11 @@
 
 #include "../Others/Misc.h"
 
-//	コンストラクタ	
-FrameBuffer::FrameBuffer(ID3D11Device* device, uint32_t width, uint32_t height, bool hasDepthstencil/*BLOOM*/)
+FrameBuffer::FrameBuffer(ID3D11Device* device, uint32_t width, uint32_t height, bool hasDepthstencil)
 {
 	HRESULT hr{ S_OK };
 
-	Microsoft::WRL::ComPtr <ID3D11Texture2D> renderTargetBuffer;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> renderTargetBuffer;
 	D3D11_TEXTURE2D_DESC texture2dDesc{};
 	texture2dDesc.Width = width;
 	texture2dDesc.Height = height;

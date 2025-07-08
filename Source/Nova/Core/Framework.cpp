@@ -13,9 +13,8 @@
 
 HighResolutionTimer Framework::tictoc_ = {};
 
-//	コンストラクタ
 Framework::Framework(HWND hwnd)
-	: graphics_(hwnd, FULLSCREEN/*fullscreen*/),
+	: graphics_(hwnd, FULLSCREEN/*フルスクリーンのオン・オフ*/),
 	input_(hwnd)
 {
 
@@ -62,7 +61,7 @@ int Framework::Run()
 		return 0;
 	}
 
-	IMGUI_CTRL_INITIALIZE(graphics_.GetHwnd(), graphics_.GetDevice(), graphics_.GetDeviceContext());
+	IMGUI_CTRL_INITIALIZE(graphics_.GetWindowHandle(), graphics_.GetDevice(), graphics_.GetDeviceContext());
 
 	while (WM_QUIT != msg.message)
 	{
@@ -106,7 +105,7 @@ void Framework::CalculateFrameStats()
 		std::wostringstream outs;
 		outs.precision(6);
 		outs << APPLICATION_NAME << L" : FPS : " << fps_ << L" / " << L"Frame Time : " << 1000.0f / fps_ << L" (ms)";
-		SetWindowTextW(graphics_.GetHwnd(), outs.str().c_str());
+		SetWindowTextW(graphics_.GetWindowHandle(), outs.str().c_str());
 
 		//	FPS値をバッファに追加
 		if (fpsBuffer_.size() >= maxHistorySize_)

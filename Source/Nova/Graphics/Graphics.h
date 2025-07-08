@@ -60,7 +60,7 @@ public:
 	void SetInvProjection(const DirectX::XMMATRIX& invProjection)				{ DirectX::XMStoreFloat4x4(&sceneConstant_.invProjection_, invProjection); }
 	void SetIsVSync(const bool& isVSync);
 
-	CONST HWND					GetHwnd()					CONST	{ return hwnd_; }
+	const HWND					GetWindowHandle()			const	{ return hwnd_; }
 	ID3D11Device*				GetDevice()					const	{ return device_.Get(); }
 	ID3D11DeviceContext*		GetDeviceContext()			const 	{ return deviceContext_.Get(); }
 	IDXGISwapChain1*			GetSwapChain()				const	{ return swapChain_.Get(); }

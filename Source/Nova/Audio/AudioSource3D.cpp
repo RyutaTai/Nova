@@ -16,7 +16,6 @@
 #include "../Others/Misc.h"
 #include "../../Game/Character/Player/Player.h"
 
-//	コンストラクタ
 AudioSource3D::AudioSource3D(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType, const std::string& sceneName, SoundEmitter* emitter)
 	: Audio(xaudio, resource, audioType, sceneName)
 {
@@ -26,6 +25,7 @@ AudioSource3D::AudioSource3D(IXAudio2* xaudio, WaveReader* resource, const Audio
 		dspSetting_.srcChannelCount_ = resource->GetWaveForMatex().nChannels;
 		dspSetting_.dstChannelCount_ = 2;
 		dspSetting_.outputMatrix_ = new FLOAT32[dspSetting_.srcChannelCount_ * dspSetting_.dstChannelCount_];
+		emitterName_ = emitter_->name_;
 	}
 	delete resource;	//	メモリリーク防止
 }

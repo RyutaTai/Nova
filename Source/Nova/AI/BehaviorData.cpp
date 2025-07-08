@@ -3,6 +3,11 @@
 #include "NodeBase.h"
 #include "../../External/imgui/imgui.h"
 
+BehaviorData::BehaviorData()
+{
+	Initialize();
+}
+
 //	‰Šú‰»
 void BehaviorData::Initialize()
 {

@@ -1,9 +1,9 @@
 #include "Audio.h"
 
-#include "../../imgui/imgui.h"
+#include "../Graphics/Graphics.h"
 #include "../Others/Misc.h"
+#include "../../imgui/imgui.h"
 
-//	コンストラクタ
 Audio::Audio(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType, const std::string& sceneName)
 {
 	HRESULT hr = S_OK;
@@ -32,9 +32,31 @@ Audio::Audio(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType,
 	sfxSend_ = { 0, sourceVoice_ };
 	sfxSendList_ = { 1, &sfxSend_ };
 
-	audioName_ = resource->GetName();
+	filename_ = resource->GetName();
 	audioType_ = audioType;
 	sceneName_ = sceneName;
+
+	//	オーディオの種類IDを設定
+	audioTypeId_ = static_cast<int>(audioType);
+
+	//	シーンの種類IDを設定
+	const char* sceneNames[] =
+	{
+		"TitleScene","LoadingScene","GameScene",
+	};
+	sceneTypeId_ = 0;
+	for (const char* name : sceneNames)
+	{
+		if (sceneName == name)
+		{
+			break;
+		}
+		sceneTypeId_++;
+	}
+
+	//	エミッターとリスナーのIDを設定
+	emitterName_ = {};
+	listenerName_ = {};
 
 }
 
@@ -56,7 +78,8 @@ void Audio::Play(const bool& loop)
 	if (isPlayable_ == false)return;
 
 	//	ループ設定
-	buffer_.LoopCount = loop ? XAUDIO2_LOOP_INFINITE : 0;
+	isLoopFlag_ = loop;
+	buffer_.LoopCount = isLoopFlag_ ? XAUDIO2_LOOP_INFINITE : 0;
 
 	//	再生終わりを待たずに即時再生(要調整)
 	sourceVoice_->Stop();
@@ -147,20 +170,33 @@ bool Audio::IsSE()
 //	ボリューム設定
 void Audio::SetVolume(const float& volume, const bool& useDb)
 {
-	float setVolume = volume;
+	currentVolume_ = volume;
 	if (useDb)
 	{
-		if (setVolume <= -40.0f)
-			setVolume = 0.0f;
+		if (currentVolume_ <= -40.0f)
+			currentVolume_ = 0.0f;
 		else
-			setVolume = XAudio2DecibelsToAmplitudeRatio(volume); // dBを0.0f～1.0fに変換
+			currentVolume_ = XAudio2DecibelsToAmplitudeRatio(volume); // dBを0.0f～1.0fに変換
 	}
-	if (setVolume != lastVolume_)// SetVolumeが重い処理のため分岐させておく
+	if (currentVolume_ != lastVolume_)// SetVolumeが重い処理のため分岐させておく
 	{
-		sourceVoice_->SetVolume(setVolume);
-		lastVolume_ = setVolume;
+		sourceVoice_->SetVolume(currentVolume_);
+		lastVolume_ = currentVolume_;
 	}
+}
 
+//	オーディオの種類をstringで取得
+const std::string Audio::GetAudioTypeName()const
+{
+	std::string name = {};
+	switch (audioType_)
+	{
+	case AudioType::BGMNormal:	name = "BGMNormal"; break;
+	case AudioType::SENormal:	name = "SENormal";	break;
+	case AudioType::BGM3D:		name = "BGM3D";		break;
+	case AudioType::SE3D:		name = "SE3D";		break;
+	}
+	return name;
 }
 
 //	デバッグ描画
@@ -184,5 +220,11 @@ void Audio::DrawDebug()
 	ImGui::Checkbox("IsPlaying", &isPlay);					//	再生中かどうか
 	ImGui::DragFloat("PlayTimer", &timer_);					//	現在のループの再生時間
 	ImGui::DragFloat("TotalPlayTimer", &totalPlayTimer_);	//	合計再生時間
+	if (ImGui::DragFloat("Volume", &currentVolume_, 0.001f, 0.0f, 10.0f))	//	音量
+	{
+		SetVolume(currentVolume_, false);
+	}
+	ImGui::Text(u8"AudioName : %s", audioName_.c_str());				//	音源名
+	ImGui::Text(u8"Filename  : %s", filename_.c_str());					//	ファイル名
 #endif
 }

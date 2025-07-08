@@ -26,7 +26,7 @@ void SceneGame::Initialize()
 	AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Game.wav", Audio::AudioType::BGMNormal, "GameScene");
 	gameBGM->SetVolume(0.3f, false);
 	gameBGM->SetAudioName("GameBGM");
-	AudioManager::Instance().Register(gameBGM);
+	AudioManager::Instance().AudioRegister(gameBGM);
 
 	// ----- スプライト初期化 -----
 	sprites_[static_cast<int>(SPRITE_GAME::Clear)]		= std::make_unique<Sprite>(L"./Resources/Image/Clear.png");
@@ -77,7 +77,6 @@ void SceneGame::Initialize()
 	// ----- テクスチャ読み込み -----
 	D3D11_TEXTURE2D_DESC texture2dDesc = {};
 	ID3D11Device* device = Graphics::Instance().GetDevice();
-
 	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/sunset_jhbcentral_4k/sunset_jhbcentral_4k.dds",
 		shaderResourceViews_[0].GetAddressOf(), &texture2dDesc);
 	LoadTextureFromFile(device, L"./Resources/Model/GltfSample/environments/sunset_jhbcentral_4k/diffuse_iem.dds",
@@ -92,11 +91,11 @@ void SceneGame::Initialize()
 	framebuffers_[1] = std::make_unique<FrameBuffer>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
 	fullScreenQuad_ = std::make_unique<FullScreenQuad>(device);
 	bloomer_ = std::make_unique<Bloom>(device, SCREEN_WIDTH, SCREEN_HEIGHT);
-	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/FinalPassPs.cso", pixelShaders_[0].ReleaseAndGetAddressOf());
+	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/FinalPassPs.cso", pixelShaders_[static_cast<int>(PixelShaderType::FinalPass)].ReleaseAndGetAddressOf());
 
 	//	----- シャドウ -----
-	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/CascadedShadowPs.cso", pixelShaders_[2].GetAddressOf());
-	cascadedShadowMaps_ = std::make_unique<decltype(cascadedShadowMaps_)::element_type>(device, 1024 * 4, 1024 * 4);
+	Graphics::Instance().GetShader()->CreatePsFromCso(device, "./Resources/Shader/CascadedShadowPs.cso", pixelShaders_[static_cast<int>(PixelShaderType::Shadow)].GetAddressOf());
+	cascadedShadowMaps_ = std::make_unique<CascadedShadowMaps>(device, 1024 * 4, 1024 * 4);
 
 	//	----- カラーフィルター -----
 	colorFilter_ = std::make_unique<ColorFilter>();
@@ -201,35 +200,6 @@ void SceneGame::LoadWaveSprite(const wchar_t* filename)
 	sprites_[SPRITE_GAME::WAVE] = std::make_unique<Sprite>(filename);
 }
 
-//	シーン定数バッファ更新
-void SceneGame::UpdateSceneConstants()
-{
-	Graphics::Instance().SetViewProjection(Camera::Instance().CalcViewProjectionMatrix());
-	Graphics::Instance().SetLightDirection(lightDirection_);
-	Graphics::Instance().SetCameraPosition({ 0,0,1,0 });
-	Graphics::Instance().SetInvViewProjection(Camera::Instance().CalcInvViewProjectionMatrix());
-	Graphics::Instance().SetInvProjection(Camera::Instance().CalcInvProjectionMatrix());
-
-	Graphics::SceneConstants sceneConstants = Graphics::Instance().GetSceneConstant();
-	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
-	deviceContext->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
-	deviceContext->VSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
-	deviceContext->PSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
-
-}
-
-//	レンダー初期設定
-void SceneGame::SetupRender()
-{
-	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
-	ID3D11ShaderResourceView* nullShaderResourceViews[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT]{};
-	deviceContext->VSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
-	deviceContext->PSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
-
-	Camera::Instance().SetPerspectiveFov();
-
-}
-
 //	描画処理
 void SceneGame::Render()
 {
@@ -256,6 +226,36 @@ void SceneGame::Render()
 
 }
 
+//	レンダー初期設定
+void SceneGame::SetupRender()
+{
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
+	ID3D11ShaderResourceView* nullShaderResourceViews[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT]{};
+	deviceContext->VSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
+	deviceContext->PSSetShaderResources(0, _countof(nullShaderResourceViews), nullShaderResourceViews);
+
+	//	パースペクティブ設定
+	Camera::Instance().SetPerspectiveFov();
+
+}
+
+//	シーン定数バッファ更新
+void SceneGame::UpdateSceneConstants()
+{
+	Graphics::Instance().SetViewProjection(Camera::Instance().CalcViewProjectionMatrix());
+	Graphics::Instance().SetLightDirection(lightDirection_);
+	Graphics::Instance().SetCameraPosition({ 0,0,1,0 });
+	Graphics::Instance().SetInvViewProjection(Camera::Instance().CalcInvViewProjectionMatrix());
+	Graphics::Instance().SetInvProjection(Camera::Instance().CalcInvProjectionMatrix());
+
+	Graphics::SceneConstants sceneConstants = Graphics::Instance().GetSceneConstant();
+	ID3D11DeviceContext* deviceContext = Graphics::Instance().GetDeviceContext();
+	deviceContext->UpdateSubresource(sceneConstantBuffer_.Get(), 0, 0, &sceneConstants, 0, 0);
+	deviceContext->VSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
+	deviceContext->PSSetConstantBuffers(1, 1, sceneConstantBuffer_.GetAddressOf());
+
+}
+
 // メインの3Dシーンとポストエフェクトの描画
 void SceneGame::Render3DScene()
 {
@@ -266,16 +266,17 @@ void SceneGame::Render3DScene()
 	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
 	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
 
+	//	シーン定数バッファのカメラポジション設定
 	DirectX::XMFLOAT4 cameraPosition = { Camera::Instance().GetEye().x, Camera::Instance().GetEye().y, Camera::Instance().GetEye().z, 1.0f };
 	Graphics::Instance().SetCameraPosition(cameraPosition);
 
-	// ビューポートの取得は、通常は描画ターゲットのアクティベート時に設定されるため、
-	// ここで取得する必要があるか再確認 (SetViewportsで設定し直す場合は意味がある)
+	//	ビューポートの取得は、通常は描画ターゲットのアクティベート時に設定されるため、
+	//	ここで取得する必要があるか再確認 (SetViewportsで設定し直す場合は意味がある)
 	D3D11_VIEWPORT viewport;
 	UINT numViewports{ 1 };
 	deviceContext->RSGetViewports(&numViewports, &viewport);
 
-	// カメラの投影行列を再度設定（冗長な可能性あり）
+	//	カメラの投影行列を再度設定（冗長な可能性あり）
 	Camera::Instance().SetPerspectiveFov();
 	DirectX::XMMATRIX Projection = Camera::Instance().GetProjectionMatrix();
 	DirectX::XMVECTOR Eye{ DirectX::XMLoadFloat3(&Camera::Instance().GetEye()) };
@@ -334,8 +335,35 @@ void SceneGame::Render3DScene()
 		cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMap (シャドウマップ)
 	};
 	//	フルスクリーンクアッドで最終ピクセルシェーダーを適用し、画面に描画
-	fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[0].Get());
+	fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[static_cast<int>(PixelShaderType::FinalPass)].Get());
 
+}
+
+//	エフェクト描画
+void SceneGame::RenderEffect()
+{
+	//	ステート設定
+	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::SOLID);
+	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
+	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
+
+	//	描画
+	DirectX::XMFLOAT4X4 view;
+	DirectX::XMStoreFloat4x4(&view, Camera::Instance().GetViewMatrix());
+	DirectX::XMFLOAT4X4 projection;
+	DirectX::XMStoreFloat4x4(&projection, Camera::Instance().GetProjectionMatrix());
+	EffectManager::Instance().Render(view, projection);
+
+}
+
+//	デバッグプリミティブ描画
+void SceneGame::RenderDebugPrimitive()
+{
+#if _DEBUG
+	player_->DrawDebugPrimitive();
+	EnemyManager::Instance().DrawDebugPrimitive();
+	Graphics::Instance().GetDebugRenderer()->Render();
+#endif
 }
 
 //	スプライト描画
@@ -362,30 +390,6 @@ void SceneGame::RenderSprite()
 
 }
 
-//	デバッグプリミティブ描画
-void SceneGame::RenderDebugPrimitive()
-{
-#if _DEBUG
-	player_->DrawDebugPrimitive();
-	EnemyManager::Instance().DrawDebugPrimitive();
-	Graphics::Instance().GetDebugRenderer()->Render();
-#endif
-}
-
-//	エフェクト描画
-void SceneGame::RenderEffect()
-{
-	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::SOLID);
-	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
-	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::ALPHA);
-
-	DirectX::XMFLOAT4X4 view;
-	DirectX::XMStoreFloat4x4(&view, Camera::Instance().GetViewMatrix());
-	DirectX::XMFLOAT4X4 projection;
-	DirectX::XMStoreFloat4x4(&projection, Camera::Instance().GetProjectionMatrix());
-	EffectManager::Instance().Render(view, projection);
-
-}
 
 //	シャドウ生成
 void SceneGame::MakeShadow()
@@ -396,14 +400,19 @@ void SceneGame::MakeShadow()
 	DirectX::XMFLOAT4X4 cameraProjection;
 	DirectX::XMStoreFloat4x4(&cameraProjection, Camera::Instance().GetProjectionMatrix());
 	cascadedShadowMaps_->Clear(deviceContext);
-	cascadedShadowMaps_->Activate(deviceContext, cameraView, cameraProjection, lightDirection_, criticalDepthValue_, 3/*cb_slot*/);
+	static constexpr int CsmCBIndex = 3; //	カスケードシャドウマップ用定数バッファのレジスタ番号
+	cascadedShadowMaps_->Activate(deviceContext, cameraView, cameraProjection, lightDirection_, criticalDepthValue_, CsmCBIndex);
+	
+	//	ステート設定
 	Graphics::Instance().GetShader()->SetDepthStencilState(Shader::DEPTH_STENCIL_STATE::ZT_ON_ZW_ON);
 	Graphics::Instance().GetShader()->SetRasterizerState(Shader::RASTERIZER_STATE::CULL_NONE);
 	Graphics::Instance().GetShader()->SetBlendState(Shader::BLEND_STATE::NONE);
+
 	stage_->CastShadows();
 	player_->CastShadows();
 	EnemyManager::Instance().CastShadows();
 	BulletManager::Instance().CastShadows();
+
 	cascadedShadowMaps_->Deactivate(deviceContext);
 }
 
@@ -420,7 +429,7 @@ void SceneGame::DrawShadow()
 		framebuffers_[0]->shaderResourceViews_[1].Get(),	//	DepthMap
 		cascadedShadowMaps_->DepthMap().Get()				//	cascadedShadowMaps
 	};
-	fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[2].Get());
+	fullScreenQuad_->Blit(deviceContext, shaderResourceViews, 0, _countof(shaderResourceViews), pixelShaders_[static_cast<int>(PixelShaderType::Shadow)].Get());
 
 }
 

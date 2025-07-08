@@ -202,7 +202,7 @@ private://	----- デバッグ用 -----
 	bool				isCollisionStage_	= true;
 	bool				isHitStage_			= false;
 	float				gravity_			= -5.0f;
-	float				rayPosRadius_		= 0.01f;
+	float				rayPosRadius_		= 1.0f;
 	bool				isAddGravity_		= false;		//	重力加算フラグ
 
 };

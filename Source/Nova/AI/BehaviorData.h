@@ -13,8 +13,7 @@ class Enemy;
 class BehaviorData
 {
 public:
-	//	コンストラクタ
-	BehaviorData() { Initialize(); }
+	BehaviorData();
 	// 初期化
 	void Initialize();
 	//	シーケンスノードのプッシュ

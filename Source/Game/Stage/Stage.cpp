@@ -193,7 +193,8 @@ void Stage::UpdateWaveformAudioSpectrum()
 
 	//	定数バッファをGPUに送る
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(projectionMappingBuffer_[projectionMappingIndex].Get(), 0, 0, &projectionMappingConstants_[projectionMappingIndex], 0, 0);
-	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(5, 1, projectionMappingBuffer_[projectionMappingIndex].GetAddressOf());
+	static constexpr int SpectrumProjectionMappingCBIndex = 5; //	波形プロジェクションマッピング定数バッファのレジスタ番号
+	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(SpectrumProjectionMappingCBIndex, 1, projectionMappingBuffer_[projectionMappingIndex].GetAddressOf());
 
 }
 
@@ -242,7 +243,8 @@ void Stage::UpdateCircleAudioSpectrum(const float& elapsedTime)
 
 	//	定数バッファをGPUに転送
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(projectionMappingBuffer_[projectionMappingIndex].Get(), 0, 0, &projectionMappingConstants_[projectionMappingIndex], 0, 0);
-	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(4, 1, projectionMappingBuffer_[projectionMappingIndex].GetAddressOf());
+	static constexpr int SpectrumProjectionMappingCBIndex = 4; //	円形プロジェクションマッピング定数バッファのレジスタ番号
+	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(SpectrumProjectionMappingCBIndex, 1, projectionMappingBuffer_[projectionMappingIndex].GetAddressOf());
 
 }
 
@@ -331,7 +333,7 @@ bool Stage::Collision(_In_ const DirectX::XMFLOAT3& rayStartPosition, _In_ const
 	_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ const float& rayLengthLimit, _In_ const bool& skipIf) const
 {
 	//	空間分割レイキャスト
-	if (collisionMesh_->RaycastWithSpaceDivision(rayStartPosition, rayDirection, stageTransform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
+	if (collisionMesh_->Raycast(rayStartPosition, rayDirection, stageTransform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
 	{
 #if 0	//	結果を出力画面で確認するため
 		OutputDebugStringA("Position:");
@@ -423,7 +425,8 @@ void Stage::UpdateFFTConstantBuffer(const float& elapsedTime)
 
 	//	----- FFT定数バッファをGPUに転送 -----
 	Graphics::Instance().GetDeviceContext()->UpdateSubresource(fftConstantBuffer_.Get(), 0, 0, &fftConstant_, 0, 0);
-	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(10, 1, fftConstantBuffer_.GetAddressOf());
+	static constexpr int FFTCBIndex = 10; //	FFTデータ転送用定数バッファのレジスタ番号
+	Graphics::Instance().GetDeviceContext()->PSSetConstantBuffers(FFTCBIndex, 1, fftConstantBuffer_.GetAddressOf());
 
 }
 

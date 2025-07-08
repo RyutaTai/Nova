@@ -5,7 +5,6 @@
 
 Graphics* Graphics::instance_ = nullptr;
 
-//	コンストラクタ
 Graphics::Graphics(HWND hwnd, bool fullscreen)
 	: hwnd_(hwnd)
 {

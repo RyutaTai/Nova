@@ -27,24 +27,24 @@ FLOAT32 Angle(const DirectX::XMFLOAT3& emitterPos, const DirectX::XMFLOAT3& list
    
 }
 
-void DSP(SoundDSPSetting& dspSetting, const SoundListener& listener, const SoundEmitter& emitter)
+void DSP(SoundDSPSetting& dspSetting, const SoundListener* listener, const SoundEmitter& emitter)
 {
     //  リスナーからエミッターまでの距離
-    dspSetting.distanceListnerToEmitter_ = Length(emitter.position_, listener.position_);
+    dspSetting.distanceListnerToEmitter_ = Length(emitter.position_, listener->position_);
 
     // ドップラー効果
-    dspSetting.dopplerScale_ = (SPEED_OF_SOUND - (listener.velocity_.x + listener.velocity_.y + listener.velocity_.z)) /
+    dspSetting.dopplerScale_ = (SPEED_OF_SOUND - (listener->velocity_.x + listener->velocity_.y + listener->velocity_.z)) /
                                     (SPEED_OF_SOUND - (emitter.velocity_.x + emitter.velocity_.y + emitter.velocity_.z));
 
     //  リスナーからエミッターまでの角度
-    float angle = Angle(emitter.position_, listener.position_, listener.rightVec_);
+    float angle = Angle(emitter.position_, listener->position_, listener->rightVec_);
 	if (angle < M_PI * 0.5f)
     {
-        dspSetting.radianListenerToEmitter_ = Angle(emitter.position_, listener.position_, listener.frontVec_);
+        dspSetting.radianListenerToEmitter_ = Angle(emitter.position_, listener->position_, listener->frontVec_);
     }
     else
     {
-        dspSetting.radianListenerToEmitter_ = -Angle(emitter.position_, listener.position_, listener.frontVec_);
+        dspSetting.radianListenerToEmitter_ = -Angle(emitter.position_, listener->position_, listener->frontVec_);
     }
 
     //  音の減衰率
@@ -59,8 +59,8 @@ void DSP(SoundDSPSetting& dspSetting, const SoundListener& listener, const Sound
 
     case 2: //  音源:モノラル、出力:ステレオ
         {
-            FLOAT32 angle = (Angle(emitter.position_, listener.position_, listener.rightVec_) < M_PI * 0.5f) ?
-                dspSetting.radianListenerToEmitter_ : -Angle(emitter.position_, listener.position_, listener.frontVec_);
+            FLOAT32 angle = (Angle(emitter.position_, listener->position_, listener->rightVec_) < M_PI * 0.5f) ?
+                dspSetting.radianListenerToEmitter_ : -Angle(emitter.position_, listener->position_, listener->frontVec_);
 #if 1
 			//angle = (dspSetting.radianListenerToEmitter_ + M_PI * 0.5f) * 0.5f;
             angle = static_cast<float>(((dspSetting.radianListenerToEmitter_ + 90.0f) / 2.0f) * (M_PI / 180.0f));
@@ -83,8 +83,8 @@ void DSP(SoundDSPSetting& dspSetting, const SoundListener& listener, const Sound
 
     case 4: //  音源：ステレオ、出力：ステレオ
         {
-            FLOAT32 angle = (Angle(emitter.position_, listener.position_, listener.rightVec_) < M_PI * 0.5f) ?
-                dspSetting.radianListenerToEmitter_ : -Angle(emitter.position_, listener.position_, listener.frontVec_);
+            FLOAT32 angle = (Angle(emitter.position_, listener->position_, listener->rightVec_) < M_PI * 0.5f) ?
+                dspSetting.radianListenerToEmitter_ : -Angle(emitter.position_, listener->position_, listener->frontVec_);
 #if 1       
             angle = (dspSetting.radianListenerToEmitter_ + 90) * 0.5f;
 #else       
@@ -106,7 +106,7 @@ void DSP(SoundDSPSetting& dspSetting, const SoundListener& listener, const Sound
     }
 
     //  リスナーと音源の角度からローパスに適用する値を計算
-    dspSetting.filterParam_ = (std::abs(dspSetting.radianListenerToEmitter_) > listener.innerRadius_) ?
-        listener.filterParam_ * min(1.0f, (std::abs(dspSetting.radianListenerToEmitter_) - listener.innerRadius_) / (listener.outerRadius_ - listener.innerRadius_)) :
+    dspSetting.filterParam_ = (std::abs(dspSetting.radianListenerToEmitter_) > listener->innerRadius_) ?
+        listener->filterParam_ * min(1.0f, (std::abs(dspSetting.radianListenerToEmitter_) - listener->innerRadius_) / (listener->outerRadius_ - listener->innerRadius_)) :
         dspSetting.filterParam_ = 0.0f;
 }

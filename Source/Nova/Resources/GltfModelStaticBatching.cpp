@@ -730,13 +730,15 @@ void GltfModelStaticBatching::Render()
 
 	for (decltype(primitives_)::const_reference primitive : primitives_)
 	{
-		ID3D11Buffer* vertexBuffers[] = {
+		ID3D11Buffer* vertexBuffers[] = 
+		{
 			primitive.vertexBufferViews_.at("POSITION").buffer_.Get(),
 			primitive.vertexBufferViews_.at("NORMAL").buffer_.Get(),
 			primitive.vertexBufferViews_.at("TANGENT").buffer_.Get(),
 			primitive.vertexBufferViews_.at("TEXCOORD_0").buffer_.Get(),
 		};
-		UINT strides[] = {
+		UINT strides[] =
+		{
 			static_cast<UINT>(primitive.vertexBufferViews_.at("POSITION").strideInBytes_),
 			static_cast<UINT>(primitive.vertexBufferViews_.at("NORMAL").strideInBytes_),
 			static_cast<UINT>(primitive.vertexBufferViews_.at("TANGENT").strideInBytes_),
@@ -790,13 +792,15 @@ void GltfModelStaticBatching::CastShadows()
 
 	for (decltype(primitives_)::const_reference primitive : primitives_)
 	{
-		ID3D11Buffer* vertexBuffers[] = {
+		ID3D11Buffer* vertexBuffers[] = 
+		{
 			primitive.vertexBufferViews_.at("POSITION").buffer_.Get(),
 			primitive.vertexBufferViews_.at("NORMAL").buffer_.Get(),
 			primitive.vertexBufferViews_.at("TANGENT").buffer_.Get(),
 			primitive.vertexBufferViews_.at("TEXCOORD_0").buffer_.Get(),
 		};
-		UINT strides[] = {
+		UINT strides[] =
+		{
 			static_cast<UINT>(primitive.vertexBufferViews_.at("POSITION").strideInBytes_),
 			static_cast<UINT>(primitive.vertexBufferViews_.at("NORMAL").strideInBytes_),
 			static_cast<UINT>(primitive.vertexBufferViews_.at("TANGENT").strideInBytes_),

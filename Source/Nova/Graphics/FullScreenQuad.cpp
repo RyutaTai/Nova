@@ -4,7 +4,6 @@
 #include "../Others/Misc.h"
 #include "../Graphics/Graphics.h"
 
-//	コンストラクタ
 FullScreenQuad::FullScreenQuad(ID3D11Device* device)
 {
 	Graphics::Instance().GetShader()->CreateVsFromCso(device, "./Resources/Shader/FullScreenQuadVs.cso", embeddedVertexShader_.ReleaseAndGetAddressOf(),

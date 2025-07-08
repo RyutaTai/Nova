@@ -25,19 +25,19 @@ void JudgeRhythm::Initialize()
 	rhythmMissSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/Clap.wav", Audio::AudioType::SENormal, "GameScene");
 	rhythmMissSE->SetVolume(0.2f, false);
 	rhythmMissSE->SetAudioName("RhythmMissSE");
-	AudioManager::Instance().Register(rhythmMissSE);
+	AudioManager::Instance().AudioRegister(rhythmMissSE);
 
 	AudioSource* rhythmGoodSE = nullptr;
 	rhythmGoodSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/RhythmMissSE2.wav", Audio::AudioType::SENormal, "GameScene");
 	rhythmGoodSE->SetVolume(0.08f, false);
 	rhythmGoodSE->SetAudioName("RhythmGoodSE");
-	AudioManager::Instance().Register(rhythmGoodSE);
+	AudioManager::Instance().AudioRegister(rhythmGoodSE);
 
 	AudioSource* rhythmPerfectSE = nullptr;
 	rhythmPerfectSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/RhythmSE.wav", Audio::AudioType::SENormal, "GameScene");
 	rhythmPerfectSE->SetVolume(0.2f, false);
 	rhythmPerfectSE->SetAudioName("RhythmPerfectSE");
-	AudioManager::Instance().Register(rhythmPerfectSE);
+	AudioManager::Instance().AudioRegister(rhythmPerfectSE);
 
 }
 

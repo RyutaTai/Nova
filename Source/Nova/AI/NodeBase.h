@@ -13,7 +13,6 @@ class BehaviorData;
 class NodeBase
 {
 public:
-	//	コンストラクタ
 	NodeBase(const std::string& name, NodeBase* parent, NodeBase* sibling, const int& priority,
 		const BehaviorTree::SelectRule& selectRule, JudgmentBase* judgment, ActionBase* action, const int& hierarchyNo);
 	//	デストラクタ

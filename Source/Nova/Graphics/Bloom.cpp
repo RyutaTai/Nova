@@ -108,7 +108,8 @@ void Bloom::Make(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* c
 	data.bloomExtractionThreshold_ = bloomExtractionThreshold_;
 	data.bloomIntensity_ = bloomIntensity_;
 	deviceContext->UpdateSubresource(constantBuffer_.Get(), 0, 0, &data, 0, 0);
-	deviceContext->PSSetConstantBuffers(8, 1, constantBuffer_.GetAddressOf());
+	static constexpr int BloomCBIndex = 8; //	ブルーム用定数バッファのレジスタ番号
+	deviceContext->PSSetConstantBuffers(BloomCBIndex, 1, constantBuffer_.GetAddressOf());
 
 	//	明るい部分を抽出（輝度抽出）
 	glowExtraction_->Clear(deviceContext, 0, 0, 0, 1);
