@@ -93,7 +93,7 @@ void Drone::Initialize()
 	emitter_->maxDistance_ = 22.0f;
 	emitter_->volume_ = 1.0f;
 	emitter_->name_ = "Drone";
-	AudioManager::Instance().EmitterRegister(emitter_);//	emitter_‚ðunique_ptr‚É•Ï‚¦‚é
+	AudioManager::Instance().EmitterRegister(emitter_);
 
 	//	”­ŽË‰¹
 	std::shared_ptr<AudioSource3D> shotSE = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Drone/launchSE.wav", Audio::AudioType::SE3D, "GameScene", emitter_.get());

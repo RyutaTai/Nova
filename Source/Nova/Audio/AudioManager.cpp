@@ -257,11 +257,11 @@ void AudioManager::DrawAudioSelection(const int& audioIndex)
 			"BGMNormal","SENormal","BGM3D","SE3D",
 		};
 
-		int audioTypeId = 0;
 		std::weak_ptr<Audio> resource = audioResources_.at(audioIndex);
-		audioTypeId = resource.lock()->GetAudioTypeID();
+		int audioTypeId = resource.lock()->GetAudioTypeID();
 		ImGui::Combo("Audio Type", &audioTypeId, audioTypeNames, _countof(audioTypeNames));
 		//	audioResource.at(audioIndex).GetAudioType()にしないのは、ImGuiで変更したaudioTypeを使用したいから
+		resource.lock()->SetAudioTypeID(audioTypeId);
 
 		Audio::AudioType audioType;
 		switch (audioTypeId)

@@ -84,7 +84,7 @@ private:
 
 	//	----- オーディオ -----
 	std::shared_ptr<SoundEmitter>	emitter_;		//	エミッター
-	std::shared_ptr<AudioSource3D>	shotSE_;		//	ショット音
+	std::shared_ptr<AudioSource3D>	shotSE_;		//	弾丸の発射音
 
 	//	----- ステート -----
 	std::unique_ptr<StateMachine<State<Drone>>>	stateMachine_ = nullptr;		//	ステートマシン

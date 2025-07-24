@@ -30,7 +30,7 @@ Bullet::Bullet()
 	lifeTimer_ = 2.5f;
 
 	//	----- オーディオ -----
-	emitter_ = std::make_unique<SoundEmitter>();
+	emitter_ = std::make_shared<SoundEmitter>();
 	emitter_->position_ = GetTransform()->GetPosition();
 	//emitter_.velocity_ = velocity_;
 	emitter_->velocity_ = { 1,2,1 };
@@ -38,7 +38,7 @@ Bullet::Bullet()
 	emitter_->maxDistance_ = 22.0f;
 	emitter_->volume_ = 1.0f;
 	emitter_->name_ = "Bullet";
-	AudioManager::Instance().EmitterRegister(std::move(emitter_));
+	AudioManager::Instance().EmitterRegister(emitter_);
 
 	//	移動SE
 	moveSE_ = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", emitter_.get());

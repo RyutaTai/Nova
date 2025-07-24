@@ -121,8 +121,8 @@ protected:
 	float lifeTimer_ = 2.5f;
 
 	//	----- オーディオ -----
-	std::unique_ptr<SoundEmitter> emitter_;
-	std::shared_ptr<AudioSource3D> moveSE_;
+	std::shared_ptr<SoundEmitter>	emitter_;
+	std::shared_ptr<AudioSource3D>	moveSE_;
 
 	//	----- 更新フラグ -----
 	bool updateFlag_ = true;
