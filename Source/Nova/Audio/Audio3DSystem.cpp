@@ -27,7 +27,7 @@ FLOAT32 Angle(const DirectX::XMFLOAT3& emitterPos, const DirectX::XMFLOAT3& list
    
 }
 
-void DSP(SoundDSPSetting& dspSetting, const SoundListener* listener, const SoundEmitter& emitter)
+void DSP(SoundDSPSetting& dspSetting, const std::shared_ptr<SoundListener> listener, const SoundEmitter& emitter)
 {
     //  リスナーからエミッターまでの距離
     dspSetting.distanceListnerToEmitter_ = Length(emitter.position_, listener->position_);

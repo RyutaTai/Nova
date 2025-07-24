@@ -67,8 +67,8 @@ public:
 	void UpdateVelocity(const float& elapsedTime);
 
 	//	----- オーディオ -----
-	void			UpdateListener();					//	リスナー情報更新
-	SoundListener*	GetListener() { return listener_.get(); }	//	リスナー取得
+	void							UpdateListener();					//	リスナー情報更新
+	std::shared_ptr<SoundListener>	GetListener() { return listener_; }	//	リスナー取得
 
 private:
 	Transform transform_ = {};
@@ -116,7 +116,7 @@ private:
 	DirectX::XMFLOAT3 cashAngle_ = {};
 
 	//	----- オーディオ -----
-	std::unique_ptr<SoundListener> listener_;		//	リスナー
+	std::shared_ptr<SoundListener> listener_;		//	リスナー
 
 	//	----- 当たり判定 -----
 	float radius_ = 0.1f;

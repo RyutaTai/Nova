@@ -4,6 +4,7 @@
 #include <DirectXMath.h>
 #include <vector>
 #include <string>
+#include <memory>
 
 typedef float FLOAT32;
 
@@ -45,4 +46,4 @@ struct SoundDSPSetting
 };
 
 
-void DSP(SoundDSPSetting& dspSetting, const SoundListener* listener, const SoundEmitter& emitter);
+void DSP(SoundDSPSetting& dspSetting, const std::shared_ptr<SoundListener> listener, const SoundEmitter& emitter);

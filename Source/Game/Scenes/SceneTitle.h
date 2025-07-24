@@ -38,7 +38,7 @@ public:
 	StateMachine<State<SceneTitle>>* GetStateMachine() { return stateMachine_.get(); }					//	ステートマシン取得
 
 	//	----- フェード -----
-	void SetTitleLogoAlpha(const float& alpha) { titleLogoAlpha_ = alpha; }
+	void SetTitleLogoAlpha(const float& alpha) { titleTextAlpha_ = alpha; }
 	void SetKeyTextAlpha(const float& alpha) { keyTextAlpha_ = alpha; }
 
 	//	----- ロードシーンへ遷移 -----
@@ -59,7 +59,7 @@ private:	//	スプライト
 	std::unique_ptr<Sprite> sprites_[static_cast<int>(SpriteTitle::Max)];
 
 	//	----- フェード処理 -----
-	float titleLogoAlpha_ = 0.0f;		//	タイトルロゴのアルファ値
+	float titleTextAlpha_ = 0.0f;		//	タイトルロゴのアルファ値
 	float keyTextAlpha_ = 0.0f;			//	キーテキストのアルファ値
 
 };

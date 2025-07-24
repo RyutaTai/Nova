@@ -13,12 +13,14 @@
 void SceneTitle::Initialize()
 {
 	//	オーディオ初期化
+	//	タイトルBGM
 	std::shared_ptr<AudioSource> titleBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGMNormal, "TitleScene");
 	titleBGM->SetVolume(0.3f, false);
 	titleBGM->SetAudioName("TitleBGM");
 	AudioManager::Instance().AudioRegister(titleBGM);
 	AudioManager::Instance().GetAudioResource("TitleBGM")->Play(true);
-
+	
+	//	決定音(SE)
 	std::shared_ptr<AudioSource> decision = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Decision.wav", Audio::AudioType::SENormal, "TitleScene");
 	decision->SetVolume(0.2f, false);
 	decision->SetAudioName("Decision");
@@ -56,6 +58,9 @@ void SceneTitle::Finalize()
 	UIManager::Instance().Finalize();
 
 	ReleaseAllTextures();
+
+	//	タイトルBGMを止める
+	AudioManager::Instance().GetAudioResource("TitleBGM")->Stop();
 
 }
 
@@ -95,7 +100,7 @@ void SceneTitle::Render()
 
 	//	スプライト描画
 	sprites_[static_cast<int>(SpriteTitle::Back)]->Render();
-	sprites_[static_cast<int>(SpriteTitle::Groove)]->GetTransform()->SetColorA(titleLogoAlpha_);
+	sprites_[static_cast<int>(SpriteTitle::Groove)]->GetTransform()->SetColorA(titleTextAlpha_);
 	sprites_[static_cast<int>(SpriteTitle::Groove)]->Render();
 	sprites_[static_cast<int>(SpriteTitle::KeyText)]->GetTransform()->SetColorA(keyTextAlpha_);
 	sprites_[static_cast<int>(SpriteTitle::KeyText)]->Render();
@@ -148,7 +153,7 @@ void SceneTitle::DrawDebug()
 	}
 	if (ImGui::TreeNode("Audio"))
 	{
-		//se_[static_cast<int>(AUDIO_SE_TITLE::Decision)]->DrawDebug();
+		AudioManager::Instance().DrawDebug();
 		ImGui::TreePop();
 	}
 }

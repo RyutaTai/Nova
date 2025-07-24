@@ -52,6 +52,9 @@ void SceneLoading::Finalize()
 		}
 	}
 
+	//	ロードシーンのBGMを止める
+	AudioManager::Instance().GetAudioResource("LoadBGM")->Stop();
+
 }
 
 //	更新処理

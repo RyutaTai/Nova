@@ -65,10 +65,10 @@ private:
 	IXAudio2*	xaudio_ = nullptr;
 	IXAudio2MasteringVoice* masteringVoice_ = nullptr;
 
-	std::vector<std::weak_ptr<Audio>>			audioResources_ = {};	//	オーディオリソース
+	std::vector<std::shared_ptr<Audio>>			audioResources_ = {};	//	オーディオリソース
 	//std::set<std::shared_ptr<Audio> audioRemoves_ = {};	//	オーディオ破棄リスト
-	std::vector<std::weak_ptr<SoundEmitter>>	soundEmitters_	= {};	//	エミッター
-	std::vector<std::weak_ptr<SoundListener>>	soundListeners_ = {};	//	リスナー
+	std::vector<std::shared_ptr<SoundEmitter>>	soundEmitters_	= {};	//	エミッター
+	std::vector<std::shared_ptr<SoundListener>>	soundListeners_ = {};	//	リスナー
 
 	bool isAllPlayable_ = false;	//	オーディオ再生フラグ(オーディオ全体)
 

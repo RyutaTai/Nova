@@ -333,7 +333,7 @@ bool Stage::Collision(_In_ const DirectX::XMFLOAT3& rayStartPosition, _In_ const
 	_Out_ std::string& intersectionMesh, _Out_ std::string& intersectionMaterial, _In_ const float& rayLengthLimit, _In_ const bool& skipIf) const
 {
 	//	空間分割レイキャスト
-	if (collisionMesh_->Raycast(rayStartPosition, rayDirection, stageTransform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
+	if (collisionMesh_->RaycastWithSpaceDivision(rayStartPosition, rayDirection, stageTransform, intersectionPosition, intersectionNormal, intersectionMesh, intersectionMaterial, rayLengthLimit, skipIf))
 	{
 #if 0	//	結果を出力画面で確認するため
 		OutputDebugStringA("Position:");

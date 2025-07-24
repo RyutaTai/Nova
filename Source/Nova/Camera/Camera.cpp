@@ -17,7 +17,7 @@ Camera::Camera()
 	listener_->outerRadius_ = 1.67f;
 	listener_->filterParam_ = 0.8f;
 	listener_->name_ = "Camera";
-	AudioManager::Instance().ListenerRegister(std::move(listener_));
+	AudioManager::Instance().ListenerRegister(listener_);
 }
 
 //	‰Šú‰»

@@ -15,7 +15,7 @@ public:
 	void DrawDebug()override;
 
 public:
-	void SetDSPSetting(SoundListener* listner)
+	void SetDSPSetting(std::shared_ptr<SoundListener> listner)
 	{
 		DSP(dspSetting_, listner, *emitter_);
 	}
