@@ -13,16 +13,16 @@
 void SceneTitle::Initialize()
 {
 	//	オーディオ初期化
-	AudioSource* titleBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGMNormal, "TitleScene");
+	std::shared_ptr<AudioSource> titleBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGMNormal, "TitleScene");
 	titleBGM->SetVolume(0.3f, false);
 	titleBGM->SetAudioName("TitleBGM");
 	AudioManager::Instance().AudioRegister(titleBGM);
 	AudioManager::Instance().GetAudioResource("TitleBGM")->Play(true);
 
-	AudioSource* decision = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Decision.wav", Audio::AudioType::SENormal, "TitleScene");
+	std::shared_ptr<AudioSource> decision = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Decision.wav", Audio::AudioType::SENormal, "TitleScene");
 	decision->SetVolume(0.2f, false);
 	decision->SetAudioName("Decision");
-	AudioManager::Instance().AudioRegister(decision);
+	AudioManager::Instance().AudioRegister(std::move(decision));
 
 	//	スプライト初期化
 	sprites_[static_cast<int>(SpriteTitle::Back)] = std::make_unique<Sprite>(L"./Resources/Image/Back2.png");
@@ -54,9 +54,6 @@ void SceneTitle::Finalize()
 
 	//  UI終了化
 	UIManager::Instance().Finalize();
-
-	//	オーディオ終了化
-	AudioManager::Instance().RemoveBySceneName("TitleScene");
 
 	ReleaseAllTextures();
 

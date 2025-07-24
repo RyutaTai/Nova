@@ -21,19 +21,19 @@ void JudgeRhythm::Initialize()
 	comboCount_ = 0;
 
 	//	オーディオ初期化
-	AudioSource* rhythmMissSE = nullptr;
+	std::shared_ptr<AudioSource> rhythmMissSE;
 	rhythmMissSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/Clap.wav", Audio::AudioType::SENormal, "GameScene");
 	rhythmMissSE->SetVolume(0.2f, false);
 	rhythmMissSE->SetAudioName("RhythmMissSE");
 	AudioManager::Instance().AudioRegister(rhythmMissSE);
 
-	AudioSource* rhythmGoodSE = nullptr;
+	std::shared_ptr<AudioSource> rhythmGoodSE;
 	rhythmGoodSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/RhythmMissSE2.wav", Audio::AudioType::SENormal, "GameScene");
 	rhythmGoodSE->SetVolume(0.08f, false);
 	rhythmGoodSE->SetAudioName("RhythmGoodSE");
 	AudioManager::Instance().AudioRegister(rhythmGoodSE);
 
-	AudioSource* rhythmPerfectSE = nullptr;
+	std::shared_ptr<AudioSource> rhythmPerfectSE;
 	rhythmPerfectSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/RhythmSE.wav", Audio::AudioType::SENormal, "GameScene");
 	rhythmPerfectSE->SetVolume(0.2f, false);
 	rhythmPerfectSE->SetAudioName("RhythmPerfectSE");

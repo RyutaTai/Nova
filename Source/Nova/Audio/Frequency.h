@@ -18,7 +18,7 @@ public:
 	~Frequency() = default;
 
 	void Initialize();
-	void Update(const float& elapsedTime, Audio* audioSource);
+	void Update(const float& elapsedTime, std::shared_ptr<Audio> audioResource);
 	void DrawDebug();
 
 	void FFT(std::vector<Complex>& x);				//	ƒt[ƒŠƒG•ÏŠ·

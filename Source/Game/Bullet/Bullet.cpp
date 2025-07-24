@@ -30,7 +30,7 @@ Bullet::Bullet()
 	lifeTimer_ = 2.5f;
 
 	//	----- オーディオ -----
-	emitter_ = new SoundEmitter();
+	emitter_ = std::make_unique<SoundEmitter>();
 	emitter_->position_ = GetTransform()->GetPosition();
 	//emitter_.velocity_ = velocity_;
 	emitter_->velocity_ = { 1,2,1 };
@@ -38,16 +38,15 @@ Bullet::Bullet()
 	emitter_->maxDistance_ = 22.0f;
 	emitter_->volume_ = 1.0f;
 	emitter_->name_ = "Bullet";
-	AudioManager::Instance().EmitterRegister(emitter_);
+	AudioManager::Instance().EmitterRegister(std::move(emitter_));
 
 	//	移動SE
-	se_[static_cast<int>(Audio3D::Move)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", emitter_);
-	se_[static_cast<int>(Audio3D::Move)]->SetVolume(0.5f, false);
-	se_[static_cast<int>(Audio3D::Move)]->SetAudioName("BulletMove");
-	//se_[static_cast<int>(Audio3D::Move)]->SetSceneName("Game");
-	se_[static_cast<int>(Audio3D::Move)]->SetDSPSetting(Camera::Instance().GetListener());
-	se_[static_cast<int>(Audio3D::Move)]->SetListenerName(Camera::Instance().GetListener()->name_);
-	AudioManager::Instance().AudioRegister(se_[static_cast<int>(Audio3D::Move)]);
+	moveSE_ = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", emitter_.get());
+	moveSE_->SetVolume(0.5f, false);
+	moveSE_->SetAudioName("BulletMove");
+	moveSE_->SetDSPSetting(Camera::Instance().GetListener());
+	moveSE_->SetListenerName(Camera::Instance().GetListener()->name_);
+	AudioManager::Instance().AudioRegister(moveSE_);
 
 	//	----- エフェクト -----
 	effectResource_[static_cast<int>(EffectType::Explosion)] = ResourceManager::Instance().LoadEffectResource("./Resources/Effect/Blow11_2.efk");
@@ -64,6 +63,11 @@ Bullet::Bullet()
 
 	//	----- 移動速度設定 -----
 	moveSpeed_ = 6.0f;
+
+}
+
+Bullet::~Bullet()
+{
 
 }
 
@@ -117,16 +121,16 @@ void Bullet::UpdateEmitter()
 	//se_[static_cast<int>(Audio3D::Move)]->SetPosition(emitter_.position_);	//	AudioSource3Dのemitter_のpositionに渡す
 	////emitter_.velocity_ = velocity_;
 	
-	se_[static_cast<int>(Audio3D::Move)]->SetEmitterPosition(GetTransform()->GetPosition());	//	AudioSource3Dのemitter_のpositionに渡す
+	moveSE_->SetEmitterPosition(GetTransform()->GetPosition());	//	AudioSource3Dのemitter_のpositionに渡す
 	//emitter_.velocity_ = velocity_;
 }
 
 //	オーディオソース更新
 void Bullet::UpdateAudioSource()
 {
-	if (se_[static_cast<int>(Audio3D::Move)])
+	if (moveSE_)
 	{
-		se_[static_cast<int>(Audio3D::Move)]->SetDSPSetting(Camera::Instance().GetListener());
+		moveSE_->SetDSPSetting(Camera::Instance().GetListener());
 	}
 }
 
@@ -203,7 +207,6 @@ void Bullet::Destroy()
 
 	//	オーディオ削除
 	AudioManager::Instance().GetAudioResource("BulletMove")->Stop();
-	AudioManager::Instance().Remove(se_[static_cast<int>(Audio3D::Move)]);
 
 	//	マネージャーから自分を削除する
 	BulletManager::Instance().Remove(this);

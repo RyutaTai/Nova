@@ -57,18 +57,18 @@ Player::Player()
 
 	//	----- オーディオ初期設定 -----
 	//	----- 足音SE -----
-	sources_[static_cast<int>(AudioStereo::Footsteps)] = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/FootstepsOne2.wav", Audio::AudioType::SENormal, "GameScene");
-	sources_[static_cast<int>(AudioStereo::Footsteps)]->SetVolume(0.3f, false);
-	sources_[static_cast<int>(AudioStereo::Footsteps)]->SetAudioName("PlayerFootsteps");
-	AudioManager::Instance().AudioRegister(sources_[static_cast<int>(AudioStereo::Footsteps)]);
+	std::shared_ptr<AudioSource> footstepsSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/FootstepsOne2.wav", Audio::AudioType::SENormal, "GameScene");
+	footstepsSE->SetVolume(0.3f, false);
+	footstepsSE->SetAudioName("PlayerFootsteps");
+	AudioManager::Instance().AudioRegister(footstepsSE);
 
 	//	----- 攻撃ヒットSE -----
-	sources_[static_cast<int>(AudioStereo::HitAttack)] = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/HitAttack3.wav", Audio::AudioType::SENormal, "GameScene");
-	sources_[static_cast<int>(AudioStereo::HitAttack)]->SetVolume(0.5f, false);
-	sources_[static_cast<int>(AudioStereo::HitAttack)]->SetAudioName("PlayerHitAttack");
-	AudioManager::Instance().AudioRegister(sources_[static_cast<int>(AudioStereo::HitAttack)]);
+	std::shared_ptr<AudioSource> hitAttackSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Player/HitAttack3.wav", Audio::AudioType::SENormal, "GameScene");
+	hitAttackSE->SetVolume(0.5f, false);
+	hitAttackSE->SetAudioName("PlayerHitAttack");
+	AudioManager::Instance().AudioRegister(hitAttackSE);
 
-	AudioSource* comboPerfectSE = nullptr;
+	std::shared_ptr<AudioSource> comboPerfectSE = nullptr;
 	comboPerfectSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Rhythm/Hey.wav", Audio::AudioType::SENormal, "GameScene");
 	comboPerfectSE->SetVolume(0.18f, false);
 	comboPerfectSE->SetAudioName("ComboPerfectSE");

@@ -14,14 +14,14 @@ void Frequency::Initialize()
 
 }
 
-void Frequency::Update(const float& elapsedTime, Audio* audioSource)
+void Frequency::Update(const float& elapsedTime, std::shared_ptr<Audio> audioResource)
 {
 #if 1
-    size_t          SPsize      = audioSource->GetAudioBytes();     //  オーディオのバッファサイズ取得
-    const BYTE*     SPdata      = audioSource->GetAudioData();
+    size_t          SPsize      = audioResource->GetAudioBytes();     //  オーディオのバッファサイズ取得
+    const BYTE*     SPdata      = audioResource->GetAudioData();
     //std::vector<uint8_t> audioVector = ConvertToVector(SPdata, SPsize);
-    const uint8_t*  audioVector = audioSource->GetAudioData(); 
-	int             SPNowData   = static_cast<int>(audioSource->GetCurrentSample());    //  現在のサンプル
+    const uint8_t*  audioVector = audioResource->GetAudioData(); 
+	int             SPNowData   = static_cast<int>(audioResource->GetCurrentSample());    //  現在のサンプル
     int             SPNowBlock  = SPNowData / BlockCount_;                               //  現在のブロック計算
 
     //  FFT変換
@@ -124,7 +124,7 @@ void Frequency::Update(const float& elapsedTime, Audio* audioSource)
 
 #endif
     
-    audioTimer_ = audioSource->GetPlayTimer();
+    audioTimer_ = audioResource->GetPlayTimer();
 
 }
 

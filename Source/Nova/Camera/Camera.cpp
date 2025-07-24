@@ -12,12 +12,12 @@
 Camera::Camera()
 {
 	//	リスナー情報セット
-	listener_ = new SoundListener();
+	listener_ = std::make_unique<SoundListener>();
 	listener_->innerRadius_ = 0.7f;
 	listener_->outerRadius_ = 1.67f;
 	listener_->filterParam_ = 0.8f;
 	listener_->name_ = "Camera";
-	AudioManager::Instance().ListenerRegister(listener_);
+	AudioManager::Instance().ListenerRegister(std::move(listener_));
 }
 
 //	初期化

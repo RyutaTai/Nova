@@ -38,7 +38,7 @@ Drone::Drone()
 //	デストラクタ
 Drone::~Drone()
 {
-	delete debugSource_;
+	
 }
 
 //	初期化
@@ -85,7 +85,7 @@ void Drone::Initialize()
 	float posOffsetY = -10.0f;
 
 	//	エミッターの設定
-	emitter_ = new SoundEmitter();
+	emitter_ =	std::make_shared<SoundEmitter>();
 	emitter_->position_ = GetTransform()->GetPosition();
 	//emitter_[static_cast<int>(Audio3D::Shot)].position.y = playerPos.y + playerHeight / 2.0f + posOffsetY;
 	emitter_->velocity_ = { 1.0f, 2.0f, 1.0f };
@@ -93,28 +93,16 @@ void Drone::Initialize()
 	emitter_->maxDistance_ = 22.0f;
 	emitter_->volume_ = 1.0f;
 	emitter_->name_ = "Drone";
-	AudioManager::Instance().EmitterRegister(emitter_);
+	AudioManager::Instance().EmitterRegister(emitter_);//	emitter_をunique_ptrに変える
 
 	//	発射音
-	sources_[static_cast<int>(Audio3D::Shot)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Drone/launchSE.wav", Audio::AudioType::SE3D, "GameScene", emitter_);
-	sources_[static_cast<int>(Audio3D::Shot)]->SetVolume(0.3f, false);
-	sources_[static_cast<int>(Audio3D::Shot)]->SetAudioName("LaunchBullet");
-	sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
-	sources_[static_cast<int>(Audio3D::Shot)]->SetListenerName(Camera::Instance().GetListener()->name_);
-	AudioManager::Instance().AudioRegister(sources_[static_cast<int>(Audio3D::Shot)]);
+	std::shared_ptr<AudioSource3D> shotSE = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Drone/launchSE.wav", Audio::AudioType::SE3D, "GameScene", emitter_.get());
+	shotSE->SetVolume(0.3f, false);
+	shotSE->SetAudioName("LaunchBullet");
+	shotSE->SetDSPSetting(Camera::Instance().GetListener());
+	shotSE->SetListenerName(Camera::Instance().GetListener()->name_);
+	AudioManager::Instance().AudioRegister(shotSE);
 
-#endif
-
-	//	3Dオーディオテスト用
-#if 0
-	//sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/452_BPM140_2.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
-	sources_[static_cast<int>(Audio3D::Bgm)] = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/Title.wav", Audio::AudioType::BGM3D, "GameScene", &emitter_);
-	sources_[static_cast<int>(Audio3D::Bgm)]->SetVolume(0.2f, false);
-	sources_[static_cast<int>(Audio3D::Bgm)]->SetAudioName("TestBGM");
-	sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Camera::Instance().GetListener());
-	sources_[static_cast<int>(Audio3D::Bgm)]->SetPlayable(true);	//	再生するかのフラグ
-	sources_[static_cast<int>(Audio3D::Bgm)]->Play(true);
-	AudioManager::Instance().AudioRegister(sources_[static_cast<int>(Audio3D::Bgm)]);
 #endif
 
 }
@@ -192,17 +180,11 @@ void Drone::OnDead()
 void Drone::UpdateAudioSource()
 {
 	//	発射音
-	if (sources_[static_cast<int>(Audio3D::Shot)])
+	if (shotSE_)
 	{
-		sources_[static_cast<int>(Audio3D::Shot)]->SetEmitterPosition(emitter_->position_);
-		sources_[static_cast<int>(Audio3D::Shot)]->SetDSPSetting(Camera::Instance().GetListener());
+		shotSE_->SetEmitterPosition(emitter_->position_);
+		shotSE_->SetDSPSetting(Camera::Instance().GetListener());
 		
-	}
-	//	BGM(デバッグ用)
-	if (sources_[static_cast<int>(Audio3D::Bgm)])
-	{
-		sources_[static_cast<int>(Audio3D::Bgm)]->SetEmitterPosition(emitter_->position_);
-		sources_[static_cast<int>(Audio3D::Bgm)]->SetDSPSetting(Camera::Instance().GetListener());
 	}
 }
 

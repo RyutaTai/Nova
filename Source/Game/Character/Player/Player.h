@@ -67,15 +67,6 @@ public:
 		Max,			//	ステート最大数
 	};
 
-private:
-	//	オーディオの種類
-	enum class AudioStereo
-	{
-		Footsteps,	//	足音
-		HitAttack,	//	攻撃ヒット音
-		Max
-	};
-
 public:
 	Player();
 	~Player()override = default;
@@ -149,7 +140,6 @@ public:
 	StateType							GetCurrentState()	const { return currentState_; }			//	現在のステート取得
 	StateType							GetLastState()		const { return lastState_; }			//	ひとつ前のステート取得
 	void								DrawStateStr();												//	現在のステート描画
-
 	
 	//	----- 攻撃してきた敵の位置 -----
 	void SetEnemyPos(const DirectX::XMFLOAT3& enemyPos) { enemyPos_ = enemyPos; }
@@ -191,9 +181,6 @@ private:
 	DirectX::XMFLOAT3	targetPos	= {};		//	ターゲット位置
 	DirectX::XMFLOAT3	enemyPos_	= {};		//	攻撃してきた敵の位置
 
-	//	----- オーディオ -----
-	AudioSource* sources_[static_cast<int>(AudioStereo::Max)] = { nullptr };
-
 	//	----- レイキャスト -----
 	float rayLengthOffset_ = 0.0f;	//	水平方向のレイの長さを少し増やす
 
@@ -201,8 +188,8 @@ private://	----- デバッグ用 -----
 	//	ImGui用
 	bool				isCollisionStage_	= true;
 	bool				isHitStage_			= false;
-	float				gravity_			= -5.0f;
+	float				gravity_			= -5.0f;	//	重力
 	float				rayPosRadius_		= 1.0f;
-	bool				isAddGravity_		= false;		//	重力加算フラグ
+	bool				isAddGravity_		= false;	//	重力加算フラグ
 
 };

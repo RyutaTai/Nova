@@ -23,14 +23,14 @@
 void SceneGame::Initialize()
 {
 	// ----- オーディオ初期化 -----
-	AudioSource* gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Game.wav", Audio::AudioType::BGMNormal, "GameScene");
+	std::shared_ptr<AudioSource> gameBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Game.wav", Audio::AudioType::BGMNormal, "GameScene");
 	gameBGM->SetVolume(0.3f, false);
 	gameBGM->SetAudioName("GameBGM");
 	AudioManager::Instance().AudioRegister(gameBGM);
 
 	// ----- スプライト初期化 -----
-	sprites_[static_cast<int>(SPRITE_GAME::Clear)]		= std::make_unique<Sprite>(L"./Resources/Image/Clear.png");
-	sprites_[static_cast<int>(SPRITE_GAME::GameOver)]	= std::make_unique<Sprite>(L"./Resources/Image/GameOver.png");
+	sprites_[static_cast<int>(SPRITE_GAME::Clear)]	  = std::make_unique<Sprite>(L"./Resources/Image/Clear.png");
+	sprites_[static_cast<int>(SPRITE_GAME::GameOver)] = std::make_unique<Sprite>(L"./Resources/Image/GameOver.png");
 
 	// ----- UI初期化 -----
 	std::unique_ptr<UIHealth> uiHealth = std::make_unique<UIHealth>();
@@ -442,9 +442,6 @@ void SceneGame::Finalize()
 	//	UIマネージャー終了化
 	UIManager::Instance().Finalize();
 
-	//	オーディオ終了化
-	AudioManager::Instance().RemoveBySceneName("GameScene");
-	
 	//	テクスチャ解放
 	ReleaseAllTextures();
 }

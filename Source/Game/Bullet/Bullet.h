@@ -22,7 +22,7 @@ public:
 
 public:
 	Bullet();
-	virtual ~Bullet() = default;
+	virtual ~Bullet();
 
 	virtual void			Initialize();
 	virtual void			Update(const float& elapsedTime);
@@ -84,14 +84,6 @@ public:
 	//	----- ステージとの当たり判定 -----
 	bool RayVsHorizontal(const float& elapsedTime);
 
-private:
-	enum class Audio3D	//	3Dで鳴らすSEの種類
-	{
-		Explosion = 0,			//	爆発音
-		Move,					//	移動音
-		Max
-	};
-
 protected:
 	//	----- モデル -----
 	std::shared_ptr<GltfModelStaticBatching>	gltfStaticModelResource_;		//	Gltfモデル
@@ -129,8 +121,8 @@ protected:
 	float lifeTimer_ = 2.5f;
 
 	//	----- オーディオ -----
-	SoundEmitter* emitter_ = nullptr;									//	エミッターを自分の位置で持つ
-	AudioSource3D* se_[static_cast<int>(Audio3D::Max)] = { nullptr };	//	弾丸のSE(3Dで鳴らす)
+	std::unique_ptr<SoundEmitter> emitter_;
+	std::shared_ptr<AudioSource3D> moveSE_;
 
 	//	----- 更新フラグ -----
 	bool updateFlag_ = true;
@@ -146,8 +138,8 @@ private:
 
 private:
 	//	----- エフェクト -----
-	std::shared_ptr <Effect>	effectResource_[static_cast<int>(EffectType::Max)];			//	エフェクトリソース
-	float						effectScale_[static_cast<int>(EffectType::Max)] = { 1.0f };	//	エフェクトスケール
+	std::shared_ptr<Effect>	effectResource_[static_cast<int>(EffectType::Max)];			//	エフェクトリソース
+	float					effectScale_[static_cast<int>(EffectType::Max)] = { 1.0f };	//	エフェクトスケール
 
 
 };

@@ -24,7 +24,7 @@ void SceneLoading::Initialize()
 	loadSpriteAngle_ = 0.0f;
 
 	//	オーディオ初期化
-	AudioSource* loadBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Load.wav", Audio::AudioType::BGMNormal, "LoadingScene");
+	std::shared_ptr<AudioSource> loadBGM = AudioManager::Instance().LoadAudioSource("./Resources/Audio/BGM/Load.wav", Audio::AudioType::BGMNormal, "LoadingScene");
 	loadBGM->SetVolume(0.2f, false);
 	loadBGM->SetAudioName("LoadBGM");
 	AudioManager::Instance().AudioRegister(loadBGM);
@@ -51,9 +51,6 @@ void SceneLoading::Finalize()
 			sprites_[i] = nullptr;
 		}
 	}
-
-	//	オーディオ終了化
-	AudioManager::Instance().RemoveBySceneName("LoadingScene");
 
 }
 

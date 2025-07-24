@@ -68,7 +68,7 @@ public:
 
 	//	----- オーディオ -----
 	void			UpdateListener();					//	リスナー情報更新
-	SoundListener*	GetListener() { return listener_; }	//	リスナー取得
+	SoundListener*	GetListener() { return listener_.get(); }	//	リスナー取得
 
 private:
 	Transform transform_ = {};
@@ -116,7 +116,7 @@ private:
 	DirectX::XMFLOAT3 cashAngle_ = {};
 
 	//	----- オーディオ -----
-	SoundListener* listener_ = nullptr;		//	リスナー
+	std::unique_ptr<SoundListener> listener_;		//	リスナー
 
 	//	----- 当たり判定 -----
 	float radius_ = 0.1f;

@@ -1,8 +1,8 @@
 #include "Audio.h"
 
+#include "../../imgui/imgui.h"
 #include "../Graphics/Graphics.h"
 #include "../Others/Misc.h"
-#include "../../imgui/imgui.h"
 
 Audio::Audio(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType, const std::string& sceneName)
 {

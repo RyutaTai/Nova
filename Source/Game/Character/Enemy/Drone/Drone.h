@@ -26,16 +26,6 @@ public:
 		Max,				//	ステート最大数
 	};
 
-private:
-	enum class Audio3D		//	3Dオーディオで鳴らしたい音
-	{
-		Shot,				//	発射音
-		Move,				//	移動
-		Destroy,			//	破壊音
-		Bgm,				//	BGM
-		Max,
-	};
-
 public:
 	Drone();
 	~Drone()override;
@@ -93,9 +83,8 @@ private:
 	float	launchRange_	= 10.0f;	//	射程距離
 
 	//	----- オーディオ -----
-	SoundEmitter*	emitter_ = nullptr;				//	エミッター
-	AudioSource3D*	sources_[static_cast<int>(Audio3D::Max)] = { nullptr };		//	オーディオソース
-	AudioSource* debugSource_ = nullptr;
+	std::shared_ptr<SoundEmitter>	emitter_;		//	エミッター
+	std::shared_ptr<AudioSource3D>	shotSE_;		//	ショット音
 
 	//	----- ステート -----
 	std::unique_ptr<StateMachine<State<Drone>>>	stateMachine_ = nullptr;		//	ステートマシン

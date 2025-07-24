@@ -162,7 +162,7 @@ namespace GameState
 		AudioManager::Instance().GetAudioResource("GameBGM")->SetVolume(0.1f, false);
 
 		//	クリアSE再生
-		AudioSource* clearSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Clear.wav", Audio::AudioType::SENormal, "GameScene");
+		std::shared_ptr<AudioSource> clearSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/Clear.wav", Audio::AudioType::SENormal, "GameScene");
 		volume_ = 0.25f;
 		clearSE->SetVolume(volume_, false);
 		clearSE->SetAudioName("ClearSE");
@@ -212,7 +212,7 @@ namespace GameState
 		owner_->SetIsResult(true);
 
 		//	クリアSE再生
-		AudioSource* gameOverSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/GameOver.wav", Audio::AudioType::SENormal, "GameScene");
+		std::shared_ptr<AudioSource> gameOverSE = AudioManager::Instance().LoadAudioSource("./Resources/Audio/SE/GameOver.wav", Audio::AudioType::SENormal, "GameScene");
 		volume_ = 0.25f;
 		gameOverSE->SetVolume(volume_, false);
 		gameOverSE->SetAudioName("GameOverSE");
