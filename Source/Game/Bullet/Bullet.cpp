@@ -41,7 +41,7 @@ Bullet::Bullet()
 	AudioManager::Instance().EmitterRegister(emitter_);
 
 	//	移動SE
-	moveSE_ = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", emitter_.get());
+	moveSE_ = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Bullet/bulletMove.wav", Audio::AudioType::SE3D, "GameScene", emitter_);
 	moveSE_->SetVolume(0.5f, false);
 	moveSE_->SetAudioName("BulletMove");
 	moveSE_->SetDSPSetting(Camera::Instance().GetListener());
@@ -116,22 +116,15 @@ void Bullet::Launch(const DirectX::XMFLOAT3& direction, const DirectX::XMFLOAT3&
 //	エミッター更新
 void Bullet::UpdateEmitter()
 {
-	//	位置更新
-	//emitter_.position_ = GetTransform()->GetPosition();
-	//se_[static_cast<int>(Audio3D::Move)]->SetPosition(emitter_.position_);	//	AudioSource3Dのemitter_のpositionに渡す
-	////emitter_.velocity_ = velocity_;
-	
-	moveSE_->SetEmitterPosition(GetTransform()->GetPosition());	//	AudioSource3Dのemitter_のpositionに渡す
-	//emitter_.velocity_ = velocity_;
+	emitter_->position_ = GetTransform()->GetPosition();
 }
 
 //	オーディオソース更新
 void Bullet::UpdateAudioSource()
 {
-	if (moveSE_)
-	{
-		moveSE_->SetDSPSetting(Camera::Instance().GetListener());
-	}
+	//	移動音
+	moveSE_->SetEmitterPosition(emitter_->position_);
+	moveSE_->SetDSPSetting(Camera::Instance().GetListener());
 }
 
 //	カバーモデル更新処理
@@ -270,4 +263,5 @@ void Bullet::DrawDebug()
 	//	----- オーディオ -----
 	ImGui::DragFloat3("EmitterPosition", &emitter_->position_.x, 0.1f);	//	エミッターの位置
 	ImGui::DragFloat("EmitterVolume", &emitter_->volume_, 0.01f);		//	エミッターの音量
+
 }

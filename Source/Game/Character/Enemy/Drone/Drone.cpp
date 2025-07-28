@@ -96,13 +96,20 @@ void Drone::Initialize()
 	AudioManager::Instance().EmitterRegister(emitter_);
 
 	//	発射音
-	std::shared_ptr<AudioSource3D> shotSE = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Drone/launchSE.wav", Audio::AudioType::SE3D, "GameScene", emitter_.get());
-	shotSE->SetVolume(0.3f, false);
-	shotSE->SetAudioName("LaunchBullet");
-	shotSE->SetDSPSetting(Camera::Instance().GetListener());
-	shotSE->SetListenerName(Camera::Instance().GetListener()->name_);
-	AudioManager::Instance().AudioRegister(shotSE);
+	shotSE_ = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/SE/Drone/launchSE.wav", Audio::AudioType::SE3D, "GameScene", emitter_);
+	shotSE_->SetVolume(0.3f, false);
+	shotSE_->SetAudioName("LaunchBullet");
+	shotSE_->SetDSPSetting(Camera::Instance().GetListener());
+	shotSE_->SetListenerName(Camera::Instance().GetListener()->name_);
+	AudioManager::Instance().AudioRegister(shotSE_);
 
+	std::shared_ptr<AudioSource3D> bgm3D = AudioManager::Instance().LoadAudioSource3D("./Resources/Audio/BGM/Game.wav", Audio::AudioType::BGM3D, "GameScene", emitter_);
+	bgm3D->SetVolume(0.3f, false);
+	bgm3D->SetAudioName("GameBGM3D");
+	bgm3D->SetDSPSetting(Camera::Instance().GetListener());
+	bgm3D->SetListenerName(Camera::Instance().GetListener()->name_);
+	bgm3D->Play(true);
+	AudioManager::Instance().AudioRegister(bgm3D);
 #endif
 
 }
@@ -130,7 +137,6 @@ void Drone::Update(const float& elapsedTime)
 	//	----- 位置更新 -----
 	UpdatePosition(elapsedTime);
 
-
 	//	----- 旋回処理 -----
 	Turn(elapsedTime);
 
@@ -144,13 +150,6 @@ void Drone::Update(const float& elapsedTime)
 	//	----- オーディオ更新 -----
 	UpdateEmitter();
 	UpdateAudioSource();
-	
-}
-
-//	エミッター更新
-void Drone::UpdateEmitter()
-{
-	emitter_->position_ = GetTransform()->GetPosition();
 	
 }
 
@@ -176,16 +175,19 @@ void Drone::OnDead()
 	JudgeDeath();
 }
 
+//	エミッター更新
+void Drone::UpdateEmitter()
+{
+	emitter_->position_ = GetTransform()->GetPosition();
+}
+
 //	オーディオソース更新
 void Drone::UpdateAudioSource()
 {
 	//	発射音
-	if (shotSE_)
-	{
-		shotSE_->SetEmitterPosition(emitter_->position_);
-		shotSE_->SetDSPSetting(Camera::Instance().GetListener());
+	shotSE_->SetEmitterPosition(emitter_->position_);
+	shotSE_->SetDSPSetting(Camera::Instance().GetListener());
 		
-	}
 }
 
 //	弾丸処理
@@ -205,6 +207,9 @@ void Drone::LaunchBullet(const float& elapsedTime)
 	if (gamePad.GetButtonDown() & GamePad::BTN_START)	//	Enterキーで発射
 #endif
 	{
+		//	発射音再生
+		AudioManager::Instance().GetAudioResource("LaunchBullet")->Play(false);
+
 		//	前方向
 		DirectX::XMFLOAT3 dir = {};
 		float angleY = GetTransform()->GetRotationY();
@@ -231,9 +236,6 @@ void Drone::LaunchBullet(const float& elapsedTime)
 
 		//	発射タイマーリセット
 		ResetLaunchTimer();
-
-		//	発射音再生
-		AudioManager::Instance().GetAudioResource("LaunchBullet")->Play(false);
 
 	}
 

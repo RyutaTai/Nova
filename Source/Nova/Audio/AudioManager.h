@@ -24,7 +24,7 @@ public:
 
 	//	オーディオソース読み込み
 	std::shared_ptr<AudioSource>	LoadAudioSource(const char* filename, const Audio::AudioType& audioType, const std::string& sceneName);
-	std::shared_ptr<AudioSource3D>	LoadAudioSource3D(const char* filename, const Audio::AudioType& audioType, const std::string& sceneName, SoundEmitter* emitter);
+	std::shared_ptr<AudioSource3D>	LoadAudioSource3D(const char* filename, const Audio::AudioType& audioType, const std::string& sceneName, std::shared_ptr<SoundEmitter> emitter);
 
 	//	登録関数
 	void AudioRegister(std::shared_ptr<Audio> audio);					//	オーディオ登録

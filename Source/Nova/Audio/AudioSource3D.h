@@ -6,7 +6,7 @@
 class AudioSource3D : public Audio
 {
 public:
-	AudioSource3D(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType, const std::string& sceneName, SoundEmitter* emitter);
+	AudioSource3D(IXAudio2* xaudio, WaveReader* resource, const AudioType& audioType, const std::string& sceneName, std::shared_ptr<SoundEmitter> emitter);
 	~AudioSource3D()override;
 
 public:

@@ -68,7 +68,7 @@ std::shared_ptr<AudioSource> AudioManager::LoadAudioSource(const char* filename,
 }
 
 //	3Dで鳴らすオーディオソース読み込み
-std::shared_ptr<AudioSource3D> AudioManager::LoadAudioSource3D(const char* filename, const Audio::AudioType& audioType, const std::string& sceneName, SoundEmitter* emitter)
+std::shared_ptr<AudioSource3D> AudioManager::LoadAudioSource3D(const char* filename, const Audio::AudioType& audioType, const std::string& sceneName, std::shared_ptr<SoundEmitter> emitter)
 {
 	WaveReader* resource = new WaveReader(filename);
 	return std::make_shared<AudioSource3D>(xaudio_, resource, audioType, sceneName, emitter);
@@ -382,7 +382,7 @@ void AudioManager::DrawAudioSelection(const int& audioIndex)
 						emitterId++;
 					}
 					//	新しく読み込む
-					audioResources_.at(audioIndex) = AudioManager::Instance().LoadAudioSource3D(filename, audioType, sceneNames[sceneTypeId], soundEmitters_.at(emitterId).get());
+					audioResources_.at(audioIndex) = AudioManager::Instance().LoadAudioSource3D(filename, audioType, sceneNames[sceneTypeId], soundEmitters_.at(emitterId));
 					resource = audioResources_.at(audioIndex);
 					static_cast<AudioSource3D*>(audioResources_.at(audioIndex).get())->SetDSPSetting(soundListeners_.at(listenerId));
 					static_cast<AudioSource3D*>(audioResources_.at(audioIndex).get())->SetListenerName(soundListeners_.at(listenerId)->name_);
